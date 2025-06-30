@@ -4,7 +4,7 @@ import { defineConfig } from "vitest/config"
 export default defineConfig({
   build: {
     lib: {
-      name: "@nosto/search-js",
+      name: "@nosto/search-templates-starter",
       entry: [resolve(__dirname, "src/index.ts")],
       formats: ["es", "cjs"],
       fileName: (format, name) => `${name}.${format}.js`
