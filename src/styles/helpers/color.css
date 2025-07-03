@@ -1,0 +1,79 @@
+.ns-color-inherit {
+    color: inherit;
+}
+
+.ns-color-black {
+    color: var(--ns-color-black);
+}
+
+.ns-color-white {
+    color: var(--ns-color-white);
+}
+
+.ns-color-grey-light {
+    color: var(--ns-color-grey-light);
+}
+
+.ns-color-grey {
+    color: var(--ns-color-grey);
+}
+
+.ns-color-grey-dark {
+    color: var(--ns-color-grey-dark);
+}
+
+.ns-color-primary-light {
+    color: var(--ns-color-primary-light);
+}
+
+.ns-color-primary {
+    color: var(--ns-color-primary);
+}
+
+.ns-color-primary-dark {
+    color: var(--ns-color-primary-dark);
+}
+
+.ns-color-link {
+    color: var(--ns-color-link);
+}
+
+.ns-background-inherit {
+    background-color: inherit;
+}
+
+.ns-background-black {
+    background-color: var(--ns-color-black);
+}
+
+.ns-background-white {
+    background-color: var(--ns-color-white);
+}
+
+.ns-background-grey-light {
+    background-color: var(--ns-color-grey-light);
+}
+
+.ns-background-grey {
+    background-color: var(--ns-color-grey);
+}
+
+.ns-background-grey-dark {
+    background-color: var(--ns-color-grey-dark);
+}
+
+.ns-background-primary-light {
+    background-color: var(--ns-color-primary-light);
+}
+
+.ns-background-primary {
+    background-color: var(--ns-color-primary);
+}
+
+.ns-background-primary-dark {
+    background-color: var(--ns-color-primary-dark);
+}
+
+.ns-background-link {
+    background-color: var(--ns-color-link);
+}

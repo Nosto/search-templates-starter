@@ -1,0 +1,16 @@
+@import url('./variable.css');
+@import url('./components/input.css');
+@import url('./components/icon.css');
+@import url('./components/button.css');
+@import url('./components/dropdown.css');
+@import url('./components/badge.css');
+@import url('./components/loader.css');
+@import url('./autocomplete.css');
+@import url('./serp.css');
+@import url('./components/slider.css');
+@import url('./helpers/other.css');
+@import url('./helpers/grid.css');
+@import url('./helpers/spacing.css');
+@import url('./helpers/font.css');
+@import url('./helpers/text.css');
+@import url('./helpers/color.css');

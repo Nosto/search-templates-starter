@@ -1,0 +1,48 @@
+.ns-badge {
+    padding: var(--ns-space-2) var(--ns-space-4);
+    font-size: var(--ns-font-size-3);
+    font-weight: var(--ns-weight-bold);
+    line-height: 1;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: var(--ns-border-radius-4);
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.ns-badge-pill {
+    padding: var(--ns-space-1) var(--ns-space-2);
+    border-radius: var(--ns-border-radius-ns-badge-pill);
+}
+
+.ns-badge-green {
+    color: #096F2F;
+    background-color: #E9FCE8;
+}
+
+.ns-badge-green-outline {
+    color: #096F2F;
+    background-color: #E9FCE8;
+    border: 1px solid #096F2F;
+}
+
+.ns-badge-orange {
+    color: #AF5400;
+    background-color: #FFF7EA;
+}
+
+.ns-badge-orange-outline {
+    color: #AF5400;
+    background-color: #FFF7EA;
+    border: 1px solid #AF5400;
+}
+
+.ns-badge-grey {
+    color: var(--ns-color-grey-dark);
+    background-color: var(--ns-color-grey-light);
+}
+
+.ns-badge-grey-outline {
+    color: var(--ns-color-grey-dark);
+    background-color: var(--ns-color-grey-light);
+    border: 1px solid var(--ns-color-grey-dark);
+}

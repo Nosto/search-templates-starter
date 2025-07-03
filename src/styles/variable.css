@@ -1,0 +1,65 @@
+:root {
+    /* COLOR */
+    --ns-color-black: #000000;
+    --ns-color-white: #FFFFFF;
+    --ns-color-grey-light: #F0F3F6;
+    --ns-color-grey: #96A9BD;
+    --ns-color-grey-dark: #516980;
+    --ns-color-primary-light: #D9F0FF;
+    --ns-color-primary: #2473D6;
+    --ns-color-primary-dark: #16539E;
+    --ns-color-link: #2473D6;
+
+
+    /* FONT-SIZE */
+    --ns-font-size-5: 1rem;
+    --ns-font-size-4: 0.9rem;
+    --ns-font-size-3: 0.75rem;
+    --ns-font-size-2: 0.5rem;
+    --ns-font-size-1: 0.25rem;
+
+    /* FONT */
+    --ns-weight-bold: 700;
+    --ns-weight-medium: 500;
+    --ns-weight-regular: 400;
+
+    /* SPACING */
+    --ns-space-5: 1.5rem;
+    --ns-space-4: 1rem;
+    --ns-space-3: 0.75rem;
+    --ns-space-2: 0.5rem;
+    --ns-space-1: 0.25rem;
+
+    /* BORDER-RADIUS */
+    --ns-border-radius-3: 3px;
+    --ns-border-radius-4: 4px;
+    --ns-border-radius-circle: 50%;
+
+    /* LINE-HEIGHT */
+    --ns-line-height-tiny: 1;
+
+    /* Z-INDEX */
+    --ns-z-index-autocomplete: 9000;
+    --ns-z-index-sidebar-backdrop: 1051;
+    --ns-z-index-sidebar-wrapper: 1052;
+    --ns-z-index-sidebar-close: 1053;
+    --ns-header-control: 1040;
+
+    /* BOX SHADOW */
+    --ns-box-shadow-button: inset 0 0 40px rgb(0 0 0 / .25);
+    --ns-box-shadow-slider-handle: 0 0 5px var(--ns-color-primary-dark);
+
+    /* WIDTH */
+    --ns-max-width-search-template: 1500px;
+    --ns-max-width-autocomplete: 582px;
+    --ns-width-mobile-sidebar: 260px;
+    --ns-width-mobile-close-sidebar: 38px;
+    --ns-width-icon: 12px;
+    --ns-width-input-checkbox: 16px;
+    --ns-width-input-checkbox-tick: 5px;
+
+    /* HEIGHT */
+    --ns-height-icon: 12px;
+    --ns-height-input-checkbox: 16px;
+    --ns-height-input-checkbox-tick: 10px;
+}

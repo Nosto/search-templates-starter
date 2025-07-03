@@ -1,48 +1,51 @@
 {
-    "name": "@nosto/search-templates-starter",
-    "version": "0.1.0",
-    "license": "ISC",
-    "type": "module",
-    "files": [
-        "dist"
-    ],
-    "main": "./dist/index.cjs.js",
-    "module": "./dist/index.es.js",
-    "types": "./dist/index.d.ts",
-    "directories": {
-        "doc": "docs",
-        "test": "test"
-    },
-    "keywords": [],
-    "author": "Nosto",
-    "scripts": {
-        "dev": "vite",
-        "build": "tsc && vite build && npm run build-dts && npm run typedoc",
-        "build-dts": "tsc --noEmit false --emitDeclarationOnly",
-        "test": "vitest --run",
-        "lint": "eslint",
-        "preview": "vite preview",
-        "typedoc": "typedoc src/index.ts",
-        "prepare": "husky"
-    },
-    "devDependencies": {
-        "@nosto/search-js": "^3.1.1",
-        "@testing-library/dom": "^10.4.0",
-        "@types/eslint-config-prettier": "^6.11.3",
-        "@types/node": "^22.8.7",
-        "copyfiles": "^2.4.1",
-        "eslint": "^9.14.0",
-        "eslint-config-prettier": "^9.1.0",
-        "eslint-plugin-prettier": "^5.2.1",
-        "jsdom": "^25.0.1",
-        "prettier": "^3.3.3",
-        "typedoc": "^0.27.2",
-        "typescript": "^5.5.3",
-        "typescript-eslint": "^8.12.2",
-        "vite": "^6.0.3",
-        "vitest": "^2.1.4",
-        "@commitlint/cli": "^19.8.1",
-        "@commitlint/config-conventional": "^19.8.1",
-        "husky": "^9.1.7"
-    }
+  "name": "@nosto/search-templates-starter",
+  "version": "0.1.0",
+  "license": "ISC",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.es.js",
+  "types": "./dist/index.d.ts",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "keywords": [],
+  "author": "Nosto",
+  "scripts": {
+    "dev": "vite",
+    "start": "npm i && npm run dev",
+    "build": "tsc && vite build && npm run build-dts && npm run typedoc",
+    "build-dts": "tsc --noEmit false --emitDeclarationOnly",
+    "test": "vitest --run",
+    "lint": "eslint",
+    "preview": "vite preview",
+    "typedoc": "typedoc src/index.ts",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@nosto/search-js": "^3.1.1",
+    "@testing-library/dom": "^10.4.0",
+    "@types/eslint-config-prettier": "^6.11.3",
+    "@types/node": "^22.8.7",
+    "copyfiles": "^2.4.1",
+    "eslint": "^9.14.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "husky": "^9.1.7",
+    "jsdom": "^25.0.1",
+    "prettier": "^3.3.3",
+    "typedoc": "^0.27.2",
+    "typescript": "^5.5.3",
+    "typescript-eslint": "^8.12.2",
+    "vite": "^6.0.3",
+    "vitest": "^2.1.4",
+    "@nosto/nosto-js": "^2.3.0",
+    "preact": "^10.26.9"
+  }
 }
