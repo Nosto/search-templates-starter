@@ -1,5 +1,5 @@
 import { SearchInput } from "@nosto/search-js/preact/autocomplete"
-import { useActions, useNostoAppState } from "@nosto/search-js/preact/hooks"
+import { useActions } from "@nosto/search-js/preact/hooks"
 import { useState } from "preact/hooks"
 
 export function Search() {
