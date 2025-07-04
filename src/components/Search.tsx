@@ -1,22 +1,23 @@
-import { SearchInput } from "@nosto/search-js/preact/autocomplete"
+import { AutocompletePageProvider } from "@nosto/search-js/preact/autocomplete"
 import { useActions } from "@nosto/search-js/preact/hooks"
-import { useState } from "preact/hooks"
+import AutocompleteWrapper from "./Autocomplete/AutocompleteWrapper"
+import { autocompleteConfig } from "../config"
 
 export function Search() {
-  const [input, setInput] = useState("")
   const { newSearch } = useActions()
 
-  const onSearch = () => {
+  const onSearch = (value: string) => {
     newSearch({
-      query: input
+      query: value
     })
   }
 
   return (
     <div>
       <div style={{ display: "flex", gap: 4, width: "100%", justifyContent: "center" }}>
-        <SearchInput onSearchInput={target => setInput(target.value)} />
-        <input type="button" value="Search" onClick={onSearch} />
+        <AutocompletePageProvider config={autocompleteConfig}>
+          <AutocompleteWrapper onSubmit={onSearch} />
+        </AutocompletePageProvider>
       </div>
     </div>
   )

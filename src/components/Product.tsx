@@ -14,11 +14,15 @@ export default function Product({
   return (
     <SerpElement
       as="a"
+      hit={{
+        productId: product.productId!,
+        url: product.url
+      }}
       componentProps={{
+        "aria-label": `Product ${product.name}`,
         className:
           "ns-product ns-border-box ns-clickable ns-text-undecorated ns-color-inherit ns-col-12 ns-col-xs-6 ns-col-l-4 ns-p-2 ns-my-2 ns-mx-0"
       }}
-      hit={{ productId: product.productId!, url: product.url }}
     >
       <div className="ns-overflow-hidden">
         <img

@@ -1,11 +1,10 @@
+import { pick } from "@nosto/search-js/utils"
 import Product from "./Product"
-import { useNostoAppState } from "@nosto/search-js/preact/hooks"
+import { useDecoratedSearchResults, useNostoAppState } from "@nosto/search-js/preact/hooks"
 
 export default function Products() {
-  const { products, loading } = useNostoAppState(state => ({
-    products: state.response.products,
-    loading: state.loading
-  }))
+  const { loading } = useNostoAppState(state => pick(state, "loading"))
+  const { products } = useDecoratedSearchResults()
 
   return (
     <div class="ns-d-flex ns-flex-wrap" style={loading ? "opacity: 0.3;" : ""}>
