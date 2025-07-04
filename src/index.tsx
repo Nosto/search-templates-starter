@@ -1,14 +1,14 @@
 import { render } from "preact"
 import { SearchPageProvider } from "@nosto/search-js/preact/serp"
-import { initNosto } from "./utils/initNosto"
 import Serp from "./components/Serp"
 import { Search } from "./components/Search"
 import "./styles/index.css"
-import { serpConfig } from "./config"
-
-initNosto()
+import { initConfig, serpConfig } from "./config"
+import { init } from "@nosto/nosto-js"
 
 export function App() {
+  init(initConfig)
+
   return (
     <>
       <SearchPageProvider config={serpConfig}>
