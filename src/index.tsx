@@ -18,5 +18,5 @@ export function App() {
     </>
   )
 }
-
+// TODO: Serp and autocomplete components should be later injected by CSS selector instead
 render(<App />, document.getElementById("app")!)
