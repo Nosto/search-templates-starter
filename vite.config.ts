@@ -1,5 +1,6 @@
 import { resolve } from "path"
 import { defineConfig } from "vitest/config"
+import preact from "@preact/preset-vite"
 
 export default defineConfig({
   build: {
@@ -10,6 +11,7 @@ export default defineConfig({
       fileName: (format, name) => `${name}.${format}.js`
     }
   },
+  plugins: [preact()],
   server: {
     port: 8080
   },
