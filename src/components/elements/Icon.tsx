@@ -1,3 +1,6 @@
+import iconStyle from "../../styles/components/icon.module.css"
+
 export default function Icon({ name, className }: { name?: string; className?: string } = {}) {
-  return <i className={`ns-icon ns-icon${name ? `-${name}` : ""} ${className ?? ""}`}></i>
+  const iconClass = name ? iconStyle[`icon-${name}`] : ""
+  return <i className={`${iconStyle.icon} ${iconClass} ${className ?? ""}`}></i>
 }
