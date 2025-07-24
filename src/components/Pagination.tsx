@@ -1,6 +1,8 @@
 import { usePagination, useActions, Page } from "@nosto/search-js/preact/hooks"
 import Icon from "./elements/Icon"
 import { JSX } from "preact/jsx-runtime"
+import style from "../styles/components/pegination.module.css"
+import iconStyles from "../styles/components/icon.module.css"
 
 function PageLink({
   onClick,
@@ -10,12 +12,7 @@ function PageLink({
   children
 }: JSX.IntrinsicElements["a"] & { ariaLabel?: string }) {
   return (
-    <a
-      class={`ns-page-link ns-d-block ns-relative ns-text-undecorated ns-clickable ns-py-2 ns-px-4 ns-color-black ns-border-radius-3 ${className}`}
-      href={href}
-      aria-label={ariaLabel}
-      onClick={onClick}
-    >
+    <a class={`${style.link} ${className}`} href={href} aria-label={ariaLabel} onClick={onClick}>
       {children}
     </a>
   )
@@ -39,11 +36,11 @@ export default function Pagination() {
   }
 
   return (
-    <ul class="ns-d-flex ns-flex-wrap ns-justify-content-center ns-list-unstyled ns-m-0 ns-p-0 ns-my-2 ns-mx-0">
+    <ul className={style.container}>
       {prev && (
         <li>
-          <PageLink {...pageLinkProps(prev)} className="ns-previous" ariaLabel="Previous page">
-            <Icon name="arrow" className="ns-page-prev-icon" />
+          <PageLink {...pageLinkProps(prev)} ariaLabel="Previous page">
+            <Icon name="arrow" className={iconStyles["page-prev-icon"]} />
           </PageLink>
         </li>
       )}
@@ -56,13 +53,13 @@ export default function Pagination() {
             </PageLink>
           </li>
           <li>
-            <span class="ns-d-block ns-py-2 ns-px-4">...</span>
+            <span className={style.filler}>...</span>
           </li>
         </>
       )}
 
       {pages.map(page => (
-        <li key={page.page} class={`${page.current ? "ns-active ns-color-black ns-background-primary-light" : ""}`}>
+        <li key={page.page} class={`${page.current ? style.active : ""}`}>
           <PageLink ariaLabel={`${page.page} page`} {...pageLinkProps(page)}>
             {page.page}
           </PageLink>
@@ -72,7 +69,7 @@ export default function Pagination() {
       {last && (
         <>
           <li>
-            <span class="ns-py-2 ns-px-4">...</span>
+            <span className={style.filler}>...</span>
           </li>
           <li>
             <PageLink {...pageLinkProps(last)} ariaLabel="Last page">
@@ -84,8 +81,8 @@ export default function Pagination() {
 
       {next && (
         <li>
-          <PageLink {...pageLinkProps(next)} className="ns-next" ariaLabel="Next page">
-            <Icon name="arrow" className="ns-page-next-icon" />
+          <PageLink {...pageLinkProps(next)} ariaLabel="Next page">
+            <Icon name="arrow" className={iconStyles["page-next-icon"]} />
           </PageLink>
         </li>
       )}
