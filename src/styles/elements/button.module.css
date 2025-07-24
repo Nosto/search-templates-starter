@@ -1,0 +1,44 @@
+.action-button,
+.action-button-light,
+.action-button-outline-primary  {
+    font-family: inherit;
+    font-weight: var(--ns-weight-regular);
+    line-height: var(--ns-line-height-tiny);
+    color: var(--ns-color-black);
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: var(--ns-space-2) var(--ns-space-2);
+    font-size: var(--ns-font-size-4);
+    border-radius: var(--ns-border-radius-4);
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.action-button>*:not(:first-child),
+.action-button-light>*:not(:first-child),
+.action-button-outline-primary>*:not(:first-child) {
+    margin-left: var(--ns-space-1);
+}
+
+.action-button-light {
+    color: var(--ns-color-black);
+    background-color: var(--ns-color-white);
+    border-color: var(--ns-color-grey-light);
+}
+
+.action-button-outline-primary {
+    color: var(--ns-color-primary);
+    border-color: var(--ns-color-primary);
+}
+
+.action-button:active,
+.action-button-light:active,
+.action-button-outline-primary {
+    box-shadow: var(--ns-box-shadow-button);
+    transition: none;
+}
