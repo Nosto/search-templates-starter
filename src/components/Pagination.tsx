@@ -2,7 +2,7 @@ import { usePagination, useActions, Page } from "@nosto/search-js/preact/hooks"
 import Icon from "./elements/Icon"
 import { JSX } from "preact/jsx-runtime"
 import style from "../styles/components/pegination.module.css"
-import iconStyles from "../styles/components/icon.module.css"
+import iconStyles from "../styles/elements/icon.module.css"
 
 function PageLink({
   onClick,
