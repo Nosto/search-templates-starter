@@ -1,0 +1,33 @@
+.wrapper { 
+    min-height: 890px;
+    max-width: var(--ns-max-width-search-template);
+    display: flex;
+    flex-direction: column;
+    font: inherit;
+    padding: 0;
+    margin: 0 auto;
+}
+
+.container {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    position: initial;
+}
+
+.container.loading {
+    position: relative;
+}
+
+@media (min-width: 768px) {
+    .wrapper {
+        -ms-flex-direction: row !important;
+        flex-direction: row !important;
+    }
+    .container {
+        display: inline-block;
+        width: auto;
+        padding-left: var(--ns-space-5);
+    }
+}
