@@ -27,7 +27,6 @@
     }
     .container {
         display: inline-block;
-        width: auto;
         padding-left: var(--ns-space-5);
     }
 }

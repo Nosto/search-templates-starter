@@ -28,7 +28,7 @@ function ContentWrapper({ type, children }: ContentWrapperProps) {
   return (
     <div className={styles.wrapper} data-nosto-element={type}>
       {foundProducts && <Sidebar />}
-      <div className={`${styles.content} ${loading && styles.loading}`}>{children({ loading, foundProducts })}</div>
+      <div className={`${styles.container} ${loading && styles.loading}`}>{children({ loading, foundProducts })}</div>
     </div>
   )
 }
