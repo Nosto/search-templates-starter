@@ -92,7 +92,7 @@
 }
 
 @media screen and (min-width: 768px) {
-    .toggle:checked ~ .nsbackdrop {
+    .toggle:checked ~ .backdrop {
         display: none !important;
     }
 
@@ -123,8 +123,7 @@
 
 .header {
     display: flex;
-    align-items: baseline   
-    padding var(--ns-space-4);
+    align-items: baseline padding var(--ns-space-4);
 }
 
 .header span {
