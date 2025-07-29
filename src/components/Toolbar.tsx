@@ -5,7 +5,7 @@ import Icon from "./elements/Icon"
 import Select from "./elements/Select"
 import { toggleButtonId } from "./Sidebar"
 import style from "../styles/components/toolbar.module.css"
-import buttonStyle from "../styles/elements/button.module.css"
+import { Button } from "./elements"
 
 function ToggleMobileSidebarButton({
   selectedFiltersCount,
@@ -15,14 +15,13 @@ function ToggleMobileSidebarButton({
   className?: string
 }) {
   return (
-    <label
-      for={toggleButtonId}
-      className={`${buttonStyle["action-button-light"]} ${style["hide-desktop"]} ${className}`}
-    >
-      <Icon name="filter" />
-      <span>Filter</span>
+    <Button name="action-light" className={`${style["hide-desktop"]} ${className}`}>
+      <label for={toggleButtonId} className={style.label}>
+        <Icon name="filter" />
+        <span>Filter</span>
+      </label>
       {selectedFiltersCount > 0 && <span className={style["button-text"]}>{selectedFiltersCount}</span>}
-    </label>
+    </Button>
   )
 }
 

@@ -81,3 +81,18 @@
     text-decoration: line-through;
     margin-left: var(--ns-space-2);
 }
+
+.autocomplete-submit {
+    border-top-color: var(--ns-color-grey-light);
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-radius: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.autocomplete-submit button {
+    border-radius: 0;
+    text-align: center;
+    width: 100%;
+}

@@ -4,15 +4,17 @@ import RangeFacet from "./RangeFacet"
 import Icon from "./elements/Icon"
 import { SearchStatsFacet, SearchTermsFacet } from "@nosto/nosto-js/client"
 import styles from "../styles/components/sidebar.module.css"
-import buttonStyles from "../styles/components/button.module.css"
+import { Button } from "./elements"
 
 export const toggleButtonId = "toggle-mobile-sidebar"
 
 function ToggleSidebarButton({ className }: { className?: string } = {}) {
   return (
-    <label className={`${buttonStyles.action} ${styles.close} ${className}`} for={toggleButtonId}>
-      <Icon name="close" />
-    </label>
+    <Button name="action" className={`${styles.close} ${className}`}>
+      <label for={toggleButtonId}>
+        <Icon name="close" />
+      </label>
+    </Button>
   )
 }
 

@@ -1,0 +1,45 @@
+.wrapper {
+    position: relative;
+}
+
+.menu {
+    text-align: left;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: auto;
+    margin: 0;
+    padding: var(--ns-space-2) var(--ns-space-2);
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--ns-color-black);
+    font-family: inherit;
+    font-weight: var(--ns-weight-regular);
+    font-size: var(--ns-font-size-5);
+    list-style: none;
+    cursor: pointer;
+    background-color: var(--ns-color-white);
+    background-clip: padding-box;
+    border: 1px solid var(--ns-color-grey-light);
+    border-radius: var(--ns-border-radius-4);
+    background: var(--ns-color-white)
+}
+
+/* remove default arrow on ie10 and ie11 */
+.menu::ms-expand {
+    display: none;
+}
+
+/* target Internet Explorer 9 to undo the custom arrow */
+@media screen and (min-width: 0\0) {
+    .menu {
+        background: none\9;
+        padding: 5px\9;
+    }
+}
+
+.menu:focus {
+    outline: none;
+    background-color: var(--ns-color-primary-light);
+}

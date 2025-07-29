@@ -1,6 +1,6 @@
-.action-button,
-.action-button-light,
-.action-button-outline-primary  {
+.button-action,
+.button-action-light,
+.button-action-outline-primary  {
     font-family: inherit;
     font-weight: var(--ns-weight-regular);
     line-height: var(--ns-line-height-tiny);
@@ -19,26 +19,26 @@
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
-.action-button>*:not(:first-child),
-.action-button-light>*:not(:first-child),
-.action-button-outline-primary>*:not(:first-child) {
+.button-action>*:not(:first-child),
+.button-action-light>*:not(:first-child),
+.button-action-outline-primary>*:not(:first-child) {
     margin-left: var(--ns-space-1);
 }
 
-.action-button-light {
+.button-action-light {
     color: var(--ns-color-black);
     background-color: var(--ns-color-white);
     border-color: var(--ns-color-grey-light);
 }
 
-.action-button-outline-primary {
+.button-action-outline-primary {
     color: var(--ns-color-primary);
     border-color: var(--ns-color-primary);
 }
 
-.action-button:active,
-.action-button-light:active,
-.action-button-outline-primary {
+.button-action:active,
+.button-action-light:active,
+.button-action-outline-primary {
     box-shadow: var(--ns-box-shadow-button);
     transition: none;
 }
