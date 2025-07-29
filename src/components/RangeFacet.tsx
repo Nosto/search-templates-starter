@@ -3,6 +3,7 @@ import { useState } from "preact/hooks"
 import RangeInput from "./elements/RangeInput"
 import Icon from "./elements/Icon"
 import { SearchStatsFacet } from "@nosto/nosto-js/client"
+import styles from "../styles/components/facet.module.css"
 
 export default function RangeFacet({ facet }: { facet: SearchStatsFacet }) {
   const { min, max, range, updateRange } = useRange(facet.id)
@@ -10,27 +11,23 @@ export default function RangeFacet({ facet }: { facet: SearchStatsFacet }) {
   const [active, setActive] = useState(isSelected)
 
   return (
-    <li class={`ns-sidebar-dropdown ${active ? "ns-active" : ""}`}>
+    <li className={`${styles.dropdown} ${active ? styles.active : ""}`}>
       <span
-        class="ns-anchor ns-d-inline-block ns-relative ns-w-100 ns-border-box ns-p-4"
+        className={styles.anchor}
         onClick={() => {
           setActive(!active)
         }}
       >
-        <span class="ns-color-black ns-font-4">{facet.name}</span>
-        {isSelected && (
-          <span class="ns-total-count ns-d-inline-block ns-text-align-center ns-font-3 ns-font-bold ns-color-white ns-background-primary ns-ml-1">
-            {1}
-          </span>
-        )}
-        <Icon name="arrow" className="ns-absolute" />
+        <span className={styles.title}>{facet.name}</span>
+        {isSelected && <span className={styles.count}>{1}</span>}
+        <span className={styles.icon}>
+          <Icon name={active ? "arrow-up" : "arrow-down"} />
+        </span>
       </span>
-      <div class="ns-sidebar-submenu ns-d-none ns-p-4">
-        <div class="ns-d-flex ns-justify-content-between ns-font-4">
-          <div class="ns-col-6 flex-shrink-1 ns-mr-2">
-            <label for={`ns-${facet.id}-min`} class="ns-form-label">
-              Min.
-            </label>
+      <div className={styles.submenu} aria-expanded={active}>
+        <div className={styles.range}>
+          <div className={styles.input}>
+            <label for={`ns-${facet.id}-min`}>Min.</label>
             <RangeInput
               id={`ns-${facet.id}-min`}
               min={min}
@@ -42,10 +39,8 @@ export default function RangeFacet({ facet }: { facet: SearchStatsFacet }) {
               }}
             />
           </div>
-          <div class="ns-col-6 flex-shrink-1">
-            <label for={`ns-${facet.id}-max`} class="ns-form-label">
-              Max.
-            </label>
+          <div className={styles.input}>
+            <label for={`ns-${facet.id}-max`}>Max.</label>
             <RangeInput
               id={`ns-${facet.id}-max`}
               min={min}

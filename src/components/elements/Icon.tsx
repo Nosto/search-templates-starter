@@ -1,6 +1,7 @@
-import iconStyle from "../../styles/elements/icon.module.css"
+import styles from "../../styles/elements/icon.module.css"
 
-export default function Icon({ name, className }: { name?: string; className?: string } = {}) {
-  const iconClass = name ? iconStyle[`icon-${name}`] : ""
-  return <i className={`${iconStyle.icon} ${iconClass} ${className ?? ""}`}></i>
+export default function Icon({ name, className, flip }: { name?: string; className?: string; flip?: "x" | "y" } = {}) {
+  const iconClass = name ? styles[`icon-${name}`] : ""
+  const iconFlip = flip ? styles[`flip-${flip}`] : ""
+  return <i className={`${styles.icon} ${iconClass} ${iconFlip} ${className ?? ""}`}></i>
 }

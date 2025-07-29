@@ -2,7 +2,6 @@ import { usePagination, useActions, Page } from "@nosto/search-js/preact/hooks"
 import Icon from "./elements/Icon"
 import { JSX } from "preact/jsx-runtime"
 import style from "../styles/components/pegination.module.css"
-import iconStyles from "../styles/elements/icon.module.css"
 
 function PageLink({
   onClick,
@@ -40,7 +39,7 @@ export default function Pagination() {
       {prev && (
         <li>
           <PageLink {...pageLinkProps(prev)} ariaLabel="Previous page">
-            <Icon name="arrow" className={iconStyles["page-prev-icon"]} />
+            <Icon name="arrow-left" />
           </PageLink>
         </li>
       )}
@@ -82,7 +81,7 @@ export default function Pagination() {
       {next && (
         <li>
           <PageLink {...pageLinkProps(next)} ariaLabel="Next page">
-            <Icon name="arrow" className={iconStyles["page-next-icon"]} />
+            <Icon name="arrow-right" />
           </PageLink>
         </li>
       )}

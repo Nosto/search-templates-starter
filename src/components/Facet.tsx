@@ -2,36 +2,30 @@ import { useFacet } from "@nosto/search-js/preact/hooks"
 import Checkbox from "./elements/Checkbox"
 import Icon from "./elements/Icon"
 import { SearchTermsFacet } from "@nosto/nosto-js/client"
+import styles from "../styles/components/facet.module.css"
 
 export default function Facet({ facet }: { facet: SearchTermsFacet }) {
   const { active, selectedFiltersCount, toggleActive, toggleProductFilter } = useFacet(facet)
 
   return (
-    <li class={`ns-sidebar-dropdown ${active ? "ns-active" : ""}`} aria-expanded={!!active}>
+    <li class={`${styles.dropdown} ${active ? styles.active : ""}`} aria-expanded={!!active}>
       <span
-        class="ns-anchor ns-d-inline-block ns-relative ns-w-100 ns-border-box ns-p-4"
+        className={styles.anchor}
         data-nosto-element="facet"
         onClick={toggleActive}
         aria-controls={`${facet.id}-sub-menu`}
         aria-label={`${active ? "Collapse" : "Expand"} ${facet.name}`}
       >
-        <span class="ns-color-black ns-font-4">{facet.name}</span>
-        {selectedFiltersCount > 0 && (
-          <span class="ns-total-count ns-d-inline-block ns-text-align-center ns-font-3 ns-font-bold ns-color-white ns-background-primary ns-ml-1">
-            {selectedFiltersCount}
-          </span>
-        )}
-        <Icon name="arrow" className="ns-absolute" />
+        <span className={styles.title}>{facet.name}</span>
+        {selectedFiltersCount > 0 && <span className={styles.count}>{selectedFiltersCount}</span>}
+        <span className={styles.icon}>
+          <Icon name={active ? "arrow-up" : "arrow-down"} />
+        </span>
       </span>
-      <div class="ns-sidebar-submenu ns-d-none ns-p-4" id={`${facet.id}-sub-menu`}>
-        <ul class="ns-list-unstyled ns-p-0 ns-m-0" role="menu">
+      <div className={styles.submenu} id={`${facet.id}-sub-menu`}>
+        <ul role="menu">
           {facet.data?.map(value => (
-            <li
-              key={value.value}
-              class="ns-d-flex ns-justify-content-between ns-align-items-center ns-font-3"
-              data-nosto-element="facet-setting"
-              role="menuitem"
-            >
+            <li key={value.value} data-nosto-element="facet-setting" role="menuitem">
               <Checkbox
                 value={value.value}
                 selected={value.selected}
@@ -40,9 +34,7 @@ export default function Facet({ facet }: { facet: SearchTermsFacet }) {
                   toggleProductFilter(facet.field, value.value, !value.selected)
                 }}
               />
-              <span class="ns-count ns-d-inline-block ns-text-align-center ns-py-1 ns-px-1 ns-font-3 ns-font-bold ns-color-black ns-background-grey-light ns-border-radius-3">
-                {value.count}
-              </span>
+              <span className={styles.count}>{value.count}</span>
             </li>
           ))}
         </ul>
