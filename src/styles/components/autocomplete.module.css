@@ -77,7 +77,7 @@
     -webkit-box-orient: vertical;
 }
 
-.product .details .striked {
+.product .details .old-price {
     text-decoration: line-through;
     margin-left: var(--ns-space-2);
 }

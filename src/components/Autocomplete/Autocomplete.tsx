@@ -16,7 +16,7 @@ export default function Autocomplete() {
       <div className={style.container}>
         <div className={style.items}>
           {products?.hits?.length > 0 && (
-            <div className={style.products}>
+            <div>
               <div className={style.products}>
                 {products?.hits?.map(hit => {
                   return (
@@ -41,7 +41,7 @@ export default function Autocomplete() {
                           <div>
                             <span>{hit.priceText}</span>
                             {hit.listPrice && hit.price && hit.listPrice > hit.price && (
-                              <span className={style.striked}>{hit.listPrice}</span>
+                              <span className={style["old-price"]}>{hit.listPrice}</span>
                             )}
                           </div>
                         </div>
