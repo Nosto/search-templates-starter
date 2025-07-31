@@ -14,9 +14,7 @@ export default function SelectedFilters() {
               <span>
                 {filter?.name}: {filter?.value}
               </span>
-              <Button name="action" onClick={() => filter?.remove()}>
-                ×
-              </Button>
+              <Button name="action" onClick={() => filter?.remove()} icon="close" />
             </div>
           ))}
         </div>
