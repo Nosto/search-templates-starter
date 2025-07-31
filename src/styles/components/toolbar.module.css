@@ -1,4 +1,4 @@
-.button-text {
+.buttonText {
     border-radius: 50px;
     padding: 0.1rem 0.35rem;
     display: inline-block;
@@ -18,7 +18,7 @@
 }
 
 @media (min-width: 768px) {
-    .hide-desktop {
+    .hideDesktop {
         display: none !important;
     }
 }
@@ -59,7 +59,7 @@
     }
 }
 
-.buttons-container {
+.buttonsContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -68,7 +68,7 @@
 }
 
 @media (min-width: 768px) {
-    .buttons-container {
+    .buttonsContainer {
         display: block;
         width: auto;
     }

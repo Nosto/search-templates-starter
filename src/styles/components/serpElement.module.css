@@ -41,7 +41,7 @@
     margin-bottom: var(--ns-space-1) !important;
 }
 
-.special-price {
+.specialPrice {
     text-decoration: line-through;
     margin-left: var(--ns-space-2); 
 }

@@ -15,12 +15,12 @@ function ToggleMobileSidebarButton({
   className?: string
 }) {
   return (
-    <Button name="action-light" className={`${style["hide-desktop"]} ${className}`}>
+    <Button name="action-light" className={`${style.hideDesktop} ${className}`}>
       <label for={toggleButtonId} className={style.label}>
         <Icon name="filter" />
         <span>Filter</span>
       </label>
-      {selectedFiltersCount > 0 && <span className={style["button-text"]}>{selectedFiltersCount}</span>}
+      {selectedFiltersCount > 0 && <span className={style.buttonText}>{selectedFiltersCount}</span>}
     </Button>
   )
 }
@@ -41,12 +41,12 @@ export default function Toolbar() {
           {docCount} products
         </span>
       )}
-      <div className={style["buttons-container"]}>
+      <div className={style.buttonsContainer}>
         <ToggleMobileSidebarButton selectedFiltersCount={selectedFiltersCount} />
         <Select
           value={activeSort}
           onChange={e => setSort((e.target as HTMLSelectElement)?.value)}
-          className={style["sort-menu"]}
+          className={style.sortMenu}
           options={options}
           label={"Sort by"}
         />

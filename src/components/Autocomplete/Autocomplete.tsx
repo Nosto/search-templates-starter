@@ -41,7 +41,7 @@ export default function Autocomplete() {
                           <div>
                             <span>{hit.priceText}</span>
                             {hit.listPrice && hit.price && hit.listPrice > hit.price && (
-                              <span className={style["old-price"]}>{hit.listPrice}</span>
+                              <span className={style.oldPrice}>{hit.listPrice}</span>
                             )}
                           </div>
                         </div>

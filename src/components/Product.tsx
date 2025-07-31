@@ -1,7 +1,7 @@
 import { SerpElement } from "@nosto/search-js/preact/serp"
 import { productImagePlaceholder } from "../helpers"
 import { SearchProduct } from "@nosto/nosto-js/client"
-import style from "../styles/components/serpElement.module.css"
+import styles from "../styles/components/serpElement.module.css"
 
 export default function Product({
   product,
@@ -21,20 +21,20 @@ export default function Product({
       }}
       componentProps={{
         "aria-label": `Product ${product.name}`,
-        className: style.serpElement,
+        className: styles.serpElement,
         href: product.url
       }}
     >
-      <div className={style.image}>
+      <div className={styles.image}>
         <img src={previewImage ?? product.imageUrl ?? productImagePlaceholder} alt={product.name} />
       </div>
-      <div className={style.info} data-nosto-element="product">
+      <div className={styles.info} data-nosto-element="product">
         {product.brand && <div>{product.brand}</div>}
         <div>{product.name}</div>
         <div aria-label="Price">
           <span>{product.priceText}</span>
           {product.listPrice && product.price && product.listPrice > product.price && (
-            <span className={style["special-price"]}>{product.listPrice}</span>
+            <span className={styles.specialPrice}>{product.listPrice}</span>
           )}
         </div>
       </div>

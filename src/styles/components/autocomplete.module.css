@@ -28,7 +28,7 @@
 }
 
 @media only screen and (min-width: 768px) {
-    .ns-autocomplete {
+    .autocomplete {
         width: auto;
     }
 }
@@ -77,12 +77,12 @@
     -webkit-box-orient: vertical;
 }
 
-.product .details .old-price {
+.product .details .oldPrice {
     text-decoration: line-through;
     margin-left: var(--ns-space-2);
 }
 
-.autocomplete-submit {
+.autocompleteSubmit {
     border-top-color: var(--ns-color-grey-light);
     border-top-width: 1px;
     border-top-style: solid;
@@ -91,7 +91,7 @@
     justify-content: center;
 }
 
-.autocomplete-submit button {
+.autocompleteSubmit button {
     border-radius: 0;
     text-align: center;
     width: 100%;
