@@ -15,8 +15,8 @@ This project is a starter template for building search interfaces using [`@nosto
 
 Ensure you have the following installed:
 
-- Node.js (v16 or higher)
-- npm or yarn
+- Node.js (v22 or higher)
+- npm
 
 ### Installation
 
@@ -39,20 +39,13 @@ Start the development server:
 npm run dev
 ```
 
-This will launch the application at http://localhost:8000.
+This will launch the application at http://localhost:8080.
 
 ### Build
 To build the project for production:
 ```sh
 npm run build
 ```
-
-### Configuration
-Customize the search behavior in config.ts:
-
-- Sorting Options: Define sorting options using createSortOption.
-- Hit Decorators: Add decorators for thumbnails and prices.
-- Default Config: Set default values for search size, autocomplete size, and more.
 
 ### Resources
 - [Search-js docs](https://docs.nosto.com/techdocs/apis/frontend/oss/search-js)
