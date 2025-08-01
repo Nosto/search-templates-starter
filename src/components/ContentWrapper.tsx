@@ -1,6 +1,7 @@
 import { JSX } from "preact"
 import Sidebar from "./Sidebar"
 import { useNostoAppState } from "@nosto/search-js/preact/hooks"
+import styles from "../styles/components/contentWrapper.module.css"
 
 export type ContentChildrenProps = { loading: boolean; foundProducts: boolean }
 
@@ -25,17 +26,9 @@ function ContentWrapper({ type, children }: ContentWrapperProps) {
   }
 
   return (
-    <div
-      class="ns-serp ns-d-flex ns-flex-column ns-flex-md-row ns-font-inherit ns-p-4 ns-my-0 ns-mx-auto"
-      data-nosto-element={type}
-    >
+    <div className={styles.wrapper} data-nosto-element={type}>
       {foundProducts && <Sidebar />}
-      <div
-        class="ns-d-block ns-d-md-inline ns-w-100 ns-border-box ns-p-0 ns-pl-md-5"
-        style={{ position: loading ? "relative" : "initial" }}
-      >
-        {children({ loading, foundProducts })}
-      </div>
+      <div className={`${styles.container} ${loading && styles.loading}`}>{children({ loading, foundProducts })}</div>
     </div>
   )
 }

@@ -26,7 +26,12 @@ export default function AutocompleteWrapper({ onSubmit }: { onSubmit: (input: st
   }
 
   return (
-    <div>
+    <form
+      onSubmit={e => {
+        e.preventDefault()
+        handleSearch()
+      }}
+    >
       <SearchInput
         onSearchInput={target => setInput(target.value)}
         componentProps={{
@@ -34,14 +39,12 @@ export default function AutocompleteWrapper({ onSubmit }: { onSubmit: (input: st
           onFocus: () => setShowAutocomplete(true)
         }}
       />
-      <button type="button" onClick={handleSearch}>
-        Search
-      </button>
+      <button type="submit">Search</button>
       {showAutocomplete && (
         <div>
           <Autocomplete />
         </div>
       )}
-    </div>
+    </form>
   )
 }

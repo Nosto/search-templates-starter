@@ -4,6 +4,8 @@ import { sortOptions } from "../config"
 import Icon from "./elements/Icon"
 import Select from "./elements/Select"
 import { toggleButtonId } from "./Sidebar"
+import style from "../styles/components/toolbar.module.css"
+import { Button } from "./elements"
 
 function ToggleMobileSidebarButton({
   selectedFiltersCount,
@@ -13,18 +15,13 @@ function ToggleMobileSidebarButton({
   className?: string
 }) {
   return (
-    <label
-      for={toggleButtonId}
-      className={`ns-act-btn ns-act-btn-light ns-filters ns-d-inline-flex ns-d-md-none ns-text-align-center ns-align-items-center ${className}`}
-    >
-      <Icon name="filter" />
-      <span>Filter</span>
-      {selectedFiltersCount > 0 && (
-        <span className="ns-total-count ns-d-inline-block ns-text-align-center ns-font-3 ns-font-bold ns-color-white ns-background-primary ns-ml-1">
-          {selectedFiltersCount}
-        </span>
-      )}
-    </label>
+    <Button name="action-light" className={`${style.hideDesktop} ${className}`}>
+      <label for={toggleButtonId} className={style.label}>
+        <Icon name="filter" />
+        <span>Filter</span>
+      </label>
+      {selectedFiltersCount > 0 && <span className={style.buttonText}>{selectedFiltersCount}</span>}
+    </Button>
   )
 }
 
@@ -38,24 +35,18 @@ export default function Toolbar() {
   const options = sortOptions.map(o => ({ value: o.id, label: o.value.name }))
 
   return (
-    <div
-      class="ns-header-controls ns-d-flex ns-flex-column ns-flex-md-row ns-d-none ns-d-md-flex  ns-flex-wrap align-center ns-justify-content-between ns-pt-o ns-pr-2 ns-pb-1 ns-pl-2"
-      style={loading ? "opacity: 0.3; justify-content: end !important;" : ""}
-    >
+    <div className={style.container} style={loading ? style.loading : ""}>
       {!loading && (
-        <span
-          class="ns-d-inline ns-text-align-center ns-order-3 ns-d-md-block ns-order-md-first ns-align-self-md-center ns-color-black"
-          data-nosto-element="totalResults"
-        >
+        <span className={style.total} data-nosto-element="totalResults">
           {docCount} products
         </span>
       )}
-      <div class="ns-d-flex ns-flex-wrap ns-justify-content-between ns-d-md-block nos-w-100 ns-mb-4">
+      <div className={style.buttonsContainer}>
         <ToggleMobileSidebarButton selectedFiltersCount={selectedFiltersCount} />
         <Select
           value={activeSort}
           onChange={e => setSort((e.target as HTMLSelectElement)?.value)}
-          className="ns-selection-dropdown-sort-menu"
+          className={style.sortMenu}
           options={options}
           label={"Sort by"}
         />

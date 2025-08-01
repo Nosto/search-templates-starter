@@ -1,11 +1,18 @@
-.ns-loader-wrapper {
+.wrapper {
+    /* wrapper ns-d-flex ns-justify-content-center ns-align-items-center */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper {
     width: 100%;
     height: 300px;
     position: absolute; 
     z-index: 1;
 }
 
-.ns-loader-wrapper>.ns-loader {
+.wrapper>.loader {
     border: 8px solid var(--ns-color-grey-light);
     border-top: 8px solid var(--ns-color-primary);
     border-radius: 50%;

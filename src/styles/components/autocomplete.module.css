@@ -1,0 +1,98 @@
+
+.wrapper {
+    display: flex;
+    gap: 4;
+    width: 100%;
+    justify-content: center;
+}
+
+.autocomplete {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    align-items: start;
+    background-color: var(--ns-color-white);
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    z-index: var(--ns-z-index-autocomplete);
+    max-width: var(--ns-max-width-autocomplete);
+    border: 1px solid var(--ns-color-grey-light);
+    border-radius: var(--ns-border-radius-3);
+    box-shadow: 2px 2px 2px var(--ns-color-grey);
+    width: calc(100% - 4px);
+}
+
+@media only screen and (min-width: 768px) {
+    .autocomplete {
+        width: auto;
+    }
+}
+
+.autocomplete .container {
+    margin-top: auto;
+    width: 100%;
+}
+
+.autocomplete .container .items {
+    display: flex;
+    flex-direction: column;
+    -ms-flex-direction: row;
+}
+
+.autocomplete .container .items .products {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.autocomplete .container .items .products .product {
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    padding: var(--ns-space-2);
+}
+
+.product .image {
+    height: auto;
+    object-fit: contain;
+}
+
+.product .details {
+    padding-left: var(--ns-space-2);
+    color: var(--ns-color-black);
+    font-size: var(--ns-font-4);
+}
+
+.product .details .name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.product .details .oldPrice {
+    text-decoration: line-through;
+    margin-left: var(--ns-space-2);
+}
+
+.autocompleteSubmit {
+    border-top-color: var(--ns-color-grey-light);
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-radius: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.autocompleteSubmit button {
+    border-radius: 0;
+    text-align: center;
+    width: 100%;
+}

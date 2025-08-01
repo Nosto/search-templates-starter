@@ -1,6 +1,7 @@
 import { SerpElement } from "@nosto/search-js/preact/serp"
 import { productImagePlaceholder } from "../helpers"
 import { SearchProduct } from "@nosto/nosto-js/client"
+import styles from "../styles/components/serpElement.module.css"
 
 export default function Product({
   product,
@@ -20,24 +21,20 @@ export default function Product({
       }}
       componentProps={{
         "aria-label": `Product ${product.name}`,
-        className:
-          "ns-product ns-border-box ns-clickable ns-text-undecorated ns-color-inherit ns-col-12 ns-col-xs-6 ns-col-l-4 ns-p-2 ns-my-2 ns-mx-0"
+        className: styles.serpElement,
+        href: product.url
       }}
     >
-      <div className="ns-overflow-hidden">
-        <img
-          class="ns-w-100 ns-h-auto"
-          src={previewImage ?? product.imageUrl ?? productImagePlaceholder}
-          alt={product.name}
-        />
+      <div className={styles.image}>
+        <img src={previewImage ?? product.imageUrl ?? productImagePlaceholder} alt={product.name} />
       </div>
-      <div class="ns-relative ns-mt-2" data-nosto-element="product">
-        {product.brand && <div class="ns-color-black ns-mb-1 ns-font-4">{product.brand}</div>}
-        <div class="ns-clipped ns-text-four-lines ns-text-md-three-lines ns-mb-2 ns-font-4">{product.name}</div>
+      <div className={styles.info} data-nosto-element="product">
+        {product.brand && <div>{product.brand}</div>}
+        <div>{product.name}</div>
         <div aria-label="Price">
           <span>{product.priceText}</span>
           {product.listPrice && product.price && product.listPrice > product.price && (
-            <span class="ns-color-black ns-font-4 ns-text-striked ns-ml-2">{product.listPrice}</span>
+            <span className={styles.specialPrice}>{product.listPrice}</span>
           )}
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { JSX } from "preact"
+import styles from "../../styles/elements/select.module.css"
 
 export default function Select({
   value,
@@ -11,13 +12,16 @@ export default function Select({
   label?: string
 }) {
   return (
-    <div className="ns-relative">
+    <div className={styles.wrapper}>
       <select
-        className={`ns-selection-dropdown-menu ns-text-align-left ${className}`}
-        value={value}
+        className={`${styles.menu} ${className}`}
+        value={value || "placeholder"}
         onChange={onChange}
         aria-label={label || "Select"}
       >
+        <option value="placeholder" disabled>
+          {label || "Select an option"}
+        </option>
         {options.map(option => (
           <option key={option.value} value={option.value}>
             {option.label}

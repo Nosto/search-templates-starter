@@ -1,3 +1,5 @@
+import style from "../../styles/elements/checkbox.module.css"
+
 export default function Checkbox({
   value,
   selected,
@@ -10,10 +12,10 @@ export default function Checkbox({
   className?: string
 }) {
   return (
-    <label className={`ns-checkbox ns-d-block ns-color-black ${className}`}>
+    <label className={`${style.checkbox} ${className}`}>
       {value}
       <input type="checkbox" checked={selected} onChange={onChange} />
-      <span className="ns-checkmark" />
+      <span className={style.checkmark} />
     </label>
   )
 }
