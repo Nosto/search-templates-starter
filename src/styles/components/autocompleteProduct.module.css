@@ -8,6 +8,8 @@
 .image {
     height: auto;
     object-fit: contain;
+    width: 60px;
+    aspect-ratio: auto 60 / 40;
 }
 
 .details {

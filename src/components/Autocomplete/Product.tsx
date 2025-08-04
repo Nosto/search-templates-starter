@@ -13,13 +13,7 @@ export default function Product({ hit }: { hit: SearchProduct }) {
       }}
     >
       <div data-url={hit.url} className={style.container} data-nosto-element="product">
-        <img
-          className={style.image}
-          src={hit.imageUrl ?? productImagePlaceholder}
-          alt={hit.name}
-          width="60"
-          height="40"
-        />
+        <img className={style.image} src={hit.imageUrl ?? productImagePlaceholder} alt={hit.name} />
         <div className={style.details}>
           {hit.brand && <div>{hit.brand}</div>}
           <div className={style.name}>{hit.name}</div>
