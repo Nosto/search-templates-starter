@@ -1,4 +1,4 @@
-.serpElement {
+.container {
     padding: var(--ns-space-2);
     color: inherit;
     margin: var(--ns-space-2) 0;
@@ -10,7 +10,7 @@
 }
 
 @media (min-width: 375px) {
-    .serpElement {
+    .container {
         -ms-flex: 0 0 50%;
         flex: 0 0 50%;
         max-width: 50%;
@@ -18,7 +18,7 @@
 }
 
 @media (min-width: 1024px) {
-    .serpElement{
+    .container {
         -ms-flex: 0 0 33.333333%;
         flex: 0 0 33.333333%;
         max-width: 33.333333%;
@@ -43,5 +43,5 @@
 
 .specialPrice {
     text-decoration: line-through;
-    margin-left: var(--ns-space-2); 
+    margin-left: var(--ns-space-2);
 }

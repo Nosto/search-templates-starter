@@ -1,6 +1,6 @@
 .button-action,
 .button-action-light,
-.button-action-outline-primary  {
+.button-action-outline-primary {
     font-family: inherit;
     font-weight: var(--ns-weight-regular);
     line-height: var(--ns-line-height-tiny);
@@ -16,12 +16,16 @@
     padding: var(--ns-space-2) var(--ns-space-2);
     font-size: var(--ns-font-size-4);
     border-radius: var(--ns-border-radius-4);
-    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    transition:
+        color 0.15s ease-in-out,
+        background-color 0.15s ease-in-out,
+        border-color 0.15s ease-in-out,
+        box-shadow 0.15s ease-in-out;
 }
 
-.button-action>*:not(:first-child),
-.button-action-light>*:not(:first-child),
-.button-action-outline-primary>*:not(:first-child) {
+.button-action > *:not(:first-child),
+.button-action-light > *:not(:first-child),
+.button-action-outline-primary > *:not(:first-child) {
     margin-left: var(--ns-space-1);
 }
 

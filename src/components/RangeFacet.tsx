@@ -24,7 +24,7 @@ export default function RangeFacet({ facet }: { facet: SearchStatsFacet }) {
           <Icon name={active ? "arrow-up" : "arrow-down"} />
         </span>
       </span>
-      <div className={styles.submenu} aria-expanded={active}>
+      <div className={styles.menu} aria-expanded={active}>
         <div className={styles.range}>
           <div className={styles.input}>
             <label for={`ns-${facet.id}-min`}>Min.</label>

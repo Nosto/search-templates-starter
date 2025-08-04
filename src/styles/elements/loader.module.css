@@ -8,11 +8,11 @@
 .wrapper {
     width: 100%;
     height: 300px;
-    position: absolute; 
+    position: absolute;
     z-index: 1;
 }
 
-.wrapper>.loader {
+.wrapper > .loader {
     border: 8px solid var(--ns-color-grey-light);
     border-top: 8px solid var(--ns-color-primary);
     border-radius: 50%;

@@ -10,7 +10,7 @@
     user-select: none;
 }
 
-.checkbox>input {
+.checkbox > input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
@@ -18,7 +18,7 @@
     width: 0;
 }
 
-.checkbox>.checkmark:after {
+.checkbox > .checkmark:after {
     left: 5px;
     top: 1px;
     width: var(--ns-width-input-checkbox-tick);
@@ -30,21 +30,21 @@
     transform: rotate(45deg);
 }
 
-.checkbox>input:checked~.checkmark {
+.checkbox > input:checked ~ .checkmark {
     background-color: var(--ns-color-primary);
 }
 
-.checkbox>.checkmark:after {
+.checkbox > .checkmark:after {
     content: "";
     position: absolute;
     display: none;
 }
 
-.checkbox>input:checked~.checkmark:after {
+.checkbox > input:checked ~ .checkmark:after {
     display: block;
 }
 
-.checkbox>.checkmark {
+.checkbox > .checkmark {
     position: absolute;
     top: 0;
     left: 0;

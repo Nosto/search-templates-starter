@@ -1,0 +1,31 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    padding: var(--ns-space-2);
+}
+
+.image {
+    height: auto;
+    object-fit: contain;
+}
+
+.details {
+    padding-left: var(--ns-space-2);
+    color: var(--ns-color-black);
+    font-size: var(--ns-font-4);
+}
+
+.name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.strikedPrice {
+    text-decoration: line-through;
+    margin-left: var(--ns-space-2);
+}

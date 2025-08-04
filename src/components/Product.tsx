@@ -21,7 +21,7 @@ export default function Product({
       }}
       componentProps={{
         "aria-label": `Product ${product.name}`,
-        className: styles.serpElement,
+        className: styles.container,
         href: product.url
       }}
     >

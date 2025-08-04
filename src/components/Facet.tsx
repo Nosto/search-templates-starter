@@ -22,8 +22,8 @@ export default function Facet({ facet }: { facet: SearchTermsFacet }) {
           <Icon name={active ? "arrow-up" : "arrow-down"} />
         </span>
       </span>
-      <div className={styles.submenu} id={`${facet.id}-sub-menu`}>
-        <ul role="menu">
+      <div className={styles.menu} id={`${facet.id}-sub-menu`}>
+        <ul className={styles.list} role="menu">
           {facet.data?.map(value => (
             <li key={value.value} data-nosto-element="facet-setting" role="menuitem">
               <Checkbox

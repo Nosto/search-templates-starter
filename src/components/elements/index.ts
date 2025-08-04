@@ -1,4 +1,3 @@
-export { default as SubmitButton } from "./SubmitButton"
 export { default as Select } from "./Select"
 export { default as Checkbox } from "./Checkbox"
 export { default as Icon } from "./Icon"

@@ -11,10 +11,10 @@ export default function SelectedFilters() {
         <div className={styles.container}>
           {filters.map(filter => (
             <div key={`${filter?.name}: ${filter?.value}`} className={styles.filter}>
-              <span>
+              <span className={styles.label}>
                 {filter?.name}: {filter?.value}
               </span>
-              <Button name="action" onClick={() => filter?.remove()} icon="close" />
+              <Button className={styles.button} name="action" onClick={() => filter?.remove()} icon="close" />
             </div>
           ))}
         </div>

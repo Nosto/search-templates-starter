@@ -28,11 +28,11 @@ export default function SideBar() {
       <div className={styles.wrapper} style={loading ? "opacity: 0.3;" : ""}>
         <div className={styles.content}>
           <div className={styles.header}>
-            <span>Filters</span>
+            <span className={styles.title}>Filters</span>
             <ToggleSidebarButton />
           </div>
-          <div className={styles.facets}>
-            <ul>
+          <div>
+            <ul className={styles.facets}>
               {facets?.map(facet => {
                 switch (facet.type) {
                   case "terms":
