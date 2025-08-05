@@ -49,6 +49,11 @@
     color: var(--ns-color-black);
 }
 
+.filter {
+    display: flex;
+    align-items: center;
+}
+
 @media (min-width: 768px) {
     .total {
         -ms-flex-item-align: center;
