@@ -5,7 +5,7 @@ import Icon from "@/elements/Icon/Icon"
 import Select from "@/elements/Select/Select"
 import { toggleButtonId } from "@/components/Sidebar/Sidebar"
 import style from "./Toolbar.module.css"
-import { Button } from "@/elements"
+import Button from "@/elements/Button/Button"
 
 function ToggleMobileSidebarButton({
   selectedFiltersCount,

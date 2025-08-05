@@ -1,7 +1,7 @@
 import { useDecoratedSearchResults } from "@nosto/search-js/preact/hooks"
-import { Button } from "@/elements"
+import Button from "@/elements/Button/Button"
 import style from "./Products.module.css"
-import Product from "@/components/Product/Product"
+import Product from "@/components/Autocomplete/Product/Product"
 
 export default function Autocomplete() {
   const { products } = useDecoratedSearchResults()

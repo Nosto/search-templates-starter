@@ -1,6 +1,6 @@
 import { useProductFilters } from "@nosto/search-js/preact/hooks"
 import styles from "./SelectedFilters.module.css"
-import { Button } from "@/elements"
+import Button from "@/elements/Button/Button"
 
 export default function SelectedFilters() {
   const { filters, removeAll } = useProductFilters()

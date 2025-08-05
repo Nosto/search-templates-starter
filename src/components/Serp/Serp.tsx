@@ -1,6 +1,6 @@
-import Products from "../Products/Products"
+import Products from "@/components/Products/Products"
 import Toolbar from "@/components/Toolbar/Toolbar"
-import BottomToolbar from "../BottomToolbar/BottomToolbar"
+import BottomToolbar from "@/components/BottomToolbar/BottomToolbar"
 import SelectedFilters from "@/components/SelectedFilters/SelectedFilters"
 import { ContentChildrenProps, wrapContent } from "@/components/ContentWrapper/ContentWrapper"
 import { InfiniteScroll } from "@nosto/search-js/preact/common"

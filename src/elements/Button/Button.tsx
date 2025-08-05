@@ -1,6 +1,6 @@
 import { JSX } from "preact/jsx-runtime"
 import styles from "./button.module.css"
-import { Icon } from "@/elements"
+import Icon from "@/elements/Icon/Icon"
 
 export default function Button({
   className,
@@ -12,7 +12,7 @@ export default function Button({
   const style = name ? styles[`button-${name}`] : ""
 
   return (
-    <button type="submit" className={`${style} ${className}`} {...props}>
+    <button className={`${style} ${className}`} {...props}>
       {icon && <Icon name={icon} />}
       {children}
     </button>

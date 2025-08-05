@@ -4,7 +4,7 @@ import RangeFacet from "@/components/Facet/RangeFacet"
 import Icon from "@/elements/Icon/Icon"
 import { SearchStatsFacet, SearchTermsFacet } from "@nosto/nosto-js/client"
 import styles from "./Sidebar.module.css"
-import { Button } from "@/elements"
+import Button from "@/elements/Button/Button"
 
 export const toggleButtonId = "toggle-mobile-sidebar"
 
