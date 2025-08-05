@@ -1,4 +1,4 @@
-import styles from "../../styles/elements/loader.module.css"
+import styles from "./loader.module.css"
 
 export default function Loader({ className }: { className?: string } = {}) {
   return (

@@ -1,7 +1,7 @@
 import { SerpElement } from "@nosto/search-js/preact/serp"
 import { productImagePlaceholder } from "../helpers"
 import { SearchProduct } from "@nosto/nosto-js/client"
-import styles from "../styles/components/serpElement.module.css"
+import styles from "./serpElement.module.css"
 
 export default function Product({
   product,

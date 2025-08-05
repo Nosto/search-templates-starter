@@ -4,7 +4,7 @@ import { sortOptions } from "../config"
 import Icon from "./elements/Icon"
 import Select from "./elements/Select"
 import { toggleButtonId } from "./Sidebar"
-import style from "../styles/components/toolbar.module.css"
+import style from "./toolbar.module.css"
 import { Button } from "./elements"
 
 function ToggleMobileSidebarButton({
@@ -15,12 +15,12 @@ function ToggleMobileSidebarButton({
   className?: string
 }) {
   return (
-    <Button name="action-light" className={`${style.hideDesktop} ${className}`}>
+    <Button name="light" className={`${style.mobile} ${className}`}>
       <label for={toggleButtonId} className={style.label}>
         <Icon name="filter" />
         <span>Filter</span>
       </label>
-      {selectedFiltersCount > 0 && <span className={style.buttonText}>{selectedFiltersCount}</span>}
+      {selectedFiltersCount > 0 && <span className={style.badge}>{selectedFiltersCount}</span>}
     </Button>
   )
 }
@@ -41,12 +41,12 @@ export default function Toolbar() {
           {docCount} products
         </span>
       )}
-      <div className={style.buttonsContainer}>
+      <div className={style.buttons}>
         <ToggleMobileSidebarButton selectedFiltersCount={selectedFiltersCount} />
         <Select
           value={activeSort}
           onChange={e => setSort((e.target as HTMLSelectElement)?.value)}
-          className={style.sortMenu}
+          className=""
           options={options}
           label={"Sort by"}
         />

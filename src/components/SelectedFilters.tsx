@@ -1,5 +1,5 @@
 import { useProductFilters } from "@nosto/search-js/preact/hooks"
-import styles from "../styles/components/selectedFilters.module.css"
+import styles from "./selectedFilters.module.css"
 import { Button } from "./elements"
 
 export default function SelectedFilters() {
@@ -14,7 +14,7 @@ export default function SelectedFilters() {
               <span>
                 {filter?.name}: {filter?.value}
               </span>
-              <Button name="action" onClick={() => filter?.remove()} icon="close" />
+              <Button name="base" onClick={() => filter?.remove()} icon="close" />
             </div>
           ))}
         </div>

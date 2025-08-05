@@ -1,5 +1,5 @@
 import { JSX } from "preact/jsx-runtime"
-import styles from "../../styles/elements/button.module.css"
+import styles from "./button.module.css"
 import Icon from "./Icon"
 
 export default function Button({
@@ -8,8 +8,8 @@ export default function Button({
   icon,
   children,
   ...props
-}: { icon?: string } & JSX.IntrinsicElements["button"]) {
-  const style = name ? styles[`button-${name}`] : ""
+}: { icon?: string; name?: string } & JSX.IntrinsicElements["button"]) {
+  const style = name ? (styles as any)[name] || styles.base : styles.base
 
   return (
     <button type="submit" className={`${style} ${className}`} {...props}>

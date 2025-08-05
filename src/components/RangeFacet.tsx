@@ -3,7 +3,7 @@ import { useState } from "preact/hooks"
 import RangeInput from "./elements/RangeInput"
 import Icon from "./elements/Icon"
 import { SearchStatsFacet } from "@nosto/nosto-js/client"
-import styles from "../styles/components/facet.module.css"
+import styles from "./facet.module.css"
 
 export default function RangeFacet({ facet }: { facet: SearchStatsFacet }) {
   const { min, max, range, updateRange } = useRange(facet.id)

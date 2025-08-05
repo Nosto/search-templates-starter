@@ -1,6 +1,4 @@
-.button-action,
-.button-action-light,
-.button-action-outline-primary  {
+.base {
     font-family: inherit;
     font-weight: var(--ns-weight-regular);
     line-height: var(--ns-line-height-tiny);
@@ -19,26 +17,22 @@
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
-.button-action>*:not(:first-child),
-.button-action-light>*:not(:first-child),
-.button-action-outline-primary>*:not(:first-child) {
+.base>*:not(:first-child) {
     margin-left: var(--ns-space-1);
 }
 
-.button-action-light {
+.light {
     color: var(--ns-color-black);
     background-color: var(--ns-color-white);
     border-color: var(--ns-color-grey-light);
 }
 
-.button-action-outline-primary {
+.outline {
     color: var(--ns-color-primary);
     border-color: var(--ns-color-primary);
 }
 
-.button-action:active,
-.button-action-light:active,
-.button-action-outline-primary {
+.base:active {
     box-shadow: var(--ns-box-shadow-button);
     transition: none;
 }

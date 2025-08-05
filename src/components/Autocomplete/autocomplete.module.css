@@ -82,7 +82,7 @@
     margin-left: var(--ns-space-2);
 }
 
-.autocompleteSubmit {
+.submit {
     border-top-color: var(--ns-color-grey-light);
     border-top-width: 1px;
     border-top-style: solid;
@@ -91,7 +91,7 @@
     justify-content: center;
 }
 
-.autocompleteSubmit button {
+.submit button {
     border-radius: 0;
     text-align: center;
     width: 100%;
