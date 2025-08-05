@@ -1,0 +1,58 @@
+.autocomplete {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    align-items: start;
+    background-color: var(--ns-color-white);
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    z-index: var(--ns-z-index-autocomplete);
+    max-width: var(--ns-max-width-autocomplete);
+    border: 1px solid var(--ns-color-grey-light);
+    border-radius: var(--ns-border-radius-3);
+    box-shadow: 2px 2px 2px var(--ns-color-grey);
+    width: calc(100% - 4px);
+}
+
+@media only screen and (min-width: 768px) {
+    .autocomplete {
+        width: auto;
+    }
+}
+
+.container {
+    margin-top: auto;
+    width: 100%;
+}
+
+.items {
+    display: flex;
+    flex-direction: column;
+    -ms-flex-direction: row;
+}
+
+.products {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.buttons {
+    border-top-color: var(--ns-color-grey-light);
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-radius: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.button {
+    border-radius: 0;
+    text-align: center;
+    width: 100%;
+}

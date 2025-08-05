@@ -1,35 +1,50 @@
-import { useDecoratedSearchResults } from "@nosto/search-js/preact/hooks"
-import { Button } from "../elements"
-import style from "../../styles/components/autocomplete.module.css"
-import Product from "./Product"
+import Products from "./Products/Products"
+import { useEffect, useState, useCallback } from "preact/hooks"
+import { useActions } from "@nosto/search-js/preact/hooks"
+import { SearchInput } from "@nosto/search-js/preact/autocomplete"
 
-export default function Autocomplete() {
-  const { products } = useDecoratedSearchResults()
+export default function Autocomplete({ onSubmit }: { onSubmit: (input: string) => void }) {
+  const [input, setInput] = useState<string>("")
+  const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false)
+  const { newSearch } = useActions()
 
-  if (!products?.hits?.length) {
-    return
+  const debounceSearch = useCallback(() => {
+    const handler = setTimeout(() => {
+      if (input.length >= 3) {
+        newSearch({ query: input })
+      }
+    }, 300)
+    return () => clearTimeout(handler)
+  }, [input, newSearch])
+
+  useEffect(debounceSearch, [input])
+
+  const handleSearch = () => {
+    if (input.trim()) {
+      onSubmit(input)
+    }
   }
 
   return (
-    <div className={style.autocomplete} data-nosto-element="autocomplete">
-      <div className={style.container}>
-        <div className={style.items}>
-          {products?.hits?.length > 0 && (
-            <div>
-              <div className={style.products}>
-                {products?.hits?.map(hit => (
-                  <Product key={hit.productId} hit={hit} />
-                ))}
-              </div>
-              <div className={style.buttons}>
-                <Button className={style.button} name="action">
-                  See all search results
-                </Button>
-              </div>
-            </div>
-          )}
+    <form
+      onSubmit={e => {
+        e.preventDefault()
+        handleSearch()
+      }}
+    >
+      <SearchInput
+        onSearchInput={target => setInput(target.value)}
+        componentProps={{
+          onBlur: () => setShowAutocomplete(false),
+          onFocus: () => setShowAutocomplete(true)
+        }}
+      />
+      <button type="submit">Search</button>
+      {showAutocomplete && (
+        <div>
+          <Products />
         </div>
-      </div>
-    </div>
+      )}
+    </form>
   )
 }

@@ -1,0 +1,6 @@
+export { default as Select } from "./Select/Select"
+export { default as Checkbox } from "./Checkbox/Checkbox"
+export { default as Icon } from "./Icon/Icon"
+export { default as Loader } from "./Loader/Loader"
+export { default as RangeInput } from "./RangeInput/RangeInput"
+export { default as Button } from "./Button/Button"
