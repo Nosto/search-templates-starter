@@ -1,4 +1,4 @@
-import styles from "./icon.module.css"
+import styles from "./Icon.module.css"
 
 export default function Icon({ name, className, flip }: { name?: string; className?: string; flip?: "x" | "y" } = {}) {
   const iconClass = name ? styles[`icon-${name}`] : ""

@@ -2,7 +2,7 @@ import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
 import { useDecoratedSearchResults } from "@nosto/search-js/preact/hooks"
 import { SubmitButton } from "../elements"
 import { productImagePlaceholder } from "../../helpers"
-import style from "./autocomplete.module.css"
+import style from "./Autocomplete.module.css"
 
 export default function Autocomplete() {
   const { products } = useDecoratedSearchResults()

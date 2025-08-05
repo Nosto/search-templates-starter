@@ -1,5 +1,5 @@
 import { JSX } from "preact"
-import styles from "./select.module.css"
+import styles from "./Select.module.css"
 
 export default function Select({
   value,

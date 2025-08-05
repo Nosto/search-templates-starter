@@ -2,7 +2,7 @@ import { useFacet } from "@nosto/search-js/preact/hooks"
 import Checkbox from "./elements/Checkbox"
 import Icon from "./elements/Icon"
 import { SearchTermsFacet } from "@nosto/nosto-js/client"
-import styles from "./facet.module.css"
+import styles from "./Facet.module.css"
 
 export default function Facet({ facet }: { facet: SearchTermsFacet }) {
   const { active, selectedFiltersCount, toggleActive, toggleProductFilter } = useFacet(facet)

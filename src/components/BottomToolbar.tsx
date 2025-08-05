@@ -2,7 +2,7 @@ import { useSizeOptions } from "@nosto/search-js/preact/hooks"
 import { defaultConfig, sizes } from "../config"
 import Pagination from "./Pagination"
 import Select from "./elements/Select"
-import styles from "./bottomToolbar.module.css"
+import styles from "./BottomToolbar.module.css"
 
 export default function BottomToolbar() {
   const { from, to, size, total, handleSizeChange, sizeOptions } = useSizeOptions(sizes, defaultConfig.serpSize)

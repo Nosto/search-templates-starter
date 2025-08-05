@@ -2,7 +2,7 @@ import { AutocompletePageProvider } from "@nosto/search-js/preact/autocomplete"
 import { useActions } from "@nosto/search-js/preact/hooks"
 import AutocompleteWrapper from "./Autocomplete/AutocompleteWrapper"
 import { autocompleteConfig } from "../config"
-import style from "./Autocomplete/autocomplete.module.css"
+import style from "./Autocomplete/Autocomplete.module.css"
 
 export function Search() {
   const { newSearch } = useActions()

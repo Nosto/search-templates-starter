@@ -4,7 +4,7 @@ import { sortOptions } from "../config"
 import Icon from "./elements/Icon"
 import Select from "./elements/Select"
 import { toggleButtonId } from "./Sidebar"
-import style from "./toolbar.module.css"
+import style from "./Toolbar.module.css"
 import { Button } from "./elements"
 
 function ToggleMobileSidebarButton({

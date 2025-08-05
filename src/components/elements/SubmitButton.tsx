@@ -1,4 +1,4 @@
-import styles from "../Autocomplete/autocomplete.module.css"
+import styles from "../Autocomplete/Autocomplete.module.css"
 import Button from "./Button"
 
 export default function SubmitButton({ className, text }: { className?: string; text?: string }) {

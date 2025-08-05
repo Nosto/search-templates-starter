@@ -1,5 +1,5 @@
 import { JSX } from "preact/jsx-runtime"
-import styles from "./button.module.css"
+import styles from "./Button.module.css"
 import Icon from "./Icon"
 
 export default function Button({

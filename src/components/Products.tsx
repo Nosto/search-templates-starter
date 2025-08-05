@@ -1,7 +1,7 @@
 import { pick } from "@nosto/search-js/utils"
 import Product from "./Product"
 import { useDecoratedSearchResults, useNostoAppState } from "@nosto/search-js/preact/hooks"
-import style from "./serp.module.css"
+import style from "./Serp.module.css"
 
 export default function Products() {
   const { loading } = useNostoAppState(state => pick(state, "loading"))
