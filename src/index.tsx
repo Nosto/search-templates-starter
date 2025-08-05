@@ -1,8 +1,8 @@
 import { render } from "preact"
 import { SearchPageProvider } from "@nosto/search-js/preact/serp"
-import Serp from "./components/Serp"
-import { Search } from "./components/Search"
-import "./styles/variable.css"
+import Serp from "@/components/Serp/Serp"
+import { Search } from "@/components/Search/Search"
+import "./variable.css"
 import { initConfig, serpConfig } from "./config"
 import { init } from "@nosto/nosto-js"
 

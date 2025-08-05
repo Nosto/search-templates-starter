@@ -13,10 +13,15 @@ export default defineConfig({
   },
   plugins: [preact()],
   server: {
-    port: 8080
+    port: 8000
   },
   test: {
     globals: true,
     environment: "jsdom"
+  },
+  resolve: {
+    alias: {
+      "@": resolve(__dirname, "src")
+    }
   }
 })

@@ -22,7 +22,13 @@
 
     /* JSX */
     "jsx": "react-jsx",
-    "jsxImportSource": "preact"
+    "jsxImportSource": "preact",
+
+    /* Paths */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+    }
   },
-  "include": ["src"]
+  "include": ["src"],
 }
