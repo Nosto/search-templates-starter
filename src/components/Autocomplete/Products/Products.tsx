@@ -21,8 +21,8 @@ export default function Autocomplete() {
                   <Product key={hit.productId} hit={hit} />
                 ))}
               </div>
-              <div className={style.buttons}>
-                <Button className={style.button} name="action">
+              <div className={style.button}>
+                <Button className={style.submit} name="action">
                   See all search results
                 </Button>
               </div>

@@ -19,11 +19,11 @@
     margin: 0;
 }
 
-.list li:not(:first-child) {
+.list > li:not(:first-child) {
     margin: var(--ns-space-2) 0;
 }
 
-.list li {
+.list > li {
     display: flex;
     justify-content: space-between;
     align-items: center;

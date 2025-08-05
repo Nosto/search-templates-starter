@@ -42,7 +42,7 @@
     flex-grow: 1;
 }
 
-.buttons {
+.button {
     border-top-color: var(--ns-color-grey-light);
     border-top-width: 1px;
     border-top-style: solid;
@@ -51,7 +51,7 @@
     justify-content: center;
 }
 
-.button {
+.submit {
     border-radius: 0;
     text-align: center;
     width: 100%;

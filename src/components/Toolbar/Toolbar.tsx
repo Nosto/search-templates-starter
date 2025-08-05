@@ -15,12 +15,12 @@ function ToggleMobileSidebarButton({
   className?: string
 }) {
   return (
-    <Button name="action-light" className={`${style.hideDesktop} ${className}`}>
+    <Button name="action-light" className={`${style.mobile} ${className}`}>
       <label for={toggleButtonId} className={style.label}>
         <Icon name="filter" />
         <span>Filter</span>
       </label>
-      {selectedFiltersCount > 0 && <span className={style.buttonText}>{selectedFiltersCount}</span>}
+      {selectedFiltersCount > 0 && <span className={style.badge}>{selectedFiltersCount}</span>}
     </Button>
   )
 }
@@ -41,7 +41,7 @@ export default function Toolbar() {
           {docCount} products
         </span>
       )}
-      <div className={style.buttonsContainer}>
+      <div className={style.buttons}>
         <ToggleMobileSidebarButton selectedFiltersCount={selectedFiltersCount} />
         <Select
           value={activeSort}

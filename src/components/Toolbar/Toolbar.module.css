@@ -1,4 +1,4 @@
-.buttonText {
+.badge {
     border-radius: 50px;
     padding: 0.1rem 0.35rem;
     display: inline-block;
@@ -18,7 +18,7 @@
 }
 
 @media (min-width: 768px) {
-    .hideDesktop {
+    .mobile {
         display: none !important;
     }
 }
@@ -59,7 +59,7 @@
     }
 }
 
-.buttonsContainer {
+.buttons {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -68,7 +68,7 @@
 }
 
 @media (min-width: 768px) {
-    .buttonsContainer {
+    .buttons {
         display: block;
         width: auto;
     }
