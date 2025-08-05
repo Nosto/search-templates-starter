@@ -14,7 +14,7 @@ export default function SelectedFilters() {
               <span className={styles.label}>
                 {filter?.name}: {filter?.value}
               </span>
-              <Button className={styles.button} name="action" onClick={() => filter?.remove()} icon="close" />
+              <Button className={styles.button} onClick={() => filter?.remove()} icon="close" />
             </div>
           ))}
         </div>
