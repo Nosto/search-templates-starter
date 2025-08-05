@@ -6,7 +6,7 @@ export default defineConfig({
   build: {
     lib: {
       name: "@nosto/search-templates-starter",
-      entry: [resolve(__dirname, "src/index.tsx")],
+      entry: [resolve(__dirname, "src/index.ts")],
       formats: ["es", "cjs"],
       fileName: (format, name) => `${name}.${format}.js`
     }
