@@ -23,7 +23,7 @@
     "test": "vitest --run",
     "lint": "eslint",
     "preview": "vite preview",
-    "typedoc": "typedoc src/index.ts",
+    "typedoc": "typedoc src/index.tsx",
     "prepare": "husky"
   },
   "devDependencies": {
