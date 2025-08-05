@@ -4,15 +4,13 @@ import Icon from "@/elements/Icon/Icon"
 
 export default function Button({
   className,
-  name,
   icon,
   children,
+  light,
   ...props
-}: { icon?: string } & JSX.IntrinsicElements["button"]) {
-  const style = name ? styles[`button-${name}`] : ""
-
+}: { icon?: string; light?: boolean } & JSX.IntrinsicElements["button"]) {
   return (
-    <button className={`${style} ${className}`} {...props}>
+    <button className={`${styles.button} ${light && styles.light} ${className}`} {...props}>
       {icon && <Icon name={icon} />}
       {children}
     </button>

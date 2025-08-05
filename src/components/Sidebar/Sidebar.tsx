@@ -10,7 +10,7 @@ export const toggleButtonId = "toggle-mobile-sidebar"
 
 function ToggleSidebarButton({ className }: { className?: string } = {}) {
   return (
-    <Button name="action" className={`${styles.close} ${className}`}>
+    <Button className={`${styles.close} ${className}`}>
       <label for={toggleButtonId}>
         <Icon name="close" />
       </label>

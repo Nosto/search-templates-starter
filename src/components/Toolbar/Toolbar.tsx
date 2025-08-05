@@ -15,7 +15,7 @@ function ToggleMobileSidebarButton({
   className?: string
 }) {
   return (
-    <Button name="action-light" className={`${style.mobile} ${style.filter} ${className}`}>
+    <Button light className={`${style.mobile} ${style.filter} ${className}`}>
       <label for={toggleButtonId} className={style.label}>
         <Icon name="filter" />
         <span>Filter</span>
