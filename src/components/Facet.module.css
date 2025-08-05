@@ -32,7 +32,7 @@
     margin: var(--ns-space-2) 0;
 }
 
-.dropdown > .anchor .icon {
+.dropdownAnchorIcon {
     right: 16px;
     display: block;
     top: 16px;
@@ -52,7 +52,7 @@
     padding: var(--ns-space-4);
 }
 
-.anchor .title {
+.anchorTitle {
     color: var(--ns-color-black);
     font-size: var(--ns-font-4);
 }
@@ -67,7 +67,7 @@
     font-weight: var(--ns-font-bold);
 }
 
-.anchor .count {
+.anchorCount {
     border-radius: 50px;
     color: var(--ns-color-white);
     background-color: var(--ns-color-primary);
@@ -76,7 +76,7 @@
     margin-left: var(--ns-space-1);
 }
 
-.submenu .count {
+.submenuCount {
     padding: var(--ns-space-1) var(--ns-space-1);
     color: var(--ns-color-black);
     background-color: var(--ns-color-grey-light);
@@ -89,7 +89,7 @@
     font-size: var(--ns-font-4);
 }
 
-.range .input {
+.rangeInput {
     position: relative;
     width: 100%;
     -ms-flex: 0 0 50%;

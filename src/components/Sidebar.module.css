@@ -137,12 +137,3 @@
     margin: 0;
 }
 
-.sidebar-submenu li:not(:first-child) {
-    margin: var(--ns-space-2) 0;
-}
-
-.sidebar-submenu .count {
-    white-space: nowrap;
-    vertical-align: baseline;
-    line-height: var(--ns-line-height-tiny);
-}

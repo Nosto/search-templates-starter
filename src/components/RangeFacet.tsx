@@ -18,15 +18,15 @@ export default function RangeFacet({ facet }: { facet: SearchStatsFacet }) {
           setActive(!active)
         }}
       >
-        <span className={styles.title}>{facet.name}</span>
-        {isSelected && <span className={styles.count}>{1}</span>}
-        <span className={styles.icon}>
+        <span className={styles.anchorTitle}>{facet.name}</span>
+        {isSelected && <span className={styles.anchorCount}>{1}</span>}
+        <span className={styles.dropdownAnchorIcon}>
           <Icon name={active ? "arrow-up" : "arrow-down"} />
         </span>
       </span>
       <div className={styles.submenu} aria-expanded={active}>
         <div className={styles.range}>
-          <div className={styles.input}>
+          <div className={styles.rangeInput}>
             <label for={`ns-${facet.id}-min`}>Min.</label>
             <RangeInput
               id={`ns-${facet.id}-min`}
@@ -39,7 +39,7 @@ export default function RangeFacet({ facet }: { facet: SearchStatsFacet }) {
               }}
             />
           </div>
-          <div className={styles.input}>
+          <div className={styles.rangeInput}>
             <label for={`ns-${facet.id}-max`}>Max.</label>
             <RangeInput
               id={`ns-${facet.id}-max`}

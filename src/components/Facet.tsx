@@ -16,9 +16,9 @@ export default function Facet({ facet }: { facet: SearchTermsFacet }) {
         aria-controls={`${facet.id}-sub-menu`}
         aria-label={`${active ? "Collapse" : "Expand"} ${facet.name}`}
       >
-        <span className={styles.title}>{facet.name}</span>
-        {selectedFiltersCount > 0 && <span className={styles.count}>{selectedFiltersCount}</span>}
-        <span className={styles.icon}>
+        <span className={styles.anchorTitle}>{facet.name}</span>
+        {selectedFiltersCount > 0 && <span className={styles.anchorCount}>{selectedFiltersCount}</span>}
+        <span className={styles.dropdownAnchorIcon}>
           <Icon name={active ? "arrow-up" : "arrow-down"} />
         </span>
       </span>
@@ -34,7 +34,7 @@ export default function Facet({ facet }: { facet: SearchTermsFacet }) {
                   toggleProductFilter(facet.field, value.value, !value.selected)
                 }}
               />
-              <span className={styles.count}>{value.count}</span>
+              <span className={styles.submenuCount}>{value.count}</span>
             </li>
           ))}
         </ul>

@@ -13,11 +13,11 @@ export default function Autocomplete() {
 
   return (
     <div className={style.autocomplete} data-nosto-element="autocomplete">
-      <div className={style.container}>
-        <div className={style.items}>
+      <div className={style.autocompleteContainer}>
+        <div className={style.autocompleteItems}>
           {products?.hits?.length > 0 && (
             <div>
-              <div className={style.products}>
+              <div className={style.autocompleteProducts}>
                 {products?.hits?.map(hit => {
                   return (
                     <AutocompleteElement
@@ -27,21 +27,21 @@ export default function Autocomplete() {
                         url: hit.url
                       }}
                     >
-                      <div data-url={hit.url} className={style.product} data-nosto-element="product">
+                      <div data-url={hit.url} className={style.autocompleteProduct} data-nosto-element="product">
                         <img
-                          className={style.image}
+                          className={style.productImage}
                           src={hit.imageUrl ?? productImagePlaceholder}
                           alt={hit.name}
                           width="60"
                           height="40"
                         />
-                        <div className={style.details}>
+                        <div className={style.productDetails}>
                           {hit.brand && <div>{hit.brand}</div>}
-                          <div className={style.name}>{hit.name}</div>
+                          <div className={style.productDetailsName}>{hit.name}</div>
                           <div>
                             <span>{hit.priceText}</span>
                             {hit.listPrice && hit.price && hit.listPrice > hit.price && (
-                              <span className={style.oldPrice}>{hit.listPrice}</span>
+                              <span className={style.productDetailsOldPrice}>{hit.listPrice}</span>
                             )}
                           </div>
                         </div>
