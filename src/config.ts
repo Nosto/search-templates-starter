@@ -2,7 +2,6 @@ import { SerpConfig } from "@nosto/search-js/preact/serp"
 import { createSortOption } from "./utils/sorting"
 import { thumbnailDecorator } from "@nosto/search-js/thumbnails"
 import { priceDecorator } from "@nosto/search-js/currencies"
-import { InitProps } from "@nosto/nosto-js"
 import { AutocompleteConfig } from "@nosto/search-js/preact/autocomplete"
 
 export const sizes = [24, 48, 72]
@@ -36,7 +35,3 @@ export const autocompleteConfig = {
     hitDecorators: hitDecorators
   }
 } satisfies AutocompleteConfig
-
-export const initConfig = {
-  merchantId: ""
-} satisfies InitProps
