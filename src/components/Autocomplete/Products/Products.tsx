@@ -22,7 +22,7 @@ export default function Autocomplete() {
                 ))}
               </div>
               <div className={style.button}>
-                <Button className={style.submit} name="action">
+                <Button type="submit" className={style.submit} name="action">
                   See all search results
                 </Button>
               </div>
