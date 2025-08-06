@@ -20,18 +20,21 @@ export const defaultConfig = {
   historySize: 5
 }
 
-export const hitDecorators = [thumbnailDecorator({ size: "2" }), priceDecorator({ defaultCurrency: "EUR" })] as const
+const thumbnailSize = "9" // 750x750
+const defaultCurrency = "EUR"
+
+export const hitDecorators = [thumbnailDecorator({ size: thumbnailSize }), priceDecorator({ defaultCurrency })] as const
 
 export const serpConfig = {
-  defaultCurrency: "EUR",
+  defaultCurrency,
   search: {
-    hitDecorators: hitDecorators
+    hitDecorators
   }
 } satisfies SerpConfig
 
 export const autocompleteConfig = {
-  defaultCurrency: "EUR",
+  defaultCurrency,
   search: {
-    hitDecorators: hitDecorators
+    hitDecorators
   }
 } satisfies AutocompleteConfig
