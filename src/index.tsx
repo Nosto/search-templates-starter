@@ -1,15 +1,14 @@
 import { SearchPageProvider } from "@nosto/search-js/preact/serp"
-import { useEventBusDispatch } from "@nosto/search-js/preact/events"
 import { init } from "@nosto/search-js/preact/inject"
 import Serp from "@/components/Serp/Serp"
 import { Search } from "@/components/Search/Search"
 import "./variable.css"
 import { serpConfig } from "./config"
 import Products from "@/components/Autocomplete/Products/Products"
+import SearchQueryHandler from "@/components/SearchQueryHandler/SearchQueryHandler"
+// import { render } from "preact"
 
 function injectSearch() {
-  // const triggerNewSearch = useEventBusDispatch({ event: "actions/newSearch" })
-
   init({
     autocomplete: {
       config: {
@@ -18,6 +17,9 @@ function injectSearch() {
       inputCssSelector: "#search",
       formCssSelector: "#search-form",
       dropdownCssSelector: "#dropdown",
+      onNavigateToSearch: query => {
+        location.href = `/?q=${query.query}`
+      },
       renderAutocomplete: () => <Products />,
       query: {
         keywords: {
@@ -32,7 +34,12 @@ function injectSearch() {
         defaultCurrency: "EUR"
       },
       cssSelector: "#serp",
-      render: () => <Serp />
+      render: () => (
+        <>
+          <SearchQueryHandler />
+          <Serp />
+        </>
+      )
     }
   })
 }
@@ -47,6 +54,6 @@ export function App() {
     </>
   )
 }
-// TODO: Serp and autocomplete components should be later injected by CSS selector instead
+
 // render(<App />, document.getElementById("app")!)
 injectSearch()

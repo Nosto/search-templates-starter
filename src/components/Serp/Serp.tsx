@@ -7,6 +7,9 @@ import { InfiniteScroll } from "@nosto/search-js/preact/common"
 import Loader from "@/elements/Loader/Loader"
 import NoResults from "@/components/NoResults/NoResults"
 
+import { useEventBusDispatch } from "@nosto/search-js/preact/events"
+import { useEffect } from "preact/hooks"
+
 export function SerpBody({ loading, foundProducts }: ContentChildrenProps) {
   if (loading) return <Loader />
   return foundProducts ? (
