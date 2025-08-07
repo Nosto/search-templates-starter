@@ -8,7 +8,21 @@
   </head>
 
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <header>
+        <form id="search-form">
+          <label for="search">Search</label>
+          <input
+            type="text"
+            id="search"
+            name="search"
+            placeholder="Search for products"
+          />
+          <div id="dropdown"></div>
+        </form>
+      </header>
+      <main id="serp" />
+    </div>
     <script type="module">
       import { init } from "@nosto/nosto-js"
       init({
