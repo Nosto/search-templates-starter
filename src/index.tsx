@@ -5,7 +5,7 @@ import { Search } from "@/components/Search/Search"
 import "./variable.css"
 import { serpConfig } from "./config"
 
-export function App() {
+function App() {
   return (
     <>
       <SearchPageProvider config={serpConfig}>

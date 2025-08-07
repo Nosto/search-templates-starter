@@ -17,9 +17,7 @@
   "author": "Nosto",
   "scripts": {
     "dev": "vite",
-    "start": "npm i && npm run dev",
-    "build": "tsc && vite build && npm run build-dts && npm run typedoc",
-    "build-dts": "tsc --noEmit false --emitDeclarationOnly",
+    "build": "tsc && vite build && npm run typedoc",
     "test": "vitest --run",
     "lint": "eslint",
     "preview": "vite preview",
