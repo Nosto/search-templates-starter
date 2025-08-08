@@ -3,11 +3,11 @@ import { useEffect, useState, useCallback } from "preact/hooks"
 import { useActions } from "@nosto/search-js/preact/hooks"
 import { SearchInput } from "@nosto/search-js/preact/autocomplete"
 
-interface AutocompleteProps {
+interface Props {
   onSubmit: (input: string) => void
 }
 
-export default function Autocomplete({ onSubmit }: AutocompleteProps) {
+export default function Autocomplete({ onSubmit }: Props) {
   const [input, setInput] = useState<string>("")
   const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false)
   const { newSearch } = useActions()

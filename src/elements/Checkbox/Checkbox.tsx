@@ -1,13 +1,13 @@
 import style from "./Checkbox.module.css"
 
-interface CheckboxProps {
+interface Props {
   value: string
   selected: boolean
   onChange: (e: Event) => void
   className?: string
 }
 
-export default function Checkbox({ value, selected, onChange, className }: CheckboxProps) {
+export default function Checkbox({ value, selected, onChange, className }: Props) {
   return (
     <label className={`${style.checkbox} ${className}`}>
       {value}

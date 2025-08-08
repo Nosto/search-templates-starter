@@ -3,11 +3,11 @@ import Icon from "@/elements/Icon/Icon"
 import { JSX } from "preact/jsx-runtime"
 import style from "./Pagination.module.css"
 
-type PageLinkProps = {
+type Props = {
   ariaLabel?: string
 } & JSX.IntrinsicElements["a"]
 
-function PageLink({ onClick, href, className, ariaLabel, children }: PageLinkProps) {
+function PageLink({ onClick, href, className, ariaLabel, children }: Props) {
   return (
     <a class={`${style.link} ${className}`} href={href} aria-label={ariaLabel} onClick={onClick}>
       {children}

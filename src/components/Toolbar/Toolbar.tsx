@@ -7,12 +7,12 @@ import { toggleButtonId } from "@/components/Sidebar/Sidebar"
 import style from "./Toolbar.module.css"
 import Button from "@/elements/Button/Button"
 
-interface ToggleMobileSidebarButtonProps {
+interface Props {
   selectedFiltersCount: number
   className?: string
 }
 
-function ToggleMobileSidebarButton({ selectedFiltersCount, className }: ToggleMobileSidebarButtonProps) {
+function ToggleMobileSidebarButton({ selectedFiltersCount, className }: Props) {
   return (
     <Button light className={`${style.mobile} ${style.filter} ${className}`}>
       <label for={toggleButtonId} className={style.label}>

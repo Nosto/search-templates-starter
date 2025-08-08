@@ -5,11 +5,11 @@ import Icon from "@/elements/Icon/Icon"
 import { SearchStatsFacet } from "@nosto/nosto-js/client"
 import styles from "./Facet.module.css"
 
-interface RangeFacetProps {
+interface Props {
   facet: SearchStatsFacet
 }
 
-export default function RangeFacet({ facet }: RangeFacetProps) {
+export default function RangeFacet({ facet }: Props) {
   const { min, max, range, updateRange } = useRange(facet.id)
   const isSelected = min !== range[0] || max !== range[1]
   const [active, setActive] = useState(isSelected)

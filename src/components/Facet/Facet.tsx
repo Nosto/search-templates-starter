@@ -4,11 +4,11 @@ import Icon from "@/elements/Icon/Icon"
 import { SearchTermsFacet } from "@nosto/nosto-js/client"
 import styles from "./Facet.module.css"
 
-interface FacetProps {
+interface Props {
   facet: SearchTermsFacet
 }
 
-export default function Facet({ facet }: FacetProps) {
+export default function Facet({ facet }: Props) {
   const { active, selectedFiltersCount, toggleActive, toggleProductFilter } = useFacet(facet)
 
   return (

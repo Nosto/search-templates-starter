@@ -7,12 +7,12 @@ import { InfiniteScroll } from "@nosto/search-js/preact/common"
 import Loader from "@/elements/Loader/Loader"
 import NoResults from "@/components/NoResults/NoResults"
 
-interface CategoryBodyProps {
+interface Props {
   loading: boolean
   foundProducts: boolean
 }
 
-export function CategoryBody({ loading, foundProducts }: CategoryBodyProps) {
+export function CategoryBody({ loading, foundProducts }: Props) {
   if (loading) return <Loader />
   return foundProducts ? (
     <>
@@ -26,7 +26,7 @@ export function CategoryBody({ loading, foundProducts }: CategoryBodyProps) {
   )
 }
 
-export function CategoryBodyInfiniteScroll({ loading, foundProducts }: CategoryBodyProps) {
+export function CategoryBodyInfiniteScroll({ loading, foundProducts }: Props) {
   if (!foundProducts) return loading ? <Loader /> : <NoResults />
   return (
     <>
