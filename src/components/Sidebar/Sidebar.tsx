@@ -8,7 +8,7 @@ import Button from "@/elements/Button/Button"
 
 export const toggleButtonId = "toggle-mobile-sidebar"
 
-interface Props {
+type Props = {
   className?: string
 }
 

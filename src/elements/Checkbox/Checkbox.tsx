@@ -1,6 +1,6 @@
 import style from "./Checkbox.module.css"
 
-interface Props {
+type Props = {
   value: string
   selected: boolean
   onChange: (e: Event) => void

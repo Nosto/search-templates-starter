@@ -5,7 +5,7 @@ import Icon from "@/elements/Icon/Icon"
 import { SearchStatsFacet } from "@nosto/nosto-js/client"
 import styles from "./Facet.module.css"
 
-interface Props {
+type Props = {
   facet: SearchStatsFacet
 }
 

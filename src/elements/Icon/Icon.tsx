@@ -1,6 +1,6 @@
 import styles from "./Icon.module.css"
 
-interface Props {
+type Props = {
   name?: string
   className?: string
   flip?: "x" | "y"

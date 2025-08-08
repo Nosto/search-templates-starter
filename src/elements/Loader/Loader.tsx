@@ -1,6 +1,6 @@
 import styles from "./Loader.module.css"
 
-interface Props {
+type Props = {
   className?: string
 }
 

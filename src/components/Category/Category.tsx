@@ -7,7 +7,7 @@ import { InfiniteScroll } from "@nosto/search-js/preact/common"
 import Loader from "@/elements/Loader/Loader"
 import NoResults from "@/components/NoResults/NoResults"
 
-interface Props {
+type Props = {
   loading: boolean
   foundProducts: boolean
 }

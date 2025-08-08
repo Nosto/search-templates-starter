@@ -7,7 +7,7 @@ import { toggleButtonId } from "@/components/Sidebar/Sidebar"
 import style from "./Toolbar.module.css"
 import Button from "@/elements/Button/Button"
 
-interface Props {
+type Props = {
   selectedFiltersCount: number
   className?: string
 }

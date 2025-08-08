@@ -3,7 +3,7 @@ import { productImagePlaceholder } from "@/helpers"
 import style from "./Product.module.css"
 import { SearchProduct } from "@nosto/nosto-js/client"
 
-interface Props {
+type Props = {
   hit: SearchProduct
 }
 

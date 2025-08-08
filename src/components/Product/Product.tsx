@@ -3,7 +3,7 @@ import { productImagePlaceholder } from "@/helpers"
 import { SearchProduct } from "@nosto/nosto-js/client"
 import styles from "./Product.module.css"
 
-interface Props {
+type Props = {
   product: SearchProduct
   previewImage?: string
   children?: preact.JSX.Element | preact.JSX.Element[]

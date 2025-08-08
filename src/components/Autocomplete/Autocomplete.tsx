@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback } from "preact/hooks"
 import { useActions } from "@nosto/search-js/preact/hooks"
 import { SearchInput } from "@nosto/search-js/preact/autocomplete"
 
-interface Props {
+type Props = {
   onSubmit: (input: string) => void
 }
 
