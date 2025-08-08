@@ -2,11 +2,13 @@ import { resolve } from "path"
 import { defineConfig } from "vitest/config"
 import preact from "@preact/preset-vite"
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   build: {
     lib: {
-      name: "@nosto/search-templates-starter",
-      entry: [resolve(__dirname, "src/index.tsx")],
+      entry: {
+        injected: resolve(__dirname, "src/entries/injected.tsx"),
+        native: resolve(__dirname, "src/entries/native.tsx")
+      },
       formats: ["es", "cjs"],
       fileName: (format, name) => `${name}.${format}.js`
     }
@@ -19,10 +21,13 @@ export default defineConfig({
     globals: true,
     environment: "jsdom"
   },
+  define: {
+    __MODE__: JSON.stringify(mode)
+  },
   resolve: {
     alias: {
       "@": resolve(__dirname, "src")
     },
     dedupe: ["preact", "preact/hooks"]
   }
-})
+}))

@@ -16,6 +16,8 @@
   "keywords": [],
   "author": "Nosto",
   "scripts": {
+    "dev:injected": "vite --mode injected",
+    "dev:native": "vite --mode native",
     "dev": "vite",
     "start": "npm i && npm run dev",
     "build": "tsc && vite build && npm run build-dts && npm run typedoc",
