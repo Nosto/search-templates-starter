@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest"
-import cl from "./cl"
+import cl from "../../src/utils/cl"
 
 describe("cl - classname joining utility", () => {
   it("joins truthy class names with spaces", () => {
