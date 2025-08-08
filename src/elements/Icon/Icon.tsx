@@ -1,14 +1,19 @@
 import cl from "@/utils/cl"
 import styles from "./Icon.module.css"
 
+export type IconName =
+  | "close"
+  | "arrow"
+  | `arrow-${"left" | "right" | "up" | "down"}`
+  | "search"
+  | `page-${"prev" | "next"}`
+  | "filter"
+
 type Props = {
-  name?: string
+  name: IconName
   className?: string
-  flip?: "x" | "y"
 }
 
-export default function Icon({ name, className, flip }: Props = {}) {
-  const iconClass = name ? styles[`icon-${name}`] : ""
-  const iconFlip = flip ? styles[`flip-${flip}`] : ""
-  return <i className={cl(styles.icon, iconClass, iconFlip, className)}></i>
+export default function Icon({ name, className }: Props) {
+  return <i className={cl(styles.icon, styles[name], className)}></i>
 }
