@@ -8,7 +8,11 @@ import Button from "@/elements/Button/Button"
 
 export const toggleButtonId = "toggle-mobile-sidebar"
 
-function ToggleSidebarButton({ className }: { className?: string } = {}) {
+interface ToggleSidebarButtonProps {
+  className?: string
+}
+
+function ToggleSidebarButton({ className }: ToggleSidebarButtonProps = {}) {
   return (
     <Button className={`${styles.close} ${className}`}>
       <label for={toggleButtonId}>

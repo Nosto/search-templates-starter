@@ -1,16 +1,18 @@
 import { JSX } from "preact"
 import styles from "./Select.module.css"
 
+interface SelectProps {
+  options: { value: string | number; label: string }[]
+  label?: string
+}
+
 export default function Select({
   value,
   onChange,
   className,
   options,
   label
-}: JSX.IntrinsicElements["select"] & {
-  options: { value: string | number; label: string }[]
-  label?: string
-}) {
+}: SelectProps & JSX.IntrinsicElements["select"]) {
   return (
     <div className={styles.wrapper}>
       <select
