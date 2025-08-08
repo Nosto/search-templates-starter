@@ -48,6 +48,18 @@
     width: 100%;
     box-sizing: border-box;
     padding: var(--ns-space-4);
+    /* Reset button styles to look like span */
+    border: none;
+    background: none;
+    font: inherit;
+    text-align: inherit;
+    margin: 0;
+    outline: 2px solid transparent; /* Invisible outline for focus */
+    outline-offset: 2px;
+}
+
+.anchor:focus {
+    outline-color: var(--ns-color-primary, #007acc);
 }
 
 .title {

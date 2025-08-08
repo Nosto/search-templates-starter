@@ -50,4 +50,15 @@
     font-size: var(--ns-font-4);
     margin-left: auto;
     margin-right: 0;
+    /* Reset button styles to look like span */
+    border: none;
+    background: none;
+    font: inherit;
+    padding: 0;
+    outline: 2px solid transparent; /* Invisible outline for focus */
+    outline-offset: 2px;
+}
+
+.clear:focus {
+    outline-color: var(--ns-color-primary, #007acc);
 }
