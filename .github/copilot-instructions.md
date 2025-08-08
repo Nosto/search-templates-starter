@@ -11,10 +11,12 @@
 * Favor named exports over default exports
 * Provide code examples in Typescript.
 * Avoid using `any` in TypeScript; prefer specific types or `unknown`.
+* Use ES2020 level features and syntax conventions
 
 ## Preact conventions
 
-TODO
+* Favor functional style react components and use the function syntax instead of lambda syntax
+* Extract props definitions with more than 2 members
 
 ## Testing
 
