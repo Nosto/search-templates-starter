@@ -3,13 +3,12 @@ import styles from "./Button.module.css"
 import Icon from "@/elements/Icon/Icon"
 import cl from "@/utils/cl"
 
-export default function Button({
-  className,
-  icon,
-  children,
-  light,
-  ...props
-}: { icon?: string; light?: boolean } & JSX.IntrinsicElements["button"]) {
+type Props = {
+  icon?: string
+  light?: boolean
+} & JSX.IntrinsicElements["button"]
+
+export default function Button({ className, icon, children, light, ...props }: Props) {
   return (
     <button className={cl(styles.button, light && styles.light, className)} {...props}>
       {icon && <Icon name={icon} />}

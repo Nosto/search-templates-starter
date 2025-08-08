@@ -4,13 +4,11 @@ import { JSX } from "preact/jsx-runtime"
 import style from "./Pagination.module.css"
 import cl from "@/utils/cl"
 
-function PageLink({
-  onClick,
-  href,
-  className,
-  ariaLabel,
-  children
-}: JSX.IntrinsicElements["a"] & { ariaLabel?: string }) {
+type Props = {
+  ariaLabel?: string
+} & JSX.IntrinsicElements["a"]
+
+function PageLink({ onClick, href, className, ariaLabel, children }: Props) {
   return (
     <a class={cl(style.link, className)} href={href} aria-label={ariaLabel} onClick={onClick}>
       {children}
