@@ -12,22 +12,31 @@ export default function RangeFacet({ facet }: { facet: SearchStatsFacet }) {
 
   return (
     <li className={`${styles.dropdown} ${active ? styles.active : ""}`}>
-      <span
+      <button
         className={styles.anchor}
         onClick={() => {
           setActive(!active)
         }}
+        onKeyDown={e => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault()
+            setActive(!active)
+          }
+        }}
+        aria-expanded={active}
+        aria-controls={`${facet.id}-range-menu`}
+        aria-label={`${active ? "Collapse" : "Expand"} ${facet.name} range filter`}
       >
         <span className={styles.title}>{facet.name}</span>
         {isSelected && <span className={styles.count}>{1}</span>}
         <span className={styles.icon}>
           <Icon name={active ? "arrow-up" : "arrow-down"} />
         </span>
-      </span>
-      <div className={styles.menu} aria-expanded={active}>
+      </button>
+      <div className={styles.menu} id={`${facet.id}-range-menu`}>
         <div className={styles.range}>
           <div className={styles.input}>
-            <label for={`ns-${facet.id}-min`}>Min.</label>
+            <label htmlFor={`ns-${facet.id}-min`}>Min.</label>
             <RangeInput
               id={`ns-${facet.id}-min`}
               min={min}
@@ -40,7 +49,7 @@ export default function RangeFacet({ facet }: { facet: SearchStatsFacet }) {
             />
           </div>
           <div className={styles.input}>
-            <label for={`ns-${facet.id}-max`}>Max.</label>
+            <label htmlFor={`ns-${facet.id}-max`}>Max.</label>
             <RangeInput
               id={`ns-${facet.id}-max`}
               min={min}

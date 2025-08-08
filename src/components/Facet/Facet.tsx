@@ -8,12 +8,19 @@ export default function Facet({ facet }: { facet: SearchTermsFacet }) {
   const { active, selectedFiltersCount, toggleActive, toggleProductFilter } = useFacet(facet)
 
   return (
-    <li class={`${styles.dropdown} ${active ? styles.active : ""}`} aria-expanded={!!active}>
-      <span
+    <li class={`${styles.dropdown} ${active ? styles.active : ""}`}>
+      <button
         className={styles.anchor}
         data-nosto-element="facet"
         onClick={toggleActive}
+        onKeyDown={e => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault()
+            toggleActive()
+          }
+        }}
         aria-controls={`${facet.id}-sub-menu`}
+        aria-expanded={!!active}
         aria-label={`${active ? "Collapse" : "Expand"} ${facet.name}`}
       >
         <span className={styles.title}>{facet.name}</span>
@@ -21,7 +28,7 @@ export default function Facet({ facet }: { facet: SearchTermsFacet }) {
         <span className={styles.icon}>
           <Icon name={active ? "arrow-up" : "arrow-down"} />
         </span>
-      </span>
+      </button>
       <div className={styles.menu} id={`${facet.id}-sub-menu`}>
         <ul className={styles.list} role="menu">
           {facet.data?.map(value => (

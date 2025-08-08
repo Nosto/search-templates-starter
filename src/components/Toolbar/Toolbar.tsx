@@ -16,7 +16,7 @@ function ToggleMobileSidebarButton({
 }) {
   return (
     <Button light className={`${style.mobile} ${style.filter} ${className}`}>
-      <label for={toggleButtonId} className={style.label}>
+      <label htmlFor={toggleButtonId} className={style.label} aria-label="Open filters sidebar">
         <Icon name="filter" />
         <span>Filter</span>
       </label>

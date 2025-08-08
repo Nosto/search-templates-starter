@@ -11,7 +11,7 @@ export const toggleButtonId = "toggle-mobile-sidebar"
 function ToggleSidebarButton({ className }: { className?: string } = {}) {
   return (
     <Button className={`${styles.close} ${className}`}>
-      <label for={toggleButtonId}>
+      <label htmlFor={toggleButtonId} aria-label="Close filters sidebar">
         <Icon name="close" />
       </label>
     </Button>
@@ -23,8 +23,8 @@ export default function SideBar() {
 
   return facets?.length > 0 ? (
     <>
-      <input type="checkbox" id={toggleButtonId} className={styles.toggle} />
-      <label className={styles.backdrop} for={toggleButtonId} />
+      <input type="checkbox" id={toggleButtonId} className={styles.toggle} aria-label="Toggle mobile filters sidebar" />
+      <label className={styles.backdrop} htmlFor={toggleButtonId} aria-label="Close filters sidebar" />
       <div className={styles.wrapper} style={loading ? "opacity: 0.3;" : ""}>
         <div className={styles.content}>
           <div className={styles.header}>

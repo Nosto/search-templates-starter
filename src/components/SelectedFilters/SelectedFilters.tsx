@@ -18,14 +18,21 @@ export default function SelectedFilters() {
             </div>
           ))}
         </div>
-        <span
+        <button
           className={styles.clear}
           onClick={() => {
             removeAll()
           }}
+          onKeyDown={e => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault()
+              removeAll()
+            }
+          }}
+          aria-label="Clear all filters"
         >
           Clear Filters
-        </span>
+        </button>
       </div>
     )
   )
