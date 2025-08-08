@@ -7,7 +7,6 @@ export default function NoResults() {
   return (
     <div className={style.container}>
       <div>No results found for '{query}'</div>
-      <div class="nosto_element" id="noresults-nosto-1"></div>
     </div>
   )
 }
