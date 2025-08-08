@@ -1,3 +1,4 @@
+import cl from "@/utils/cl"
 import styles from "./Icon.module.css"
 
 type Props = {
@@ -9,5 +10,5 @@ type Props = {
 export default function Icon({ name, className, flip }: Props = {}) {
   const iconClass = name ? styles[`icon-${name}`] : ""
   const iconFlip = flip ? styles[`flip-${flip}`] : ""
-  return <i className={`${styles.icon} ${iconClass} ${iconFlip} ${className ?? ""}`}></i>
+  return <i className={cl(styles.icon, iconClass, iconFlip, className)}></i>
 }

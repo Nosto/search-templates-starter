@@ -5,6 +5,7 @@ import Icon from "@/elements/Icon/Icon"
 import { SearchStatsFacet, SearchTermsFacet } from "@nosto/nosto-js/client"
 import styles from "./Sidebar.module.css"
 import Button from "@/elements/Button/Button"
+import cl from "@/utils/cl"
 
 export const toggleButtonId = "toggle-mobile-sidebar"
 
@@ -14,7 +15,7 @@ type Props = {
 
 function ToggleSidebarButton({ className }: Props = {}) {
   return (
-    <Button className={`${styles.close} ${className}`}>
+    <Button className={cl(styles.close, className)}>
       <label for={toggleButtonId}>
         <Icon name="close" />
       </label>
