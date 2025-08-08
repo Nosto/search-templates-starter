@@ -12,7 +12,7 @@
     z-index: 1;
 }
 
-.wrapper > .loader {
+.loader {
     border: 8px solid var(--ns-color-grey-light);
     border-top: 8px solid var(--ns-color-primary);
     border-radius: 50%;

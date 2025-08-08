@@ -18,7 +18,10 @@
     width: 0;
 }
 
-.checkbox > .checkmark:after {
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
     left: 5px;
     top: 1px;
     width: var(--ns-width-input-checkbox-tick);
@@ -34,17 +37,11 @@
     background-color: var(--ns-color-primary);
 }
 
-.checkbox > .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-}
-
 .checkbox > input:checked ~ .checkmark:after {
     display: block;
 }
 
-.checkbox > .checkmark {
+.checkmark {
     position: absolute;
     top: 0;
     left: 0;
