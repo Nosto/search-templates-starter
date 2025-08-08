@@ -1,4 +1,5 @@
 import style from "./Checkbox.module.css"
+import cl from "@/utils/cl"
 
 export default function Checkbox({
   value,
@@ -12,7 +13,7 @@ export default function Checkbox({
   className?: string
 }) {
   return (
-    <label className={`${style.checkbox} ${className}`}>
+    <label className={cl(style.checkbox, className)}>
       {value}
       <input type="checkbox" checked={selected} onChange={onChange} />
       <span className={style.checkmark} />

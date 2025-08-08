@@ -1,5 +1,6 @@
 import { JSX } from "preact"
 import styles from "./Select.module.css"
+import cl from "@/utils/cl"
 
 export default function Select({
   value,
@@ -14,7 +15,7 @@ export default function Select({
   return (
     <div className={styles.wrapper}>
       <select
-        className={`${styles.menu} ${className}`}
+        className={cl(styles.menu, className)}
         value={value || "placeholder"}
         onChange={onChange}
         aria-label={label || "Select"}
