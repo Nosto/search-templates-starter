@@ -20,6 +20,7 @@
     "build": "tsc && vite build && npm run typedoc",
     "test": "vitest --run",
     "lint": "eslint",
+    "lint-fix": "eslint --fix",
     "preview": "vite preview",
     "typedoc": "typedoc src/index.tsx",
     "prepare": "husky"
