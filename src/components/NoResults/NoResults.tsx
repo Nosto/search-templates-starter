@@ -1,11 +1,10 @@
 import { useNostoAppState } from "@nosto/search-js/preact/hooks"
-import style from "./NoResults.module.css"
 
 export default function NoResults() {
   const query = useNostoAppState(state => state.response.query)
 
   return (
-    <div className={style.container}>
+    <div className="my-ns-5 text-ns-4">
       <div>No results found for '{query}'</div>
     </div>
   )

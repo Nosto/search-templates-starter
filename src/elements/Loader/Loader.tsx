@@ -1,5 +1,4 @@
 import cl from "@/utils/cl"
-import styles from "./Loader.module.css"
 
 type Props = {
   className?: string
@@ -7,8 +6,8 @@ type Props = {
 
 export default function Loader({ className }: Props = {}) {
   return (
-    <div className={cl(styles.wrapper, className)}>
-      <div className={styles.loader} />
+    <div className={cl("flex justify-center items-center w-full h-[300px] absolute z-[1]", className)}>
+      <div className="border-8 border-ns-grey-light border-t-ns-primary rounded-full w-[60px] h-[60px] animate-spin" />
     </div>
   )
 }

@@ -1,7 +1,6 @@
 import { usePagination, useActions, Page } from "@nosto/search-js/preact/hooks"
 import Icon from "@/elements/Icon/Icon"
 import { JSX } from "preact/jsx-runtime"
-import style from "./Pagination.module.css"
 import cl from "@/utils/cl"
 
 type Props = {
@@ -10,7 +9,12 @@ type Props = {
 
 function PageLink({ onClick, href, className, ariaLabel, children }: Props) {
   return (
-    <a class={cl(style.link, className)} href={href} aria-label={ariaLabel} onClick={onClick}>
+    <a
+      class={cl("block relative no-underline text-ns-black p-ns-2 px-ns-4 rounded-ns-3 cursor-pointer", className)}
+      href={href}
+      aria-label={ariaLabel}
+      onClick={onClick}
+    >
       {children}
     </a>
   )
@@ -34,7 +38,7 @@ export default function Pagination() {
   }
 
   return (
-    <ul className={style.container}>
+    <ul className="flex flex-wrap justify-center list-none my-ns-2 p-0">
       {prev && (
         <li>
           <PageLink {...pageLinkProps(prev)} ariaLabel="Previous page">
@@ -51,13 +55,13 @@ export default function Pagination() {
             </PageLink>
           </li>
           <li>
-            <span className={style.filler}>...</span>
+            <span className="block p-ns-2 px-ns-4">...</span>
           </li>
         </>
       )}
 
       {pages.map(page => (
-        <li key={page.page} class={cl(page.current && style.active)}>
+        <li key={page.page} class={cl(page.current && "bg-ns-primary-light")}>
           <PageLink ariaLabel={`${page.page} page`} {...pageLinkProps(page)}>
             {page.page}
           </PageLink>
@@ -67,7 +71,7 @@ export default function Pagination() {
       {last && (
         <>
           <li>
-            <span className={style.filler}>...</span>
+            <span className="block p-ns-2 px-ns-4">...</span>
           </li>
           <li>
             <PageLink {...pageLinkProps(last)} ariaLabel="Last page">

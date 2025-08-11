@@ -2,7 +2,6 @@ import { AutocompletePageProvider } from "@nosto/search-js/preact/autocomplete"
 import { useActions } from "@nosto/search-js/preact/hooks"
 import AutocompleteWrapper from "@/components/Autocomplete/Autocomplete"
 import { autocompleteConfig } from "@/config"
-import style from "./Search.module.css"
 
 export function Search() {
   const { newSearch } = useActions()
@@ -18,7 +17,7 @@ export function Search() {
 
   return (
     <div>
-      <div className={style.wrapper}>
+      <div className="flex gap-1 w-full justify-center">
         <AutocompletePageProvider config={autocompleteConfig}>
           <AutocompleteWrapper onSubmit={onSearch} />
         </AutocompletePageProvider>
