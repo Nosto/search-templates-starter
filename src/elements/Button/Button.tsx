@@ -1,10 +1,10 @@
 import { JSX } from "preact/jsx-runtime"
 import styles from "./Button.module.css"
-import Icon from "@/elements/Icon/Icon"
+import Icon, { IconName } from "@/elements/Icon/Icon"
 import cl from "@/utils/cl"
 
 type Props = {
-  icon?: string
+  icon?: IconName
   light?: boolean
 } & JSX.IntrinsicElements["button"]
 

@@ -1,3 +1,4 @@
+import cl from "@/utils/cl"
 import styles from "./Loader.module.css"
 
 type Props = {
@@ -6,7 +7,7 @@ type Props = {
 
 export default function Loader({ className }: Props = {}) {
   return (
-    <div className={`${styles.wrapper} ${className}`}>
+    <div className={cl(styles.wrapper, className)}>
       <div className={styles.loader} />
     </div>
   )

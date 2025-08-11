@@ -4,6 +4,7 @@ import RangeInput from "@/elements/RangeInput/RangeInput"
 import Icon from "@/elements/Icon/Icon"
 import { SearchStatsFacet } from "@nosto/nosto-js/client"
 import styles from "./Facet.module.css"
+import cl from "@/utils/cl"
 
 type Props = {
   facet: SearchStatsFacet
@@ -15,7 +16,7 @@ export default function RangeFacet({ facet }: Props) {
   const [active, setActive] = useState(isSelected)
 
   return (
-    <li className={`${styles.dropdown} ${active ? styles.active : ""}`}>
+    <li className={cl(styles.dropdown, active && styles.active)}>
       <span
         className={styles.anchor}
         onClick={() => {
