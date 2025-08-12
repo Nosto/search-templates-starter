@@ -140,7 +140,6 @@ npm run lint
 - Dependency vulnerabilities reported by npm audit (from third-party packages)
 
 ### Port Configuration
-- README mentions port 8080 but actual dev server runs on port 8000 (configured in vite.config.ts)
 - Preview server runs on port 4173
 
 ### Build Artifacts
