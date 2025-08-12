@@ -45,33 +45,6 @@ npm run lint-fix    # Auto-fix issues
 - **Time**: ~2-3 seconds each
 - **CRITICAL**: Always run `npm run lint-fix` before committing or CI will fail
 
-## Development Server
-
-### Start Development Server
-```bash
-npm run dev
-```
-- **NEVER CANCEL**: Server runs indefinitely until stopped
-- Starts on http://localhost:8000 (note: port 8000, not 8080 as mentioned in README)
-- **Time to start**: ~600ms
-- Hot module reloading enabled via Vite
-
-### With Environment Variables (Required for full functionality)
-```bash
-VITE_MERCHANT_ID=test-merchant npm run dev
-```
-- The app requires `VITE_MERCHANT_ID` for Nosto integration
-- Without this variable, search functionality will show "nosto is not defined" errors
-- Use any string value for development/testing
-
-### Preview Production Build
-```bash
-npm run preview
-```
-- **NEVER CANCEL**: Server runs indefinitely until stopped
-- Starts on http://localhost:4173
-- Tests the production build locally
-
 ## Validation and Testing
 
 ### Manual Testing Scenarios
