@@ -39,7 +39,7 @@ Start the development server:
 npm run dev
 ```
 
-This will launch the application at http://localhost:8080.
+This will launch the application at http://localhost:8000.
 
 ### Build
 To build the project for production:
