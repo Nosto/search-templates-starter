@@ -16,7 +16,7 @@ type Props = {
 function ToggleSidebarButton({ className }: Props = {}) {
   return (
     <Button className={cl(styles.close, className)}>
-      <label for={toggleButtonId}>
+      <label htmlFor={toggleButtonId}>
         <Icon name="close" />
       </label>
     </Button>
@@ -29,7 +29,7 @@ export default function SideBar() {
   return facets?.length > 0 ? (
     <>
       <input type="checkbox" id={toggleButtonId} className={styles.toggle} />
-      <label className={styles.backdrop} for={toggleButtonId} />
+      <label className={styles.backdrop} htmlFor={toggleButtonId} />
       <div className={styles.wrapper} style={loading ? "opacity: 0.3;" : ""}>
         <div className={styles.content}>
           <div className={styles.header}>

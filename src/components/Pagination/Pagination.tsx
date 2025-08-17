@@ -10,7 +10,7 @@ type Props = {
 
 function PageLink({ onClick, href, className, ariaLabel, children }: Props) {
   return (
-    <a class={cl(style.link, className)} href={href} aria-label={ariaLabel} onClick={onClick}>
+    <a className={cl(style.link, className)} href={href} aria-label={ariaLabel} onClick={onClick}>
       {children}
     </a>
   )
@@ -57,7 +57,7 @@ export default function Pagination() {
       )}
 
       {pages.map(page => (
-        <li key={page.page} class={cl(page.current && style.active)}>
+        <li key={page.page} className={cl(page.current && style.active)}>
           <PageLink ariaLabel={`${page.page} page`} {...pageLinkProps(page)}>
             {page.page}
           </PageLink>
