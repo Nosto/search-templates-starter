@@ -32,7 +32,7 @@ export default function RangeFacet({ facet }: Props) {
       <div className={styles.menu} aria-expanded={active}>
         <div className={styles.range}>
           <div className={styles.input}>
-            <label for={`ns-${facet.id}-min`}>Min.</label>
+            <label htmlFor={`ns-${facet.id}-min`}>Min.</label>
             <RangeInput
               id={`ns-${facet.id}-min`}
               min={min}
@@ -45,7 +45,7 @@ export default function RangeFacet({ facet }: Props) {
             />
           </div>
           <div className={styles.input}>
-            <label for={`ns-${facet.id}-max`}>Max.</label>
+            <label htmlFor={`ns-${facet.id}-max`}>Max.</label>
             <RangeInput
               id={`ns-${facet.id}-max`}
               min={min}

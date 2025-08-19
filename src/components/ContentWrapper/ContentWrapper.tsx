@@ -35,5 +35,6 @@ function ContentWrapper({ type, children }: ContentWrapperProps) {
 }
 
 export function wrapContent(type: string, Component: ContentWrapperProps["children"]) {
+  // eslint-disable-next-line react/display-name
   return () => <ContentWrapper type={type}>{Component}</ContentWrapper>
 }

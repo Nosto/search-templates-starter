@@ -12,7 +12,7 @@ export default function Facet({ facet }: Props) {
   const { active, selectedFiltersCount, toggleActive, toggleProductFilter } = useFacet(facet)
 
   return (
-    <li class={`${styles.dropdown} ${active ? styles.active : ""}`} aria-expanded={!!active}>
+    <li className={`${styles.dropdown} ${active ? styles.active : ""}`} aria-expanded={!!active}>
       <span
         className={styles.anchor}
         data-nosto-element="facet"

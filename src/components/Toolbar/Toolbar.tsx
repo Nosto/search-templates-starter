@@ -16,7 +16,7 @@ type Props = {
 function ToggleMobileSidebarButton({ selectedFiltersCount, className }: Props) {
   return (
     <Button light className={cl(style.mobile, style.filter, className)}>
-      <label for={toggleButtonId} className={style.label}>
+      <label htmlFor={toggleButtonId} className={style.label}>
         <Icon name="filter" />
         <span>Filter</span>
       </label>
