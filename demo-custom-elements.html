@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosto Search Custom Elements Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .demo-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        .demo-section h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        .custom-element {
+            border: 2px dashed #007bff;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .note {
+            background-color: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Nosto Search Custom Elements Demo</h1>
+    
+    <div class="note">
+        <strong>Note:</strong> This demo shows the custom element structure. 
+        To see the actual search components in action, you need to:
+        <ol>
+            <li>Set up proper Nosto merchant configuration</li>
+            <li>Import the custom elements in your JavaScript</li>
+            <li>Ensure the SearchPageProvider context is available</li>
+        </ol>
+    </div>
+
+    <div class="demo-section">
+        <h2>Custom Element Usage Examples</h2>
+        
+        <h3>1. Selected Filters Component</h3>
+        <div class="custom-element">
+            <nosto-search-filters></nosto-search-filters>
+        </div>
+        <p>Displays active search filters and allows users to remove them.</p>
+        
+        <h3>2. Toolbar Component</h3>
+        <div class="custom-element">
+            <nosto-search-toolbar></nosto-search-toolbar>
+        </div>
+        <p>Shows search results count, sort options, and mobile filter toggle.</p>
+        
+        <h3>3. Products Component</h3>
+        <div class="custom-element">
+            <nosto-search-products></nosto-search-products>
+        </div>
+        <p>Displays the grid of product search results.</p>
+        
+        <h3>4. Bottom Toolbar Component</h3>
+        <div class="custom-element">
+            <nosto-search-bottom-toolbar></nosto-search-bottom-toolbar>
+        </div>
+        <p>Provides pagination controls and items per page selector.</p>
+    </div>
+
+    <div class="demo-section">
+        <h2>Integration Examples</h2>
+        
+        <h3>Complete Search Interface</h3>
+        <div style="border: 1px solid #ddd; padding: 15px; border-radius: 4px;">
+            <nosto-search-filters></nosto-search-filters>
+            <nosto-search-toolbar></nosto-search-toolbar>
+            <nosto-search-products></nosto-search-products>
+            <nosto-search-bottom-toolbar></nosto-search-bottom-toolbar>
+        </div>
+    </div>
+
+    <div class="demo-section">
+        <h2>Custom Event Communication</h2>
+        <p>The custom elements communicate via custom events:</p>
+        <ul>
+            <li><code>nosto-search-filters-changed</code> - When filters are modified</li>
+            <li><code>nosto-search-filters-cleared</code> - When all filters are cleared</li>
+            <li><code>nosto-search-sort-changed</code> - When sort option is changed</li>
+            <li><code>nosto-search-filter-toggle</code> - When mobile filter is toggled</li>
+            <li><code>nosto-search-product-clicked</code> - When a product is clicked</li>
+            <li><code>nosto-search-products-loaded</code> - When products are loaded</li>
+            <li><code>nosto-search-page-changed</code> - When pagination changes</li>
+            <li><code>nosto-search-page-size-changed</code> - When page size changes</li>
+        </ul>
+    </div>
+
+    <div class="demo-section">
+        <h2>JavaScript Usage</h2>
+        <pre><code>// Import the custom elements
+import '@/custom-elements'
+
+// Listen for custom events
+document.addEventListener('nosto-search-filters-changed', (event) => {
+    console.log('Filters changed:', event.detail)
+})
+
+// Create elements programmatically
+const filters = document.createElement('nosto-search-filters')
+document.body.appendChild(filters)
+</code></pre>
+    </div>
+
+    <script>
+        // Simple demo of event listening
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add event listeners for demonstration
+            const events = [
+                'nosto-search-filters-changed',
+                'nosto-search-filters-cleared', 
+                'nosto-search-sort-changed',
+                'nosto-search-filter-toggle',
+                'nosto-search-product-clicked',
+                'nosto-search-products-loaded',
+                'nosto-search-page-changed',
+                'nosto-search-page-size-changed'
+            ]
+            
+            events.forEach(eventType => {
+                document.addEventListener(eventType, (event) => {
+                    console.log(`Event fired: ${eventType}`, event.detail)
+                })
+            })
+            
+            console.log('Demo loaded. Custom element events are being listened to.')
+        })
+    </script>
+</body>
+</html>
