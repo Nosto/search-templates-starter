@@ -58,6 +58,7 @@
     /* BOX SHADOW */
     --ns-box-shadow-button: inset 0 0 40px rgb(0 0 0 / .25);
     --ns-box-shadow-slider-handle: 0 0 5px var(--ns-color-primary-dark);
+    --ns-box-shadow-autocomplete: 2px 2px 2px var(--ns-color-grey);
     --ns-shadow-offset-small: 2px;
     --ns-shadow-offset-medium: 3px;
 

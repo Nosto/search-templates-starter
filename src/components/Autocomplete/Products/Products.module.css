@@ -15,7 +15,7 @@
     max-width: var(--ns-max-width-autocomplete);
     border: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
     border-radius: var(--ns-border-radius-3);
-    box-shadow: var(--ns-shadow-offset-small) var(--ns-shadow-offset-small) var(--ns-shadow-offset-small) var(--ns-color-grey);
+    box-shadow: var(--ns-box-shadow-autocomplete);
     width: calc(100% - calc(var(--ns-border-width-medium) * 2));
 }
 
