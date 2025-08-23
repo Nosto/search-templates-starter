@@ -12,9 +12,9 @@
     position: relative;
     list-style: none;
     cursor: pointer;
-    border: 1px solid var(--ns-color-grey-light);
+    border: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
     border-radius: var(--ns-border-radius-4);
-    width: 150px;
+    width: var(--ns-width-select);
     padding: var(--ns-space-2) 8% var(--ns-space-2) 22%;
 }
 

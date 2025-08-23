@@ -22,7 +22,7 @@
     align-items: center;
     padding: var(--ns-space-1);
     font-size: var(--ns-font-size-4);
-    border: 1px solid var(--ns-color-grey);
+    border: var(--ns-border-width-thin) solid var(--ns-color-grey);
     border-radius: var(--ns-border-radius-3);
 }
 

@@ -1,8 +1,8 @@
 .close {
-    border: 0px;
+    border: var(--ns-border-width-none);
     max-width: var(--ns-width-mobile-close-sidebar);
-    top: 10px;
-    right: 10px;
+    top: var(--ns-space-10);
+    right: var(--ns-space-10);
     position: absolute;
     display: block;
     text-align: right;
@@ -117,7 +117,7 @@
 .header {
     display: flex;
     align-items: baseline padding var(--ns-space-4);
-    border-bottom: 1px solid var(--ns-color-grey-light);
+    border-bottom: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
 }
 
 .title {

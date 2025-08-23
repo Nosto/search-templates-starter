@@ -13,10 +13,10 @@
     right: 0;
     z-index: var(--ns-z-index-autocomplete);
     max-width: var(--ns-max-width-autocomplete);
-    border: 1px solid var(--ns-color-grey-light);
+    border: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
     border-radius: var(--ns-border-radius-3);
-    box-shadow: 2px 2px 2px var(--ns-color-grey);
-    width: calc(100% - 4px);
+    box-shadow: var(--ns-shadow-offset-small) var(--ns-shadow-offset-small) var(--ns-shadow-offset-small) var(--ns-color-grey);
+    width: calc(100% - calc(var(--ns-border-width-medium) * 2));
 }
 
 @media only screen and (min-width: 768px) {
@@ -44,7 +44,7 @@
 
 .button {
     border-top-color: var(--ns-color-grey-light);
-    border-top-width: 1px;
+    border-top-width: var(--ns-border-width-thin);
     border-top-style: solid;
     border-radius: 0;
     display: flex;
