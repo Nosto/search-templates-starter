@@ -131,6 +131,17 @@ npm run lint
 - Use `expect` for assertions
 - Test environment is jsdom for DOM-related testing
 
+### Storybook Stories
+- **ALWAYS** use actual components from the codebase in Storybook files instead of demo components
+- Import the real component: `import ComponentName from "./ComponentName"`
+- Set the Meta type to the actual component: `Meta<typeof ComponentName>`
+- For components that depend on Nosto hooks/context that aren't available in Storybook:
+  - Create a `MockedView` story that shows what the component would look like when properly integrated
+  - Include documentation noting the component requires Nosto search context
+  - Use inline styles for quick mockups rather than complex demo components
+- Keep stories focused on demonstrating the actual component structure and behavior
+- Avoid creating elaborate custom demo components that duplicate functionality
+
 ## Common Issues and Troubleshooting
 
 ### Known Issues
