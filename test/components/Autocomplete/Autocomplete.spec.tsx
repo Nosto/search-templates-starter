@@ -2,36 +2,6 @@ import { describe, it, expect, vi } from "vitest"
 import { renderWithAutocompleteProvider } from "../../utils/test-utils"
 import AutocompleteWrapper from "@/components/Autocomplete/Autocomplete"
 
-// Mock the autocomplete hooks
-vi.mock("@nosto/search-js/preact/hooks", async () => {
-  const actual = await vi.importActual("@nosto/search-js/preact/hooks")
-  return {
-    ...actual,
-    useAutocomplete: () => ({
-      query: "test",
-      setQuery: vi.fn(),
-      submit: vi.fn(),
-      results: {
-        products: {
-          hits: [
-            {
-              productId: "1",
-              name: "Test Product",
-              imageUrl: "https://example.com/image.jpg",
-              price: 29.99,
-              priceText: "$29.99"
-            }
-          ]
-        },
-        suggestions: [
-          { suggestion: "test product", matched: "test" },
-          { suggestion: "test item", matched: "test" }
-        ]
-      }
-    })
-  }
-})
-
 describe("Autocomplete Component", () => {
   const mockOnSubmit = vi.fn()
 
