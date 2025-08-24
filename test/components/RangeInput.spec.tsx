@@ -3,10 +3,10 @@ import { render } from "@testing-library/preact"
 import RangeInput from "../../src/elements/RangeInput/RangeInput"
 
 describe("RangeInput component", () => {
-  it("renders as number input by default", () => {
+  it("renders as range input by default", () => {
     const { container } = render(<RangeInput />)
     const input = container.querySelector("input")
-    expect(input?.type).toBe("number")
+    expect(input?.type).toBe("range")
   })
 
   it("renders as range input when type is specified", () => {

@@ -5,5 +5,5 @@ import cl from "@/utils/cl"
 type Props = JSX.IntrinsicElements["input"]
 
 export default function RangeInput({ className, ...props }: Props) {
-  return <input type="number" className={cl(styles.input, className)} {...props} />
+  return <input type="range" className={cl(styles.input, className)} {...props} />
 }
