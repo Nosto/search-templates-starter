@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
-import Icon from "./Icon"
+import { h } from "preact"
+import Icon, { type IconName } from "./Icon"
 
 const meta: Meta<typeof Icon> = {
   title: "Elements/Icon",
@@ -35,56 +36,56 @@ const meta: Meta<typeof Icon> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Close: Story = {
-  args: {
-    name: "close"
-  }
-}
-
-export const Search: Story = {
+export const Default: Story = {
   args: {
     name: "search"
   }
 }
 
-export const ArrowUp: Story = {
-  args: {
-    name: "arrow-up"
-  }
-}
+export const All: Story = {
+  render: () => {
+    const iconNames: IconName[] = [
+      "close",
+      "arrow",
+      "arrow-left",
+      "arrow-right",
+      "arrow-up",
+      "arrow-down",
+      "search",
+      "page-prev",
+      "page-next",
+      "filter"
+    ]
 
-export const ArrowDown: Story = {
-  args: {
-    name: "arrow-down"
-  }
-}
-
-export const ArrowLeft: Story = {
-  args: {
-    name: "arrow-left"
-  }
-}
-
-export const ArrowRight: Story = {
-  args: {
-    name: "arrow-right"
-  }
-}
-
-export const PagePrev: Story = {
-  args: {
-    name: "page-prev"
-  }
-}
-
-export const PageNext: Story = {
-  args: {
-    name: "page-next"
-  }
-}
-
-export const Filter: Story = {
-  args: {
-    name: "filter"
+    return h(
+      "div",
+      {
+        style: {
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(60px, 1fr))",
+          gap: "16px",
+          alignItems: "center",
+          justifyItems: "center"
+        }
+      },
+      iconNames.map(name =>
+        h(
+          "div",
+          {
+            key: name,
+            style: {
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "8px"
+            }
+          },
+          [h(Icon, { name }), h("span", { style: { fontSize: "12px", textAlign: "center" } }, name)]
+        )
+      )
+    )
+  },
+  parameters: {
+    controls: { disable: true }
   }
 }
