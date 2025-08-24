@@ -1,20 +1,6 @@
-import { describe, it, expect, vi } from "vitest"
+import { describe, it, expect } from "vitest"
 import { renderWithSearchProvider } from "../../utils/test-utils"
 import Facet from "@/components/Facet/Facet"
-
-// Mock the facet hooks
-vi.mock("@nosto/search-js/preact/hooks", async () => {
-  const actual = await vi.importActual("@nosto/search-js/preact/hooks")
-  return {
-    ...actual,
-    useFacet: () => ({
-      toggleTerm: vi.fn(),
-      clearTerm: vi.fn(),
-      setRange: vi.fn(),
-      isTermSelected: vi.fn(() => false)
-    })
-  }
-})
 
 describe("Facet Component", () => {
   const mockTermsFacet = {

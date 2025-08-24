@@ -1,17 +1,6 @@
-import { describe, it, expect, vi } from "vitest"
+import { describe, it, expect } from "vitest"
 import { renderWithSearchProvider } from "../../utils/test-utils"
 import Search from "@/components/Search/Search"
-
-// Mock the useActions hook to return test functions
-vi.mock("@nosto/search-js/preact/hooks", async () => {
-  const actual = await vi.importActual("@nosto/search-js/preact/hooks")
-  return {
-    ...actual,
-    useActions: () => ({
-      newSearch: vi.fn()
-    })
-  }
-})
 
 describe("Search Component", () => {
   it("renders search wrapper", () => {

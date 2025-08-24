@@ -1,28 +1,6 @@
-import { describe, it, expect, vi } from "vitest"
+import { describe, it, expect } from "vitest"
 import { renderWithSearchProvider } from "../../utils/test-utils"
 import ContentWrapper from "@/components/ContentWrapper/ContentWrapper"
-
-// Mock the Sidebar component and hooks
-vi.mock("@/components/Sidebar/Sidebar", () => ({
-  default: () => <div data-testid="sidebar">Sidebar Component</div>
-}))
-
-vi.mock("@nosto/search-js/preact/hooks", async () => {
-  const actual = await vi.importActual("@nosto/search-js/preact/hooks")
-  return {
-    ...actual,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    useNostoAppState: (selector: (state: any) => any) => {
-      const state = {
-        foundProducts: true,
-        loading: false,
-        initialized: true,
-        response: { products: { total: 5 } }
-      }
-      return selector ? selector(state) : state
-    }
-  }
-})
 
 describe("ContentWrapper Component", () => {
   const mockChildren = ({ loading, foundProducts }: { loading: boolean; foundProducts: boolean }) => (
