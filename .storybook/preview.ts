@@ -5,7 +5,7 @@ import { createStore } from "@nosto/search-js/preact/common"
 import { mockConfig, mockInitialState } from "./mocks"
 import "../src/variable.css"
 
-const preview: Preview = {
+export default {
   decorators: [
     Story => h(SearchPageProvider, { config: mockConfig, store: createStore(mockInitialState) }, h(Story, {}))
   ],
@@ -17,6 +17,4 @@ const preview: Preview = {
       }
     }
   }
-}
-
-export default preview
+} as Preview

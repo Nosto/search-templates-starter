@@ -1,7 +1,7 @@
 import type { StorybookConfig } from "@storybook/preact-vite"
 import { resolve } from "path"
 
-const config: StorybookConfig = {
+export default {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: ["@storybook/addon-docs"],
   framework: {
@@ -17,5 +17,4 @@ const config: StorybookConfig = {
     }
     return config
   }
-}
-export default config
+} as StorybookConfig

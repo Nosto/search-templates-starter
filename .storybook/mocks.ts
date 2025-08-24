@@ -2,18 +2,7 @@ import { type SerpConfig } from "@nosto/search-js/preact/serp"
 import { type State } from "@nosto/search-js/preact/common"
 
 // Function to generate mock products with varying data
-export function generateMockProducts(count: number): Array<{
-  productId: string
-  title: string
-  price: number
-  currency: string
-  category: string
-  brand: string
-  availability: string
-  url: string
-  imageUrl: string
-  description: string
-}> {
+export function generateMockProducts(count: number) {
   const categories = ["Clothing", "Electronics", "Home & Garden", "Sports", "Books", "Beauty"]
   const brands = ["BrandA", "BrandB", "BrandC", "BrandD", "BrandE", "BrandF"]
   const adjectives = ["Premium", "Classic", "Modern", "Vintage", "Eco-Friendly", "Luxury"]

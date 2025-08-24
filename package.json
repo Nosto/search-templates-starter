@@ -24,8 +24,7 @@
     "preview": "vite preview",
     "typedoc": "typedoc src/index.tsx",
     "prepare": "husky",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "storybook": "storybook dev -p 6060"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
