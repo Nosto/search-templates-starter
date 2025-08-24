@@ -1,55 +1,38 @@
 import type { Meta, StoryObj } from "@storybook/preact"
+import { Search } from "./Search"
 
-// Minimal search component for demonstration
-function Search({
-  placeholder = "Search products...",
-  value = "",
-  showButton = true,
-  disabled = false
-}: {
-  placeholder?: string
-  value?: string
-  showButton?: boolean
-  disabled?: boolean
-}) {
+// Since Search requires Nosto search context, we show what it looks like when integrated
+function SearchMockedView() {
   return (
-    <div style={{ 
-      display: "flex", 
-      border: "1px solid #d1d5db", 
-      borderRadius: "6px", 
-      overflow: "hidden",
-      maxWidth: "400px"
-    }}>
-      <input
-        type="text"
-        placeholder={placeholder}
-        defaultValue={value}
-        disabled={disabled}
-        style={{
-          flex: 1,
-          padding: "12px 16px",
-          border: "none",
-          outline: "none",
-          fontSize: "16px",
-          backgroundColor: disabled ? "#f9fafb" : "white"
-        }}
-      />
-      {showButton && (
-        <button
-          disabled={disabled}
+    <div style={{ fontFamily: "Arial, sans-serif", padding: "1rem" }}>
+      <p style={{ marginBottom: "1rem", color: "#666" }}>
+        <strong>Note:</strong> This component requires Nosto search context to function properly. The MockedView below
+        shows how it appears when integrated.
+      </p>
+      <div style={{ display: "flex", gap: "0.5rem", maxWidth: "400px" }}>
+        <input
+          type="text"
+          placeholder="Search products..."
           style={{
-            padding: "12px 20px",
-            backgroundColor: disabled ? "#d1d5db" : "#3b82f6",
+            flex: 1,
+            padding: "0.75rem",
+            border: "1px solid #d1d5db",
+            borderRadius: "6px"
+          }}
+        />
+        <button
+          style={{
+            padding: "0.75rem 1.5rem",
+            backgroundColor: "#007bff",
             color: "white",
             border: "none",
-            cursor: disabled ? "not-allowed" : "pointer",
-            fontSize: "16px",
-            fontWeight: "500"
+            borderRadius: "6px",
+            cursor: "pointer"
           }}
         >
           Search
         </button>
-      )}
+      </div>
     </div>
   )
 }
@@ -60,59 +43,22 @@ const meta: Meta<typeof Search> = {
   parameters: {
     layout: "centered"
   },
-  tags: ["autodocs"],
-  argTypes: {
-    placeholder: {
-      control: "text",
-      description: "Placeholder text for the search input"
-    },
-    value: {
-      control: "text",
-      description: "Current search value"
-    },
-    showButton: {
-      control: "boolean",
-      description: "Whether to show the search button"
-    },
-    disabled: {
-      control: "boolean",
-      description: "Whether the search is disabled"
-    }
-  }
+  tags: ["autodocs"]
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {
-    placeholder: "Search products...",
-    showButton: true,
-    disabled: false
-  }
+  render: () => (
+    <div style={{ padding: "1rem" }}>
+      <p style={{ color: "#666", marginBottom: "1rem" }}>
+        This component requires Nosto search context to function properly.
+      </p>
+    </div>
+  )
 }
 
-export const WithValue: Story = {
-  args: {
-    placeholder: "Search products...",
-    value: "running shoes",
-    showButton: true,
-    disabled: false
-  }
-}
-
-export const NoButton: Story = {
-  args: {
-    placeholder: "Type to search...",
-    showButton: false,
-    disabled: false
-  }
-}
-
-export const Disabled: Story = {
-  args: {
-    placeholder: "Search is disabled...",
-    showButton: true,
-    disabled: true
-  }
+export const MockedView: Story = {
+  render: () => <SearchMockedView />
 }

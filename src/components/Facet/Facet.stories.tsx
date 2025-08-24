@@ -1,144 +1,67 @@
 import type { Meta, StoryObj } from "@storybook/preact"
+import Facet from "./Facet"
 
-// Create a simplified Facet demo
-function FacetDemo({
-  facetName = "Category",
-  options = ["Electronics", "Clothing", "Books"],
-  selectedCount = 0,
-  isActive = false
-}: {
-  facetName?: string
-  options?: string[]
-  selectedCount?: number
-  isActive?: boolean
-}) {
+// Since Facet requires Nosto search context, we show what it looks like when integrated
+function FacetMockedView() {
   return (
-    <li
-      style={{
-        listStyle: "none",
-        border: "1px solid #ccc",
-        borderRadius: "4px",
-        width: "300px"
-      }}
-    >
-      <span
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "0.75rem 1rem",
-          cursor: "pointer",
-          backgroundColor: isActive ? "#f5f5f5" : "white"
-        }}
-      >
-        <span style={{ fontWeight: "bold" }}>{facetName}</span>
-        {selectedCount > 0 && (
+    <div style={{ fontFamily: "Arial, sans-serif", padding: "1rem" }}>
+      <p style={{ marginBottom: "1rem", color: "#666" }}>
+        <strong>Note:</strong> This component requires Nosto search context to function properly. The MockedView below
+        shows how it appears when integrated.
+      </p>
+      <ul style={{ listStyle: "none", padding: 0, margin: 0, maxWidth: "300px" }}>
+        <li style={{ border: "1px solid #ddd", borderRadius: "4px", marginBottom: "0.5rem" }}>
           <span
             style={{
-              backgroundColor: "#007bff",
-              color: "white",
-              borderRadius: "12px",
-              padding: "2px 8px",
-              fontSize: "0.8rem",
-              marginLeft: "0.5rem"
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "0.75rem 1rem",
+              cursor: "pointer"
             }}
           >
-            {selectedCount}
+            <span style={{ fontWeight: "bold" }}>Category</span>
+            <span
+              style={{
+                backgroundColor: "#007bff",
+                color: "white",
+                borderRadius: "12px",
+                padding: "2px 8px",
+                fontSize: "0.75rem"
+              }}
+            >
+              2
+            </span>
+            <span>↓</span>
           </span>
-        )}
-        <span style={{ marginLeft: "auto" }}>{isActive ? "↑" : "↓"}</span>
-      </span>
-      {isActive && (
-        <div style={{ padding: "1rem", borderTop: "1px solid #eee" }}>
-          <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-            {options.map((option, index) => (
-              <li key={option} style={{ padding: "0.25rem 0" }}>
-                <label style={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
-                  {option}
-                  <input type="checkbox" defaultChecked={index < selectedCount} style={{ marginLeft: "auto" }} />
-                  <span
-                    style={{
-                      width: "16px",
-                      height: "16px",
-                      marginLeft: "0.5rem",
-                      color: "#666",
-                      fontSize: "0.8rem"
-                    }}
-                  >
-                    ({Math.floor(Math.random() * 50) + 1})
-                  </span>
-                </label>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </li>
+        </li>
+      </ul>
+    </div>
   )
 }
 
-const meta: Meta<typeof FacetDemo> = {
+const meta: Meta<typeof Facet> = {
   title: "Components/Facet/Facet",
-  component: FacetDemo,
+  component: Facet,
   parameters: {
     layout: "centered"
   },
-  tags: ["autodocs"],
-  argTypes: {
-    facetName: {
-      control: "text",
-      description: "Name of the facet"
-    },
-    options: {
-      control: "object",
-      description: "Array of facet options"
-    },
-    selectedCount: {
-      control: "number",
-      description: "Number of selected options"
-    },
-    isActive: {
-      control: "boolean",
-      description: "Whether the facet is expanded"
-    }
-  }
+  tags: ["autodocs"]
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {
-    facetName: "Category",
-    options: ["Electronics", "Clothing", "Books", "Home & Garden"],
-    selectedCount: 0,
-    isActive: false
-  }
+  render: () => (
+    <div style={{ padding: "1rem" }}>
+      <p style={{ color: "#666", marginBottom: "1rem" }}>
+        This component requires a SearchTermsFacet prop and Nosto search context.
+      </p>
+    </div>
+  )
 }
 
-export const Expanded: Story = {
-  args: {
-    facetName: "Category",
-    options: ["Electronics", "Clothing", "Books", "Home & Garden"],
-    selectedCount: 0,
-    isActive: true
-  }
-}
-
-export const WithSelections: Story = {
-  args: {
-    facetName: "Brand",
-    options: ["Apple", "Samsung", "Sony", "Nike", "Adidas"],
-    selectedCount: 2,
-    isActive: true
-  }
-}
-
-export const ManyOptions: Story = {
-  args: {
-    facetName: "Color",
-    options: ["Red", "Blue", "Green", "Yellow", "Black", "White", "Purple", "Orange"],
-    selectedCount: 1,
-    isActive: true
-  }
+export const MockedView: Story = {
+  render: () => <FacetMockedView />
 }

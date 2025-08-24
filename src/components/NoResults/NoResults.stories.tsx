@@ -1,10 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/preact"
+import NoResults from "./NoResults"
 
-// Simplified component that mimics NoResults behavior with minimal markup
-function NoResults({ query = "sample search query" }: { query?: string }) {
+// Since NoResults requires Nosto search context, we show what it looks like when integrated
+function NoResultsMockedView() {
   return (
-    <div style={{ margin: "var(--ns-space-5, 1rem) 0", fontSize: "var(--ns-font-size-4, 1rem)" }}>
-      <div>No results found for &apos;{query}&apos;</div>
+    <div style={{ fontFamily: "Arial, sans-serif", padding: "1rem" }}>
+      <p style={{ marginBottom: "1rem", color: "#666" }}>
+        <strong>Note:</strong> This component requires Nosto search context to function properly. The MockedView below
+        shows how it appears when integrated.
+      </p>
+      <div style={{ margin: "1rem 0", fontSize: "1rem" }}>
+        <div>No results found for &apos;sample search query&apos;</div>
+      </div>
     </div>
   )
 }
@@ -15,32 +22,22 @@ const meta: Meta<typeof NoResults> = {
   parameters: {
     layout: "centered"
   },
-  tags: ["autodocs"],
-  argTypes: {
-    query: {
-      control: "text",
-      description: "Search query that returned no results"
-    }
-  }
+  tags: ["autodocs"]
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {
-    query: "sample search query"
-  }
+  render: () => (
+    <div style={{ padding: "1rem" }}>
+      <p style={{ color: "#666", marginBottom: "1rem" }}>
+        This component requires Nosto search context to function properly.
+      </p>
+    </div>
+  )
 }
 
-export const LongQuery: Story = {
-  args: {
-    query: "this is a very long search query that might wrap to multiple lines"
-  }
-}
-
-export const EmptyQuery: Story = {
-  args: {
-    query: ""
-  }
+export const MockedView: Story = {
+  render: () => <NoResultsMockedView />
 }

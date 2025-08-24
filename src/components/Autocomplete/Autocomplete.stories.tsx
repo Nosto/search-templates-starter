@@ -14,12 +14,14 @@ function Autocomplete({
 }) {
   return (
     <div style={{ position: "relative", width: "400px" }}>
-      <div style={{
-        display: "flex",
-        border: "1px solid #d1d5db",
-        borderRadius: "6px",
-        overflow: "hidden"
-      }}>
+      <div
+        style={{
+          display: "flex",
+          border: "1px solid #d1d5db",
+          borderRadius: "6px",
+          overflow: "hidden"
+        }}
+      >
         <input
           type="text"
           placeholder="Start typing to see suggestions..."
@@ -32,31 +34,35 @@ function Autocomplete({
             fontSize: "16px"
           }}
         />
-        <button style={{
-          padding: "12px 20px",
-          backgroundColor: "#3b82f6",
-          color: "white",
-          border: "none",
-          cursor: "pointer",
-          fontSize: "16px",
-          fontWeight: "500"
-        }}>
+        <button
+          style={{
+            padding: "12px 20px",
+            backgroundColor: "#3b82f6",
+            color: "white",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "16px",
+            fontWeight: "500"
+          }}
+        >
           Search
         </button>
       </div>
 
       {showSuggestions && (
-        <div style={{
-          position: "absolute",
-          top: "100%",
-          left: 0,
-          right: 0,
-          backgroundColor: "white",
-          border: "1px solid #d1d5db",
-          borderTop: "none",
-          borderRadius: "0 0 6px 6px",
-          zIndex: 10
-        }}>
+        <div
+          style={{
+            position: "absolute",
+            top: "100%",
+            left: 0,
+            right: 0,
+            backgroundColor: "white",
+            border: "1px solid #d1d5db",
+            borderTop: "none",
+            borderRadius: "0 0 6px 6px",
+            zIndex: 10
+          }}
+        >
           {loading ? (
             <div style={{ padding: "16px", color: "#6b7280" }}>Loading...</div>
           ) : (
@@ -68,10 +74,10 @@ function Autocomplete({
                   cursor: "pointer",
                   borderBottom: index < suggestions.length - 1 ? "1px solid #f3f4f6" : "none"
                 }}
-                onMouseEnter={(e) => {
+                onMouseEnter={e => {
                   e.currentTarget.style.backgroundColor = "#f9fafb"
                 }}
-                onMouseLeave={(e) => {
+                onMouseLeave={e => {
                   e.currentTarget.style.backgroundColor = "white"
                 }}
               >
@@ -145,11 +151,7 @@ export const Loading: Story = {
 export const LongSuggestions: Story = {
   args: {
     query: "laptop",
-    suggestions: [
-      "laptop computers for gaming",
-      "laptop accessories and cases",
-      "laptop stands and cooling pads"
-    ],
+    suggestions: ["laptop computers for gaming", "laptop accessories and cases", "laptop stands and cooling pads"],
     showSuggestions: true,
     loading: false
   }

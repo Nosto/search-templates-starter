@@ -1,75 +1,77 @@
 import type { Meta, StoryObj } from "@storybook/preact"
+import SelectedFilters from "./SelectedFilters"
 
-// Minimal selected filters component
-function SelectedFilters({
-  filters = ["Category: Electronics", "Brand: Apple"],
-  showClearAll = true
-}: {
-  filters?: string[]
-  showClearAll?: boolean
-}) {
-  if (filters.length === 0) {
-    return null
-  }
-
+// Since SelectedFilters requires Nosto search context, we show what it looks like when integrated
+function SelectedFiltersMockedView() {
   return (
-    <div style={{ 
-      display: "flex", 
-      flexWrap: "wrap", 
-      gap: "0.5rem", 
-      alignItems: "center" 
-    }}>
-      {filters.map((filter, index) => (
-        <span
-          key={index}
+    <div style={{ fontFamily: "Arial, sans-serif", padding: "1rem" }}>
+      <p style={{ marginBottom: "1rem", color: "#666" }}>
+        <strong>Note:</strong> This component requires Nosto search context to function properly. The MockedView below
+        shows how it appears when integrated.
+      </p>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+        <div
           style={{
-            display: "inline-flex",
+            display: "flex",
             alignItems: "center",
-            backgroundColor: "#eff6ff",
-            color: "#1d4ed8",
-            padding: "6px 12px",
-            borderRadius: "20px",
-            fontSize: "14px",
-            gap: "6px",
-            border: "1px solid #dbeafe"
+            gap: "0.5rem",
+            padding: "0.5rem 0.75rem",
+            backgroundColor: "#f3f4f6",
+            borderRadius: "6px",
+            fontSize: "0.875rem"
           }}
         >
-          {filter}
+          <span>Category: Electronics</span>
           <button
             style={{
-              background: "none",
+              backgroundColor: "transparent",
               border: "none",
-              color: "#1d4ed8",
               cursor: "pointer",
-              fontSize: "16px",
-              padding: 0,
-              width: "16px",
-              height: "16px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center"
+              padding: "0",
+              fontSize: "1rem"
             }}
           >
             ×
           </button>
-        </span>
-      ))}
-      
-      {showClearAll && filters.length > 0 && (
-        <button
+        </div>
+        <div
           style={{
-            background: "none",
-            border: "1px solid #d1d5db",
-            color: "#6b7280",
-            cursor: "pointer",
-            fontSize: "14px",
-            padding: "6px 12px",
-            borderRadius: "6px"
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+            padding: "0.5rem 0.75rem",
+            backgroundColor: "#f3f4f6",
+            borderRadius: "6px",
+            fontSize: "0.875rem"
           }}
         >
-          Clear all
+          <span>Brand: Apple</span>
+          <button
+            style={{
+              backgroundColor: "transparent",
+              border: "none",
+              cursor: "pointer",
+              padding: "0",
+              fontSize: "1rem"
+            }}
+          >
+            ×
+          </button>
+        </div>
+        <button
+          style={{
+            padding: "0.5rem 0.75rem",
+            backgroundColor: "#ef4444",
+            color: "white",
+            border: "none",
+            borderRadius: "6px",
+            fontSize: "0.875rem",
+            cursor: "pointer"
+          }}
+        >
+          Clear All
         </button>
-      )}
+      </div>
     </div>
   )
 }
@@ -80,59 +82,22 @@ const meta: Meta<typeof SelectedFilters> = {
   parameters: {
     layout: "centered"
   },
-  tags: ["autodocs"],
-  argTypes: {
-    filters: {
-      control: "object",
-      description: "Array of selected filter strings"
-    },
-    showClearAll: {
-      control: "boolean",
-      description: "Whether to show clear all button"
-    }
-  }
+  tags: ["autodocs"]
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {
-    filters: ["Category: Electronics", "Brand: Apple"],
-    showClearAll: true
-  }
+  render: () => (
+    <div style={{ padding: "1rem" }}>
+      <p style={{ color: "#666", marginBottom: "1rem" }}>
+        This component requires Nosto search context to function properly.
+      </p>
+    </div>
+  )
 }
 
-export const ManyFilters: Story = {
-  args: {
-    filters: [
-      "Category: Electronics", 
-      "Brand: Apple", 
-      "Price: $100-$500", 
-      "Rating: 4+ stars",
-      "Color: Black"
-    ],
-    showClearAll: true
-  }
-}
-
-export const SingleFilter: Story = {
-  args: {
-    filters: ["Category: Electronics"],
-    showClearAll: true
-  }
-}
-
-export const NoFilters: Story = {
-  args: {
-    filters: [],
-    showClearAll: true
-  }
-}
-
-export const NoClearAll: Story = {
-  args: {
-    filters: ["Category: Electronics", "Brand: Apple"],
-    showClearAll: false
-  }
+export const MockedView: Story = {
+  render: () => <SelectedFiltersMockedView />
 }

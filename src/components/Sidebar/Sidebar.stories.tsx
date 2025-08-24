@@ -1,108 +1,83 @@
 import type { Meta, StoryObj } from "@storybook/preact"
+import Sidebar from "./Sidebar"
 
-// Minimal sidebar component
-function Sidebar({
-  isOpen = true,
-  loading = false
-}: {
-  isOpen?: boolean
-  loading?: boolean
-}) {
+// Since Sidebar requires Nosto search context, we show what it looks like when integrated
+function SidebarMockedView() {
   return (
-    <div style={{ 
-      width: "280px", 
-      border: "1px solid #e2e8f0", 
-      borderRadius: "8px",
-      backgroundColor: "white",
-      opacity: loading ? 0.5 : 1,
-      transform: isOpen ? "translateX(0)" : "translateX(-100%)",
-      transition: "transform 0.3s ease"
-    }}>
-      <div style={{ padding: "1rem" }}>
-        <div style={{ 
-          display: "flex", 
-          alignItems: "center", 
-          justifyContent: "space-between",
-          marginBottom: "1rem",
-          paddingBottom: "1rem",
-          borderBottom: "1px solid #e2e8f0"
-        }}>
-          <span style={{ fontSize: "1.125rem", fontWeight: "600" }}>Filters</span>
-          <button style={{ 
-            background: "none", 
-            border: "none", 
-            fontSize: "1.25rem", 
-            cursor: "pointer",
-            color: "#64748b"
-          }}>
-            ×
-          </button>
-        </div>
-        
-        <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-          <div style={{ 
-            border: "1px solid #e2e8f0", 
-            borderRadius: "6px"
-          }}>
-            <div style={{ 
-              padding: "0.75rem", 
-              backgroundColor: "#f8fafc", 
-              fontWeight: "500",
-              borderBottom: "1px solid #e2e8f0"
-            }}>
-              Category
-            </div>
-            <div style={{ padding: "0.75rem" }}>
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer" }}>
-                  <input type="checkbox" />
-                  <span>Electronics</span>
-                </label>
-                <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer" }}>
-                  <input type="checkbox" />
-                  <span>Clothing</span>
-                </label>
-              </div>
-            </div>
+    <div style={{ fontFamily: "Arial, sans-serif", padding: "1rem" }}>
+      <p style={{ marginBottom: "1rem", color: "#666" }}>
+        <strong>Note:</strong> This component requires Nosto search context to function properly. The MockedView below
+        shows how it appears when integrated.
+      </p>
+      <div
+        style={{
+          border: "1px solid #e2e8f0",
+          borderRadius: "8px",
+          padding: "1rem",
+          maxWidth: "300px",
+          backgroundColor: "white"
+        }}
+      >
+        <h3 style={{ margin: "0 0 1rem", fontSize: "1.125rem", fontWeight: "600" }}>Filters</h3>
+
+        {/* Category Facet */}
+        <div style={{ marginBottom: "1rem" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "0.75rem 0",
+              borderBottom: "1px solid #e2e8f0",
+              cursor: "pointer"
+            }}
+          >
+            <span style={{ fontWeight: "500" }}>Category</span>
+            <span
+              style={{
+                backgroundColor: "#007bff",
+                color: "white",
+                borderRadius: "12px",
+                padding: "2px 8px",
+                fontSize: "0.75rem"
+              }}
+            >
+              2
+            </span>
+            <span>↓</span>
           </div>
-          
-          <div style={{ 
-            border: "1px solid #e2e8f0", 
-            borderRadius: "6px"
-          }}>
-            <div style={{ 
-              padding: "0.75rem", 
-              backgroundColor: "#f8fafc", 
-              fontWeight: "500",
-              borderBottom: "1px solid #e2e8f0"
-            }}>
-              Price Range
-            </div>
-            <div style={{ padding: "0.75rem" }}>
-              <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
-                <input 
-                  type="number" 
-                  placeholder="Min"
-                  style={{ 
-                    padding: "0.5rem", 
-                    border: "1px solid #d1d5db", 
-                    borderRadius: "4px",
-                    width: "80px"
-                  }}
-                />
-                <span>to</span>
-                <input 
-                  type="number" 
-                  placeholder="Max"
-                  style={{ 
-                    padding: "0.5rem", 
-                    border: "1px solid #d1d5db", 
-                    borderRadius: "4px",
-                    width: "80px"
-                  }}
-                />
-              </div>
-            </div>
+        </div>
+
+        {/* Price Range Facet */}
+        <div style={{ marginBottom: "1rem" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "0.75rem 0",
+              borderBottom: "1px solid #e2e8f0",
+              cursor: "pointer"
+            }}
+          >
+            <span style={{ fontWeight: "500" }}>Price</span>
+            <span>↓</span>
+          </div>
+        </div>
+
+        {/* Brand Facet */}
+        <div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "0.75rem 0",
+              cursor: "pointer"
+            }}
+          >
+            <span style={{ fontWeight: "500" }}>Brand</span>
+            <span>↓</span>
           </div>
         </div>
       </div>
@@ -116,39 +91,22 @@ const meta: Meta<typeof Sidebar> = {
   parameters: {
     layout: "centered"
   },
-  tags: ["autodocs"],
-  argTypes: {
-    isOpen: {
-      control: "boolean",
-      description: "Whether the sidebar is open"
-    },
-    loading: {
-      control: "boolean",
-      description: "Loading state"
-    }
-  }
+  tags: ["autodocs"]
 }
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {
-    isOpen: true,
-    loading: false
-  }
+  render: () => (
+    <div style={{ padding: "1rem" }}>
+      <p style={{ color: "#666", marginBottom: "1rem" }}>
+        This component requires Nosto search context to function properly.
+      </p>
+    </div>
+  )
 }
 
-export const Closed: Story = {
-  args: {
-    isOpen: false,
-    loading: false
-  }
-}
-
-export const Loading: Story = {
-  args: {
-    isOpen: true,
-    loading: true
-  }
+export const MockedView: Story = {
+  render: () => <SidebarMockedView />
 }
