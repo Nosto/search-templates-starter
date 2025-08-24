@@ -3,7 +3,7 @@ import { SearchPageProvider } from "@nosto/search-js/preact/serp"
 import { AutocompletePageProvider } from "@nosto/search-js/preact/autocomplete"
 import { State } from "@nosto/search-js/preact"
 import { serpConfig, autocompleteConfig } from "../../src/config"
-import { SearchProduct } from "@nosto/nosto-js/client"
+import { SearchProduct, SearchFacet, SearchResult } from "@nosto/nosto-js/client"
 
 // Mock product data for testing
 export const mockProducts: SearchProduct[] = [
@@ -41,7 +41,7 @@ export const mockProducts: SearchProduct[] = [
 ]
 
 // Mock filters data for testing
-export const mockFilters = [
+export const mockFilters: SearchFacet[] = [
   {
     id: "brand",
     name: "Brand",
@@ -63,7 +63,7 @@ export const mockFilters = [
 ]
 
 // Mock search response with non-empty state
-export const mockSearchResponse = {
+export const mockSearchResponse: SearchResult = {
   query: "test search",
   products: {
     total: mockProducts.length,
