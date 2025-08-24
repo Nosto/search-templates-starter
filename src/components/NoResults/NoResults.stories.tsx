@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 
-// Create a simplified version for storybook
-function NoResultsDemo({ query = "sample search query" }: { query?: string }) {
+// Simplified component that mimics NoResults behavior with minimal markup
+function NoResults({ query = "sample search query" }: { query?: string }) {
   return (
-    <div style={{ textAlign: "center", padding: "2rem" }}>
+    <div style={{ margin: "var(--ns-space-5, 1rem) 0", fontSize: "var(--ns-font-size-4, 1rem)" }}>
       <div>No results found for &apos;{query}&apos;</div>
     </div>
   )
 }
 
-const meta: Meta<typeof NoResultsDemo> = {
+const meta: Meta<typeof NoResults> = {
   title: "Components/NoResults",
-  component: NoResultsDemo,
+  component: NoResults,
   parameters: {
     layout: "centered"
   },
@@ -24,8 +24,8 @@ const meta: Meta<typeof NoResultsDemo> = {
   }
 }
 
-export default meta;
-type Story = StoryObj<typeof NoResultsDemo>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {

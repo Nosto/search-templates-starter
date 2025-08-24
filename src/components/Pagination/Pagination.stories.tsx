@@ -1,145 +1,99 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 
-// Create a simplified Pagination demo
-function PaginationDemo({
+// Minimal pagination component
+function Pagination({
   currentPage = 3,
-  totalPages = 10,
-  showFirst = false,
-  showLast = false
+  totalPages = 10
 }: {
   currentPage?: number
   totalPages?: number
-  showFirst?: boolean
-  showLast?: boolean
 }) {
-  const generatePages = () => {
-    const pages = []
-    const start = Math.max(1, currentPage - 2)
-    const end = Math.min(totalPages, currentPage + 2)
+  const pages = []
+  const start = Math.max(1, currentPage - 2)
+  const end = Math.min(totalPages, currentPage + 2)
 
-    for (let i = start; i <= end; i++) {
-      pages.push(i)
-    }
-    return pages
+  for (let i = start; i <= end; i++) {
+    pages.push(i)
   }
 
-  const pages = generatePages()
-  const hasPrev = currentPage > 1
-  const hasNext = currentPage < totalPages
-
   return (
-    <ul
-      style={{
-        display: "flex",
-        listStyle: "none",
-        padding: 0,
-        margin: 0,
-        gap: "0.25rem",
-        alignItems: "center"
-      }}
-    >
-      {hasPrev && (
-        <li>
-          <button
-            style={{
-              padding: "0.5rem",
-              border: "1px solid #ccc",
-              backgroundColor: "white",
-              borderRadius: "4px",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center"
-            }}
-          >
-            ←
-          </button>
-        </li>
-      )}
-
-      {showFirst && currentPage > 3 && (
+    <div style={{ 
+      display: "flex", 
+      gap: "0.5rem", 
+      alignItems: "center" 
+    }}>
+      <button 
+        disabled={currentPage === 1}
+        style={{ 
+          padding: "8px 12px", 
+          border: "1px solid #d1d5db", 
+          borderRadius: "6px",
+          backgroundColor: currentPage === 1 ? "#f9fafb" : "white",
+          cursor: currentPage === 1 ? "not-allowed" : "pointer"
+        }}
+      >
+        Previous
+      </button>
+      
+      {start > 1 && (
         <>
-          <li>
-            <button
-              style={{
-                padding: "0.5rem 0.75rem",
-                border: "1px solid #ccc",
-                backgroundColor: "white",
-                borderRadius: "4px",
-                cursor: "pointer"
-              }}
-            >
-              1
-            </button>
-          </li>
-          <li>
-            <span style={{ padding: "0.5rem" }}>...</span>
-          </li>
+          <button style={{ 
+            padding: "8px 12px", 
+            border: "1px solid #d1d5db", 
+            borderRadius: "6px",
+            backgroundColor: "white"
+          }}>1</button>
+          {start > 2 && <span>...</span>}
         </>
       )}
-
+      
       {pages.map(page => (
-        <li key={page}>
-          <button
-            style={{
-              padding: "0.5rem 0.75rem",
-              border: "1px solid #ccc",
-              backgroundColor: page === currentPage ? "#007bff" : "white",
-              color: page === currentPage ? "white" : "black",
-              borderRadius: "4px",
-              cursor: "pointer",
-              fontWeight: page === currentPage ? "bold" : "normal"
-            }}
-          >
-            {page}
-          </button>
-        </li>
+        <button 
+          key={page}
+          style={{ 
+            padding: "8px 12px", 
+            border: "1px solid #d1d5db", 
+            borderRadius: "6px",
+            backgroundColor: page === currentPage ? "#3b82f6" : "white",
+            color: page === currentPage ? "white" : "black",
+            fontWeight: page === currentPage ? "600" : "normal"
+          }}
+        >
+          {page}
+        </button>
       ))}
-
-      {showLast && currentPage < totalPages - 2 && (
+      
+      {end < totalPages && (
         <>
-          <li>
-            <span style={{ padding: "0.5rem" }}>...</span>
-          </li>
-          <li>
-            <button
-              style={{
-                padding: "0.5rem 0.75rem",
-                border: "1px solid #ccc",
-                backgroundColor: "white",
-                borderRadius: "4px",
-                cursor: "pointer"
-              }}
-            >
-              {totalPages}
-            </button>
-          </li>
+          {end < totalPages - 1 && <span>...</span>}
+          <button style={{ 
+            padding: "8px 12px", 
+            border: "1px solid #d1d5db", 
+            borderRadius: "6px",
+            backgroundColor: "white"
+          }}>{totalPages}</button>
         </>
       )}
-
-      {hasNext && (
-        <li>
-          <button
-            style={{
-              padding: "0.5rem",
-              border: "1px solid #ccc",
-              backgroundColor: "white",
-              borderRadius: "4px",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center"
-            }}
-          >
-            →
-          </button>
-        </li>
-      )}
-    </ul>
+      
+      <button 
+        disabled={currentPage === totalPages}
+        style={{ 
+          padding: "8px 12px", 
+          border: "1px solid #d1d5db", 
+          borderRadius: "6px",
+          backgroundColor: currentPage === totalPages ? "#f9fafb" : "white",
+          cursor: currentPage === totalPages ? "not-allowed" : "pointer"
+        }}
+      >
+        Next
+      </button>
+    </div>
   )
 }
 
-const meta: Meta<typeof PaginationDemo> = {
+const meta: Meta<typeof Pagination> = {
   title: "Components/Pagination",
-  component: PaginationDemo,
+  component: Pagination,
   parameters: {
     layout: "centered"
   },
@@ -152,14 +106,6 @@ const meta: Meta<typeof PaginationDemo> = {
     totalPages: {
       control: { type: "number", min: 1, max: 50 },
       description: "Total number of pages"
-    },
-    showFirst: {
-      control: "boolean",
-      description: "Show first page and ellipsis"
-    },
-    showLast: {
-      control: "boolean",
-      description: "Show last page and ellipsis"
     }
   }
 }
@@ -170,44 +116,34 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     currentPage: 3,
-    totalPages: 10,
-    showFirst: false,
-    showLast: false
+    totalPages: 10
   }
 }
 
 export const FirstPage: Story = {
   args: {
     currentPage: 1,
-    totalPages: 10,
-    showFirst: false,
-    showLast: false
+    totalPages: 10
   }
 }
 
 export const LastPage: Story = {
   args: {
     currentPage: 10,
-    totalPages: 10,
-    showFirst: false,
-    showLast: false
+    totalPages: 10
   }
 }
 
 export const WithEllipsis: Story = {
   args: {
     currentPage: 15,
-    totalPages: 50,
-    showFirst: true,
-    showLast: true
+    totalPages: 50
   }
 }
 
 export const FewPages: Story = {
   args: {
     currentPage: 2,
-    totalPages: 3,
-    showFirst: false,
-    showLast: false
+    totalPages: 3
   }
 }

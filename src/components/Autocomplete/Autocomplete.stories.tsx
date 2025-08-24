@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 
-// Create a simplified Autocomplete demo
-function AutocompleteDemo({
+// Minimal autocomplete component
+function Autocomplete({
   query = "",
   suggestions = ["running shoes", "basketball shoes", "casual shoes"],
   showSuggestions = false,
@@ -13,84 +13,71 @@ function AutocompleteDemo({
   loading?: boolean
 }) {
   return (
-    <div style={{ position: "relative", width: "400px", padding: "1rem" }}>
-      <div
-        style={{
-          display: "flex",
-          border: "1px solid #ccc",
-          borderRadius: "4px",
-          overflow: "hidden"
-        }}
-      >
+    <div style={{ position: "relative", width: "400px" }}>
+      <div style={{
+        display: "flex",
+        border: "1px solid #d1d5db",
+        borderRadius: "6px",
+        overflow: "hidden"
+      }}>
         <input
           type="text"
           placeholder="Start typing to see suggestions..."
           defaultValue={query}
           style={{
             flex: 1,
-            padding: "0.75rem 1rem",
+            padding: "12px 16px",
             border: "none",
             outline: "none",
-            fontSize: "1rem"
+            fontSize: "16px"
           }}
         />
-        <button
-          style={{
-            padding: "0.75rem 1.5rem",
-            backgroundColor: "#007bff",
-            color: "white",
-            border: "none",
-            cursor: "pointer",
-            fontSize: "1rem"
-          }}
-        >
+        <button style={{
+          padding: "12px 20px",
+          backgroundColor: "#3b82f6",
+          color: "white",
+          border: "none",
+          cursor: "pointer",
+          fontSize: "16px",
+          fontWeight: "500"
+        }}>
           Search
         </button>
       </div>
 
       {showSuggestions && (
-        <div
-          style={{
-            position: "absolute",
-            top: "100%",
-            left: "1rem",
-            right: "1rem",
-            backgroundColor: "white",
-            border: "1px solid #ccc",
-            borderTop: "none",
-            borderRadius: "0 0 4px 4px",
-            boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-            zIndex: 1000
-          }}
-        >
+        <div style={{
+          position: "absolute",
+          top: "100%",
+          left: 0,
+          right: 0,
+          backgroundColor: "white",
+          border: "1px solid #d1d5db",
+          borderTop: "none",
+          borderRadius: "0 0 6px 6px",
+          zIndex: 10
+        }}>
           {loading ? (
-            <div style={{ padding: "1rem", textAlign: "center", color: "#666" }}>Loading suggestions...</div>
+            <div style={{ padding: "16px", color: "#6b7280" }}>Loading...</div>
           ) : (
-            <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
-              {suggestions.map(suggestion => (
-                <li key={suggestion}>
-                  <button
-                    style={{
-                      width: "100%",
-                      padding: "0.75rem 1rem",
-                      border: "none",
-                      background: "none",
-                      textAlign: "left",
-                      cursor: "pointer",
-                      fontSize: "1rem"
-                    }}
-                    onMouseEnter={e => {
-                      ;(e.target as HTMLElement).style.backgroundColor = "#f5f5f5"
-                    }}
-                    onMouseLeave={e => {
-                      ;(e.target as HTMLElement).style.backgroundColor = "transparent"
-                    }}
-                  >
-                    {suggestion}
-                  </button>
-                </li>
-              ))}
-            </ul>
+            suggestions.map((suggestion, index) => (
+              <div
+                key={index}
+                style={{
+                  padding: "12px 16px",
+                  cursor: "pointer",
+                  borderBottom: index < suggestions.length - 1 ? "1px solid #f3f4f6" : "none"
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = "#f9fafb"
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "white"
+                }}
+              >
+                {suggestion}
+              </div>
+            ))
           )}
         </div>
       )}
@@ -98,9 +85,9 @@ function AutocompleteDemo({
   )
 }
 
-const meta: Meta<typeof AutocompleteDemo> = {
+const meta: Meta<typeof Autocomplete> = {
   title: "Components/Autocomplete",
-  component: AutocompleteDemo,
+  component: Autocomplete,
   parameters: {
     layout: "centered"
   },
@@ -161,8 +148,7 @@ export const LongSuggestions: Story = {
     suggestions: [
       "laptop computers for gaming",
       "laptop accessories and cases",
-      "laptop stands and cooling pads",
-      "laptop batteries and chargers"
+      "laptop stands and cooling pads"
     ],
     showSuggestions: true,
     loading: false

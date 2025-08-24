@@ -1,47 +1,61 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import { SearchProduct } from "@nosto/nosto-js/client"
 
-// Create a simplified version of Product component for Storybook
-function ProductDemo({ product, previewImage }: { product: SearchProduct; previewImage?: string }) {
+// Wrapper that renders the Product component's visual structure without Nosto dependencies
+function Product({ product, previewImage, children }: { 
+  product: SearchProduct; 
+  previewImage?: string; 
+  children?: preact.JSX.Element | preact.JSX.Element[] 
+}) {
+  const productImagePlaceholder = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNGM0Y0RjYiLz48L3N2Zz4="
+
   return (
-    <div
+    <a
+      href={product.url}
+      aria-label={`Product ${product.name}`}
       style={{
-        border: "1px solid #ccc",
-        borderRadius: "8px",
-        padding: "1rem",
-        maxWidth: "300px",
+        display: "block",
         textDecoration: "none",
-        color: "inherit"
+        color: "inherit",
+        border: "1px solid #e2e8f0",
+        borderRadius: "8px",
+        overflow: "hidden",
+        maxWidth: "280px"
       }}
     >
-      <div style={{ marginBottom: "1rem" }}>
-        <img
-          src={
-            previewImage ?? product.imageUrl ?? "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANwAAADbCAMAAAAxgQ8LAA=="
-          }
+      <div style={{ aspectRatio: "1", overflow: "hidden" }}>
+        <img 
+          src={previewImage ?? product.imageUrl ?? productImagePlaceholder} 
           alt={product.name}
-          style={{ width: "100%", height: "200px", objectFit: "cover" }}
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
         />
       </div>
-      <div>
-        {product.brand && <div style={{ fontSize: "0.9rem", color: "#666" }}>{product.brand}</div>}
-        <div style={{ fontWeight: "bold", margin: "0.5rem 0" }}>{product.name}</div>
-        <div style={{ fontSize: "1.1rem", fontWeight: "bold" }}>
+      <div style={{ padding: "1rem" }} data-nosto-element="product">
+        {product.brand && <div style={{ fontSize: "0.875rem", color: "#64748b", marginBottom: "0.25rem" }}>{product.brand}</div>}
+        <div style={{ fontWeight: "500", marginBottom: "0.5rem" }}>{product.name}</div>
+        <div aria-label="Price" style={{ fontSize: "1.125rem", fontWeight: "600" }}>
           <span>{product.priceText}</span>
           {product.listPrice && product.price && product.listPrice > product.price && (
-            <span style={{ textDecoration: "line-through", marginLeft: "0.5rem", color: "#999" }}>
+            <span style={{ 
+              textDecoration: "line-through", 
+              marginLeft: "0.5rem", 
+              color: "#64748b",
+              fontSize: "1rem",
+              fontWeight: "400"
+            }}>
               {product.listPrice}
             </span>
           )}
         </div>
       </div>
-    </div>
+      {children}
+    </a>
   )
 }
 
-const meta: Meta<typeof ProductDemo> = {
+const meta: Meta<typeof Product> = {
   title: "Components/Product",
-  component: ProductDemo,
+  component: Product,
   parameters: {
     layout: "centered"
   },
@@ -71,7 +85,7 @@ export const Default: Story = {
       priceText: "$29.99",
       url: "#",
       imageUrl: ""
-    }
+    } as SearchProduct
   }
 }
 
@@ -86,7 +100,7 @@ export const WithDiscount: Story = {
       priceText: "$19.99",
       url: "#",
       imageUrl: ""
-    }
+    } as SearchProduct
   }
 }
 
@@ -99,7 +113,7 @@ export const NoBrand: Story = {
       priceText: "$15.99",
       url: "#",
       imageUrl: ""
-    }
+    } as SearchProduct
   }
 }
 
@@ -113,6 +127,6 @@ export const LongName: Story = {
       priceText: "$99.99",
       url: "#",
       imageUrl: ""
-    }
+    } as SearchProduct
   }
 }

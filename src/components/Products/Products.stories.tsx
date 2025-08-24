@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 
-// Create a simplified Products grid demo
-function ProductsDemo({
+// Minimal products grid component
+function Products({
   productCount = 6,
   loading = false,
   layout = "grid"
@@ -13,40 +13,124 @@ function ProductsDemo({
   const mockProducts = Array.from({ length: productCount }, (_, i) => ({
     id: i + 1,
     name: `Product ${i + 1}`,
-    brand: `Brand ${String.fromCharCode(65 + (i % 3))}`,
-    price: `$${(29.99 + i * 10).toFixed(2)}`,
-    image: `https://via.placeholder.com/200x200?text=Product+${i + 1}`
+    price: `$${(29.99 + i * 10).toFixed(2)}`
   }))
 
   if (loading) {
     return (
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: layout === "grid" ? "repeat(auto-fill, minmax(200px, 1fr))" : "1fr",
-          gap: "1rem",
-          padding: "1rem",
-          opacity: 0.6
-        }}
-      >
+      <div style={{ 
+        display: "grid", 
+        gridTemplateColumns: layout === "grid" ? "repeat(3, 1fr)" : "1fr", 
+        gap: "1rem", 
+        opacity: 0.5 
+      }}>
         {Array.from({ length: 3 }).map((_, i) => (
-          <div
-            key={i}
-            style={{
-              border: "1px solid #eee",
-              borderRadius: "8px",
-              padding: "1rem",
-              backgroundColor: "#f5f5f5"
-            }}
-          >
-            <div style={{ height: "150px", backgroundColor: "#ddd", marginBottom: "0.5rem" }} />
-            <div style={{ height: "1rem", backgroundColor: "#ddd", marginBottom: "0.25rem" }} />
-            <div style={{ height: "1rem", backgroundColor: "#ddd", width: "60%" }} />
+          <div key={i} style={{ 
+            border: "1px solid #e2e8f0", 
+            borderRadius: "8px", 
+            padding: "1rem", 
+            backgroundColor: "#f8fafc" 
+          }}>
+            <div style={{ height: "120px", backgroundColor: "#e2e8f0", marginBottom: "0.5rem" }} />
+            <div style={{ height: "1rem", backgroundColor: "#e2e8f0", marginBottom: "0.25rem" }} />
+            <div style={{ height: "1rem", backgroundColor: "#e2e8f0", width: "60%" }} />
           </div>
         ))}
       </div>
     )
   }
+
+  return (
+    <div style={{ 
+      display: "grid", 
+      gridTemplateColumns: layout === "grid" ? "repeat(3, 1fr)" : "1fr", 
+      gap: "1rem" 
+    }}>
+      {mockProducts.map(product => (
+        <div key={product.id} style={{ 
+          border: "1px solid #e2e8f0", 
+          borderRadius: "8px", 
+          overflow: "hidden",
+          backgroundColor: "white"
+        }}>
+          <div style={{ 
+            height: "120px", 
+            backgroundColor: "#f3f4f6", 
+            display: "flex", 
+            alignItems: "center", 
+            justifyContent: "center", 
+            color: "#6b7280" 
+          }}>
+            Image
+          </div>
+          <div style={{ padding: "1rem" }}>
+            <div style={{ fontWeight: "500", marginBottom: "0.5rem" }}>{product.name}</div>
+            <div style={{ fontSize: "1.125rem", fontWeight: "600", color: "#3b82f6" }}>{product.price}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+const meta: Meta<typeof Products> = {
+  title: "Components/Products",
+  component: Products,
+  parameters: {
+    layout: "centered"
+  },
+  tags: ["autodocs"],
+  argTypes: {
+    productCount: {
+      control: { type: "range", min: 1, max: 12 },
+      description: "Number of products to display"
+    },
+    loading: {
+      control: "boolean",
+      description: "Loading state"
+    },
+    layout: {
+      control: "select",
+      options: ["grid", "list"],
+      description: "Layout style"
+    }
+  }
+}
+
+export default meta
+type Story = StoryObj<typeof meta>
+
+export const Default: Story = {
+  args: {
+    productCount: 6,
+    loading: false,
+    layout: "grid"
+  }
+}
+
+export const Loading: Story = {
+  args: {
+    productCount: 6,
+    loading: true,
+    layout: "grid"
+  }
+}
+
+export const ListLayout: Story = {
+  args: {
+    productCount: 4,
+    loading: false,
+    layout: "list"
+  }
+}
+
+export const ManyProducts: Story = {
+  args: {
+    productCount: 12,
+    loading: false,
+    layout: "grid"
+  }
+}
 
   return (
     <div

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 
-// Create a simplified Search demo
-function SearchDemo({
+// Minimal search component for demonstration
+function Search({
   placeholder = "Search products...",
   value = "",
   showButton = true,
@@ -13,52 +13,50 @@ function SearchDemo({
   disabled?: boolean
 }) {
   return (
-    <div style={{ padding: "1rem" }}>
-      <div
+    <div style={{ 
+      display: "flex", 
+      border: "1px solid #d1d5db", 
+      borderRadius: "6px", 
+      overflow: "hidden",
+      maxWidth: "400px"
+    }}>
+      <input
+        type="text"
+        placeholder={placeholder}
+        defaultValue={value}
+        disabled={disabled}
         style={{
-          display: "flex",
-          border: "1px solid #ccc",
-          borderRadius: "4px",
-          overflow: "hidden",
-          maxWidth: "500px"
+          flex: 1,
+          padding: "12px 16px",
+          border: "none",
+          outline: "none",
+          fontSize: "16px",
+          backgroundColor: disabled ? "#f9fafb" : "white"
         }}
-      >
-        <input
-          type="text"
-          placeholder={placeholder}
-          defaultValue={value}
+      />
+      {showButton && (
+        <button
           disabled={disabled}
           style={{
-            flex: 1,
-            padding: "0.75rem 1rem",
+            padding: "12px 20px",
+            backgroundColor: disabled ? "#d1d5db" : "#3b82f6",
+            color: "white",
             border: "none",
-            outline: "none",
-            fontSize: "1rem"
+            cursor: disabled ? "not-allowed" : "pointer",
+            fontSize: "16px",
+            fontWeight: "500"
           }}
-        />
-        {showButton && (
-          <button
-            disabled={disabled}
-            style={{
-              padding: "0.75rem 1.5rem",
-              backgroundColor: disabled ? "#ccc" : "#007bff",
-              color: "white",
-              border: "none",
-              cursor: disabled ? "not-allowed" : "pointer",
-              fontSize: "1rem"
-            }}
-          >
-            Search
-          </button>
-        )}
-      </div>
+        >
+          Search
+        </button>
+      )}
     </div>
   )
 }
 
-const meta: Meta<typeof SearchDemo> = {
+const meta: Meta<typeof Search> = {
   title: "Components/Search",
-  component: SearchDemo,
+  component: Search,
   parameters: {
     layout: "centered"
   },
@@ -89,7 +87,6 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     placeholder: "Search products...",
-    value: "",
     showButton: true,
     disabled: false
   }
@@ -107,7 +104,6 @@ export const WithValue: Story = {
 export const NoButton: Story = {
   args: {
     placeholder: "Type to search...",
-    value: "",
     showButton: false,
     disabled: false
   }
@@ -116,7 +112,6 @@ export const NoButton: Story = {
 export const Disabled: Story = {
   args: {
     placeholder: "Search is disabled...",
-    value: "",
     showButton: true,
     disabled: true
   }
