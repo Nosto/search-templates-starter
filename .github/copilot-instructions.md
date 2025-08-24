@@ -77,6 +77,7 @@ npm run lint
 - **Total time**: ~2.5 minutes
 - **NEVER CANCEL**: Set timeout to 10+ minutes total
 - This matches the CI pipeline in `.github/workflows/ci.yml`
+- **CRITICAL**: Only commit if all commands pass (typecheck, lint, and test must all succeed)
 
 ## Codebase Navigation
 
