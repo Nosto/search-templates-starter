@@ -1,17 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Products from "./Products"
 
-const meta: Meta<typeof Products> = {
+export default {
   title: "Components/Products",
   component: Products,
   parameters: {
     layout: "centered"
   },
   tags: ["autodocs"]
-}
+} as Meta<typeof Products>
 
-export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof Products>
 
 export const Default: Story = {
   render: () => <Products />

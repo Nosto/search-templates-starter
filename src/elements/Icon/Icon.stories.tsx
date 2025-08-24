@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/preact"
 import { h } from "preact"
 import Icon, { type IconName } from "./Icon"
 
-const meta: Meta<typeof Icon> = {
+export default {
   title: "Elements/Icon",
   component: Icon,
   parameters: {
@@ -31,10 +31,9 @@ const meta: Meta<typeof Icon> = {
       description: "Additional CSS classes"
     }
   }
-}
+} as Meta<typeof Icon>
 
-export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof Icon>
 
 export const Default: Story = {
   args: {

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Select from "./Select"
 
-const meta: Meta<typeof Select> = {
+export default {
   title: "Elements/Select",
   component: Select,
   parameters: {
@@ -22,10 +22,9 @@ const meta: Meta<typeof Select> = {
       description: "Selected value"
     }
   }
-}
+} as Meta<typeof Select>
 
-export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof Select>
 
 export const Default: Story = {
   args: {

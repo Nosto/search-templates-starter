@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Checkbox from "./Checkbox"
 
-const meta: Meta<typeof Checkbox> = {
+export default {
   title: "Elements/Checkbox",
   component: Checkbox,
   parameters: {
@@ -22,10 +22,9 @@ const meta: Meta<typeof Checkbox> = {
       description: "Additional CSS classes"
     }
   }
-}
+} as Meta<typeof Checkbox>
 
-export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof Checkbox>
 
 export const Default: Story = {
   args: {

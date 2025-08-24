@@ -1,17 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import { Search } from "./Search"
 
-const meta: Meta<typeof Search> = {
+export default {
   title: "Components/Search",
   component: Search,
   parameters: {
     layout: "centered"
   },
   tags: ["autodocs"]
-}
+} as Meta<typeof Search>
 
-export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof Search>
 
 export const Default: Story = {
   render: () => <Search />

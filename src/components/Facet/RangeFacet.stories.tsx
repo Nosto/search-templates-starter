@@ -11,17 +11,16 @@ const mockRangeFacet = {
   max: 500
 }
 
-const meta: Meta<typeof RangeFacet> = {
+export default {
   title: "Components/Facet/RangeFacet",
   component: RangeFacet,
   parameters: {
     layout: "centered"
   },
   tags: ["autodocs"]
-}
+} as Meta<typeof RangeFacet>
 
-export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof RangeFacet>
 
 export const Default: Story = {
   render: () => <RangeFacet facet={mockRangeFacet} />

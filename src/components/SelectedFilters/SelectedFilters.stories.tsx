@@ -1,17 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import SelectedFilters from "./SelectedFilters"
 
-const meta: Meta<typeof SelectedFilters> = {
+export default {
   title: "Components/SelectedFilters",
   component: SelectedFilters,
   parameters: {
     layout: "centered"
   },
   tags: ["autodocs"]
-}
+} as Meta<typeof SelectedFilters>
 
-export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof SelectedFilters>
 
 export const Default: Story = {
   render: () => <SelectedFilters />

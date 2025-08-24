@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import RangeInput from "./RangeInput"
 
-const meta: Meta<typeof RangeInput> = {
+export default {
   title: "Elements/RangeInput",
   component: RangeInput,
   parameters: {
@@ -30,10 +30,9 @@ const meta: Meta<typeof RangeInput> = {
       description: "Whether the input is disabled"
     }
   }
-}
+} as Meta<typeof RangeInput>
 
-export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof RangeInput>
 
 export const Default: Story = {
   args: {

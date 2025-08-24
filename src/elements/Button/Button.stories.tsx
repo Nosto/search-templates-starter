@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Button from "./Button"
 
-const meta: Meta<typeof Button> = {
+export default {
   title: "Elements/Button",
   component: Button,
   parameters: {
@@ -38,10 +38,9 @@ const meta: Meta<typeof Button> = {
       description: "Button content"
     }
   }
-}
+} as Meta<typeof Button>
 
-export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof Button>
 
 export const Default: Story = {
   args: {

@@ -1,17 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Autocomplete from "./Autocomplete"
 
-const meta: Meta<typeof Autocomplete> = {
+export default {
   title: "Components/Autocomplete",
   component: Autocomplete,
   parameters: {
     layout: "centered"
   },
   tags: ["autodocs"]
-}
+} as Meta<typeof Autocomplete>
 
-export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof Autocomplete>
 
 export const Default: Story = {
   render: () => <Autocomplete onSubmit={(input: string) => console.log("Search submitted:", input)} />

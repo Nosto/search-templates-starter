@@ -14,17 +14,16 @@ const mockFacet = {
   ]
 }
 
-const meta: Meta<typeof Facet> = {
+export default {
   title: "Components/Facet/Facet",
   component: Facet,
   parameters: {
     layout: "centered"
   },
   tags: ["autodocs"]
-}
+} as Meta<typeof Facet>
 
-export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof Facet>
 
 export const Default: Story = {
   render: () => <Facet facet={mockFacet} />

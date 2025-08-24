@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import BottomToolbar from "./BottomToolbar"
 
-const meta: Meta<typeof BottomToolbar> = {
+export default {
   title: "Components/BottomToolbar",
   component: BottomToolbar,
   parameters: {
@@ -13,10 +13,9 @@ const meta: Meta<typeof BottomToolbar> = {
     }
   },
   tags: ["autodocs"]
-}
+} as Meta<typeof BottomToolbar>
 
-export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof BottomToolbar>
 
 export const Default: Story = {
   render: () => <BottomToolbar />
