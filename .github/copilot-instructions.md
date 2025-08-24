@@ -130,6 +130,10 @@ npm run lint
 - Use `beforeEach` for setup, `afterEach` for cleanup
 - Use `expect` for assertions
 - Test environment is jsdom for DOM-related testing
+- **MANDATORY**: Every new component must have a corresponding test file in `test/components/`
+- Component tests must wrap content with SearchPageProvider and include non-empty state for products/filters
+- Use the test utilities in `test/utils/test-utils.tsx` for consistent test setup
+- Test files should mirror the component directory structure (e.g., `src/components/Product/Product.tsx` → `test/components/Product/Product.spec.tsx`)
 
 ## Common Issues and Troubleshooting
 
