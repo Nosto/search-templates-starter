@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 
-// Create a simplified SelectedFilters demo
-function SelectedFiltersDemo({
+// Minimal selected filters component
+function SelectedFilters({
   filters = ["Category: Electronics", "Brand: Apple"],
   showClearAll = true
 }: {
@@ -13,76 +13,70 @@ function SelectedFiltersDemo({
   }
 
   return (
-    <div style={{ padding: "1rem" }}>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "0.5rem",
-          alignItems: "center"
-        }}
-      >
-        <span style={{ fontWeight: "bold", marginRight: "0.5rem" }}>Filters:</span>
-        {filters.map((filter, index) => (
-          <span
-            key={index}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              backgroundColor: "#e3f2fd",
-              color: "#1565c0",
-              padding: "0.25rem 0.5rem",
-              borderRadius: "16px",
-              fontSize: "0.9rem",
-              gap: "0.5rem"
-            }}
-          >
-            {filter}
-            <button
-              style={{
-                background: "none",
-                border: "none",
-                color: "#1565c0",
-                cursor: "pointer",
-                fontSize: "1rem",
-                lineHeight: 1,
-                padding: 0,
-                width: "16px",
-                height: "16px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center"
-              }}
-              title={`Remove ${filter} filter`}
-            >
-              ×
-            </button>
-          </span>
-        ))}
-        {showClearAll && filters.length > 1 && (
+    <div style={{ 
+      display: "flex", 
+      flexWrap: "wrap", 
+      gap: "0.5rem", 
+      alignItems: "center" 
+    }}>
+      {filters.map((filter, index) => (
+        <span
+          key={index}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            backgroundColor: "#eff6ff",
+            color: "#1d4ed8",
+            padding: "6px 12px",
+            borderRadius: "20px",
+            fontSize: "14px",
+            gap: "6px",
+            border: "1px solid #dbeafe"
+          }}
+        >
+          {filter}
           <button
             style={{
               background: "none",
-              border: "1px solid #666",
-              color: "#666",
-              padding: "0.25rem 0.75rem",
-              borderRadius: "4px",
-              fontSize: "0.9rem",
+              border: "none",
+              color: "#1d4ed8",
               cursor: "pointer",
-              marginLeft: "0.5rem"
+              fontSize: "16px",
+              padding: 0,
+              width: "16px",
+              height: "16px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
             }}
           >
-            Clear All
+            ×
           </button>
-        )}
-      </div>
+        </span>
+      ))}
+      
+      {showClearAll && filters.length > 0 && (
+        <button
+          style={{
+            background: "none",
+            border: "1px solid #d1d5db",
+            color: "#6b7280",
+            cursor: "pointer",
+            fontSize: "14px",
+            padding: "6px 12px",
+            borderRadius: "6px"
+          }}
+        >
+          Clear all
+        </button>
+      )}
     </div>
   )
 }
 
-const meta: Meta<typeof SelectedFiltersDemo> = {
+const meta: Meta<typeof SelectedFilters> = {
   title: "Components/SelectedFilters",
-  component: SelectedFiltersDemo,
+  component: SelectedFilters,
   parameters: {
     layout: "centered"
   },
@@ -94,7 +88,7 @@ const meta: Meta<typeof SelectedFiltersDemo> = {
     },
     showClearAll: {
       control: "boolean",
-      description: "Show clear all button when multiple filters"
+      description: "Whether to show clear all button"
     }
   }
 }
@@ -109,16 +103,22 @@ export const Default: Story = {
   }
 }
 
-export const SingleFilter: Story = {
+export const ManyFilters: Story = {
   args: {
-    filters: ["Price: $100 - $500"],
+    filters: [
+      "Category: Electronics", 
+      "Brand: Apple", 
+      "Price: $100-$500", 
+      "Rating: 4+ stars",
+      "Color: Black"
+    ],
     showClearAll: true
   }
 }
 
-export const ManyFilters: Story = {
+export const SingleFilter: Story = {
   args: {
-    filters: ["Category: Electronics", "Brand: Apple", "Price: $100 - $500", "Color: Black", "Rating: 4+ stars"],
+    filters: ["Category: Electronics"],
     showClearAll: true
   }
 }

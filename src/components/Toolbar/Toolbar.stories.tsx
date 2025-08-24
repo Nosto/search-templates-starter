@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 
-// Create a simplified Toolbar demo
-function ToolbarDemo({
+// Minimal toolbar component
+function Toolbar({
   totalResults = 142,
   selectedFiltersCount = 2,
   loading = false,
@@ -15,108 +15,87 @@ function ToolbarDemo({
   selectedSort?: string
 }) {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "1rem",
-        borderBottom: "1px solid #eee",
-        backgroundColor: "white",
-        opacity: loading ? 0.6 : 1
-      }}
-    >
-      {!loading && <span style={{ fontSize: "1rem", fontWeight: "bold" }}>{totalResults} products</span>}
+    <div style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      padding: "1rem",
+      borderBottom: "1px solid #e2e8f0",
+      backgroundColor: "white",
+      opacity: loading ? 0.6 : 1
+    }}>
+      <span style={{ fontSize: "16px", fontWeight: "500" }}>
+        {loading ? "Loading..." : `${totalResults} products`}
+      </span>
 
       <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-        {/* Mobile filter button */}
-        <button
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            padding: "0.5rem 1rem",
-            border: "1px solid #ccc",
-            backgroundColor: "white",
-            borderRadius: "4px",
-            cursor: "pointer",
-            position: "relative"
-          }}
-        >
-          🔍 Filter
+        <button style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "0.5rem",
+          padding: "8px 16px",
+          border: "1px solid #d1d5db",
+          backgroundColor: "white",
+          borderRadius: "6px",
+          cursor: "pointer",
+          position: "relative",
+          fontSize: "14px"
+        }}>
+          Filter
           {selectedFiltersCount > 0 && (
-            <span
-              style={{
-                position: "absolute",
-                top: "-8px",
-                right: "-8px",
-                backgroundColor: "#007bff",
-                color: "white",
-                borderRadius: "50%",
-                width: "20px",
-                height: "20px",
-                fontSize: "0.8rem",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center"
-              }}
-            >
+            <span style={{
+              position: "absolute",
+              top: "-8px",
+              right: "-8px",
+              backgroundColor: "#ef4444",
+              color: "white",
+              borderRadius: "50%",
+              width: "20px",
+              height: "20px",
+              fontSize: "12px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
+            }}>
               {selectedFiltersCount}
             </span>
           )}
         </button>
 
-        {/* Sort dropdown */}
-        <div style={{ position: "relative" }}>
-          <select
-            value={selectedSort}
-            style={{
-              padding: "0.5rem 2rem 0.5rem 1rem",
-              border: "1px solid #ccc",
-              borderRadius: "4px",
-              backgroundColor: "white",
-              cursor: "pointer",
-              fontSize: "1rem",
-              appearance: "none"
-            }}
-          >
-            {sortOptions.map(option => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-          <span
-            style={{
-              position: "absolute",
-              right: "0.5rem",
-              top: "50%",
-              transform: "translateY(-50%)",
-              pointerEvents: "none"
-            }}
-          >
-            ▼
-          </span>
-        </div>
+        <select 
+          value={selectedSort}
+          style={{
+            padding: "8px 12px",
+            border: "1px solid #d1d5db",
+            borderRadius: "6px",
+            backgroundColor: "white",
+            fontSize: "14px",
+            cursor: "pointer"
+          }}
+        >
+          {sortOptions.map(option => (
+            <option key={option} value={option}>{option}</option>
+          ))}
+        </select>
       </div>
     </div>
   )
 }
 
-const meta: Meta<typeof ToolbarDemo> = {
+const meta: Meta<typeof Toolbar> = {
   title: "Components/Toolbar",
-  component: ToolbarDemo,
+  component: Toolbar,
   parameters: {
-    layout: "fullscreen"
+    layout: "centered"
   },
   tags: ["autodocs"],
   argTypes: {
     totalResults: {
-      control: "number",
+      control: { type: "number", min: 0, max: 10000 },
       description: "Total number of search results"
     },
     selectedFiltersCount: {
-      control: "number",
+      control: { type: "number", min: 0, max: 10 },
       description: "Number of active filters"
     },
     loading: {
@@ -128,7 +107,8 @@ const meta: Meta<typeof ToolbarDemo> = {
       description: "Available sort options"
     },
     selectedSort: {
-      control: "text",
+      control: "select",
+      options: ["Most relevant", "Price: Low to High", "Price: High to Low"],
       description: "Currently selected sort option"
     }
   }
@@ -140,26 +120,16 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     totalResults: 142,
-    selectedFiltersCount: 0,
+    selectedFiltersCount: 2,
     loading: false,
     sortOptions: ["Most relevant", "Price: Low to High", "Price: High to Low"],
     selectedSort: "Most relevant"
   }
 }
 
-export const WithFilters: Story = {
-  args: {
-    totalResults: 87,
-    selectedFiltersCount: 3,
-    loading: false,
-    sortOptions: ["Most relevant", "Price: Low to High", "Price: High to Low"],
-    selectedSort: "Price: Low to High"
-  }
-}
-
 export const Loading: Story = {
   args: {
-    totalResults: 0,
+    totalResults: 142,
     selectedFiltersCount: 0,
     loading: true,
     sortOptions: ["Most relevant", "Price: Low to High", "Price: High to Low"],
@@ -167,12 +137,32 @@ export const Loading: Story = {
   }
 }
 
-export const ManyResults: Story = {
+export const NoFilters: Story = {
   args: {
-    totalResults: 1247,
-    selectedFiltersCount: 1,
+    totalResults: 89,
+    selectedFiltersCount: 0,
     loading: false,
-    sortOptions: ["Most relevant", "Price: Low to High", "Price: High to Low", "Customer Rating", "Newest"],
-    selectedSort: "Customer Rating"
+    sortOptions: ["Most relevant", "Price: Low to High", "Price: High to Low"],
+    selectedSort: "Most relevant"
+  }
+}
+
+export const ManyFilters: Story = {
+  args: {
+    totalResults: 23,
+    selectedFiltersCount: 7,
+    loading: false,
+    sortOptions: ["Most relevant", "Price: Low to High", "Price: High to Low"],
+    selectedSort: "Price: Low to High"
+  }
+}
+
+export const FewResults: Story = {
+  args: {
+    totalResults: 3,
+    selectedFiltersCount: 4,
+    loading: false,
+    sortOptions: ["Most relevant", "Price: Low to High", "Price: High to Low"],
+    selectedSort: "Most relevant"
   }
 }
