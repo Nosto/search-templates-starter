@@ -17,6 +17,46 @@
     display: block;
 }
 
+.input[type="range"] {
+    padding: var(--ns-space-1);
+    background: transparent;
+    cursor: pointer;
+}
+
+.input[type="range"]::-webkit-slider-track {
+    background: var(--ns-color-grey-light);
+    height: 4px;
+    border-radius: 2px;
+}
+
+.input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: var(--ns-color-primary);
+    cursor: pointer;
+    margin-top: -6px;
+    box-shadow: var(--ns-box-shadow-slider-handle);
+}
+
+.input[type="range"]::-moz-range-track {
+    background: var(--ns-color-grey-light);
+    height: 4px;
+    border-radius: 2px;
+    border: none;
+}
+
+.input[type="range"]::-moz-range-thumb {
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: var(--ns-color-primary);
+    cursor: pointer;
+    border: none;
+    box-shadow: var(--ns-box-shadow-slider-handle);
+}
+
 .input:focus {
     outline: 0;
     box-shadow:

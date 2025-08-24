@@ -31,31 +31,23 @@ export default function RangeFacet({ facet }: Props) {
       </span>
       <div className={styles.menu} aria-expanded={active}>
         <div className={styles.range}>
-          <div className={styles.input}>
-            <label htmlFor={`ns-${facet.id}-min`}>Min.</label>
+          <div className={styles.rangeContainer}>
+            <label htmlFor={`ns-${facet.id}-range`}>Max: {range[1] || max}</label>
             <RangeInput
-              id={`ns-${facet.id}-min`}
+              type="range"
+              id={`ns-${facet.id}-range`}
               min={min}
               max={max}
-              value={range[0]}
+              value={range[1] || max}
               onChange={e => {
-                const value = parseFloat(e.currentTarget.value) || undefined
-                updateRange([value, range[1]])
+                const value = parseFloat(e.currentTarget.value)
+                updateRange([min, value])
               }}
             />
-          </div>
-          <div className={styles.input}>
-            <label htmlFor={`ns-${facet.id}-max`}>Max.</label>
-            <RangeInput
-              id={`ns-${facet.id}-max`}
-              min={min}
-              max={max}
-              value={range[1]}
-              onChange={e => {
-                const value = parseFloat(e.currentTarget.value) || undefined
-                updateRange([range[0], value])
-              }}
-            />
+            <div className={styles.rangeLabels}>
+              <span>{min}</span>
+              <span>{max}</span>
+            </div>
           </div>
         </div>
       </div>
