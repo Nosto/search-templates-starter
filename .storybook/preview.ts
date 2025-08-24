@@ -1,10 +1,22 @@
 import type { Preview } from "@storybook/preact-vite"
 import { h } from "preact"
-import { SearchPageProvider } from "@nosto/search-js/preact/serp"
+import { SearchPageProvider, type SerpConfig } from "@nosto/search-js/preact/serp"
+import { createStore, type State } from "@nosto/search-js/preact/common"
 import "../src/variable.css"
 
 // Function to generate mock products with varying data
-function generateMockProducts(count: number) {
+function generateMockProducts(count: number): Array<{
+  productId: string
+  title: string
+  price: number
+  currency: string
+  category: string
+  brand: string
+  availability: string
+  url: string
+  imageUrl: string
+  description: string
+}> {
   const categories = ["Clothing", "Electronics", "Home & Garden", "Sports", "Books", "Beauty"]
   const brands = ["BrandA", "BrandB", "BrandC", "BrandD", "BrandE", "BrandF"]
   const adjectives = ["Premium", "Classic", "Modern", "Vintage", "Eco-Friendly", "Luxury"]
@@ -33,29 +45,54 @@ function generateMockProducts(count: number) {
 }
 
 // Mock config for Storybook that provides search context
-const mockConfig = {
+const mockConfig: SerpConfig = {
   defaultCurrency: "EUR",
   search: {
     hitDecorators: []
   }
 }
 
-const mockInitialState = {
-  search: {
-    query: "",
-    filters: [],
+const mockInitialState: Partial<State> = {
+  loading: false,
+  initialized: true,
+  query: {
+    q: "",
+    filters: [
+      {
+        field: "category",
+        type: "terms",
+        value: ["Clothing"]
+      },
+      {
+        field: "brand",
+        type: "terms",
+        value: ["BrandA", "BrandB"]
+      },
+      {
+        field: "price",
+        type: "range",
+        min: 20,
+        max: 200
+      }
+    ],
     sort: { field: "_score", order: "desc" }
   },
-  products: {
-    from: 1,
-    size: 24,
-    total: 142,
-    hits: generateMockProducts(24)
+  response: {
+    products: {
+      from: 1,
+      size: 24,
+      total: 142,
+      hits: generateMockProducts(24)
+    },
+    facets: [],
+    keywords: []
   }
 }
 
 const preview: Preview = {
-  decorators: [Story => h(SearchPageProvider, { config: mockConfig, initialState: mockInitialState }, h(Story))],
+  decorators: [
+    Story => h(SearchPageProvider, { config: mockConfig, store: createStore(mockInitialState) }, h(Story, {}))
+  ],
   parameters: {
     controls: {
       matchers: {
