@@ -1,6 +1,7 @@
 import type { Preview } from "@storybook/preact-vite"
 import { h } from "preact"
 import { SearchPageProvider } from "@nosto/search-js/preact/serp"
+import "../src/variable.css"
 
 // Function to generate mock products with varying data
 function generateMockProducts(count: number) {
