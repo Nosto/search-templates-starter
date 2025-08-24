@@ -1,6 +1,7 @@
 import { render } from "@testing-library/preact"
 import { SearchPageProvider } from "@nosto/search-js/preact/serp"
 import { AutocompletePageProvider } from "@nosto/search-js/preact/autocomplete"
+import { State } from "@nosto/search-js/preact"
 import { serpConfig, autocompleteConfig } from "../../src/config"
 import { SearchProduct } from "@nosto/nosto-js/client"
 
@@ -72,10 +73,20 @@ export const mockSearchResponse = {
   redirect: null
 }
 
+// Mock query for comprehensive state testing
+export const mockQuery = {
+  q: "test search",
+  filters: {},
+  sort: "relevance",
+  size: 24,
+  from: 0
+}
+
 // Mock state for components that need non-empty data
-export const mockNonEmptyState = {
+export const mockNonEmptyState: Partial<State> = {
   loading: false,
   initialized: true,
+  query: mockQuery,
   response: mockSearchResponse
 }
 
