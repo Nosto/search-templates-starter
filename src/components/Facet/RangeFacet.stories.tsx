@@ -29,7 +29,7 @@ export const Default: Story = {
 
 export const LargeRange: Story = {
   render: () => (
-    <RangeFacet 
+    <RangeFacet
       facet={{
         id: "rating",
         name: "Customer Rating",
@@ -51,7 +51,7 @@ export const LargeRange: Story = {
 
 export const WeightRange: Story = {
   render: () => (
-    <RangeFacet 
+    <RangeFacet
       facet={{
         id: "weight",
         name: "Weight (kg)",

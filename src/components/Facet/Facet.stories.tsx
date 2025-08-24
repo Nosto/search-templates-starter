@@ -32,7 +32,7 @@ export const Default: Story = {
 
 export const WithSelectedFilters: Story = {
   render: () => (
-    <Facet 
+    <Facet
       facet={{
         ...mockFacet,
         data: [
@@ -40,7 +40,7 @@ export const WithSelectedFilters: Story = {
           { value: "clothing", count: 28, selected: true },
           { value: "accessories", count: 15, selected: false }
         ]
-      }} 
+      }}
     />
   ),
   parameters: {
@@ -54,7 +54,7 @@ export const WithSelectedFilters: Story = {
 
 export const LargeFacet: Story = {
   render: () => (
-    <Facet 
+    <Facet
       facet={{
         id: "brand",
         name: "Brand",
