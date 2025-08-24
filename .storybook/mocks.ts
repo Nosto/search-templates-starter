@@ -42,7 +42,7 @@ export const mockInitialState: Partial<State> = {
   loading: false,
   initialized: true,
   query: {
-    q: "",
+    q: "shoes",
     filters: [
       {
         field: "category",
