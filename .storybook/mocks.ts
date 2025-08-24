@@ -42,26 +42,7 @@ export const mockInitialState: Partial<State> = {
   loading: false,
   initialized: true,
   query: {
-    q: "shoes",
-    filters: [
-      {
-        field: "category",
-        type: "terms",
-        value: ["Clothing"]
-      },
-      {
-        field: "brand",
-        type: "terms",
-        value: ["BrandA", "BrandB"]
-      },
-      {
-        field: "price",
-        type: "range",
-        min: 20,
-        max: 200
-      }
-    ],
-    sort: { field: "_score", order: "desc" }
+    query: "shoes"
   },
   response: {
     products: {
@@ -69,8 +50,6 @@ export const mockInitialState: Partial<State> = {
       size: 24,
       total: 142,
       hits: generateMockProducts(24)
-    },
-    facets: [],
-    keywords: []
+    }
   }
 }

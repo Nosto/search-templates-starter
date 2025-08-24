@@ -7,7 +7,12 @@ import "../src/variable.css"
 
 export default {
   decorators: [
-    Story => h(SearchPageProvider, { config: mockConfig, store: createStore(mockInitialState) }, h(Story, {}))
+    Story =>
+      h(SearchPageProvider, {
+        config: mockConfig,
+        store: createStore(mockInitialState),
+        children: h(Story, {})
+      })
   ],
   parameters: {
     controls: {

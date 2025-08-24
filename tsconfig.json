@@ -33,5 +33,5 @@
     /* Plugins */
     "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
-  "include": ["src", ".storybook", "test"]
+  "include": ["src", ".storybook/**/*", "test"]
 }
