@@ -1,21 +1,17 @@
 import { describe, it, expect } from "vitest"
 import { render } from "preact"
-import { h } from "preact"
-import * as NoResultsStories from "../../../src/components/NoResults/NoResults.stories"
+import { default as meta, Default } from "@/components/NoResults/NoResults.stories"
+import { wrapStory } from "../../storybook"
 
 describe("NoResults Stories", () => {
-  it("renders Default story without errors", () => {
-    const story = NoResultsStories.Default
-    const args = story.args || {}
+  const stories = [{ name: "Default", story: Default }]
 
-    const container = document.createElement("div")
-    document.body.appendChild(container)
-
-    const element = h(NoResultsStories.default.component, args)
-    render(element, container)
-
-    expect(container.firstChild).toBeDefined()
-
-    document.body.removeChild(container)
+  stories.forEach(({ name, story }) => {
+    it(`renders ${name} story without errors`, () => {
+      const container = document.createElement("div")
+      const element = wrapStory(story, meta)
+      render(element, container)
+      expect(container.firstChild).toBeDefined()
+    })
   })
 })

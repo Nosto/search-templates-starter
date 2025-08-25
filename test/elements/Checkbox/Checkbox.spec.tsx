@@ -1,51 +1,21 @@
 import { describe, it, expect } from "vitest"
 import { render } from "preact"
-import { h } from "preact"
-import * as CheckboxStories from "../../../src/elements/Checkbox/Checkbox.stories"
+import { default as meta, Default, Selected, LongLabel } from "@/elements/Checkbox/Checkbox.stories"
+import { wrapStory } from "../../storybook"
 
 describe("Checkbox Stories", () => {
-  it("renders Default story without errors", () => {
-    const story = CheckboxStories.Default
-    const args = story.args || {}
+  const stories = [
+    { name: "Default", story: Default },
+    { name: "Selected", story: Selected },
+    { name: "LongLabel", story: LongLabel }
+  ]
 
-    const container = document.createElement("div")
-    document.body.appendChild(container)
-
-    const element = h(CheckboxStories.default.component, args)
-    render(element, container)
-
-    expect(container.firstChild).toBeDefined()
-
-    document.body.removeChild(container)
-  })
-
-  it("renders Selected story without errors", () => {
-    const story = CheckboxStories.Selected
-    const args = story.args || {}
-
-    const container = document.createElement("div")
-    document.body.appendChild(container)
-
-    const element = h(CheckboxStories.default.component, args)
-    render(element, container)
-
-    expect(container.firstChild).toBeDefined()
-
-    document.body.removeChild(container)
-  })
-
-  it("renders LongLabel story without errors", () => {
-    const story = CheckboxStories.LongLabel
-    const args = story.args || {}
-
-    const container = document.createElement("div")
-    document.body.appendChild(container)
-
-    const element = h(CheckboxStories.default.component, args)
-    render(element, container)
-
-    expect(container.firstChild).toBeDefined()
-
-    document.body.removeChild(container)
+  stories.forEach(({ name, story }) => {
+    it(`renders ${name} story without errors`, () => {
+      const container = document.createElement("div")
+      const element = wrapStory(story, meta)
+      render(element, container)
+      expect(container.firstChild).toBeDefined()
+    })
   })
 })
