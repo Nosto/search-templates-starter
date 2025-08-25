@@ -85,7 +85,7 @@ git commit --no-verify -m "your commit message"
 ```
 - **CRITICAL**: Use `--no-verify` flag to bypass Husky hooks that may cause pipeline failures
 - This prevents commitlint and other pre-commit hooks from blocking your commits
-- Ensure your commit messages follow conventional commit format even when using `--no-verify`
+- When committing code, ALWAYS use valid conventional commit format.
 
 ## Codebase Navigation
 
