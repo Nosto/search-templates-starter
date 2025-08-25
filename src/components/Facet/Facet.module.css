@@ -48,6 +48,11 @@
     width: 100%;
     box-sizing: border-box;
     padding: var(--ns-space-4);
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+    text-align: left;
 }
 
 .title {
