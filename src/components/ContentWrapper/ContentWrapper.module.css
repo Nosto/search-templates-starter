@@ -1,5 +1,5 @@
 .wrapper { 
-    min-height: 890px;
+    min-height: var(--ns-min-height-content);
     max-width: var(--ns-max-width-search-template);
     display: flex;
     flex-direction: column;

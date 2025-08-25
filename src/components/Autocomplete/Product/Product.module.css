@@ -8,7 +8,7 @@
 .image {
     height: auto;
     object-fit: contain;
-    width: 60px;
+    width: var(--ns-width-product-image);
     aspect-ratio: auto 60 / 40;
 }
 
