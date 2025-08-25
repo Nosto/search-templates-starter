@@ -1,7 +1,6 @@
 import { type SerpConfig } from "@nosto/search-js/preact/serp"
 import { type State } from "@nosto/search-js/preact/common"
 
-// Function to generate mock products with varying data
 export function generateMockProducts(count: number) {
   const categories = ["Clothing", "Electronics", "Home & Garden", "Sports", "Books", "Beauty"]
   const brands = ["BrandA", "BrandB", "BrandC", "BrandD", "BrandE", "BrandF"]
@@ -18,7 +17,7 @@ export function generateMockProducts(count: number) {
     return {
       productId: `product-${productNum}`,
       title: `${adjectives[adjectiveIndex]} ${productTypes[typeIndex]} ${productNum}`,
-      price: Math.round((Math.random() * 200 + 20) * 100) / 100, // Random price between 20-220
+      price: Math.round((Math.random() * 200 + 20) * 100) / 100, // 20-220
       currency: "EUR",
       category: categories[categoryIndex],
       brand: brands[brandIndex],
@@ -30,7 +29,6 @@ export function generateMockProducts(count: number) {
   })
 }
 
-// Mock config for Storybook that provides search context
 export const mockConfig: SerpConfig = {
   defaultCurrency: "EUR",
   search: {

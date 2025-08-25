@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import RangeFacet from "./RangeFacet"
 
-// Mock range facet data for Storybook
 const mockRangeFacet = {
   id: "price",
   name: "Price",

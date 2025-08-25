@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Facet from "./Facet"
 
-// Mock facet data for Storybook
 const mockFacet = {
   id: "category",
   name: "Category",

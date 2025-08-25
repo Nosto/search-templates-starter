@@ -13,11 +13,11 @@ export default {
 type Story = StoryObj<typeof Autocomplete>
 
 export const Default: Story = {
-  render: () => <Autocomplete onSubmit={(input: string) => console.log("Search submitted:", input)} />
+  render: () => <Autocomplete onSubmit={(input: string) => console.info("Search submitted:", input)} />
 }
 
 export const Interactive: Story = {
-  render: () => <Autocomplete onSubmit={(input: string) => console.log("Search submitted:", input)} />,
+  render: () => <Autocomplete onSubmit={(input: string) => console.info("Search submitted:", input)} />,
   parameters: {
     docs: {
       description: {

@@ -3,8 +3,6 @@ import fs from "fs"
 import path from "path"
 import { fileURLToPath } from "url"
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
-
 // Function to recursively find all .stories.tsx files
 function findStorybookFiles(dir: string): string[] {
   const files: string[] = []
@@ -24,6 +22,7 @@ function findStorybookFiles(dir: string): string[] {
   return files
 }
 
+// Function to verify story file structure
 // Function to verify story file structure
 function verifyStoryFileStructure(filePath: string): { valid: boolean; errors: string[] } {
   const content = fs.readFileSync(filePath, "utf-8")
@@ -51,7 +50,7 @@ function verifyStoryFileStructure(filePath: string): { valid: boolean; errors: s
 }
 
 describe("Storybook stories", () => {
-  const srcDir = path.join(__dirname, "..", "src")
+  const srcDir = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "src")
   const storyFiles = findStorybookFiles(srcDir)
 
   it("finds Storybook story files", () => {
