@@ -1,41 +1,20 @@
 import { describe, it, expect } from "vitest"
 import { render } from "preact"
-import { h } from "preact"
-import * as AutocompleteStories from "../../../src/components/Autocomplete/Autocomplete.stories"
-import { SearchPageProvider } from "@nosto/search-js/preact/serp"
-import { createStore } from "@nosto/search-js/preact/common"
-import { mockConfig, mockInitialState } from "../../utils/mocks"
+import { default as meta, Default, Interactive } from "@/components/Autocomplete/Autocomplete.stories"
+import { wrapStory } from "../../storybook"
 
 describe("Autocomplete Stories", () => {
-  it("renders Default story without errors", () => {
-    const container = document.createElement("div")
-    document.body.appendChild(container)
+  const stories = [
+    { name: "Default", story: Default },
+    { name: "Interactive", story: Interactive }
+  ]
 
-    const element = h(SearchPageProvider, {
-      config: mockConfig,
-      store: createStore(mockInitialState),
-      children: AutocompleteStories.Default.render()
+  stories.forEach(({ name, story }) => {
+    it(`renders ${name} story without errors`, () => {
+      const container = document.createElement("div")
+      const element = wrapStory(story, meta)
+      render(element, container)
+      expect(container.firstChild).toBeDefined()
     })
-    render(element, container)
-
-    expect(container.firstChild).toBeDefined()
-
-    document.body.removeChild(container)
-  })
-
-  it("renders Interactive story without errors", () => {
-    const container = document.createElement("div")
-    document.body.appendChild(container)
-
-    const element = h(SearchPageProvider, {
-      config: mockConfig,
-      store: createStore(mockInitialState),
-      children: AutocompleteStories.Interactive.render()
-    })
-    render(element, container)
-
-    expect(container.firstChild).toBeDefined()
-
-    document.body.removeChild(container)
   })
 })
