@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest"
 import fs from "fs"
 import path from "path"
 import { fileURLToPath } from "url"
+import { generateMockProducts, mockConfig, mockInitialState } from "./utils/mocks"
 
 // Function to recursively find all .stories.tsx files
 function findStorybookFiles(dir: string): string[] {
@@ -116,5 +117,33 @@ describe("Storybook stories", () => {
       const hasMockComponent = /MockedView|MockView|Mock.*Component/.test(content)
       expect(hasMockComponent, `${relativePath} should not contain mock components`).toBe(false)
     })
+  })
+})
+
+describe("Shared mock utilities", () => {
+  it("generates mock products with consistent structure", () => {
+    const products = generateMockProducts(5)
+
+    expect(products).toHaveLength(5)
+    products.forEach(product => {
+      expect(product).toHaveProperty("productId")
+      expect(product).toHaveProperty("title")
+      expect(product).toHaveProperty("price")
+      expect(product).toHaveProperty("currency", "EUR")
+      expect(product.productId).toMatch(/^product-\d+$/)
+      expect(typeof product.price).toBe("number")
+    })
+  })
+
+  it("provides valid mock config", () => {
+    expect(mockConfig).toHaveProperty("defaultCurrency", "EUR")
+    expect(mockConfig).toHaveProperty("search")
+  })
+
+  it("provides valid initial state", () => {
+    expect(mockInitialState).toHaveProperty("loading", false)
+    expect(mockInitialState).toHaveProperty("initialized", true)
+    expect(mockInitialState.query).toHaveProperty("query", "shoes")
+    expect(mockInitialState.response?.products?.hits).toHaveLength(24)
   })
 })

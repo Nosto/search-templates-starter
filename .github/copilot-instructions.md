@@ -114,6 +114,7 @@ npm run lint
 - Favor named exports over default exports
 - Avoid using `any` in TypeScript; prefer specific types or `unknown`
 - Use ES2020 level features and syntax conventions
+- **Avoid adding unnecessary comments** - only add comments when explicitly instructed or when complex logic needs explanation
 
 ### Preact Conventions
 - Favor functional style react components and use the function syntax instead of lambda syntax
@@ -142,6 +143,12 @@ npm run lint
   - Use inline styles for quick mockups rather than complex demo components
 - Keep stories focused on demonstrating the actual component structure and behavior
 - Avoid creating elaborate custom demo components that duplicate functionality
+
+### Pull Request Documentation
+- **PR descriptions should summarize the complete impact** of all changes made across the entire PR, not just the latest commit
+- Provide comprehensive overview of features added, refactoring done, and improvements made
+- Use clear sections to organize changes (e.g., "Enhanced Configuration", "Story Refactoring", "Validation and Testing")
+- Include validation steps and commands that verify the changes work correctly
 
 ## Common Issues and Troubleshooting
 
