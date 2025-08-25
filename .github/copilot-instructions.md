@@ -83,7 +83,6 @@ When committing code, ALWAYS run git commit with `--no-verify` to avoid Husky fa
 ```bash
 git commit --no-verify -m "your commit message"
 ```
-- **CRITICAL**: Use `--no-verify` flag to bypass Husky hooks that may cause pipeline failures
 - This prevents commitlint and other pre-commit hooks from blocking your commits
 - When committing code, ALWAYS use valid conventional commit format.
 
