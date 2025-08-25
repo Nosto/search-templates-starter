@@ -73,6 +73,7 @@
     --ns-width-select: 150px;
     --ns-width-loader: 60px;
     --ns-width-product-image: 60px;
+    --ns-width-autocomplete-offset: 4px;
 
     /* HEIGHT */
     --ns-height-icon: 12px;
