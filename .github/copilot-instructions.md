@@ -77,6 +77,7 @@ npm run lint
 - **Total time**: ~2.5 minutes
 - **NEVER CANCEL**: Set timeout to 10+ minutes total
 - This matches the CI pipeline in `.github/workflows/ci.yml`
+- **CRITICAL**: Only commit if all commands pass (typecheck, lint, and test must all succeed)
 
 ## Codebase Navigation
 
@@ -113,6 +114,7 @@ npm run lint
 - Favor named exports over default exports
 - Avoid using `any` in TypeScript; prefer specific types or `unknown`
 - Use ES2020 level features and syntax conventions
+- **Avoid adding unnecessary comments** - only add comments when explicitly instructed or when complex logic needs explanation
 
 ### Preact Conventions
 - Favor functional style react components and use the function syntax instead of lambda syntax
@@ -130,6 +132,23 @@ npm run lint
 - Use `beforeEach` for setup, `afterEach` for cleanup
 - Use `expect` for assertions
 - Test environment is jsdom for DOM-related testing
+
+### Storybook Stories
+- **ALWAYS** use actual components from the codebase in Storybook files instead of demo components
+- Import the real component: `import ComponentName from "./ComponentName"`
+- Set the Meta type to the actual component: `Meta<typeof ComponentName>`
+- For components that depend on Nosto hooks/context that aren't available in Storybook:
+  - Create a `MockedView` story that shows what the component would look like when properly integrated
+  - Include documentation noting the component requires Nosto search context
+  - Use inline styles for quick mockups rather than complex demo components
+- Keep stories focused on demonstrating the actual component structure and behavior
+- Avoid creating elaborate custom demo components that duplicate functionality
+
+### Pull Request Documentation
+- **PR descriptions should summarize the complete impact** of all changes made across the entire PR, not just the latest commit
+- Provide comprehensive overview of features added, refactoring done, and improvements made
+- Use clear sections to organize changes (e.g., "Enhanced Configuration", "Story Refactoring", "Validation and Testing")
+- Include validation steps and commands that verify the changes work correctly
 
 ## Common Issues and Troubleshooting
 
