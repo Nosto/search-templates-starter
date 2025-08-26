@@ -1,7 +1,6 @@
 import { init } from "@nosto/search-js/preact/inject"
 import Serp from "@/components/Serp/Serp"
 import "@/variable.css"
-import { serpConfig } from "@/config"
 import Products from "@/components/Autocomplete/Products/Products"
 import SearchQueryHandler from "@/components/SearchQueryHandler/SearchQueryHandler"
 // import { render } from "preact"

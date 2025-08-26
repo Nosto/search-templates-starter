@@ -21,7 +21,7 @@ export default function Autocomplete({ onSubmit }: Props) {
     return () => clearTimeout(handler)
   }, [input, newSearch])
 
-  useEffect(debounceSearch, [input])
+  useEffect(debounceSearch, [input, debounceSearch])
 
   const handleSearch = () => {
     if (input.trim()) {

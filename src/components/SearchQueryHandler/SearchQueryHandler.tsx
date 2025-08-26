@@ -22,7 +22,7 @@ export default function SearchQueryHandler() {
         }
       })
     }
-  }, [])
+  }, [newSearch, size])
 
   return null
 }
