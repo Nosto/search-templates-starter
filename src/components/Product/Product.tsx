@@ -30,7 +30,7 @@ export default function Product({ product, previewImage, children }: Props) {
         {product.brand && <div>{product.brand}</div>}
         <div>{product.name}</div>
         <div aria-label="Price">
-          <span>{product.priceText}</span>
+          <span>{product.price}</span>
           {product.listPrice && product.price && product.listPrice > product.price && (
             <span className={styles.specialPrice}>{product.listPrice}</span>
           )}

@@ -13,17 +13,19 @@ export function generateMockProducts(count: number) {
     const brandIndex = index % brands.length
     const adjectiveIndex = index % adjectives.length
     const typeIndex = index % productTypes.length
+    const listPrice = Math.round((Math.random() * 200 + 20) * 100) / 100
 
     return {
       productId: `product-${productNum}`,
       title: `${adjectives[adjectiveIndex]} ${productTypes[typeIndex]} ${productNum}`,
-      price: Math.round((Math.random() * 200 + 20) * 100) / 100,
+      price: Math.round(Math.random() * listPrice * 100) / 100,
+      listPrice,
       currency: "EUR",
       category: categories[categoryIndex],
       brand: brands[brandIndex],
       availability: "InStock",
       url: `/product-${productNum}`,
-      imageUrl: `https://via.placeholder.com/300x300?text=Product+${productNum}`,
+      imageUrl: "https://picsum.photos/300/300",
       description: `High-quality ${adjectives[adjectiveIndex].toLowerCase()} ${productTypes[typeIndex].toLowerCase()} from ${brands[brandIndex]}`
     }
   })

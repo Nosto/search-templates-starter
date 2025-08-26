@@ -15,9 +15,10 @@ type Story = StoryObj<typeof Product>
 const mockProduct = {
   product_id: "1",
   name: "Sample Product",
-  price: 29.99,
+  price: 30.0,
+  listPrice: 40.0,
   currency: "EUR",
-  image_url: "https://via.placeholder.com/300x300",
+  imageUrl: "https://picsum.photos/300/300",
   url: "#"
 }
 
