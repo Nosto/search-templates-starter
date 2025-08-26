@@ -8,7 +8,6 @@ export default defineConfig(({ mode }) => {
   return {
     build: {
       outDir: "dist",
-      formats: ["es", "cjs"],
       minify: true,
       sourcemap: true,
       rollupOptions: {
@@ -33,8 +32,7 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         "@": resolve(__dirname, "src")
-      },
-      dedupe: ["preact", "preact/hooks"]
+      }
     }
   }
 })
