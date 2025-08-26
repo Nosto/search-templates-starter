@@ -8,13 +8,51 @@
   </head>
 
   <body>
-    <script>
-        const mode = "%MODE%"; 
-        if (mode === "injected") {
-          location.href = "/injected.html";
-        } else if (mode === "native") {
-          location.href = "/native.html";
-        }
-      </script>
+    <div id="app"></div>
+    <script type="module">
+      const mode = __MODE__ || "native"
+      if (mode === "injected") {
+        import("/src/entries/injected.tsx")
+        const header = document.createElement("header")
+        const form = document.createElement("form")
+        const label = document.createElement("label")
+        const input = document.createElement("input")
+        const dropdown = document.createElement("div")
+        const main = document.createElement("main")
+
+        form.id = "search-form"
+        label.htmlFor = "search"
+        input.type = "text"
+        input.id = "search"
+        input.name = "search"
+        input.placeholder = "Search for products"
+        dropdown.id = "dropdown"
+        main.id = "serp"
+
+        label.appendChild(document.createTextNode("Search"))
+        form.appendChild(label)
+        form.appendChild(input)
+        form.appendChild(dropdown)
+        header.appendChild(form)
+        document.body.appendChild(header)
+        document.body.appendChild(main)
+
+      } else {
+        import("/src/entries/native.tsx")
+      }
+    </script>
+
+    <script type="module">
+      import { init } from "@nosto/nosto-js"
+      init({
+        merchantId: import.meta.env.VITE_MERCHANT_ID
+      })
+      setTimeout(() => {
+        nosto.reload({
+          site: location.href,
+          searchTemplatesEnabled: false
+        })
+      }, 500)
+    </script>
   </body>
 </html>
