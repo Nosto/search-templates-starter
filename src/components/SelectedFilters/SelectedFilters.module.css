@@ -50,4 +50,6 @@
     font-size: var(--ns-font-4);
     margin-left: auto;
     margin-right: 0;
+    background: none;
+    border: none;
 }

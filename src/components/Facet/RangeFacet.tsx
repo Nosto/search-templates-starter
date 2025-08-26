@@ -17,19 +17,29 @@ export default function RangeFacet({ facet }: Props) {
 
   return (
     <li className={cl(styles.dropdown, active && styles.active)}>
-      <span
+      <button
         className={styles.anchor}
         onClick={() => {
           setActive(!active)
         }}
+        onKeyDown={e => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault()
+            setActive(!active)
+          }
+        }}
+        aria-controls={`${facet.id}-range-menu`}
+        aria-expanded={active}
+        aria-label={`${active ? "Collapse" : "Expand"} ${facet.name} range filter`}
+        type="button"
       >
         <span className={styles.title}>{facet.name}</span>
         {isSelected && <span className={styles.count}>{1}</span>}
         <span className={styles.icon}>
           <Icon name={active ? "arrow-up" : "arrow-down"} />
         </span>
-      </span>
-      <div className={styles.menu} aria-expanded={active}>
+      </button>
+      <div className={styles.menu} id={`${facet.id}-range-menu`} aria-expanded={active}>
         <div className={styles.range}>
           <div className={styles.input}>
             <label htmlFor={`ns-${facet.id}-min`}>Min.</label>

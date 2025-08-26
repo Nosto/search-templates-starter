@@ -48,6 +48,9 @@
     width: 100%;
     box-sizing: border-box;
     padding: var(--ns-space-4);
+    background: none;
+    border: none;
+    text-align: left;
 }
 
 .title {
