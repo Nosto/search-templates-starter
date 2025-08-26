@@ -3,7 +3,6 @@ import Serp from "@/components/Serp/Serp"
 import "@/variable.css"
 import Products from "@/components/Autocomplete/Products/Products"
 import SearchQueryHandler from "@/components/SearchQueryHandler/SearchQueryHandler"
-// import { render } from "preact"
 
 function injectSearch() {
   init({
