@@ -1,0 +1,18 @@
+.container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: var(--ns-space-1) var(--ns-space-2);
+}
+
+.name {
+    font-size: var(--ns-font-size-4);
+    font-weight: var(--ns-weight-medium);
+    color: var(--ns-color-text);
+}
+
+.container:hover,
+.highlighted {
+    background-color: var(--ns-color-grey-light);
+}

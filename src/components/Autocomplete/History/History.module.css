@@ -1,0 +1,19 @@
+.container {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: var(--ns-border-width-thin) solid var(--ns-color-grey);
+    z-index: var(--ns-z-index-autocomplete);
+    max-height: 400px;
+    overflow: auto;
+    margin-top: var(--ns-space-2);
+    padding: var(--ns-space-2);
+}
+
+.header {
+    font-size: var(--ns-font-size-4);
+    font-weight: var(--ns-weight-bold);
+    padding: var(--ns-space-2);
+}
