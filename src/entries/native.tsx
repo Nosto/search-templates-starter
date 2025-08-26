@@ -5,7 +5,7 @@ import "@/variable.css"
 import { serpConfig } from "@/config"
 import { render } from "preact"
 
-function Native() {
+function App() {
   return (
     <>
       <SearchPageProvider config={serpConfig}>
@@ -16,4 +16,4 @@ function Native() {
   )
 }
 
-render(<Native />, document.getElementById("app")!)
+render(<App />, document.getElementById("app")!)

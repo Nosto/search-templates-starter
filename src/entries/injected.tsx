@@ -4,40 +4,36 @@ import "@/variable.css"
 import Products from "@/components/Autocomplete/Products/Products"
 import SearchQueryHandler from "@/components/SearchQueryHandler/SearchQueryHandler"
 
-function injectSearch() {
-  init({
-    autocomplete: {
-      config: {
-        defaultCurrency: "EUR"
-      },
-      inputCssSelector: "#search",
-      formCssSelector: "#search-form",
-      dropdownCssSelector: "#dropdown",
-      onNavigateToSearch: query => {
-        location.href = `/?q=${query.query}`
-      },
-      renderAutocomplete: () => <Products />,
-      query: {
-        keywords: {
-          fields: ["keyword", "_highlight.keyword"],
-          size: 5,
-          facets: ["*"]
-        }
-      }
+init({
+  autocomplete: {
+    config: {
+      defaultCurrency: "EUR"
     },
-    serp: {
-      config: {
-        defaultCurrency: "EUR"
-      },
-      cssSelector: "#serp",
-      render: () => (
-        <>
-          <SearchQueryHandler />
-          <Serp />
-        </>
-      )
+    inputCssSelector: "#search",
+    formCssSelector: "#search-form",
+    dropdownCssSelector: "#dropdown",
+    onNavigateToSearch: query => {
+      location.href = `/?q=${query.query}`
+    },
+    renderAutocomplete: () => <Products />,
+    query: {
+      keywords: {
+        fields: ["keyword", "_highlight.keyword"],
+        size: 5,
+        facets: ["*"]
+      }
     }
-  })
-}
-
-injectSearch()
+  },
+  serp: {
+    config: {
+      defaultCurrency: "EUR"
+    },
+    cssSelector: "#serp",
+    render: () => (
+      <>
+        <SearchQueryHandler />
+        <Serp />
+      </>
+    )
+  }
+})

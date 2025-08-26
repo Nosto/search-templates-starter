@@ -23,9 +23,6 @@ export default defineConfig(({ mode }) => ({
     globals: true,
     environment: "jsdom"
   },
-  define: {
-    __MODE__: JSON.stringify(mode)
-  },
   resolve: {
     alias: {
       "@": resolve(__dirname, "src")

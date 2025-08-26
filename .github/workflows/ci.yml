@@ -21,7 +21,7 @@ jobs:
         run: npm ci
 
       - name: Run native build
-        run: npm run build:native
+        run: npm run build
 
       - name: Run injected build
         run: npm run build:injected
