@@ -8,7 +8,10 @@ export default defineConfig(({ mode }) => ({
     minify: true,
     sourcemap: true,
     rollupOptions: {
-      input: resolve(__dirname, `src/entries/${mode}.tsx`),
+      input:
+        mode === "native"
+          ? [resolve(__dirname, `index.html`), resolve(__dirname, `src/entries/native.tsx`)]
+          : resolve(__dirname, `src/entries/injected.tsx`),
       output: {
         entryFileNames: "[name].js",
         assetFileNames: "[name][extname]"
