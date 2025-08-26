@@ -5,6 +5,19 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Search templates starter</title>
+    <style>
+      #dropdown {
+        top: 28px;
+        position: absolute;
+        left: 20%;
+        right: 20%;
+      }
+      #search-form {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+      }
+    </style>
   </head>
 
   <body>
@@ -36,7 +49,6 @@
         header.appendChild(form)
         document.body.appendChild(header)
         document.body.appendChild(main)
-
       } else {
         import("/src/entries/native.tsx")
       }
