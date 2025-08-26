@@ -40,9 +40,27 @@ export const mockInitialState: Partial<State> = {
   loading: false,
   initialized: true,
   query: {
-    query: "shoes"
+    query: "shoes",
+    products: {
+      filter: [
+        {
+          field: "color",
+          value: ["red"]
+        },
+        {
+          field: "price",
+          range: [
+            {
+              gte: "50",
+              lte: "150"
+            }
+          ]
+        }
+      ]
+    }
   },
   response: {
+    query: "shoes",
     products: {
       from: 1,
       size: 24,
