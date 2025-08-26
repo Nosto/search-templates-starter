@@ -3,15 +3,13 @@ import { productImagePlaceholder } from "@/helpers"
 import { SearchProduct } from "@nosto/nosto-js/client"
 import styles from "./Product.module.css"
 
-export default function Product({
-  product,
-  previewImage,
-  children
-}: {
+type Props = {
   product: SearchProduct
   previewImage?: string
   children?: preact.JSX.Element | preact.JSX.Element[]
-}) {
+}
+
+export default function Product({ product, previewImage, children }: Props) {
   return (
     <SerpElement
       as="a"

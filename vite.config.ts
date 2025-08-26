@@ -4,13 +4,20 @@ import preact from "@preact/preset-vite"
 
 export default defineConfig(({ mode }) => ({
   build: {
-    lib: {
-      entry: {
-        injected: resolve(__dirname, "src/entries/injected.tsx"),
-        native: resolve(__dirname, "src/entries/native.tsx")
-      },
-      formats: ["es", "cjs"],
-      fileName: (format, name) => `${name}.${format}.js`
+    outDir: "dist",
+    entry: {
+      injected: resolve(__dirname, "src/entries/injected.tsx"),
+      native: resolve(__dirname, "src/entries/native.tsx")
+    },
+    formats: ["es", "cjs"],
+    minify: true,
+    sourcemap: true,
+    rollupOptions: {
+      input: resolve(__dirname, "src/index.tsx"),
+      output: {
+        entryFileNames: "[name].js",
+        assetFileNames: "[name][extname]"
+      }
     }
   },
   plugins: [preact()],

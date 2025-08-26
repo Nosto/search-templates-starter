@@ -4,14 +4,19 @@ import RangeInput from "@/elements/RangeInput/RangeInput"
 import Icon from "@/elements/Icon/Icon"
 import { SearchStatsFacet } from "@nosto/nosto-js/client"
 import styles from "./Facet.module.css"
+import cl from "@/utils/cl"
 
-export default function RangeFacet({ facet }: { facet: SearchStatsFacet }) {
+type Props = {
+  facet: SearchStatsFacet
+}
+
+export default function RangeFacet({ facet }: Props) {
   const { min, max, range, updateRange } = useRange(facet.id)
   const isSelected = min !== range[0] || max !== range[1]
   const [active, setActive] = useState(isSelected)
 
   return (
-    <li className={`${styles.dropdown} ${active ? styles.active : ""}`}>
+    <li className={cl(styles.dropdown, active && styles.active)}>
       <span
         className={styles.anchor}
         onClick={() => {
@@ -27,7 +32,7 @@ export default function RangeFacet({ facet }: { facet: SearchStatsFacet }) {
       <div className={styles.menu} aria-expanded={active}>
         <div className={styles.range}>
           <div className={styles.input}>
-            <label for={`ns-${facet.id}-min`}>Min.</label>
+            <label htmlFor={`ns-${facet.id}-min`}>Min.</label>
             <RangeInput
               id={`ns-${facet.id}-min`}
               min={min}
@@ -40,7 +45,7 @@ export default function RangeFacet({ facet }: { facet: SearchStatsFacet }) {
             />
           </div>
           <div className={styles.input}>
-            <label for={`ns-${facet.id}-max`}>Max.</label>
+            <label htmlFor={`ns-${facet.id}-max`}>Max.</label>
             <RangeInput
               id={`ns-${facet.id}-max`}
               min={min}

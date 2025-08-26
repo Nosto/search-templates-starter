@@ -29,11 +29,21 @@
     --ns-space-3: 0.75rem;
     --ns-space-2: 0.5rem;
     --ns-space-1: 0.25rem;
+    --ns-space-05: 5px;
+    --ns-space-10: 10px;
+    --ns-space-16: 16px;
 
     /* BORDER-RADIUS */
     --ns-border-radius-3: 3px;
     --ns-border-radius-4: 4px;
     --ns-border-radius-circle: 50%;
+    --ns-border-radius-pill: 50px;
+
+    /* BORDER-WIDTH */
+    --ns-border-width-none: 0;
+    --ns-border-width-thin: 1px;
+    --ns-border-width-medium: 2px;
+    --ns-border-width-thick: 8px;
 
     /* LINE-HEIGHT */
     --ns-line-height-tiny: 1;
@@ -48,6 +58,9 @@
     /* BOX SHADOW */
     --ns-box-shadow-button: inset 0 0 40px rgb(0 0 0 / .25);
     --ns-box-shadow-slider-handle: 0 0 5px var(--ns-color-primary-dark);
+    --ns-box-shadow-autocomplete: 2px 2px 2px var(--ns-color-grey);
+    --ns-shadow-offset-small: 2px;
+    --ns-shadow-offset-medium: 3px;
 
     /* WIDTH */
     --ns-max-width-search-template: 1500px;
@@ -57,9 +70,16 @@
     --ns-width-icon: 12px;
     --ns-width-input-checkbox: 16px;
     --ns-width-input-checkbox-tick: 5px;
+    --ns-width-select: 150px;
+    --ns-width-loader: 60px;
+    --ns-width-product-image: 60px;
+    --ns-width-autocomplete-offset: 4px;
 
     /* HEIGHT */
     --ns-height-icon: 12px;
     --ns-height-input-checkbox: 16px;
     --ns-height-input-checkbox-tick: 10px;
+    --ns-height-loader: 60px;
+    --ns-height-loader-container: 300px;
+    --ns-min-height-content: 890px;
 }

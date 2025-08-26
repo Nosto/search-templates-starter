@@ -3,7 +3,11 @@ import { productImagePlaceholder } from "@/helpers"
 import style from "./Product.module.css"
 import { SearchProduct } from "@nosto/nosto-js/client"
 
-export default function Product({ hit }: { hit: SearchProduct }) {
+type Props = {
+  hit: SearchProduct
+}
+
+export default function Product({ hit }: Props) {
   return (
     <AutocompleteElement
       key={hit.productId}

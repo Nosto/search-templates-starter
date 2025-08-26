@@ -1,5 +1,5 @@
 .dropdown {
-    border-bottom: 1px solid var(--ns-color-grey-light);
+    border-bottom: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
 }
 
 @media only screen and (min-width: 768px) {
@@ -31,9 +31,9 @@
 }
 
 .dropdown > .anchor .icon {
-    right: 16px;
+    right: var(--ns-space-16);
     display: block;
-    top: 16px;
+    top: var(--ns-space-16);
     position: absolute;
 }
 
@@ -66,7 +66,7 @@
 }
 
 .anchor .count {
-    border-radius: 50px;
+    border-radius: var(--ns-border-radius-pill);
     color: var(--ns-color-white);
     background-color: var(--ns-color-primary);
     padding: 0.1rem 0.35rem;

@@ -2,16 +2,15 @@ import { usePagination, useActions, Page } from "@nosto/search-js/preact/hooks"
 import Icon from "@/elements/Icon/Icon"
 import { JSX } from "preact/jsx-runtime"
 import style from "./Pagination.module.css"
+import cl from "@/utils/cl"
 
-function PageLink({
-  onClick,
-  href,
-  className,
-  ariaLabel,
-  children
-}: JSX.IntrinsicElements["a"] & { ariaLabel?: string }) {
+type Props = {
+  ariaLabel?: string
+} & JSX.IntrinsicElements["a"]
+
+function PageLink({ onClick, href, className, ariaLabel, children }: Props) {
   return (
-    <a class={`${style.link} ${className}`} href={href} aria-label={ariaLabel} onClick={onClick}>
+    <a className={cl(style.link, className)} href={href} aria-label={ariaLabel} onClick={onClick}>
       {children}
     </a>
   )
@@ -58,7 +57,7 @@ export default function Pagination() {
       )}
 
       {pages.map(page => (
-        <li key={page.page} class={`${page.current ? style.active : ""}`}>
+        <li key={page.page} className={cl(page.current && style.active)}>
           <PageLink ariaLabel={`${page.page} page`} {...pageLinkProps(page)}>
             {page.page}
           </PageLink>

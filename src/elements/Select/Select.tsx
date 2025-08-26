@@ -1,20 +1,17 @@
 import { JSX } from "preact"
 import styles from "./Select.module.css"
+import cl from "@/utils/cl"
 
-export default function Select({
-  value,
-  onChange,
-  className,
-  options,
-  label
-}: JSX.IntrinsicElements["select"] & {
+type Props = {
   options: { value: string | number; label: string }[]
   label?: string
-}) {
+} & JSX.IntrinsicElements["select"]
+
+export default function Select({ value, onChange, className, options, label }: Props) {
   return (
     <div className={styles.wrapper}>
       <select
-        className={`${styles.menu} ${className}`}
+        className={cl(styles.menu, className)}
         value={value || "placeholder"}
         onChange={onChange}
         aria-label={label || "Select"}

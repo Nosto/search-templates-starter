@@ -10,7 +10,7 @@
     -moz-user-select: none;
     user-select: none;
     background-color: transparent;
-    border: 1px solid transparent;
+    border: var(--ns-border-width-thin) solid transparent;
     padding: var(--ns-space-2) var(--ns-space-2);
     font-size: var(--ns-font-size-4);
     border-radius: var(--ns-border-radius-4);

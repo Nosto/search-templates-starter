@@ -7,17 +7,17 @@
 
 .wrapper {
     width: 100%;
-    height: 300px;
+    height: var(--ns-height-loader-container);
     position: absolute;
     z-index: 1;
 }
 
-.wrapper > .loader {
-    border: 8px solid var(--ns-color-grey-light);
-    border-top: 8px solid var(--ns-color-primary);
+.loader {
+    border: var(--ns-border-width-thick) solid var(--ns-color-grey-light);
+    border-top: var(--ns-border-width-thick) solid var(--ns-color-primary);
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
+    width: var(--ns-width-loader);
+    height: var(--ns-height-loader);
     animation: spin 2s linear infinite;
 }
 

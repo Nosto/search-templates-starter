@@ -1,6 +1,9 @@
 import { JSX } from "preact"
 import styles from "./RangeInput.module.css"
+import cl from "@/utils/cl"
 
-export default function RangeInput({ className, ...props }: JSX.IntrinsicElements["input"]) {
-  return <input type="number" className={`${styles.input} ${className}`} {...props} />
+type Props = JSX.IntrinsicElements["input"]
+
+export default function RangeInput({ className, ...props }: Props) {
+  return <input type="number" className={cl(styles.input, className)} {...props} />
 }

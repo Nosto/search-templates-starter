@@ -5,13 +5,18 @@ import Icon from "@/elements/Icon/Icon"
 import { SearchStatsFacet, SearchTermsFacet } from "@nosto/nosto-js/client"
 import styles from "./Sidebar.module.css"
 import Button from "@/elements/Button/Button"
+import cl from "@/utils/cl"
 
 export const toggleButtonId = "toggle-mobile-sidebar"
 
-function ToggleSidebarButton({ className }: { className?: string } = {}) {
+type Props = {
+  className?: string
+}
+
+function ToggleSidebarButton({ className }: Props = {}) {
   return (
-    <Button className={`${styles.close} ${className}`}>
-      <label for={toggleButtonId}>
+    <Button className={cl(styles.close, className)}>
+      <label htmlFor={toggleButtonId}>
         <Icon name="close" />
       </label>
     </Button>
@@ -24,7 +29,7 @@ export default function SideBar() {
   return facets?.length > 0 ? (
     <>
       <input type="checkbox" id={toggleButtonId} className={styles.toggle} />
-      <label className={styles.backdrop} for={toggleButtonId} />
+      <label className={styles.backdrop} htmlFor={toggleButtonId} />
       <div className={styles.wrapper} style={loading ? "opacity: 0.3;" : ""}>
         <div className={styles.content}>
           <div className={styles.header}>
