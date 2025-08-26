@@ -4,7 +4,6 @@ import { Search } from "@/components/Search/Search"
 import "@/variable.css"
 import { serpConfig } from "@/config"
 import { render } from "preact"
-// import { render } from "preact"
 
 function Native() {
   return (
