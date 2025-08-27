@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest"
-import { render } from "preact"
+import { render } from "@testing-library/preact"
 import { default as meta, Default, All } from "@/elements/Icon/Icon.stories"
 import { wrapStory } from "../../storybook"
 
@@ -11,10 +11,11 @@ describe("Icon Stories", () => {
 
   stories.forEach(({ name, story }) => {
     it(`renders ${name} story without errors`, () => {
-      const container = document.createElement("div")
       const element = wrapStory(story, meta)
-      render(element, container)
-      expect(container.firstChild).toBeDefined()
+      const { container } = render(element)
+      expect(container).toBeInTheDocument()
+      // Check that something was rendered (element or text content)
+      expect(container.innerHTML.length).toBeGreaterThan(0)
     })
   })
 })
