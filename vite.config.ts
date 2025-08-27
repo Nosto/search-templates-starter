@@ -2,16 +2,15 @@ import { resolve } from "path"
 import { defineConfig } from "vitest/config"
 import preact from "@preact/preset-vite"
 
-export default defineConfig(({ mode }) => ({
+const dirname = import.meta.dirname
+
+export default defineConfig(() => ({
   build: {
     outDir: "dist",
     minify: true,
     sourcemap: true,
     rollupOptions: {
-      input:
-        mode === "native"
-          ? [resolve(__dirname, `index.html`), resolve(__dirname, `src/entries/native.tsx`)]
-          : resolve(__dirname, `src/entries/injected.tsx`),
+      input: resolve(dirname, `index.html`),
       output: {
         entryFileNames: "[name].js",
         assetFileNames: "[name][extname]"
@@ -28,7 +27,7 @@ export default defineConfig(({ mode }) => ({
   },
   resolve: {
     alias: {
-      "@": resolve(__dirname, "src")
+      "@": resolve(dirname, "src")
     }
   }
 }))
