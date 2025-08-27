@@ -38,8 +38,8 @@
           import("/src/entries/injected.tsx")
           return
         }
-        import("/src/entries/native.tsx")
         document.querySelector("#app").innerHTML = ""
+        import("/src/entries/native.tsx")
       }
       renderApp()
     </script>
