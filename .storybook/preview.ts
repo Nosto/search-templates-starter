@@ -2,7 +2,7 @@ import type { Preview } from "@storybook/preact-vite"
 import { h } from "preact"
 import { SearchPageProvider } from "@nosto/search-js/preact/serp"
 import { createStore } from "@nosto/search-js/preact/common"
-import { mockConfig, mockInitialState } from "./mocks"
+import { mockConfig, mockInitialState } from "../test/utils/mocks"
 import "../src/variable.css"
 
 export default {
