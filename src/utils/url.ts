@@ -1,6 +1,7 @@
 export interface UrlQueryState {
   query?: string
   page?: number
+  filter?: Array<{ field: string; value: string }>
 }
 
 export function serializeQueryState(state: UrlQueryState): URLSearchParams {
@@ -12,6 +13,11 @@ export function serializeQueryState(state: UrlQueryState): URLSearchParams {
 
   if (state.page && state.page > 1) {
     params.set("p", state.page.toString())
+  }
+
+  if (state.filter && state.filter.length > 0) {
+    const filterString = state.filter.map(f => `${f.field}:${f.value}`).join(",")
+    params.set("filter", filterString)
   }
 
   return params
@@ -30,6 +36,21 @@ export function deserializeQueryState(searchParams: URLSearchParams): UrlQuerySt
     const pageNum = parseInt(p, 10)
     if (!isNaN(pageNum) && pageNum > 1) {
       state.page = pageNum
+    }
+  }
+
+  const filter = searchParams.get("filter")
+  if (filter) {
+    const filterPairs = filter
+      .split(",")
+      .map(pair => {
+        const [field, value = ""] = pair.split(":")
+        return { field: field?.trim() || "", value: value?.trim() || "" }
+      })
+      .filter(pair => pair.field && pair.value)
+
+    if (filterPairs.length > 0) {
+      state.filter = filterPairs
     }
   }
 
