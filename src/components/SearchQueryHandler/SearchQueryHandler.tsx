@@ -26,10 +26,7 @@ export default function SearchQueryHandler() {
           from: searchFrom,
           ...(filter &&
             filter.length > 0 && {
-              filters: filter.map(f => ({
-                field: f.field,
-                value: f.value
-              }))
+              filters: filter
             })
         }
       }
@@ -43,15 +40,7 @@ export default function SearchQueryHandler() {
     const currentPage = from ? Math.floor(from / size) + 1 : 1
 
     // Convert current filters to URL format
-    const currentFilters =
-      filters && filters.length > 0
-        ? filters
-            .map(f => ({
-              field: f?.field || "",
-              value: Array.isArray(f?.value) ? f.value.join(",") : f?.value || ""
-            }))
-            .filter(f => f.field && f.value)
-        : undefined
+    const currentFilters = filters && filters.length > 0 ? filters : undefined
 
     updateURL({
       query: query || undefined,

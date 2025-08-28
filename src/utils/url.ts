@@ -1,6 +1,6 @@
 export interface Filter {
-  field: string
-  value: string
+  field?: string
+  value?: string | string[]
 }
 
 export interface UrlQueryState {
@@ -9,7 +9,7 @@ export interface UrlQueryState {
   filter?: Filter[]
 }
 
-export function serializeQueryState(state: UrlQueryState): URLSearchParams {
+export function serializeQueryState(state: UrlQueryState) {
   const params = new URLSearchParams()
 
   if (state.query) {
@@ -22,14 +22,16 @@ export function serializeQueryState(state: UrlQueryState): URLSearchParams {
 
   if (state.filter && state.filter.length > 0) {
     state.filter.forEach(f => {
-      params.append(f.field, f.value)
+      if (f.field && f.value !== undefined) {
+        params.append(`filter.${f.field}`, Array.isArray(f.value) ? f.value.join(",") : String(f.value))
+      }
     })
   }
 
   return params
 }
 
-export function deserializeQueryState(searchParams: URLSearchParams): UrlQueryState {
+export function deserializeQueryState(searchParams: URLSearchParams) {
   const state: UrlQueryState = {}
 
   const q = searchParams.get("q")
@@ -46,11 +48,11 @@ export function deserializeQueryState(searchParams: URLSearchParams): UrlQuerySt
   }
 
   const filters: Filter[] = []
-  const knownParams = new Set(["q", "p"])
 
   for (const [key, value] of searchParams.entries()) {
-    if (!knownParams.has(key) && value.trim()) {
-      filters.push({ field: key, value: value.trim() })
+    if (key.startsWith("filter.") && value.trim()) {
+      const field = key.substring(7) // Remove "filter." prefix
+      filters.push({ field, value: value.trim() })
     }
   }
 
@@ -61,7 +63,7 @@ export function deserializeQueryState(searchParams: URLSearchParams): UrlQuerySt
   return state
 }
 
-export function updateURL(state: UrlQueryState): void {
+export function updateURL(state: UrlQueryState) {
   const params = serializeQueryState(state)
   const url = new URL(window.location.pathname, window.location.origin || "http://localhost")
   url.search = params.toString()
@@ -69,7 +71,7 @@ export function updateURL(state: UrlQueryState): void {
   window.history.replaceState(null, "", url.pathname + url.search)
 }
 
-export function getCurrentUrlState(): UrlQueryState {
+export function getCurrentUrlState() {
   const searchParams = new URLSearchParams(window.location.search)
   return deserializeQueryState(searchParams)
 }
