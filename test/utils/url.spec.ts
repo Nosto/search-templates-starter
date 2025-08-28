@@ -4,21 +4,21 @@ import { serializeQueryState, deserializeQueryState, updateURL, getCurrentUrlSta
 describe("URL utilities", () => {
   describe("serializeQueryState", () => {
     it("creates URLSearchParams with query parameter", () => {
-      const state = { q: "test search" }
+      const state = { query: "test search" }
       const params = serializeQueryState(state)
       expect(params.get("q")).toBe("test search")
       expect(params.get("p")).toBeNull()
     })
 
     it("creates URLSearchParams with page parameter when greater than 1", () => {
-      const state = { q: "test", p: 2 }
+      const state = { query: "test", page: 2 }
       const params = serializeQueryState(state)
       expect(params.get("q")).toBe("test")
       expect(params.get("p")).toBe("2")
     })
 
     it("omits page parameter when equal to 1", () => {
-      const state = { q: "test", p: 1 }
+      const state = { query: "test", page: 1 }
       const params = serializeQueryState(state)
       expect(params.get("q")).toBe("test")
       expect(params.get("p")).toBeNull()
@@ -31,7 +31,7 @@ describe("URL utilities", () => {
     })
 
     it("omits empty query", () => {
-      const state = { q: "", p: 2 }
+      const state = { query: "", page: 2 }
       const params = serializeQueryState(state)
       expect(params.get("q")).toBeNull()
       expect(params.get("p")).toBe("2")
@@ -42,29 +42,29 @@ describe("URL utilities", () => {
     it("parses query parameter", () => {
       const params = new URLSearchParams("q=test+search")
       const state = deserializeQueryState(params)
-      expect(state.q).toBe("test search")
-      expect(state.p).toBeUndefined()
+      expect(state.query).toBe("test search")
+      expect(state.page).toBeUndefined()
     })
 
     it("parses page parameter when greater than 1", () => {
       const params = new URLSearchParams("q=test&p=3")
       const state = deserializeQueryState(params)
-      expect(state.q).toBe("test")
-      expect(state.p).toBe(3)
+      expect(state.query).toBe("test")
+      expect(state.page).toBe(3)
     })
 
     it("omits page parameter when equal to 1", () => {
       const params = new URLSearchParams("q=test&p=1")
       const state = deserializeQueryState(params)
-      expect(state.q).toBe("test")
-      expect(state.p).toBeUndefined()
+      expect(state.query).toBe("test")
+      expect(state.page).toBeUndefined()
     })
 
     it("handles invalid page parameter", () => {
       const params = new URLSearchParams("q=test&p=invalid")
       const state = deserializeQueryState(params)
-      expect(state.q).toBe("test")
-      expect(state.p).toBeUndefined()
+      expect(state.query).toBe("test")
+      expect(state.page).toBeUndefined()
     })
 
     it("handles empty parameters", () => {
@@ -76,7 +76,7 @@ describe("URL utilities", () => {
     it("ignores unknown parameters", () => {
       const params = new URLSearchParams("q=test&unknown=value&p=2")
       const state = deserializeQueryState(params)
-      expect(state).toEqual({ q: "test", p: 2 })
+      expect(state).toEqual({ query: "test", page: 2 })
     })
   })
 
@@ -100,7 +100,7 @@ describe("URL utilities", () => {
     })
 
     it("updates URL with query parameters", () => {
-      const state = { q: "test search", p: 2 }
+      const state = { query: "test search", page: 2 }
       updateURL(state)
       expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?q=test+search&p=2")
     })
@@ -113,7 +113,7 @@ describe("URL utilities", () => {
 
     it("preserves pathname", () => {
       window.location.pathname = "/some/path"
-      const state = { q: "test" }
+      const state = { query: "test" }
       updateURL(state)
       expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/some/path?q=test")
     })
@@ -132,7 +132,7 @@ describe("URL utilities", () => {
     it("parses current URL search parameters", () => {
       window.location.search = "?q=current+search&p=3"
       const state = getCurrentUrlState()
-      expect(state).toEqual({ q: "current search", p: 3 })
+      expect(state).toEqual({ query: "current search", page: 3 })
     })
 
     it("handles empty search parameters", () => {

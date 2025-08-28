@@ -1,17 +1,17 @@
 export interface UrlQueryState {
-  q?: string
-  p?: number
+  query?: string
+  page?: number
 }
 
 export function serializeQueryState(state: UrlQueryState): URLSearchParams {
   const params = new URLSearchParams()
 
-  if (state.q) {
-    params.set("q", state.q)
+  if (state.query) {
+    params.set("q", state.query)
   }
 
-  if (state.p && state.p > 1) {
-    params.set("p", state.p.toString())
+  if (state.page && state.page > 1) {
+    params.set("p", state.page.toString())
   }
 
   return params
@@ -22,14 +22,14 @@ export function deserializeQueryState(searchParams: URLSearchParams): UrlQuerySt
 
   const q = searchParams.get("q")
   if (q) {
-    state.q = q
+    state.query = q
   }
 
   const p = searchParams.get("p")
   if (p) {
     const pageNum = parseInt(p, 10)
     if (!isNaN(pageNum) && pageNum > 1) {
-      state.p = pageNum
+      state.page = pageNum
     }
   }
 

@@ -14,11 +14,11 @@ export default function SearchQueryHandler() {
 
   // Initialize search from URL on first load
   useEffect(() => {
-    const { q, p } = getCurrentUrlState()
-    if (q || p) {
-      const searchFrom = p ? (p - 1) * size + 1 : 1
+    const { query, page } = getCurrentUrlState()
+    if (query || page) {
+      const searchFrom = page ? (page - 1) * size : 0
       newSearch({
-        query: q || "",
+        query: query || "",
         products: {
           size,
           from: searchFrom
@@ -31,8 +31,8 @@ export default function SearchQueryHandler() {
   useEffect(() => {
     const currentPage = from ? Math.floor(from / size) + 1 : 1
     updateURL({
-      q: query || undefined,
-      p: currentPage > 1 ? currentPage : undefined
+      query: query || undefined,
+      page: currentPage > 1 ? currentPage : undefined
     })
   }, [query, from, size])
 
