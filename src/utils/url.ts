@@ -1,7 +1,3 @@
-/**
- * URL state management utilities for query serialization/deserialization
- */
-
 export interface UrlQueryState {
   q?: string
   p?: number
