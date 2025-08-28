@@ -24,7 +24,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint",
     "lint-fix": "eslint --fix",
-    "format": "prettier --write \"src/**/*.{js,ts,tsx,css}\" \"test/**/*.{js,ts,tsx}\" \"*.{js,ts}\" \".storybook/**/*.{js,ts}\"",
+    "prettier": "prettier --write \"{src,test}/**/*.{js,ts,tsx}\" \"src/**/*.css\" \"*.{js,ts}\" \".storybook/**/*.{js,ts}\"",
     "preview": "vite preview",
     "typedoc": "typedoc src/entries/native.tsx",
     "typedoc:injected": "typedoc src/entries/injected.tsx",
