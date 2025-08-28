@@ -19,27 +19,18 @@ export default function SearchQueryHandler() {
     if (query || page || filter) {
       const searchFrom = page ? (page - 1) * size : 0
 
-      const searchConfig: {
-        query: string
-        products: {
-          size: number
-          from: number
-          filters?: Array<{ field: string; value: string }>
-        }
-      } = {
+      const searchConfig = {
         query: query || "",
         products: {
           size,
-          from: searchFrom
+          from: searchFrom,
+          ...(filter && filter.length > 0 && {
+            filters: filter.map(f => ({
+              field: f.field,
+              value: f.value
+            }))
+          })
         }
-      }
-
-      // Add filters if they exist in URL
-      if (filter && filter.length > 0) {
-        searchConfig.products.filters = filter.map(f => ({
-          field: f.field,
-          value: f.value
-        }))
       }
 
       newSearch(searchConfig)
