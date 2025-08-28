@@ -47,14 +47,16 @@ describe("URL utilities", () => {
       }
       const params = serializeQueryState(state)
       expect(params.get("q")).toBe("test")
-      expect(params.get("filter")).toBe("brand:Nike,color:Red")
+      expect(params.get("brand")).toBe("Nike")
+      expect(params.get("color")).toBe("Red")
     })
 
     it("omits empty filter array", () => {
       const state = { query: "test", filter: [] }
       const params = serializeQueryState(state)
       expect(params.get("q")).toBe("test")
-      expect(params.get("filter")).toBeNull()
+      expect(params.has("brand")).toBe(false)
+      expect(params.has("color")).toBe(false)
     })
 
     it("handles filters with query and page", () => {
@@ -66,7 +68,7 @@ describe("URL utilities", () => {
       const params = serializeQueryState(state)
       expect(params.get("q")).toBe("shoes")
       expect(params.get("p")).toBe("2")
-      expect(params.get("filter")).toBe("category:sports")
+      expect(params.get("category")).toBe("sports")
     })
   })
 
@@ -108,11 +110,15 @@ describe("URL utilities", () => {
     it("ignores unknown parameters", () => {
       const params = new URLSearchParams("q=test&unknown=value&p=2")
       const state = deserializeQueryState(params)
-      expect(state).toEqual({ query: "test", page: 2 })
+      expect(state).toEqual({
+        query: "test",
+        page: 2,
+        filter: [{ field: "unknown", value: "value" }]
+      })
     })
 
     it("parses filter parameter", () => {
-      const params = new URLSearchParams("q=test&filter=brand:Nike,color:Red")
+      const params = new URLSearchParams("q=test&brand=Nike&color=Red")
       const state = deserializeQueryState(params)
       expect(state.query).toBe("test")
       expect(state.filter).toEqual([
@@ -122,25 +128,25 @@ describe("URL utilities", () => {
     })
 
     it("parses single filter", () => {
-      const params = new URLSearchParams("filter=category:shoes")
+      const params = new URLSearchParams("category=shoes")
       const state = deserializeQueryState(params)
       expect(state.filter).toEqual([{ field: "category", value: "shoes" }])
     })
 
     it("handles malformed filter parameter", () => {
-      const params = new URLSearchParams("filter=invalid")
+      const params = new URLSearchParams("invalid=&empty=")
       const state = deserializeQueryState(params)
       expect(state.filter).toBeUndefined()
     })
 
     it("filters out empty field/value pairs", () => {
-      const params = new URLSearchParams("filter=brand:Nike,:Red,color:")
+      const params = new URLSearchParams("brand=Nike&empty=&color=")
       const state = deserializeQueryState(params)
       expect(state.filter).toEqual([{ field: "brand", value: "Nike" }])
     })
 
     it("handles URL encoded filter values", () => {
-      const params = new URLSearchParams("filter=brand:Nike+Air,color:Dark+Blue")
+      const params = new URLSearchParams("brand=Nike+Air&color=Dark+Blue")
       const state = deserializeQueryState(params)
       expect(state.filter).toEqual([
         { field: "brand", value: "Nike Air" },
@@ -196,7 +202,7 @@ describe("URL utilities", () => {
         ]
       }
       updateURL(state)
-      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?q=shoes&filter=brand%3ANike%2Ccolor%3ARed")
+      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?q=shoes&brand=Nike&color=Red")
     })
 
     it("updates URL with query, page, and filter parameters", () => {
@@ -206,13 +212,13 @@ describe("URL utilities", () => {
         filter: [{ field: "category", value: "sports" }]
       }
       updateURL(state)
-      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?q=sneakers&p=3&filter=category%3Asports")
+      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?q=sneakers&p=3&category=sports")
     })
 
     it("updates URL with only filter parameters", () => {
       const state = { filter: [{ field: "brand", value: "Adidas" }] }
       updateURL(state)
-      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?filter=brand%3AAdidas")
+      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?brand=Adidas")
     })
   })
 
@@ -239,7 +245,7 @@ describe("URL utilities", () => {
     })
 
     it("parses filter parameters from URL", () => {
-      window.location.search = "?q=shoes&filter=brand:Nike,color:Red&p=2"
+      window.location.search = "?q=shoes&brand=Nike&color=Red&p=2"
       const state = getCurrentUrlState()
       expect(state).toEqual({
         query: "shoes",
@@ -252,7 +258,7 @@ describe("URL utilities", () => {
     })
 
     it("parses only filter parameters", () => {
-      window.location.search = "?filter=category:sports"
+      window.location.search = "?category=sports"
       const state = getCurrentUrlState()
       expect(state).toEqual({
         filter: [{ field: "category", value: "sports" }]

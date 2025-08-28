@@ -1,5 +1,5 @@
 import { sizes, defaultConfig } from "@/config"
-import { useActions, useSizeOptions, useNostoAppState, useProductFilters } from "@nosto/search-js/preact/hooks"
+import { useActions, useSizeOptions, useNostoAppState } from "@nosto/search-js/preact/hooks"
 import { getCurrentUrlState, updateURL } from "@/utils/url"
 
 import { useEffect } from "preact/hooks"
@@ -7,11 +7,11 @@ import { useEffect } from "preact/hooks"
 export default function SearchQueryHandler() {
   const { newSearch } = useActions()
   const { size } = useSizeOptions(sizes, defaultConfig.serpSize)
-  const { filters } = useProductFilters()
 
-  // Get current query and pagination state from app
+  // Get current query, pagination, and filter state from app
   const query = useNostoAppState(state => state.query?.query)
   const from = useNostoAppState(state => state.query?.products?.from)
+  const filters = useNostoAppState(state => state.query?.products?.filter)
 
   // Initialize search from URL on first load
   useEffect(() => {
@@ -24,12 +24,13 @@ export default function SearchQueryHandler() {
         products: {
           size,
           from: searchFrom,
-          ...(filter && filter.length > 0 && {
-            filters: filter.map(f => ({
-              field: f.field,
-              value: f.value
-            }))
-          })
+          ...(filter &&
+            filter.length > 0 && {
+              filters: filter.map(f => ({
+                field: f.field,
+                value: f.value
+              }))
+            })
         }
       }
 
@@ -43,8 +44,13 @@ export default function SearchQueryHandler() {
 
     // Convert current filters to URL format
     const currentFilters =
-      filters.length > 0
-        ? filters.map(f => ({ field: f?.name || "", value: f?.value || "" })).filter(f => f.field && f.value)
+      filters && filters.length > 0
+        ? filters
+            .map(f => ({
+              field: f?.field || "",
+              value: Array.isArray(f?.value) ? f.value.join(",") : f?.value || ""
+            }))
+            .filter(f => f.field && f.value)
         : undefined
 
     updateURL({

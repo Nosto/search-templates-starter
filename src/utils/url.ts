@@ -1,7 +1,12 @@
+export interface Filter {
+  field: string
+  value: string
+}
+
 export interface UrlQueryState {
   query?: string
   page?: number
-  filter?: Array<{ field: string; value: string }>
+  filter?: Array<Filter>
 }
 
 export function serializeQueryState(state: UrlQueryState): URLSearchParams {
@@ -16,8 +21,9 @@ export function serializeQueryState(state: UrlQueryState): URLSearchParams {
   }
 
   if (state.filter && state.filter.length > 0) {
-    const filterString = state.filter.map(f => `${f.field}:${f.value}`).join(",")
-    params.set("filter", filterString)
+    state.filter.forEach(f => {
+      params.append(f.field, f.value)
+    })
   }
 
   return params
@@ -39,19 +45,17 @@ export function deserializeQueryState(searchParams: URLSearchParams): UrlQuerySt
     }
   }
 
-  const filter = searchParams.get("filter")
-  if (filter) {
-    const filterPairs = filter
-      .split(",")
-      .map(pair => {
-        const [field, value = ""] = pair.split(":")
-        return { field: field?.trim() || "", value: value?.trim() || "" }
-      })
-      .filter(pair => pair.field && pair.value)
+  const filters: Filter[] = []
+  const knownParams = new Set(["q", "p"])
 
-    if (filterPairs.length > 0) {
-      state.filter = filterPairs
+  for (const [key, value] of searchParams.entries()) {
+    if (!knownParams.has(key) && value.trim()) {
+      filters.push({ field: key, value: value.trim() })
     }
+  }
+
+  if (filters.length > 0) {
+    state.filter = filters
   }
 
   return state
