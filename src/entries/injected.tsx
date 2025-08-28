@@ -3,6 +3,8 @@ import Serp from "@/components/Serp/Serp"
 import "@/variable.css"
 import Products from "@/components/Autocomplete/Products/Products"
 import SearchQueryHandler from "@/components/SearchQueryHandler/SearchQueryHandler"
+import { LocationProvider, Route, Router } from "preact-iso"
+import NotFound from "@/components/NotFound"
 
 init({
   autocomplete: {
@@ -30,10 +32,13 @@ init({
     },
     cssSelector: "#serp",
     render: () => (
-      <>
+      <LocationProvider>
         <SearchQueryHandler />
-        <Serp />
-      </>
+        <Router>
+          <Route path="/" component={Serp} />
+          <Route default component={NotFound} />
+        </Router>
+      </LocationProvider>
     )
   }
 })

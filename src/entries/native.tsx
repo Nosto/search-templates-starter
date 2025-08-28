@@ -4,14 +4,23 @@ import { Search } from "@/components/Search/Search"
 import "@/variable.css"
 import { serpConfig } from "@/config"
 import { render } from "preact"
+import { LocationProvider, Route, Router } from "preact-iso"
+import NotFound from "@/components/NotFound"
+import SearchQueryHandler from "@/components/SearchQueryHandler/SearchQueryHandler"
 
 function App() {
   return (
     <>
-      <SearchPageProvider config={serpConfig}>
-        <Search />
-        <Serp />
-      </SearchPageProvider>
+      <LocationProvider>
+        <SearchPageProvider config={serpConfig}>
+          <Search />
+          <SearchQueryHandler />
+          <Router>
+            <Route path="/" component={Serp} />
+            <Route default component={NotFound} />
+          </Router>
+        </SearchPageProvider>
+      </LocationProvider>
     </>
   )
 }
