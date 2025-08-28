@@ -29,7 +29,7 @@ export default function SearchQueryHandler() {
 
   // Update URL when app state changes
   useEffect(() => {
-    const currentPage = from ? Math.floor((from - 1) / size) + 1 : 1
+    const currentPage = from ? Math.floor(from / size) + 1 : 1
     updateURL({
       q: query || undefined,
       p: currentPage > 1 ? currentPage : undefined
