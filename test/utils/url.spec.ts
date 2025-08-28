@@ -70,6 +70,30 @@ describe("URL utilities", () => {
       expect(params.get("p")).toBe("2")
       expect(params.get("filter.category")).toBe("sports")
     })
+
+    it("spreads array filter values to multiple parameters", () => {
+      const state = {
+        query: "shoes",
+        filter: [{ field: "brand", value: ["Nike", "Adidas", "Puma"] }]
+      }
+      const params = serializeQueryState(state)
+      expect(params.get("q")).toBe("shoes")
+      expect(params.getAll("filter.brand")).toEqual(["Nike", "Adidas", "Puma"])
+    })
+
+    it("handles mixed single and array filter values", () => {
+      const state = {
+        filter: [
+          { field: "brand", value: ["Nike", "Adidas"] },
+          { field: "color", value: "Red" },
+          { field: "size", value: ["8", "9", "10"] }
+        ]
+      }
+      const params = serializeQueryState(state)
+      expect(params.getAll("filter.brand")).toEqual(["Nike", "Adidas"])
+      expect(params.get("filter.color")).toBe("Red")
+      expect(params.getAll("filter.size")).toEqual(["8", "9", "10"])
+    })
   })
 
   describe("deserializeQueryState", () => {
@@ -152,6 +176,24 @@ describe("URL utilities", () => {
         { field: "color", value: "Dark Blue" }
       ])
     })
+
+    it("parses multiple filter parameters as array", () => {
+      const params = new URLSearchParams("filter.brand=Nike&filter.brand=Adidas&filter.brand=Puma")
+      const state = deserializeQueryState(params)
+      expect(state.filter).toEqual([{ field: "brand", value: ["Nike", "Adidas", "Puma"] }])
+    })
+
+    it("handles mixed single and multiple filter parameters", () => {
+      const params = new URLSearchParams(
+        "filter.brand=Nike&filter.brand=Adidas&filter.color=Red&filter.size=8&filter.size=9"
+      )
+      const state = deserializeQueryState(params)
+      expect(state.filter).toEqual([
+        { field: "brand", value: ["Nike", "Adidas"] },
+        { field: "color", value: "Red" },
+        { field: "size", value: ["8", "9"] }
+      ])
+    })
   })
 
   describe("updateURL", () => {
@@ -219,6 +261,18 @@ describe("URL utilities", () => {
       updateURL(state)
       expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?filter.brand=Adidas")
     })
+
+    it("updates URL with array filter parameters", () => {
+      const state = {
+        filter: [{ field: "brand", value: ["Nike", "Adidas", "Puma"] }]
+      }
+      updateURL(state)
+      expect(window.history.replaceState).toHaveBeenCalledWith(
+        null,
+        "",
+        "/?filter.brand=Nike&filter.brand=Adidas&filter.brand=Puma"
+      )
+    })
   })
 
   describe("getCurrentUrlState", () => {
@@ -261,6 +315,17 @@ describe("URL utilities", () => {
       const state = getCurrentUrlState()
       expect(state).toEqual({
         filter: [{ field: "category", value: "sports" }]
+      })
+    })
+
+    it("parses array filter parameters from URL", () => {
+      window.location.search = "?filter.brand=Nike&filter.brand=Adidas&filter.color=Red"
+      const state = getCurrentUrlState()
+      expect(state).toEqual({
+        filter: [
+          { field: "brand", value: ["Nike", "Adidas"] },
+          { field: "color", value: "Red" }
+        ]
       })
     })
   })

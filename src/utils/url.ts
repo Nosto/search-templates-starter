@@ -23,7 +23,11 @@ export function serializeQueryState(state: UrlQueryState) {
   if (state.filter && state.filter.length > 0) {
     state.filter.forEach(f => {
       if (f.field && f.value !== undefined) {
-        params.append(`filter.${f.field}`, Array.isArray(f.value) ? f.value.join(",") : String(f.value))
+        if (Array.isArray(f.value)) {
+          f.value.forEach(val => params.append(`filter.${f.field}`, String(val)))
+        } else {
+          params.append(`filter.${f.field}`, String(f.value))
+        }
       }
     })
   }
@@ -48,11 +52,23 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
   }
 
   const filters: Filter[] = []
+  const filterMap = new Map<string, string[]>()
 
   for (const [key, value] of searchParams.entries()) {
     if (key.startsWith("filter.") && value.trim()) {
       const field = key.substring(7) // Remove "filter." prefix
-      filters.push({ field, value: value.trim() })
+      if (!filterMap.has(field)) {
+        filterMap.set(field, [])
+      }
+      filterMap.get(field)!.push(value.trim())
+    }
+  }
+
+  for (const [field, values] of filterMap.entries()) {
+    if (values.length === 1) {
+      filters.push({ field, value: values[0] })
+    } else {
+      filters.push({ field, value: values })
     }
   }
 
