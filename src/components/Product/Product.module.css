@@ -1,48 +1,48 @@
 .container {
-    padding: var(--ns-space-2);
-    color: inherit;
-    margin: var(--ns-space-2) 0;
-    box-sizing: border-box;
-    flex: 0 0 100%;
-    max-width: 100%;
-    position: relative;
-    width: 100%;
-    text-decoration: none;
+  padding: var(--ns-space-2);
+  color: inherit;
+  margin: var(--ns-space-2) 0;
+  box-sizing: border-box;
+  flex: 0 0 100%;
+  max-width: 100%;
+  position: relative;
+  width: 100%;
+  text-decoration: none;
 }
 
 @media (min-width: 375px) {
-    .container {
-        -ms-flex: 0 0 50%;
-        flex: 0 0 50%;
-        max-width: 50%;
-    }
+  .container {
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
 }
 
 @media (min-width: 1024px) {
-    .container {
-        -ms-flex: 0 0 33.333333%;
-        flex: 0 0 33.333333%;
-        max-width: 33.333333%;
-    }
+  .container {
+    -ms-flex: 0 0 33.333333%;
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
 }
 
 .image img {
-    height: auto;
-    width: 100%;
+  height: auto;
+  width: 100%;
 }
 
 .info {
-    position: relative;
-    margin-top: var(--ns-space-2);
+  position: relative;
+  margin-top: var(--ns-space-2);
 }
 
 .info > div {
-    color: var(--ns-color-black);
-    font-size: var(--ns-font-size-4);
-    margin-bottom: var(--ns-space-1) !important;
+  color: var(--ns-color-black);
+  font-size: var(--ns-font-size-4);
+  margin-bottom: var(--ns-space-1) !important;
 }
 
 .specialPrice {
-    text-decoration: line-through;
-    margin-left: var(--ns-space-2);
+  text-decoration: line-through;
+  margin-left: var(--ns-space-2);
 }

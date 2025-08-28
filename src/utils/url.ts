@@ -6,7 +6,7 @@ export interface Filter {
 export interface UrlQueryState {
   query?: string
   page?: number
-  filter?: Array<Filter>
+  filter?: Filter[]
 }
 
 export function serializeQueryState(state: UrlQueryState): URLSearchParams {
