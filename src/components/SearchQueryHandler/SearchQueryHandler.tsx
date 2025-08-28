@@ -24,10 +24,7 @@ export default function SearchQueryHandler() {
         products: {
           size,
           from: searchFrom,
-          ...(filter &&
-            filter.length > 0 && {
-              filters: filter
-            })
+          filters: filter
         }
       }
 
@@ -39,13 +36,10 @@ export default function SearchQueryHandler() {
   useEffect(() => {
     const currentPage = from ? Math.floor(from / size) + 1 : 1
 
-    // Convert current filters to URL format
-    const currentFilters = filters && filters.length > 0 ? filters : undefined
-
     updateURL({
       query: query || undefined,
       page: currentPage > 1 ? currentPage : undefined,
-      filter: currentFilters
+      filter: filters
     })
   }, [query, from, size, filters])
 

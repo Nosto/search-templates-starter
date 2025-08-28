@@ -1,6 +1,6 @@
 export interface Filter {
   field?: string
-  value?: string | string[]
+  value?: string[]
 }
 
 export interface UrlQueryState {
@@ -22,12 +22,8 @@ export function serializeQueryState(state: UrlQueryState) {
 
   if (state.filter && state.filter.length > 0) {
     state.filter.forEach(f => {
-      if (f.field && f.value !== undefined) {
-        if (Array.isArray(f.value)) {
-          f.value.forEach(val => params.append(`filter.${f.field}`, String(val)))
-        } else {
-          params.append(`filter.${f.field}`, String(f.value))
-        }
+      if (f.field && f.value !== undefined && f.value.length > 0) {
+        f.value.forEach(val => params.append(`filter.${f.field}`, String(val)))
       }
     })
   }
@@ -65,11 +61,7 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
   }
 
   for (const [field, values] of filterMap.entries()) {
-    if (values.length === 1) {
-      filters.push({ field, value: values[0] })
-    } else {
-      filters.push({ field, value: values })
-    }
+    filters.push({ field, value: values })
   }
 
   if (filters.length > 0) {
