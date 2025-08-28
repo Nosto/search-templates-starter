@@ -3,9 +3,6 @@ export interface UrlQueryState {
   p?: number
 }
 
-/**
- * Serializes query state into URL search parameters
- */
 export function serializeQueryState(state: UrlQueryState): URLSearchParams {
   const params = new URLSearchParams()
 
@@ -20,9 +17,6 @@ export function serializeQueryState(state: UrlQueryState): URLSearchParams {
   return params
 }
 
-/**
- * Deserializes URL search parameters into query state
- */
 export function deserializeQueryState(searchParams: URLSearchParams): UrlQueryState {
   const state: UrlQueryState = {}
 
@@ -42,19 +36,14 @@ export function deserializeQueryState(searchParams: URLSearchParams): UrlQuerySt
   return state
 }
 
-/**
- * Updates the current URL with new query state without triggering navigation
- */
 export function updateURL(state: UrlQueryState): void {
   const params = serializeQueryState(state)
-  const newUrl = `${window.location.pathname}${params.toString() ? `?${params.toString()}` : ""}`
+  const url = new URL(window.location.pathname, window.location.origin || "http://localhost")
+  url.search = params.toString()
 
-  window.history.replaceState(null, "", newUrl)
+  window.history.replaceState(null, "", url.pathname + url.search)
 }
 
-/**
- * Gets current query state from the URL
- */
 export function getCurrentUrlState(): UrlQueryState {
   const searchParams = new URLSearchParams(window.location.search)
   return deserializeQueryState(searchParams)

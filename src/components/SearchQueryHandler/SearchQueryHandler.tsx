@@ -16,11 +16,11 @@ export default function SearchQueryHandler() {
   // Initialize search from URL on first load
   useEffect(() => {
     if (!initialized.current) {
-      const urlState = getCurrentUrlState()
-      if (urlState.q || urlState.p) {
-        const searchFrom = urlState.p ? (urlState.p - 1) * size + 1 : 1
+      const { q, p } = getCurrentUrlState()
+      if (q || p) {
+        const searchFrom = p ? (p - 1) * size + 1 : 1
         newSearch({
-          query: urlState.q || "",
+          query: q || "",
           products: {
             size,
             from: searchFrom
