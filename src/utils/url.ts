@@ -4,10 +4,12 @@ const QUERY_PARAM = "q"
 const PAGE_PARAM = "p"
 const FILTER_PREFIX = "filter."
 
+type SimpleFilter = Pick<InputSearchTopLevelFilter, "field" | "value" | "range">
+
 export interface UrlQueryState {
   query?: string
   page?: number
-  filter?: InputSearchTopLevelFilter[]
+  filter?: SimpleFilter[]
 }
 
 export function serializeQueryState(state: UrlQueryState) {
