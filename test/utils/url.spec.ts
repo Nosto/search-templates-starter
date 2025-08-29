@@ -202,7 +202,8 @@ describe("URL utilities", () => {
       Object.defineProperty(window, "location", {
         value: {
           pathname: "/",
-          search: ""
+          search: "",
+          origin: "http://localhost:3000"
         },
         writable: true
       })

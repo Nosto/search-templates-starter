@@ -73,7 +73,7 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
 
 export function updateURL(state: UrlQueryState) {
   const params = serializeQueryState(state)
-  const url = new URL(window.location.pathname, window.location.origin || "http://localhost")
+  const url = new URL(window.location.pathname, window.location.origin)
   url.search = params.toString()
 
   window.history.replaceState(null, "", url.pathname + url.search)
