@@ -1,6 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "preact/hooks"
-import { ComponentChildren } from "preact"
-import styles from "./DynamicProductCard.module.css"
+import { useState, useEffect, useCallback } from "preact/hooks"
 
 export interface DynamicProductCardProps {
   /** The product handle to fetch data for. Required. */
@@ -11,28 +9,11 @@ export interface DynamicProductCardProps {
   template?: string
   /** The variant ID to fetch specific variant data. Optional. */
   variantId?: string
-  /** If true, the component will display placeholder content while loading. Defaults to false. */
-  placeholder?: boolean
-  /** If true, the component will only fetch data when it comes into view. Defaults to false. */
-  lazy?: boolean
-  /** Placeholder content to show while loading */
-  children?: ComponentChildren
 }
 
-export default function DynamicProductCard({
-  handle,
-  section,
-  template,
-  variantId,
-  placeholder = false,
-  lazy = false,
-  children
-}: DynamicProductCardProps) {
+export default function DynamicProductCard({ handle, section, template, variantId }: DynamicProductCardProps) {
   const [markup, setMarkup] = useState<string>("")
-  const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
-  const elementRef = useRef<HTMLDivElement>(null)
-  const observerRef = useRef<IntersectionObserver | null>(null)
 
   // Validate required props
   if (!handle) {
@@ -84,69 +65,21 @@ export default function DynamicProductCard({
 
   const loadContent = useCallback(async () => {
     try {
-      setLoading(true)
       setError(null)
       const html = await fetchMarkup()
       setMarkup(html)
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load content")
-    } finally {
-      setLoading(false)
     }
   }, [fetchMarkup])
 
   useEffect(() => {
-    if (!lazy) {
-      loadContent()
-    } else if (elementRef.current) {
-      // Set up intersection observer for lazy loading
-      observerRef.current = new IntersectionObserver(
-        entries => {
-          if (entries[0].isIntersecting) {
-            loadContent()
-            observerRef.current?.disconnect()
-          }
-        },
-        { threshold: 0.1 }
-      )
-
-      observerRef.current.observe(elementRef.current)
-    }
-
-    return () => {
-      observerRef.current?.disconnect()
-    }
-  }, [handle, section, template, variantId, lazy, loadContent])
-
-  // Cleanup observer on unmount
-  useEffect(() => {
-    return () => {
-      observerRef.current?.disconnect()
-    }
-  }, [])
+    loadContent()
+  }, [handle, section, template, variantId, loadContent])
 
   if (error) {
-    return (
-      <div className={styles.container} data-loading="false" data-error="true" ref={elementRef}>
-        <div className={styles.error}>Error: {error}</div>
-      </div>
-    )
+    return <div>Error: {error}</div>
   }
 
-  if (loading) {
-    return (
-      <div className={styles.container} data-loading="true" ref={elementRef}>
-        {placeholder && children ? children : <div className={styles.loader}>Loading...</div>}
-      </div>
-    )
-  }
-
-  return (
-    <div
-      className={styles.container}
-      data-loading="false"
-      ref={elementRef}
-      dangerouslySetInnerHTML={{ __html: markup }}
-    />
-  )
+  return <div dangerouslySetInnerHTML={{ __html: markup }} />
 }

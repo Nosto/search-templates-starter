@@ -11,12 +11,12 @@ const meta: Meta<DynamicProductCardProps> = {
     docs: {
       description: {
         component: `
-A component that fetches product card markup from Shopify with Section Rendering support,
-similar to the NostoDynamicCard web component. This component can fetch product data 
+A simplified component that fetches product card markup from Shopify with Section Rendering support,
+similar to the NostoDynamicCard web component. This component fetches product data 
 dynamically using either a template or section approach.
 
 **Note**: This component requires a Shopify environment to function properly. The stories
-below show the component structure and loading states that would appear in a real environment.
+below show the component structure that would appear in a real environment.
         `
       }
     }
@@ -37,14 +37,6 @@ below show the component structure and loading states that would appear in a rea
     variantId: {
       control: "text",
       description: "Specific variant ID to fetch (optional)"
-    },
-    placeholder: {
-      control: "boolean",
-      description: "Whether to show placeholder content while loading"
-    },
-    lazy: {
-      control: "boolean",
-      description: "Whether to lazy load when component comes into view"
     }
   }
 } satisfies Meta<DynamicProductCardProps>
@@ -53,7 +45,7 @@ export default meta
 type Story = StoryObj<DynamicProductCardProps>
 
 // Mock fetch for Storybook stories
-const mockFetch = (mockResponse: string, delay = 1000) => {
+const mockFetch = (mockResponse: string, delay = 500) => {
   // Simple mock for demonstration purposes
   if (typeof window !== "undefined") {
     const originalFetch = window.fetch
@@ -71,17 +63,6 @@ const mockFetch = (mockResponse: string, delay = 1000) => {
     setTimeout(() => {
       window.fetch = originalFetch
     }, delay + 1000)
-  }
-}
-
-export const LoadingState: Story = {
-  args: {
-    handle: "awesome-product",
-    template: "product-card"
-  },
-  beforeEach: () => {
-    // Mock a slow response to show loading state
-    mockFetch("<div>Product content</div>", 5000)
   }
 }
 
@@ -140,33 +121,6 @@ export const WithSection: Story = {
   }
 }
 
-export const WithPlaceholder: Story = {
-  args: {
-    handle: "awesome-product",
-    template: "product-card",
-    placeholder: true,
-    children: (
-      <div style={{ padding: "20px", background: "#f5f5f5", textAlign: "center" }}>
-        <div style={{ width: "200px", height: "200px", background: "#ddd", marginBottom: "10px" }} />
-        <div style={{ background: "#ddd", height: "20px", marginBottom: "5px" }} />
-        <div style={{ background: "#ddd", height: "16px", width: "60%" }} />
-      </div>
-    )
-  },
-  beforeEach: () => {
-    mockFetch(
-      `
-      <div class="product-card-loaded">
-        <img src="https://picsum.photos/300/300" alt="Loaded Product" />
-        <h3>Loaded Product</h3>
-        <p>$79.99</p>
-      </div>
-    `,
-      2000
-    )
-  }
-}
-
 export const ErrorState: Story = {
   args: {
     handle: "nonexistent-product",
@@ -180,33 +134,6 @@ export const ErrorState: Story = {
           status: 404,
           statusText: "Not Found"
         } as Response)
-    }
-  }
-}
-
-export const LazyLoading: Story = {
-  args: {
-    handle: "lazy-product",
-    template: "product-card",
-    lazy: true
-  },
-  beforeEach: () => {
-    mockFetch(
-      `
-      <div class="lazy-loaded-product">
-        <img src="https://picsum.photos/300/300" alt="Lazy Loaded Product" />
-        <h3>Lazy Loaded Product</h3>
-        <p>This content was loaded when the component came into view</p>
-      </div>
-    `,
-      500
-    )
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "This component will only fetch data when it comes into view using IntersectionObserver."
-      }
     }
   }
 }
