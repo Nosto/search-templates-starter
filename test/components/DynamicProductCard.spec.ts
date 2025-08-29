@@ -1,0 +1,201 @@
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest"
+import { createElement } from "preact"
+import { render as preactRender } from "preact"
+import DynamicProductCard from "../../src/components/DynamicProductCard/DynamicProductCard"
+
+// Mock fetch globally
+const mockFetch = vi.fn()
+global.fetch = mockFetch
+
+// Mock IntersectionObserver
+const mockIntersectionObserver = vi.fn()
+mockIntersectionObserver.mockReturnValue({
+  observe: () => null,
+  unobserve: () => null,
+  disconnect: () => null
+})
+window.IntersectionObserver = mockIntersectionObserver
+
+describe("DynamicProductCard", () => {
+  let container: HTMLElement
+
+  beforeEach(() => {
+    container = document.createElement("div")
+    document.body.appendChild(container)
+    mockFetch.mockClear()
+    mockIntersectionObserver.mockClear()
+  })
+
+  afterEach(() => {
+    document.body.removeChild(container)
+    vi.clearAllMocks()
+  })
+
+  it("throws error when handle is missing", () => {
+    expect(() => {
+      preactRender(
+        // @ts-expect-error - Testing missing required prop
+        createElement(DynamicProductCard, { template: "product-card" }),
+        container
+      )
+    }).toThrow("DynamicProductCard requires a 'handle' prop")
+  })
+
+  it("throws error when both section and template are missing", () => {
+    expect(() => {
+      preactRender(createElement(DynamicProductCard, { handle: "test-product" }), container)
+    }).toThrow("DynamicProductCard requires either 'section' or 'template' prop")
+  })
+
+  it("shows loading state initially", () => {
+    mockFetch.mockResolvedValue({
+      ok: true,
+      text: () => Promise.resolve("<div>Product content</div>")
+    })
+
+    preactRender(createElement(DynamicProductCard, { handle: "test-product", template: "product-card" }), container)
+
+    expect(container.querySelector('[data-loading="true"]')).toBeTruthy()
+    expect(container.textContent).toContain("Loading...")
+  })
+
+  it("shows placeholder content when placeholder is true", () => {
+    mockFetch.mockResolvedValue({
+      ok: true,
+      text: () => Promise.resolve("<div>Product content</div>")
+    })
+
+    preactRender(
+      createElement(DynamicProductCard, {
+        handle: "test-product",
+        template: "product-card",
+        placeholder: true,
+        children: createElement("div", null, "Custom placeholder")
+      }),
+      container
+    )
+
+    expect(container.textContent).toContain("Custom placeholder")
+  })
+
+  it("fetches markup with template parameters", async () => {
+    const mockMarkup = "<div>Product template content</div>"
+    mockFetch.mockResolvedValue({
+      ok: true,
+      text: () => Promise.resolve(mockMarkup)
+    })
+
+    preactRender(
+      createElement(DynamicProductCard, {
+        handle: "test-product",
+        template: "product-card",
+        variantId: "12345"
+      }),
+      container
+    )
+
+    // Wait for the fetch to be called
+    await new Promise(resolve => setTimeout(resolve, 10))
+
+    expect(mockFetch).toHaveBeenCalledWith("/products/test-product?view=product-card&layout=none&variant=12345")
+
+    // Wait for component to update after fetch
+    await new Promise(resolve => setTimeout(resolve, 10))
+
+    expect(container.querySelector('[data-loading="false"]')).toBeTruthy()
+    expect(container.innerHTML).toContain(mockMarkup)
+  })
+
+  it("fetches markup with section parameters", async () => {
+    const mockMarkup = "<div>Product section content</div>"
+    mockFetch.mockResolvedValue({
+      ok: true,
+      text: () => Promise.resolve(`<body><div>${mockMarkup}</div></body>`)
+    })
+
+    preactRender(
+      createElement(DynamicProductCard, {
+        handle: "test-product",
+        section: "product-section"
+      }),
+      container
+    )
+
+    // Wait for the fetch to be called and component to update
+    await new Promise(resolve => setTimeout(resolve, 50))
+
+    expect(mockFetch).toHaveBeenCalledWith("/products/test-product?section_id=product-section")
+
+    // Wait for component to update after fetch
+    await new Promise(resolve => setTimeout(resolve, 50))
+
+    expect(container.innerHTML).toContain(mockMarkup)
+  })
+
+  it("shows error state when fetch fails", async () => {
+    mockFetch.mockResolvedValue({
+      ok: false,
+      status: 404,
+      statusText: "Not Found"
+    })
+
+    preactRender(createElement(DynamicProductCard, { handle: "test-product", template: "product-card" }), container)
+
+    // Wait for component to update after fetch error
+    await new Promise(resolve => setTimeout(resolve, 50))
+
+    expect(container.querySelector('[data-error="true"]')).toBeTruthy()
+    expect(container.textContent).toContain("Failed to fetch product data: 404 Not Found")
+  })
+
+  it("shows error when markup contains invalid tags", async () => {
+    mockFetch.mockResolvedValue({
+      ok: true,
+      text: () => Promise.resolve("<html><body>Invalid content</body></html>")
+    })
+
+    preactRender(createElement(DynamicProductCard, { handle: "test-product", template: "product-card" }), container)
+
+    // Wait for component to update after fetch
+    await new Promise(resolve => setTimeout(resolve, 50))
+
+    expect(container.querySelector('[data-error="true"]')).toBeTruthy()
+    expect(container.textContent).toContain("Invalid markup")
+  })
+
+  it("sets up intersection observer when lazy loading is enabled", async () => {
+    mockFetch.mockResolvedValue({
+      ok: true,
+      text: () => Promise.resolve("<div>Product content</div>")
+    })
+
+    preactRender(
+      createElement(DynamicProductCard, { handle: "test-product", template: "product-card", lazy: true }),
+      container
+    )
+
+    // Wait for component to mount and set up observer
+    await new Promise(resolve => setTimeout(resolve, 50))
+
+    expect(mockIntersectionObserver).toHaveBeenCalled()
+    expect(mockFetch).not.toHaveBeenCalled()
+  })
+
+  it("processes section markup correctly", async () => {
+    const sectionContent = '<div class="product">Section content</div>'
+    const fullMarkup = `<html><body><section>${sectionContent}</section></body></html>`
+
+    mockFetch.mockResolvedValue({
+      ok: true,
+      text: () => Promise.resolve(fullMarkup)
+    })
+
+    preactRender(createElement(DynamicProductCard, { handle: "test-product", section: "product-section" }), container)
+
+    // Wait for component to update after fetch
+    await new Promise(resolve => setTimeout(resolve, 50))
+
+    expect(container.innerHTML).toContain('class="product"')
+    expect(container.innerHTML).toContain("Section content")
+  })
+})
