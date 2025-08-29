@@ -1,9 +1,9 @@
 {
-    "printWidth": 120,
-    "singleQuote": false,
-    "semi": false,
-    "jsxSingleQuote": false,
-    "trailingComma": "none",
-    "arrowParens": "avoid",
-    "proseWrap": "preserve"
+  "printWidth": 120,
+  "singleQuote": false,
+  "semi": false,
+  "jsxSingleQuote": false,
+  "trailingComma": "none",
+  "arrowParens": "avoid",
+  "proseWrap": "preserve"
 }
