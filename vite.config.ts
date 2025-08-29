@@ -9,11 +9,15 @@ export default defineConfig(() => ({
     outDir: "dist",
     minify: true,
     sourcemap: true,
+    lib: {
+      entry: resolve(dirname, "src/entries/native.tsx"),
+      name: "SearchTemplatesStarter",
+      fileName: () => "index.js",
+      formats: ["iife"]
+    },
     rollupOptions: {
-      input: resolve(dirname, `index.html`),
       output: {
-        entryFileNames: "[name].js",
-        assetFileNames: "[name][extname]"
+        assetFileNames: "index[extname]"
       }
     }
   },
