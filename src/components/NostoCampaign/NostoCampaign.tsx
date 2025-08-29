@@ -12,7 +12,6 @@ type Props = {
 }
 
 export default function NostoCampaign({ placement }: Props) {
-  const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -24,7 +23,6 @@ export default function NostoCampaign({ placement }: Props) {
 
     const loadCampaign = async () => {
       try {
-        setLoading(true)
         setError(null)
 
         const api = await new Promise(nostojs)
@@ -50,8 +48,6 @@ export default function NostoCampaign({ placement }: Props) {
       } catch (err) {
         console.error("Failed to load Nosto campaign:", err)
         setError("Failed to load campaign")
-      } finally {
-        setLoading(false)
       }
     }
 
@@ -59,17 +55,8 @@ export default function NostoCampaign({ placement }: Props) {
   }, [placement])
 
   if (error) {
-    return (
-      <div data-nosto-error>
-        <div>{error}</div>
-      </div>
-    )
+    return error
   }
 
-  return (
-    <div data-nosto-placement={placement} data-loading={loading}>
-      {loading && <div>Loading campaign...</div>}
-      <div ref={containerRef} />
-    </div>
-  )
+  return <div ref={containerRef} />
 }
