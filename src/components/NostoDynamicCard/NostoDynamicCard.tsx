@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "preact/hooks"
 
-export type DynamicProductCardProps = {
+export type NostoDynamicCardProps = {
   /** The product handle to fetch data for. Required. */
   handle: string
   /** The section to use for rendering the product. section or template is required. */
@@ -11,16 +11,16 @@ export type DynamicProductCardProps = {
   variantId?: string
 }
 
-export default function DynamicProductCard({ handle, section, template, variantId }: DynamicProductCardProps) {
+export default function NostoDynamicCard({ handle, section, template, variantId }: NostoDynamicCardProps) {
   const [markup, setMarkup] = useState<string>("")
   const [error, setError] = useState<string | null>(null)
 
   if (!handle) {
-    throw new Error("DynamicProductCard requires a 'handle' prop")
+    throw new Error("NostoDynamicCard requires a 'handle' prop")
   }
 
   if (!section && !template) {
-    throw new Error("DynamicProductCard requires either 'section' or 'template' prop")
+    throw new Error("NostoDynamicCard requires either 'section' or 'template' prop")
   }
 
   const fetchMarkup = useCallback(async (): Promise<string> => {
