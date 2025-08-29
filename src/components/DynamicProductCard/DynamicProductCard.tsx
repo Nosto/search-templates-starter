@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "preact/hooks"
 
-export interface DynamicProductCardProps {
+export type DynamicProductCardProps = {
   /** The product handle to fetch data for. Required. */
   handle: string
   /** The section to use for rendering the product. section or template is required. */
@@ -15,7 +15,6 @@ export default function DynamicProductCard({ handle, section, template, variantI
   const [markup, setMarkup] = useState<string>("")
   const [error, setError] = useState<string | null>(null)
 
-  // Validate required props
   if (!handle) {
     throw new Error("DynamicProductCard requires a 'handle' prop")
   }
@@ -53,7 +52,6 @@ export default function DynamicProductCard({ handle, section, template, variantI
       html = doc.body.firstElementChild?.innerHTML?.trim() || html
     }
 
-    // Validate markup doesn't contain invalid tags
     if (/<(body|html)/.test(html)) {
       throw new Error(
         `Invalid markup for ${template || section}, make sure that no <body> or <html> tags are included.`

@@ -122,6 +122,7 @@ git commit --no-verify -m "your commit message"
 - Favor named exports over default exports
 - Avoid using `any` in TypeScript; prefer specific types or `unknown`
 - Use ES2020 level features and syntax conventions
+- **Use type instead of interface** for component props and object type definitions
 - **Avoid adding unnecessary comments** - only add comments when explicitly instructed or when complex logic needs explanation
 
 ### Preact Conventions
