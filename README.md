@@ -26,17 +26,15 @@ Ensure you have the following installed:
    git clone https://github.com/nosto/search-templates-starter.git
    cd search-templates-starter
    ```
-
 2. Install dependencies:
 
-   ```sh
-   npm install
-   ```
+    ```sh
+    npm install
+    ```
 
 ### Development
 
 Start the development server:
-
 ```sh
 npm run dev
 ```
@@ -44,14 +42,11 @@ npm run dev
 This will launch the application at http://localhost:8000.
 
 ### Build
-
 To build the project for production:
-
 ```sh
 npm run build
 ```
 
 ### Resources
-
 - [Search-js docs](https://docs.nosto.com/techdocs/apis/frontend/oss/search-js)
 - [Nosto-js docs](https://docs.nosto.com/techdocs/apis/frontend/oss/nosto-js)

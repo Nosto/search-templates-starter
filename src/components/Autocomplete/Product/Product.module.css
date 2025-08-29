@@ -1,33 +1,33 @@
 .container {
-  display: flex;
-  flex-direction: row;
-  cursor: pointer;
-  padding: var(--ns-space-2);
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    padding: var(--ns-space-2);
 }
 
 .image {
-  height: auto;
-  object-fit: contain;
-  width: var(--ns-width-product-image);
-  aspect-ratio: auto 60 / 40;
+    height: auto;
+    object-fit: contain;
+    width: var(--ns-width-product-image);
+    aspect-ratio: auto 60 / 40;
 }
 
 .details {
-  padding-left: var(--ns-space-2);
-  color: var(--ns-color-black);
-  font-size: var(--ns-font-4);
+    padding-left: var(--ns-space-2);
+    color: var(--ns-color-black);
+    font-size: var(--ns-font-4);
 }
 
 .name {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  line-clamp: 1;
-  -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 
 .strikedPrice {
-  text-decoration: line-through;
-  margin-left: var(--ns-space-2);
+    text-decoration: line-through;
+    margin-left: var(--ns-space-2);
 }

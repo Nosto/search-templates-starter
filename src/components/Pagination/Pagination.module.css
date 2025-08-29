@@ -1,27 +1,27 @@
 .container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  list-style: none;
-  margin: var(--ns-space-2) 0;
-  padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style: none;
+    margin: var(--ns-space-2) 0;
+    padding: 0;
 }
 
 .filler {
-  display: block;
-  padding: var(--ns-space-2) var(--ns-space-4);
+    display: block;
+    padding: var(--ns-space-2) var(--ns-space-4);
 }
 
 .active {
-  background-color: var(--ns-color-primary-light);
+    background-color: var(--ns-color-primary-light);
 }
 
 .link {
-  display: block;
-  position: relative;
-  text-decoration: none;
-  color: var(--ns-color-black);
-  padding: var(--ns-space-2) var(--ns-space-4);
-  border-radius: var(--ns-border-radius-3);
-  cursor: pointer;
+    display: block;
+    position: relative;
+    text-decoration: none;
+    color: var(--ns-color-black);
+    padding: var(--ns-space-2) var(--ns-space-4);
+    border-radius: var(--ns-border-radius-3);
+    cursor: pointer;
 }
