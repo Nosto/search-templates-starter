@@ -11,7 +11,7 @@ export default function SearchQueryHandler() {
   // Get current query, pagination, and filter state from app
   const query = useNostoAppState(state => state.query?.query)
   const from = useNostoAppState(state => state.query?.products?.from)
-  const filters = useNostoAppState(state => state.query?.products?.filter)
+  const filter = useNostoAppState(state => state.query?.products?.filter)
 
   // Initialize search from URL on first load
   useEffect(() => {
@@ -39,9 +39,9 @@ export default function SearchQueryHandler() {
     updateURL({
       query: query || undefined,
       page: currentPage > 1 ? currentPage : undefined,
-      filter: filters
+      filter: filter
     })
-  }, [query, from, size, filters])
+  }, [query, from, size, filter])
 
   return null
 }
