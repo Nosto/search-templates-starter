@@ -1,6 +1,12 @@
 import { useState, useEffect, useRef } from "preact/hooks"
 import { nostojs } from "@nosto/nosto-js"
 
+type AttributedCampaignResult = {
+  div_id: string
+  html: string
+  result_id: string
+}
+
 type Props = {
   placement: string
 }
@@ -25,7 +31,6 @@ export default function NostoCampaign({ placement }: Props) {
 
         const request = api
           .createRecommendationRequest({ includeTagging: true })
-          .disableCampaignInjection()
           .setElements([placement])
           .setResponseMode("HTML")
 
@@ -34,14 +39,12 @@ export default function NostoCampaign({ placement }: Props) {
         if (recommendations && recommendations[placement] && containerRef.current) {
           const campaign = recommendations[placement]
 
-          if (typeof campaign === "string") {
-            containerRef.current.innerHTML = campaign
-          } else if (campaign && typeof campaign === "object" && "html" in campaign) {
-            containerRef.current.innerHTML = campaign.html
-          } else {
-            if (campaign && typeof campaign === "object" && "result" in campaign && campaign.result) {
-              containerRef.current.innerHTML = JSON.stringify(campaign.result)
-            }
+          // Only inject campaigns that are compatible with injectCampaigns API
+          if (typeof campaign === "string" || (campaign && typeof campaign === "object" && "html" in campaign)) {
+            await api.placements.injectCampaigns(
+              { [placement]: campaign as string | AttributedCampaignResult },
+              { [placement]: containerRef.current }
+            )
           }
         }
       } catch (err) {

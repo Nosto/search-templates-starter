@@ -5,7 +5,6 @@ import NostoCampaign from "@/components/NostoCampaign/NostoCampaign"
 const mockLoadRecommendations = vi.fn()
 const mockInjectCampaigns = vi.fn()
 const mockCreateRecommendationRequest = vi.fn(() => ({
-  disableCampaignInjection: vi.fn().mockReturnThis(),
   setElements: vi.fn().mockReturnThis(),
   setResponseMode: vi.fn().mockReturnThis(),
   load: mockLoadRecommendations
@@ -64,13 +63,12 @@ describe("NostoCampaign", () => {
     expect(mockCreateRecommendationRequest).toHaveBeenCalledWith({ includeTagging: true })
 
     const mockRequest = mockCreateRecommendationRequest.mock.results[0].value
-    expect(mockRequest.disableCampaignInjection).toHaveBeenCalled()
     expect(mockRequest.setElements).toHaveBeenCalledWith(["test-placement"])
     expect(mockRequest.setResponseMode).toHaveBeenCalledWith("HTML")
     expect(mockRequest.load).toHaveBeenCalled()
   })
 
-  it("handles string campaign result by setting innerHTML", async () => {
+  it("handles string campaign result by using API injection", async () => {
     const htmlContent = "<div>Test Campaign Content</div>"
     mockLoadRecommendations.mockResolvedValue({
       recommendations: {
@@ -78,20 +76,18 @@ describe("NostoCampaign", () => {
       }
     })
 
-    const { container } = render(<NostoCampaign placement="test-placement" />)
+    render(<NostoCampaign placement="test-placement" />)
 
     vi.advanceTimersByTime(100)
     await vi.runAllTimersAsync()
 
-    const contentElements = container.querySelectorAll("div")
-    const contentWithHTML = Array.from(contentElements).find(el => el.innerHTML === htmlContent)
-
-    expect(contentWithHTML).toBeTruthy()
-    expect(contentWithHTML?.innerHTML).toBe(htmlContent)
-    expect(mockInjectCampaigns).not.toHaveBeenCalled()
+    expect(mockInjectCampaigns).toHaveBeenCalledWith(
+      { "test-placement": htmlContent },
+      { "test-placement": expect.any(HTMLElement) }
+    )
   })
 
-  it("handles AttributedCampaignResult by using innerHTML injection", async () => {
+  it("handles AttributedCampaignResult by using API injection", async () => {
     const campaignResult = {
       div_id: "test-div",
       html: "<div>Attributed Campaign</div>",
@@ -104,17 +100,15 @@ describe("NostoCampaign", () => {
       }
     })
 
-    const { container } = render(<NostoCampaign placement="test-placement" />)
+    render(<NostoCampaign placement="test-placement" />)
 
     vi.advanceTimersByTime(50)
     await vi.runAllTimersAsync()
 
-    const contentElements = container.querySelectorAll("div")
-    const contentWithHTML = Array.from(contentElements).find(el => el.innerHTML === campaignResult.html)
-
-    expect(contentWithHTML).toBeTruthy()
-    expect(contentWithHTML?.innerHTML).toBe(campaignResult.html)
-    expect(mockInjectCampaigns).not.toHaveBeenCalled()
+    expect(mockInjectCampaigns).toHaveBeenCalledWith(
+      { "test-placement": campaignResult },
+      { "test-placement": expect.any(HTMLElement) }
+    )
   })
 
   it("handles API errors gracefully", async () => {
