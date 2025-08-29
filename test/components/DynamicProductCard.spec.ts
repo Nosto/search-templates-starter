@@ -11,12 +11,14 @@ describe("DynamicProductCard", () => {
   let container: HTMLElement
 
   beforeEach(() => {
+    vi.useFakeTimers()
     container = document.createElement("div")
     document.body.appendChild(container)
     mockFetch.mockClear()
   })
 
   afterEach(() => {
+    vi.useRealTimers()
     document.body.removeChild(container)
     vi.clearAllMocks()
   })
@@ -54,7 +56,7 @@ describe("DynamicProductCard", () => {
     )
 
     // Wait for the fetch to be called and component to update
-    await new Promise(resolve => setTimeout(resolve, 50))
+    await vi.advanceTimersByTimeAsync(50)
 
     expect(mockFetch).toHaveBeenCalledWith("/products/test-product?view=product-card&layout=none&variant=12345")
     expect(container.innerHTML).toContain(mockMarkup)
@@ -76,12 +78,12 @@ describe("DynamicProductCard", () => {
     )
 
     // Wait for the fetch to be called and component to update
-    await new Promise(resolve => setTimeout(resolve, 50))
+    await vi.advanceTimersByTimeAsync(50)
 
     expect(mockFetch).toHaveBeenCalledWith("/products/test-product?section_id=product-section")
 
     // Wait for component to update after fetch
-    await new Promise(resolve => setTimeout(resolve, 50))
+    await vi.advanceTimersByTimeAsync(50)
 
     expect(container.innerHTML).toContain(mockMarkup)
   })
@@ -96,7 +98,7 @@ describe("DynamicProductCard", () => {
     preactRender(createElement(DynamicProductCard, { handle: "test-product", template: "product-card" }), container)
 
     // Wait for component to update after fetch error
-    await new Promise(resolve => setTimeout(resolve, 50))
+    await vi.advanceTimersByTimeAsync(50)
 
     expect(container.textContent).toContain("Failed to fetch product data: 404 Not Found")
   })
@@ -110,7 +112,7 @@ describe("DynamicProductCard", () => {
     preactRender(createElement(DynamicProductCard, { handle: "test-product", template: "product-card" }), container)
 
     // Wait for component to update after fetch
-    await new Promise(resolve => setTimeout(resolve, 50))
+    await vi.advanceTimersByTimeAsync(50)
 
     expect(container.textContent).toContain("Invalid markup")
   })
@@ -127,7 +129,7 @@ describe("DynamicProductCard", () => {
     preactRender(createElement(DynamicProductCard, { handle: "test-product", section: "product-section" }), container)
 
     // Wait for component to update after fetch
-    await new Promise(resolve => setTimeout(resolve, 50))
+    await vi.advanceTimersByTimeAsync(50)
 
     expect(container.innerHTML).toContain('class="product"')
     expect(container.innerHTML).toContain("Section content")
