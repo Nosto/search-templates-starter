@@ -24,7 +24,7 @@ export default function SearchQueryHandler() {
         products: {
           size,
           from: searchFrom,
-          filters: filter
+          filter
         }
       }
 
