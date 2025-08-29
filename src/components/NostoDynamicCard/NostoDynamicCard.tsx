@@ -62,8 +62,8 @@ export default function NostoDynamicCard({ handle, section, template, variantId 
   }, [handle, section, template, variantId])
 
   useEffect(() => {
-    let isMounted = true;
-    (async () => {
+    let isMounted = true
+    ;(async () => {
       try {
         setError(null)
         const html = await fetchMarkup()
@@ -71,8 +71,10 @@ export default function NostoDynamicCard({ handle, section, template, variantId 
       } catch (err) {
         if (isMounted) setError(err instanceof Error ? err.message : "Failed to load content")
       }
-    })();
-    return () => { isMounted = false; };
+    })()
+    return () => {
+      isMounted = false
+    }
   }, [fetchMarkup])
   if (error) {
     return <div>Error: {error}</div>
