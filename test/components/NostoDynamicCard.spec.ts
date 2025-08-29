@@ -1,41 +1,35 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest"
+import { render } from "@testing-library/preact"
 import { createElement } from "preact"
-import { render as preactRender } from "preact"
-import NostoDynamicCard from "../../src/components/NostoDynamicCard/NostoDynamicCard"
+import NostoDynamicCard from "@/components/NostoDynamicCard/NostoDynamicCard"
 
 // Mock fetch globally
 const mockFetch = vi.fn()
 global.fetch = mockFetch
 
 describe("NostoDynamicCard", () => {
-  let container: HTMLElement
-
   beforeEach(() => {
     vi.useFakeTimers()
-    container = document.createElement("div")
-    document.body.appendChild(container)
     mockFetch.mockClear()
   })
 
   afterEach(() => {
     vi.useRealTimers()
-    document.body.removeChild(container)
     vi.clearAllMocks()
   })
 
   it("throws error when handle is missing", () => {
     expect(() => {
-      preactRender(
+      render(
         // @ts-expect-error - Testing missing required prop
-        createElement(NostoDynamicCard, { template: "product-card" }),
-        container
+        createElement(NostoDynamicCard, { template: "product-card" })
       )
     }).toThrow("NostoDynamicCard requires a 'handle' prop")
   })
 
   it("throws error when both section and template are missing", () => {
     expect(() => {
-      preactRender(createElement(NostoDynamicCard, { handle: "test-product" }), container)
+      render(createElement(NostoDynamicCard, { handle: "test-product" }))
     }).toThrow("NostoDynamicCard requires either 'section' or 'template' prop")
   })
 
@@ -46,13 +40,12 @@ describe("NostoDynamicCard", () => {
       text: () => Promise.resolve(mockMarkup)
     })
 
-    preactRender(
+    const { container } = render(
       createElement(NostoDynamicCard, {
         handle: "test-product",
         template: "product-card",
         variantId: "12345"
-      }),
-      container
+      })
     )
 
     // Wait for the fetch to be called and component to update
@@ -69,12 +62,11 @@ describe("NostoDynamicCard", () => {
       text: () => Promise.resolve(`<body><div>${mockMarkup}</div></body>`)
     })
 
-    preactRender(
+    const { container } = render(
       createElement(NostoDynamicCard, {
         handle: "test-product",
         section: "product-section"
-      }),
-      container
+      })
     )
 
     // Wait for the fetch to be called and component to update
@@ -95,7 +87,7 @@ describe("NostoDynamicCard", () => {
       statusText: "Not Found"
     })
 
-    preactRender(createElement(NostoDynamicCard, { handle: "test-product", template: "product-card" }), container)
+    const { container } = render(createElement(NostoDynamicCard, { handle: "test-product", template: "product-card" }))
 
     // Wait for component to update after fetch error
     await vi.advanceTimersByTimeAsync(50)
@@ -109,7 +101,7 @@ describe("NostoDynamicCard", () => {
       text: () => Promise.resolve("<html><body>Invalid content</body></html>")
     })
 
-    preactRender(createElement(NostoDynamicCard, { handle: "test-product", template: "product-card" }), container)
+    const { container } = render(createElement(NostoDynamicCard, { handle: "test-product", template: "product-card" }))
 
     // Wait for component to update after fetch
     await vi.advanceTimersByTimeAsync(50)
@@ -126,7 +118,9 @@ describe("NostoDynamicCard", () => {
       text: () => Promise.resolve(fullMarkup)
     })
 
-    preactRender(createElement(NostoDynamicCard, { handle: "test-product", section: "product-section" }), container)
+    const { container } = render(
+      createElement(NostoDynamicCard, { handle: "test-product", section: "product-section" })
+    )
 
     // Wait for component to update after fetch
     await vi.advanceTimersByTimeAsync(50)

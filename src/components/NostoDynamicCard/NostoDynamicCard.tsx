@@ -23,7 +23,7 @@ export default function NostoDynamicCard({ handle, section, template, variantId 
     throw new Error("NostoDynamicCard requires either 'section' or 'template' prop")
   }
 
-  const fetchMarkup = useCallback(async (): Promise<string> => {
+  const fetchMarkup = useCallback(async () => {
     const params = new URLSearchParams()
 
     if (template) {

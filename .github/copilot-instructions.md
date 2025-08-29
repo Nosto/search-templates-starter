@@ -124,6 +124,8 @@ git commit --no-verify -m "your commit message"
 - Use ES2020 level features and syntax conventions
 - **Use type instead of interface** for component props and object type definitions
 - **Avoid adding unnecessary comments** - only add comments when explicitly instructed or when complex logic needs explanation
+- **Use `@/` path aliases** for imports from src directory (e.g., `import Component from "@/components/Component"`)
+- **Drop explicit return type declarations** when TypeScript can infer them automatically
 
 ### Preact Conventions
 - Favor functional style react components and use the function syntax instead of lambda syntax
@@ -141,6 +143,10 @@ git commit --no-verify -m "your commit message"
 - Use `beforeEach` for setup, `afterEach` for cleanup
 - Use `expect` for assertions
 - Test environment is jsdom for DOM-related testing
+- **Use `@testing-library/preact`** for component testing instead of manual Preact rendering
+- **Use `@/` path aliases** in test imports (e.g., `import Component from "@/components/Component"`)
+- Import `render` from `@testing-library/preact` and `createElement` from `preact` for component tests
+- Use `{ container }` destructuring from render result to access rendered DOM
 
 ### Storybook Stories
 - **ALWAYS** use actual components from the codebase in Storybook files instead of demo components
