@@ -1,8 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest"
-import { render } from "preact"
-import NostoCampaign from "../../src/components/NostoCampaign/NostoCampaign"
+import { render } from "@testing-library/preact"
+import NostoCampaign from "@/components/NostoCampaign/NostoCampaign"
 
-// Mock @nosto/nosto-js
 const mockLoadRecommendations = vi.fn()
 const mockInjectCampaigns = vi.fn()
 const mockCreateRecommendationRequest = vi.fn(() => ({
@@ -26,28 +25,26 @@ vi.mock("@nosto/nosto-js", () => ({
 describe("NostoCampaign", () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    vi.useFakeTimers()
     mockLoadRecommendations.mockClear()
     mockInjectCampaigns.mockClear()
     mockCreateRecommendationRequest.mockClear()
   })
 
   it("renders with required data attributes", async () => {
-    const container = document.createElement("div")
-    render(<NostoCampaign placement="test-placement" />, container)
+    const { container } = render(<NostoCampaign placement="test-placement" />)
 
     const campaignElement = container.querySelector('[data-nosto-placement="test-placement"]')
     expect(campaignElement).toBeTruthy()
 
-    // Check that the placement attribute is set correctly
     expect(campaignElement?.getAttribute("data-nosto-placement")).toBe("test-placement")
   })
 
   it("shows error when placement prop is empty", async () => {
-    const container = document.createElement("div")
-    render(<NostoCampaign placement="" />, container)
+    const { container } = render(<NostoCampaign placement="" />)
 
-    // Wait longer for the effect to run
-    await new Promise(resolve => setTimeout(resolve, 100))
+    vi.advanceTimersByTime(100)
+    await vi.runAllTimersAsync()
 
     expect(container.textContent).toContain("Placement prop is required")
   })
@@ -59,11 +56,10 @@ describe("NostoCampaign", () => {
       }
     })
 
-    const container = document.createElement("div")
-    render(<NostoCampaign placement="test-placement" />, container)
+    render(<NostoCampaign placement="test-placement" />)
 
-    // Wait for async operation
-    await new Promise(resolve => setTimeout(resolve, 50))
+    vi.advanceTimersByTime(50)
+    await vi.runAllTimersAsync()
 
     expect(mockCreateRecommendationRequest).toHaveBeenCalledWith({ includeTagging: true })
 
@@ -82,13 +78,11 @@ describe("NostoCampaign", () => {
       }
     })
 
-    const container = document.createElement("div")
-    render(<NostoCampaign placement="test-placement" />, container)
+    const { container } = render(<NostoCampaign placement="test-placement" />)
 
-    // Wait for async operation to complete
-    await new Promise(resolve => setTimeout(resolve, 100))
+    vi.advanceTimersByTime(100)
+    await vi.runAllTimersAsync()
 
-    // Find content element by class name or data attribute - it might not have the exact class
     const contentElements = container.querySelectorAll("div")
     const contentWithHTML = Array.from(contentElements).find(el => el.innerHTML === htmlContent)
 
@@ -97,7 +91,7 @@ describe("NostoCampaign", () => {
     expect(mockInjectCampaigns).not.toHaveBeenCalled()
   })
 
-  it("handles AttributedCampaignResult by using placements.injectCampaigns", async () => {
+  it("handles AttributedCampaignResult by using innerHTML injection", async () => {
     const campaignResult = {
       div_id: "test-div",
       html: "<div>Attributed Campaign</div>",
@@ -110,24 +104,27 @@ describe("NostoCampaign", () => {
       }
     })
 
-    const container = document.createElement("div")
-    render(<NostoCampaign placement="test-placement" />, container)
+    const { container } = render(<NostoCampaign placement="test-placement" />)
 
-    // Wait for async operation
-    await new Promise(resolve => setTimeout(resolve, 50))
+    vi.advanceTimersByTime(50)
+    await vi.runAllTimersAsync()
 
-    expect(mockInjectCampaigns).toHaveBeenCalledWith({ "test-placement": campaignResult }, expect.any(Object))
+    const contentElements = container.querySelectorAll("div")
+    const contentWithHTML = Array.from(contentElements).find(el => el.innerHTML === campaignResult.html)
+
+    expect(contentWithHTML).toBeTruthy()
+    expect(contentWithHTML?.innerHTML).toBe(campaignResult.html)
+    expect(mockInjectCampaigns).not.toHaveBeenCalled()
   })
 
   it("handles API errors gracefully", async () => {
     const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {})
     mockLoadRecommendations.mockRejectedValue(new Error("API Error"))
 
-    const container = document.createElement("div")
-    render(<NostoCampaign placement="test-placement" />, container)
+    const { container } = render(<NostoCampaign placement="test-placement" />)
 
-    // Wait for async operation
-    await new Promise(resolve => setTimeout(resolve, 50))
+    vi.advanceTimersByTime(50)
+    await vi.runAllTimersAsync()
 
     expect(container.textContent).toContain("Failed to load campaign")
     expect(consoleErrorSpy).toHaveBeenCalled()
