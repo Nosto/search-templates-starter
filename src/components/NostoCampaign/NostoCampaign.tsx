@@ -1,11 +1,6 @@
 import { useState, useEffect, useRef } from "preact/hooks"
 import { nostojs } from "@nosto/nosto-js"
-
-type AttributedCampaignResult = {
-  div_id: string
-  html: string
-  result_id: string
-}
+import type { AttributedCampaignResult } from "@nosto/nosto-js/client"
 
 type Props = {
   placement: string

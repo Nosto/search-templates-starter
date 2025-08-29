@@ -1,5 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from "vitest"
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest"
 import { render } from "@testing-library/preact"
+import { mockNostojs, restoreNostojs } from "@nosto/nosto-js/testing"
 import NostoCampaign from "@/components/NostoCampaign/NostoCampaign"
 
 const mockLoadRecommendations = vi.fn()
@@ -17,10 +18,6 @@ const mockNostoAPI = {
   }
 }
 
-vi.mock("@nosto/nosto-js", () => ({
-  nostojs: vi.fn(callback => callback(mockNostoAPI))
-}))
-
 describe("NostoCampaign", () => {
   beforeEach(() => {
     vi.clearAllMocks()
@@ -32,6 +29,13 @@ describe("NostoCampaign", () => {
     mockLoadRecommendations.mockResolvedValue({
       recommendations: {}
     })
+    // Setup mockNostojs
+    mockNostojs(mockNostoAPI)
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
+    restoreNostojs()
   })
 
   it("renders a div container", async () => {
