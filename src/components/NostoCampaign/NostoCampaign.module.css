@@ -1,0 +1,30 @@
+.container {
+  position: relative;
+  min-height: 2rem;
+}
+
+.content {
+  width: 100%;
+}
+
+.loading {
+  padding: var(--ns-space-3);
+  text-align: center;
+  color: var(--ns-color-text-secondary);
+  font-size: var(--ns-font-size-3);
+}
+
+.error {
+  padding: var(--ns-space-3);
+  text-align: center;
+  color: var(--ns-color-error);
+  font-size: var(--ns-font-size-3);
+  background-color: var(--ns-color-error-background, #fef2f2);
+  border: 1px solid var(--ns-color-error-border, #fecaca);
+  border-radius: var(--ns-border-radius-1);
+}
+
+.container[data-loading="true"] .content {
+  opacity: 0.5;
+  pointer-events: none;
+}
