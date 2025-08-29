@@ -37,13 +37,10 @@ export default function NostoCampaign({ placement }: Props) {
         if (recommendations && recommendations[placement] && containerRef.current) {
           const campaign = recommendations[placement]
 
-          // Only inject campaigns that are compatible with injectCampaigns API
-          if (typeof campaign === "string" || (campaign && typeof campaign === "object" && "html" in campaign)) {
-            await api.placements.injectCampaigns(
-              { [placement]: campaign as string | AttributedCampaignResult },
-              { [placement]: containerRef.current }
-            )
-          }
+          await api.placements.injectCampaigns(
+            { [placement]: campaign as string | AttributedCampaignResult },
+            { [placement]: containerRef.current }
+          )
         }
       } catch (err) {
         console.error("Failed to load Nosto campaign:", err)
