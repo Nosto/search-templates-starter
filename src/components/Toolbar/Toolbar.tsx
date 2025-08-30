@@ -35,7 +35,7 @@ export default function Toolbar() {
   const options = sortOptions.map(o => ({ value: o.id, label: o.value.name }))
 
   return (
-    <div className={style.container} style={loading ? style.loading : ""}>
+    <div className={cl(style.container, loading && style.loading)}>
       {!loading && (
         <span className={style.total} data-nosto-element="totalResults">
           {docCount} products

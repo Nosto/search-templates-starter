@@ -136,3 +136,7 @@
   vertical-align: baseline;
   line-height: var(--ns-line-height-tiny);
 }
+
+.loading {
+  opacity: 0.3;
+}
