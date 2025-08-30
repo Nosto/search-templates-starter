@@ -1,4 +1,10 @@
-import { useFacets, useNostoAppState, useSelectedFiltersCount, useSort } from "@nosto/search-js/preact/hooks"
+import {
+  useFacets,
+  useNostoAppState,
+  useSelectedFiltersCount,
+  useSort,
+  useProductFilters
+} from "@nosto/search-js/preact/hooks"
 import { pick } from "@nosto/search-js/utils"
 import { sortOptions } from "@/config"
 import Facet from "@/components/Facet/Facet"
@@ -48,6 +54,7 @@ export default function FilteringAndSorting() {
   const { loading, response } = useNostoAppState(state => pick(state, "loading", "response"))
   const { activeSort, setSort } = useSort(sortOptions)
   const selectedFiltersCount = useSelectedFiltersCount()
+  const { filters, removeAll } = useProductFilters()
 
   const docCount = response.products?.total ?? 0
   const options = sortOptions.map(o => ({ value: o.id, label: o.value.name }))
@@ -72,6 +79,38 @@ export default function FilteringAndSorting() {
           />
         </div>
       </div>
+
+      {/* Selected Filters Section */}
+      {filters.length > 0 && (
+        <div className={styles.selectedFilters}>
+          <div className={styles.selectedFiltersContainer}>
+            {filters.map(filter => (
+              <div key={`${filter?.name}: ${filter?.value}`} className={styles.selectedFilter}>
+                <span className={styles.selectedFilterLabel}>
+                  {filter?.name}: {filter?.value}
+                </span>
+                <Button className={styles.selectedFilterButton} onClick={() => filter?.remove()} icon="close" />
+              </div>
+            ))}
+          </div>
+          <button
+            className={styles.clearFilters}
+            onClick={() => {
+              removeAll()
+            }}
+            onKeyDown={e => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault()
+                removeAll()
+              }
+            }}
+            aria-label="Clear all filters"
+            type="button"
+          >
+            Clear Filters
+          </button>
+        </div>
+      )}
 
       {/* Sidebar/Filtering Section */}
       {facets?.length > 0 && (

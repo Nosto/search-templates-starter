@@ -1,8 +1,6 @@
 import ProductGrid from "@/components/ProductGrid/ProductGrid"
-import ProductEditorial from "@/components/ProductEditorial/ProductEditorial"
 import FilteringAndSorting from "@/components/FilteringAndSorting/FilteringAndSorting"
 import BottomToolbar from "@/components/BottomToolbar/BottomToolbar"
-import SelectedFilters from "@/components/SelectedFilters/SelectedFilters"
 import { wrapContent } from "@/components/ContentWrapper/ContentWrapper"
 import { InfiniteScroll } from "@nosto/search-js/preact/common"
 import Loader from "@/elements/Loader/Loader"
@@ -17,10 +15,8 @@ export function CategoryBody({ loading, foundProducts }: Props) {
   if (loading) return <Loader />
   return foundProducts ? (
     <>
-      <SelectedFilters />
       <FilteringAndSorting />
       <ProductGrid />
-      <ProductEditorial />
       <BottomToolbar />
     </>
   ) : (
@@ -32,12 +28,10 @@ export function CategoryBodyInfiniteScroll({ loading, foundProducts }: Props) {
   if (!foundProducts) return loading ? <Loader /> : <NoResults />
   return (
     <>
-      <SelectedFilters />
       <FilteringAndSorting />
       <InfiniteScroll>
         <ProductGrid />
       </InfiniteScroll>
-      <ProductEditorial />
     </>
   )
 }

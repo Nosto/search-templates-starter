@@ -232,3 +232,60 @@
   vertical-align: baseline;
   line-height: var(--ns-line-height-tiny);
 }
+
+/* Selected Filters Styles (from SelectedFilters component) */
+.selectedFilters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: var(--ns-space-2);
+}
+
+.selectedFiltersContainer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  -ms-flex: 0 0 83.333333%;
+  flex: 0 0 83.333333%;
+  max-width: 83.333333%;
+  gap: var(--ns-space-2);
+}
+
+.selectedFilter {
+  display: flex;
+  align-items: center;
+  padding: var(--ns-space-1);
+  font-size: var(--ns-font-size-4);
+  border: var(--ns-border-width-thin) solid var(--ns-color-grey);
+  border-radius: var(--ns-border-radius-3);
+}
+
+.selectedFilterLabel {
+  color: var(--ns-color-black);
+}
+
+.selectedFilterButton {
+  text-align: right;
+  align-items: center;
+  cursor: pointer;
+  padding: var(--ns-space-1);
+  color: var(--ns-color-black);
+}
+
+.clearFilters {
+  cursor: pointer;
+  position: relative;
+  width: 100%;
+  -ms-flex: 0 0 16.666667%;
+  flex: 0 0 16.666667%;
+  max-width: 16.666667%;
+  text-align: right;
+  color: var(--ns-color-link);
+  font-size: var(--ns-font-4);
+  margin-left: auto;
+  margin-right: 0;
+  background: none;
+  border: none;
+}

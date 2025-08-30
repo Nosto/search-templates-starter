@@ -1,8 +1,6 @@
 import ProductGrid from "@/components/ProductGrid/ProductGrid"
-import ProductEditorial from "@/components/ProductEditorial/ProductEditorial"
 import FilteringAndSorting from "@/components/FilteringAndSorting/FilteringAndSorting"
 import BottomToolbar from "@/components/BottomToolbar/BottomToolbar"
-import SelectedFilters from "@/components/SelectedFilters/SelectedFilters"
 import { ContentChildrenProps, wrapContent } from "@/components/ContentWrapper/ContentWrapper"
 import { InfiniteScroll } from "@nosto/search-js/preact/common"
 import Loader from "@/elements/Loader/Loader"
@@ -12,10 +10,8 @@ export function SerpBody({ loading, foundProducts }: ContentChildrenProps) {
   if (loading) return <Loader />
   return foundProducts ? (
     <>
-      <SelectedFilters />
       <FilteringAndSorting />
       <ProductGrid />
-      <ProductEditorial />
       <BottomToolbar />
     </>
   ) : (
@@ -27,7 +23,6 @@ export function SerpBodyInfiniteScroll({ loading, foundProducts }: ContentChildr
   if (!foundProducts) return loading ? <Loader /> : <NoResults />
   return (
     <>
-      <SelectedFilters />
       <FilteringAndSorting />
       <InfiniteScroll
         observerOptions={{
@@ -36,7 +31,6 @@ export function SerpBodyInfiniteScroll({ loading, foundProducts }: ContentChildr
       >
         <ProductGrid />
       </InfiniteScroll>
-      <ProductEditorial />
     </>
   )
 }
