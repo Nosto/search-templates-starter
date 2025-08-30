@@ -1,7 +1,7 @@
 import { SerpElement } from "@nosto/search-js/preact/serp"
 import { productImagePlaceholder } from "@/helpers"
 import { SearchProduct } from "@nosto/nosto-js/client"
-import styles from "./Product.module.css"
+import styles from "./ProductCard.module.css"
 
 type Props = {
   product: SearchProduct
@@ -9,7 +9,7 @@ type Props = {
   children?: preact.JSX.Element | preact.JSX.Element[]
 }
 
-export default function Product({ product, previewImage, children }: Props) {
+export default function ProductCard({ product, previewImage, children }: Props) {
   return (
     <SerpElement
       as="a"

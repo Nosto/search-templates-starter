@@ -1,16 +1,16 @@
 import { pick } from "@nosto/search-js/utils"
-import Product from "@/components/Product/Product"
+import ProductCard from "@/components/ProductCard/ProductCard"
 import { useDecoratedSearchResults, useNostoAppState } from "@nosto/search-js/preact/hooks"
-import style from "./Products.module.css"
+import style from "./ProductGrid.module.css"
 
-export default function Products() {
+export default function ProductGrid() {
   const { loading } = useNostoAppState(state => pick(state, "loading"))
   const { products } = useDecoratedSearchResults()
 
   return (
     <div className={style.container} style={loading ? "opacity: 0.3;" : ""}>
       {products?.hits.map((hit, index) => {
-        return <Product product={hit} key={hit.productId || index} />
+        return <ProductCard product={hit} key={hit.productId || index} />
       })}
     </div>
   )

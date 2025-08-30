@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/preact"
-import Product from "./Product"
+import ProductCard from "./ProductCard"
 
 export default {
-  title: "Components/Product",
-  component: Product,
+  title: "Components/ProductCard",
+  component: ProductCard,
   parameters: {
     layout: "centered"
   },
   tags: ["autodocs"]
-} as Meta<typeof Product>
+} as Meta<typeof ProductCard>
 
-type Story = StoryObj<typeof Product>
+type Story = StoryObj<typeof ProductCard>
 
 const mockProduct = {
   product_id: "1",
@@ -23,5 +23,5 @@ const mockProduct = {
 }
 
 export const Default: Story = {
-  render: () => <Product product={mockProduct} />
+  render: () => <ProductCard product={mockProduct} />
 }

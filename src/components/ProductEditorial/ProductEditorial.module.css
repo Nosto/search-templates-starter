@@ -1,0 +1,6 @@
+.container {
+  margin: var(--ns-space-4) 0;
+  padding: var(--ns-space-4);
+  background-color: var(--ns-color-light-gray);
+  border-radius: var(--ns-border-radius);
+}

@@ -1,5 +1,6 @@
-import Products from "@/components/Products/Products"
-import Toolbar from "@/components/Toolbar/Toolbar"
+import ProductGrid from "@/components/ProductGrid/ProductGrid"
+import ProductEditorial from "@/components/ProductEditorial/ProductEditorial"
+import FilteringAndSorting from "@/components/FilteringAndSorting/FilteringAndSorting"
 import BottomToolbar from "@/components/BottomToolbar/BottomToolbar"
 import SelectedFilters from "@/components/SelectedFilters/SelectedFilters"
 import { ContentChildrenProps, wrapContent } from "@/components/ContentWrapper/ContentWrapper"
@@ -12,8 +13,9 @@ export function SerpBody({ loading, foundProducts }: ContentChildrenProps) {
   return foundProducts ? (
     <>
       <SelectedFilters />
-      <Toolbar />
-      <Products />
+      <FilteringAndSorting />
+      <ProductGrid />
+      <ProductEditorial />
       <BottomToolbar />
     </>
   ) : (
@@ -26,14 +28,15 @@ export function SerpBodyInfiniteScroll({ loading, foundProducts }: ContentChildr
   return (
     <>
       <SelectedFilters />
-      <Toolbar />
+      <FilteringAndSorting />
       <InfiniteScroll
         observerOptions={{
           rootMargin: "100% 0px"
         }}
       >
-        <Products />
+        <ProductGrid />
       </InfiniteScroll>
+      <ProductEditorial />
     </>
   )
 }
