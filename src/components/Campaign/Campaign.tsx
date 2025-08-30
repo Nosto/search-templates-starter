@@ -6,7 +6,7 @@ type Props = {
   placement: string
 }
 
-export default function NostoCampaign({ placement }: Props) {
+export default function Campaign({ placement }: Props) {
   const [error, setError] = useState<string | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 

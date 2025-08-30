@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest"
 import { render } from "@testing-library/preact"
 import { mockNostojs, restoreNostojs } from "@nosto/nosto-js/testing"
-import NostoCampaign from "@/components/NostoCampaign/NostoCampaign"
+import Campaign from "@/components/Campaign/Campaign"
 
 const mockLoadRecommendations = vi.fn()
 const mockInjectCampaigns = vi.fn()
@@ -18,7 +18,7 @@ const mockNostoAPI = {
   }
 }
 
-describe("NostoCampaign", () => {
+describe("Campaign", () => {
   beforeEach(() => {
     vi.clearAllMocks()
     vi.useFakeTimers()
@@ -39,14 +39,14 @@ describe("NostoCampaign", () => {
   })
 
   it("renders a div container", async () => {
-    const { container } = render(<NostoCampaign placement="test-placement" />)
+    const { container } = render(<Campaign placement="test-placement" />)
 
     const campaignElement = container.querySelector("div")
     expect(campaignElement).toBeTruthy()
   })
 
   it("shows error when placement prop is empty", async () => {
-    const { container } = render(<NostoCampaign placement="" />)
+    const { container } = render(<Campaign placement="" />)
 
     vi.advanceTimersByTime(100)
     await vi.runAllTimersAsync()
@@ -61,7 +61,7 @@ describe("NostoCampaign", () => {
       }
     })
 
-    render(<NostoCampaign placement="test-placement" />)
+    render(<Campaign placement="test-placement" />)
 
     vi.advanceTimersByTime(50)
     await vi.runAllTimersAsync()
@@ -82,7 +82,7 @@ describe("NostoCampaign", () => {
       }
     })
 
-    render(<NostoCampaign placement="test-placement" />)
+    render(<Campaign placement="test-placement" />)
 
     vi.advanceTimersByTime(100)
     await vi.runAllTimersAsync()
@@ -106,7 +106,7 @@ describe("NostoCampaign", () => {
       }
     })
 
-    render(<NostoCampaign placement="test-placement" />)
+    render(<Campaign placement="test-placement" />)
 
     vi.advanceTimersByTime(50)
     await vi.runAllTimersAsync()
@@ -121,7 +121,7 @@ describe("NostoCampaign", () => {
     const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {})
     mockLoadRecommendations.mockRejectedValue(new Error("API Error"))
 
-    const { container } = render(<NostoCampaign placement="test-placement" />)
+    const { container } = render(<Campaign placement="test-placement" />)
 
     vi.advanceTimersByTime(50)
     await vi.runAllTimersAsync()
