@@ -109,7 +109,7 @@ describe("URL utilities", () => {
       expect(params.get("sort")).toBeNull()
     })
 
-    it("creates URLSearchParams with all parameters including sort", () => {
+    it("creates URLSearchParams with all parameters", () => {
       const state = {
         query: "shoes",
         page: 2,
