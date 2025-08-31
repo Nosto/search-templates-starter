@@ -13,7 +13,7 @@ type ToggleButtonProps = {
   onClick: () => void
 }
 
-function ToggleMobileSidebarButton({ selectedFiltersCount, className, onClick }: ToggleButtonProps) {
+function ToggleSidebarButton({ selectedFiltersCount, className, onClick }: ToggleButtonProps) {
   return (
     <Button light className={cl(style.mobile, style.filter, className)} onClick={onClick}>
       <div className={style.label}>
@@ -46,7 +46,7 @@ export default function Toolbar({ toggleSidebar }: ToolbarProps) {
         </span>
       )}
       <div className={style.buttons}>
-        <ToggleMobileSidebarButton selectedFiltersCount={selectedFiltersCount} onClick={toggleSidebar} />
+        <ToggleSidebarButton selectedFiltersCount={selectedFiltersCount} onClick={toggleSidebar} />
         <Select
           value={activeSort}
           onChange={e => setSort((e.target as HTMLSelectElement)?.value)}
