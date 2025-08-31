@@ -7,6 +7,7 @@ export interface UrlQueryState {
   query?: string
   page?: number
   filter?: Filter[]
+  sort?: string
 }
 
 export function serializeQueryState(state: UrlQueryState) {
@@ -18,6 +19,10 @@ export function serializeQueryState(state: UrlQueryState) {
 
   if (state.page && state.page > 1) {
     params.set("p", state.page.toString())
+  }
+
+  if (state.sort) {
+    params.set("sort", state.sort)
   }
 
   if (state.filter && state.filter.length > 0) {
@@ -45,6 +50,11 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
     if (!isNaN(pageNum) && pageNum > 1) {
       state.page = pageNum
     }
+  }
+
+  const sort = searchParams.get("sort")
+  if (sort) {
+    state.sort = sort
   }
 
   const filters: Filter[] = []

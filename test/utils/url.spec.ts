@@ -94,6 +94,34 @@ describe("URL utilities", () => {
       expect(params.get("filter.color")).toBe("Red")
       expect(params.getAll("filter.size")).toEqual(["8", "9", "10"])
     })
+
+    it("creates URLSearchParams with sort parameter", () => {
+      const state = { query: "test", sort: "price" }
+      const params = serializeQueryState(state)
+      expect(params.get("q")).toBe("test")
+      expect(params.get("sort")).toBe("price")
+    })
+
+    it("omits empty sort parameter", () => {
+      const state = { query: "test", sort: "" }
+      const params = serializeQueryState(state)
+      expect(params.get("q")).toBe("test")
+      expect(params.get("sort")).toBeNull()
+    })
+
+    it("creates URLSearchParams with all parameters including sort", () => {
+      const state = {
+        query: "shoes",
+        page: 2,
+        sort: "-price",
+        filter: [{ field: "brand", value: ["Nike"] }]
+      }
+      const params = serializeQueryState(state)
+      expect(params.get("q")).toBe("shoes")
+      expect(params.get("p")).toBe("2")
+      expect(params.get("sort")).toBe("-price")
+      expect(params.get("filter.brand")).toBe("Nike")
+    })
   })
 
   describe("deserializeQueryState", () => {
@@ -194,6 +222,36 @@ describe("URL utilities", () => {
         { field: "size", value: ["8", "9"] }
       ])
     })
+
+    it("parses sort parameter", () => {
+      const params = new URLSearchParams("q=test&sort=price")
+      const state = deserializeQueryState(params)
+      expect(state.query).toBe("test")
+      expect(state.sort).toBe("price")
+    })
+
+    it("parses sort parameter with special characters", () => {
+      const params = new URLSearchParams("q=test&sort=-price")
+      const state = deserializeQueryState(params)
+      expect(state.query).toBe("test")
+      expect(state.sort).toBe("-price")
+    })
+
+    it("omits empty sort parameter", () => {
+      const params = new URLSearchParams("q=test&sort=")
+      const state = deserializeQueryState(params)
+      expect(state.query).toBe("test")
+      expect(state.sort).toBeUndefined()
+    })
+
+    it("parses all parameters including sort", () => {
+      const params = new URLSearchParams("q=shoes&p=2&sort=score&filter.brand=Nike")
+      const state = deserializeQueryState(params)
+      expect(state.query).toBe("shoes")
+      expect(state.page).toBe(2)
+      expect(state.sort).toBe("score")
+      expect(state.filter).toEqual([{ field: "brand", value: ["Nike"] }])
+    })
   })
 
   describe("updateURL", () => {
@@ -274,6 +332,23 @@ describe("URL utilities", () => {
         "/?filter.brand=Nike&filter.brand=Adidas&filter.brand=Puma"
       )
     })
+
+    it("updates URL with sort parameter", () => {
+      const state = { query: "test", sort: "price" }
+      updateURL(state)
+      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?q=test&sort=price")
+    })
+
+    it("updates URL with all parameters including sort", () => {
+      const state = {
+        query: "shoes",
+        page: 2,
+        sort: "-price",
+        filter: [{ field: "brand", value: ["Nike"] }]
+      }
+      updateURL(state)
+      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?q=shoes&p=2&sort=-price&filter.brand=Nike")
+    })
   })
 
   describe("getCurrentUrlState", () => {
@@ -327,6 +402,26 @@ describe("URL utilities", () => {
           { field: "brand", value: ["Nike", "Adidas"] },
           { field: "color", value: ["Red"] }
         ]
+      })
+    })
+
+    it("parses sort parameter from URL", () => {
+      window.location.search = "?q=test&sort=price"
+      const state = getCurrentUrlState()
+      expect(state).toEqual({
+        query: "test",
+        sort: "price"
+      })
+    })
+
+    it("parses all parameters from URL", () => {
+      window.location.search = "?q=shoes&p=2&sort=-price&filter.brand=Nike"
+      const state = getCurrentUrlState()
+      expect(state).toEqual({
+        query: "shoes",
+        page: 2,
+        sort: "-price",
+        filter: [{ field: "brand", value: ["Nike"] }]
       })
     })
   })
