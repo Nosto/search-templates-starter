@@ -2,22 +2,17 @@ import Products from "@/components/Products/Products"
 import Toolbar from "@/components/Toolbar/Toolbar"
 import BottomToolbar from "@/components/BottomToolbar/BottomToolbar"
 import SelectedFilters from "@/components/SelectedFilters/SelectedFilters"
-import { wrapContent } from "@/components/ContentWrapper/ContentWrapper"
+import { wrapContent, ContentChildrenProps } from "@/components/ContentWrapper/ContentWrapper"
 import { InfiniteScroll } from "@nosto/search-js/preact/common"
 import Loader from "@/elements/Loader/Loader"
 import NoResults from "@/components/NoResults/NoResults"
 
-type Props = {
-  loading: boolean
-  foundProducts: boolean
-}
-
-export function CategoryBody({ loading, foundProducts }: Props) {
+export function CategoryBody({ loading, foundProducts, toggleSidebar }: ContentChildrenProps) {
   if (loading) return <Loader />
   return foundProducts ? (
     <>
       <SelectedFilters />
-      <Toolbar />
+      <Toolbar toggleSidebar={toggleSidebar} />
       <Products />
       <BottomToolbar />
     </>
@@ -26,12 +21,12 @@ export function CategoryBody({ loading, foundProducts }: Props) {
   )
 }
 
-export function CategoryBodyInfiniteScroll({ loading, foundProducts }: Props) {
+export function CategoryBodyInfiniteScroll({ loading, foundProducts, toggleSidebar }: ContentChildrenProps) {
   if (!foundProducts) return loading ? <Loader /> : <NoResults />
   return (
     <>
       <SelectedFilters />
-      <Toolbar />
+      <Toolbar toggleSidebar={toggleSidebar} />
       <InfiniteScroll>
         <Products />
       </InfiniteScroll>

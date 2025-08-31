@@ -13,5 +13,5 @@ export default {
 type Story = StoryObj<typeof Toolbar>
 
 export const Default: Story = {
-  render: () => <Toolbar />
+  render: () => <Toolbar toggleSidebar={() => {}} />
 }

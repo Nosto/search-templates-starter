@@ -7,34 +7,52 @@ import styles from "./Sidebar.module.css"
 import Button from "@/elements/Button/Button"
 import cl from "@/utils/cl"
 
-export const toggleButtonId = "toggle-mobile-sidebar"
-
-type Props = {
-  className?: string
+type SidebarProps = {
+  isVisible: boolean
+  onClose: () => void
 }
 
-function ToggleSidebarButton({ className }: Props = {}) {
+type ToggleButtonProps = {
+  className?: string
+  onClick: () => void
+}
+
+function ToggleSidebarButton({ className, onClick }: ToggleButtonProps) {
   return (
-    <Button className={cl(styles.close, className)}>
-      <label htmlFor={toggleButtonId} aria-label="Close sidebar filters">
-        <Icon name="close" />
-      </label>
+    <Button className={cl(styles.close, className)} onClick={onClick}>
+      <Icon name="close" />
     </Button>
   )
 }
 
-export default function SideBar() {
+export default function SideBar({ isVisible, onClose }: SidebarProps) {
   const { loading, facets } = useFacets()
 
-  return facets?.length > 0 ? (
+  if (!facets?.length) {
+    return null
+  }
+
+  return (
     <>
-      <input type="checkbox" id={toggleButtonId} className={styles.toggle} />
-      <label className={styles.backdrop} htmlFor={toggleButtonId} aria-label="Close sidebar" />
-      <div className={styles.wrapper} style={loading ? "opacity: 0.3;" : ""}>
+      {isVisible && (
+        <div
+          className={styles.backdrop}
+          onClick={onClose}
+          onKeyDown={e => {
+            if (e.key === "Escape") {
+              onClose()
+            }
+          }}
+          role="button"
+          tabIndex={0}
+          aria-label="Close sidebar by clicking outside"
+        />
+      )}
+      <div className={cl(styles.wrapper, isVisible && styles.visible)} style={loading ? "opacity: 0.3;" : ""}>
         <div className={styles.content}>
           <div className={styles.header}>
             <span className={styles.title}>Filters</span>
-            <ToggleSidebarButton />
+            <ToggleSidebarButton onClick={onClose} />
           </div>
           <div>
             <ul className={styles.facets}>
@@ -53,7 +71,5 @@ export default function SideBar() {
         </div>
       </div>
     </>
-  ) : (
-    ""
   )
 }

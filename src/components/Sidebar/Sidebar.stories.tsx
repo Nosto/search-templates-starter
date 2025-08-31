@@ -13,5 +13,9 @@ export default {
 type Story = StoryObj<typeof Sidebar>
 
 export const Default: Story = {
-  render: () => <Sidebar />
+  render: () => <Sidebar isVisible={true} onClose={() => {}} />
+}
+
+export const Hidden: Story = {
+  render: () => <Sidebar isVisible={false} onClose={() => {}} />
 }
