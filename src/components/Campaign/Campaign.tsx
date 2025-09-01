@@ -1,8 +1,7 @@
-import { JSX } from "preact/jsx-runtime"
-
 type CampaignProps = {
   placement?: string
-} & JSX.HTMLAttributes<HTMLElement>
+  [key: string]: any
+}
 
 /**
  * Campaign component using the nosto-campaign custom element directly.

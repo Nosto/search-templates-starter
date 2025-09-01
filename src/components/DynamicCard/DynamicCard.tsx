@@ -1,10 +1,9 @@
-import { JSX } from "preact/jsx-runtime"
-
 type DynamicCardProps = {
   handle: string
   section?: string
   template?: string
-} & JSX.HTMLAttributes<HTMLElement>
+  [key: string]: any
+}
 
 /**
  * DynamicCard component using the nosto-dynamic-card custom element directly.
