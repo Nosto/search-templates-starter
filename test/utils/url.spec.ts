@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from "vitest"
-import { serializeQueryState, deserializeQueryState, updateURL, getCurrentUrlState, generatePageUrl } from "@/utils/url"
+import { serializeQueryState, deserializeQueryState, updateURL, getCurrentUrlState, generatePageURL } from "@/utils/url"
 
 describe("URL utilities", () => {
   describe("serializeQueryState", () => {
@@ -331,7 +331,7 @@ describe("URL utilities", () => {
     })
   })
 
-  describe("generatePageUrl", () => {
+  describe("generatePageURL", () => {
     beforeEach(() => {
       Object.defineProperty(window, "location", {
         value: {
@@ -344,42 +344,42 @@ describe("URL utilities", () => {
     })
 
     it("generates URL for page 1 without page parameter", () => {
-      const url = generatePageUrl(1)
+      const url = generatePageURL(1)
       expect(url).toBe("/")
     })
 
     it("generates URL for page 2 with page parameter", () => {
-      const url = generatePageUrl(2)
+      const url = generatePageURL(2)
       expect(url).toBe("/?p=2")
     })
 
     it("preserves existing query parameters", () => {
       window.location.search = "?q=test+search"
-      const url = generatePageUrl(3)
+      const url = generatePageURL(3)
       expect(url).toBe("/?q=test+search&p=3")
     })
 
     it("preserves existing query and filter parameters", () => {
       window.location.search = "?q=shoes&filter.brand=Nike&filter.color=Red"
-      const url = generatePageUrl(2)
+      const url = generatePageURL(2)
       expect(url).toBe("/?q=shoes&p=2&filter.brand=Nike&filter.color=Red")
     })
 
     it("replaces existing page parameter", () => {
       window.location.search = "?q=test&p=5"
-      const url = generatePageUrl(3)
+      const url = generatePageURL(3)
       expect(url).toBe("/?q=test&p=3")
     })
 
     it("removes page parameter when navigating to page 1", () => {
       window.location.search = "?q=test&p=5"
-      const url = generatePageUrl(1)
+      const url = generatePageURL(1)
       expect(url).toBe("/?q=test")
     })
 
     it("preserves pathname", () => {
       window.location.pathname = "/search"
-      const url = generatePageUrl(2)
+      const url = generatePageURL(2)
       expect(url).toBe("/search?p=2")
     })
   })

@@ -92,7 +92,7 @@ export function getCurrentUrlState() {
   return deserializeQueryState(searchParams)
 }
 
-export function generatePageUrl(page: number) {
+export function generatePageURL(page: number) {
   const currentState = getCurrentUrlState()
   return createURLFromState({
     ...currentState,
