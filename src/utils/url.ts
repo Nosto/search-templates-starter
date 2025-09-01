@@ -74,12 +74,17 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
   return state
 }
 
-export function updateURL(state: UrlQueryState) {
+export function createUrlFromState(state: UrlQueryState): string {
   const params = serializeQueryState(state)
   const url = new URL(window.location.pathname, window.location.origin)
   url.search = params.toString()
 
-  window.history.replaceState(null, "", url.pathname + url.search)
+  return url.pathname + url.search
+}
+
+export function updateURL(state: UrlQueryState) {
+  const url = createUrlFromState(state)
+  window.history.replaceState(null, "", url)
 }
 
 export function getCurrentUrlState() {
@@ -94,9 +99,5 @@ export function generatePageUrl(page: number): string {
     page: page > 1 ? page : undefined
   }
 
-  const params = serializeQueryState(newState)
-  const url = new URL(window.location.pathname, window.location.origin)
-  url.search = params.toString()
-
-  return url.pathname + url.search
+  return createUrlFromState(newState)
 }
