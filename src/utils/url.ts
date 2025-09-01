@@ -17,11 +17,12 @@ function deserializeSortFromUrl(sortString: string) {
   return sortString
     .split(",")
     .map(item => item.trim())
-    .filter(item => item.includes("~"))
     .map(item => {
       const [field, order] = item.split("~")
-      return { field: field.trim(), order: order as InputSearchSort["order"] }
+      if (!field || !order) return null
+      return { field, order } as InputSearchSort
     })
+    .filter(item => item !== null)
 }
 
 type SimpleFilter = Pick<InputSearchTopLevelFilter, "field" | "value" | "range">

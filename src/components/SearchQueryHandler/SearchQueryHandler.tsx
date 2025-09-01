@@ -16,8 +16,8 @@ export default function SearchQueryHandler() {
 
   // Initialize search from URL on first load
   useEffect(() => {
-    const { query, page, filter, sort: urlSort } = getCurrentUrlState()
-    if (query || page || filter || urlSort) {
+    const { query, page, filter, sort } = getCurrentUrlState()
+    if (query || page || filter || sort) {
       const searchFrom = page ? (page - 1) * size : 0
 
       const searchConfig = {
@@ -26,7 +26,7 @@ export default function SearchQueryHandler() {
           size,
           from: searchFrom,
           filter,
-          sort: urlSort
+          sort
         }
       }
 
