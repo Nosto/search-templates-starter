@@ -1,8 +1,10 @@
-import { InputSearchTopLevelFilter } from "@nosto/nosto-js/client"
+import { InputSearchTopLevelFilter, InputSearchSort } from "@nosto/nosto-js/client"
+import { serializeSortToUrl, deserializeSortFromUrl } from "./sorting"
 
 const QUERY_PARAM = "q"
 const PAGE_PARAM = "p"
 const FILTER_PREFIX = "filter."
+const SORT_PARAM = "sort"
 
 type SimpleFilter = Pick<InputSearchTopLevelFilter, "field" | "value" | "range">
 
@@ -10,6 +12,7 @@ export interface UrlQueryState {
   query?: string
   page?: number
   filter?: SimpleFilter[]
+  sort?: InputSearchSort[]
 }
 
 export function serializeQueryState(state: UrlQueryState) {
@@ -29,6 +32,10 @@ export function serializeQueryState(state: UrlQueryState) {
         f.value.forEach(val => params.append(`${FILTER_PREFIX}${f.field}`, val))
       }
     })
+  }
+
+  if (state.sort && state.sort.length > 0) {
+    params.set(SORT_PARAM, serializeSortToUrl(state.sort))
   }
 
   return params
@@ -69,6 +76,14 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
 
   if (filters.length > 0) {
     state.filter = filters
+  }
+
+  const sortParam = searchParams.get(SORT_PARAM)
+  if (sortParam) {
+    const sort = deserializeSortFromUrl(sortParam)
+    if (sort.length > 0) {
+      state.sort = sort
+    }
   }
 
   return state

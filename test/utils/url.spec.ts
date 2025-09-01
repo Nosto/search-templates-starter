@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from "vitest"
 import { serializeQueryState, deserializeQueryState, updateURL, getCurrentUrlState } from "@/utils/url"
+import type { InputSearchSort } from "@nosto/nosto-js/client"
 
 describe("URL utilities", () => {
   describe("serializeQueryState", () => {
@@ -93,6 +94,48 @@ describe("URL utilities", () => {
       expect(params.getAll("filter.brand")).toEqual(["Nike", "Adidas"])
       expect(params.get("filter.color")).toBe("Red")
       expect(params.getAll("filter.size")).toEqual(["8", "9", "10"])
+    })
+
+    it("creates URLSearchParams with sort parameter", () => {
+      const state = {
+        query: "test",
+        sort: [{ field: "price", order: "asc" }] as InputSearchSort[]
+      }
+      const params = serializeQueryState(state)
+      expect(params.get("q")).toBe("test")
+      expect(params.get("sort")).toBe("price~asc")
+    })
+
+    it("creates URLSearchParams with multiple sorts", () => {
+      const state = {
+        sort: [
+          { field: "price", order: "desc" },
+          { field: "_score", order: "desc" }
+        ] as InputSearchSort[]
+      }
+      const params = serializeQueryState(state)
+      expect(params.get("sort")).toBe("price~desc,_score~desc")
+    })
+
+    it("omits empty sort array", () => {
+      const state = { query: "test", sort: [] as InputSearchSort[] }
+      const params = serializeQueryState(state)
+      expect(params.get("q")).toBe("test")
+      expect(params.has("sort")).toBe(false)
+    })
+
+    it("handles all parameters together", () => {
+      const state = {
+        query: "shoes",
+        page: 2,
+        filter: [{ field: "brand", value: ["Nike"] }],
+        sort: [{ field: "price", order: "asc" }] as InputSearchSort[]
+      }
+      const params = serializeQueryState(state)
+      expect(params.get("q")).toBe("shoes")
+      expect(params.get("p")).toBe("2")
+      expect(params.get("filter.brand")).toBe("Nike")
+      expect(params.get("sort")).toBe("price~asc")
     })
   })
 
@@ -194,6 +237,47 @@ describe("URL utilities", () => {
         { field: "size", value: ["8", "9"] }
       ])
     })
+
+    it("parses sort parameter", () => {
+      const params = new URLSearchParams("q=test&sort=price~asc")
+      const state = deserializeQueryState(params)
+      expect(state.query).toBe("test")
+      expect(state.sort).toEqual([{ field: "price", order: "asc" }])
+    })
+
+    it("parses multiple sorts parameter", () => {
+      const params = new URLSearchParams("sort=price~desc,_score~desc")
+      const state = deserializeQueryState(params)
+      expect(state.sort).toEqual([
+        { field: "price", order: "desc" },
+        { field: "_score", order: "desc" }
+      ])
+    })
+
+    it("handles invalid sort parameter", () => {
+      const params = new URLSearchParams("q=test&sort=invalid")
+      const state = deserializeQueryState(params)
+      expect(state.query).toBe("test")
+      expect(state.sort).toBeUndefined()
+    })
+
+    it("handles empty sort parameter", () => {
+      const params = new URLSearchParams("q=test&sort=")
+      const state = deserializeQueryState(params)
+      expect(state.query).toBe("test")
+      expect(state.sort).toBeUndefined()
+    })
+
+    it("handles all parameters together", () => {
+      const params = new URLSearchParams("q=shoes&p=2&filter.brand=Nike&sort=price~asc")
+      const state = deserializeQueryState(params)
+      expect(state).toEqual({
+        query: "shoes",
+        page: 2,
+        filter: [{ field: "brand", value: ["Nike"] }],
+        sort: [{ field: "price", order: "asc" }]
+      })
+    })
   })
 
   describe("updateURL", () => {
@@ -274,6 +358,41 @@ describe("URL utilities", () => {
         "/?filter.brand=Nike&filter.brand=Adidas&filter.brand=Puma"
       )
     })
+
+    it("updates URL with sort parameter", () => {
+      const state = {
+        query: "test",
+        sort: [{ field: "price", order: "asc" }] as InputSearchSort[]
+      }
+      updateURL(state)
+      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?q=test&sort=price%7Easc")
+    })
+
+    it("updates URL with multiple sorts", () => {
+      const state = {
+        sort: [
+          { field: "price", order: "desc" },
+          { field: "_score", order: "desc" }
+        ] as InputSearchSort[]
+      }
+      updateURL(state)
+      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?sort=price%7Edesc%2C_score%7Edesc")
+    })
+
+    it("updates URL with all parameters including sort", () => {
+      const state = {
+        query: "sneakers",
+        page: 3,
+        filter: [{ field: "category", value: ["sports"] }],
+        sort: [{ field: "price", order: "asc" }] as InputSearchSort[]
+      }
+      updateURL(state)
+      expect(window.history.replaceState).toHaveBeenCalledWith(
+        null,
+        "",
+        "/?q=sneakers&p=3&filter.category=sports&sort=price%7Easc"
+      )
+    })
   })
 
   describe("getCurrentUrlState", () => {
@@ -326,6 +445,29 @@ describe("URL utilities", () => {
         filter: [
           { field: "brand", value: ["Nike", "Adidas"] },
           { field: "color", value: ["Red"] }
+        ]
+      })
+    })
+
+    it("parses sort parameter from URL", () => {
+      window.location.search = "?q=shoes&sort=price~asc"
+      const state = getCurrentUrlState()
+      expect(state).toEqual({
+        query: "shoes",
+        sort: [{ field: "price", order: "asc" }]
+      })
+    })
+
+    it("parses all parameters including sort from URL", () => {
+      window.location.search = "?q=shoes&p=2&filter.brand=Nike&sort=price~desc,_score~desc"
+      const state = getCurrentUrlState()
+      expect(state).toEqual({
+        query: "shoes",
+        page: 2,
+        filter: [{ field: "brand", value: ["Nike"] }],
+        sort: [
+          { field: "price", order: "desc" },
+          { field: "_score", order: "desc" }
         ]
       })
     })
