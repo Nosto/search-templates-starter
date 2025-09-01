@@ -98,7 +98,7 @@ describe("URL utilities", () => {
     it("creates URLSearchParams with sort parameter", () => {
       const state = {
         query: "test",
-        sort: [{ field: "price", order: "desc" }]
+        sort: [{ field: "price", order: "desc" as const }]
       }
       const params = serializeQueryState(state)
       expect(params.get("q")).toBe("test")
@@ -108,8 +108,8 @@ describe("URL utilities", () => {
     it("creates URLSearchParams with multiple sort parameters", () => {
       const state = {
         sort: [
-          { field: "price", order: "desc" },
-          { field: "rating", order: "asc" }
+          { field: "price", order: "desc" as const },
+          { field: "rating", order: "asc" as const }
         ]
       }
       const params = serializeQueryState(state)
@@ -129,7 +129,7 @@ describe("URL utilities", () => {
         query: "shoes",
         page: 2,
         filter: [{ field: "brand", value: ["Nike"] }],
-        sort: [{ field: "price", order: "asc" }]
+        sort: [{ field: "price", order: "asc" as const }]
       }
       const params = serializeQueryState(state)
       expect(params.get("q")).toBe("shoes")
@@ -366,7 +366,7 @@ describe("URL utilities", () => {
     it("updates URL with sort parameters", () => {
       const state = {
         query: "shoes",
-        sort: [{ field: "price", order: "desc" }]
+        sort: [{ field: "price", order: "desc" as const }]
       }
       updateURL(state)
       expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?q=shoes&sort.price=desc")
@@ -375,8 +375,8 @@ describe("URL utilities", () => {
     it("updates URL with multiple sort parameters", () => {
       const state = {
         sort: [
-          { field: "price", order: "desc" },
-          { field: "rating", order: "asc" }
+          { field: "price", order: "desc" as const },
+          { field: "rating", order: "asc" as const }
         ]
       }
       updateURL(state)
@@ -388,7 +388,7 @@ describe("URL utilities", () => {
         query: "sneakers",
         page: 3,
         filter: [{ field: "category", value: ["sports"] }],
-        sort: [{ field: "price", order: "asc" }]
+        sort: [{ field: "price", order: "asc" as const }]
       }
       updateURL(state)
       expect(window.history.replaceState).toHaveBeenCalledWith(

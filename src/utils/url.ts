@@ -1,4 +1,4 @@
-import { InputSearchTopLevelFilter } from "@nosto/nosto-js/client"
+import { InputSearchTopLevelFilter, InputSearchSort } from "@nosto/nosto-js/client"
 
 const QUERY_PARAM = "q"
 const PAGE_PARAM = "p"
@@ -13,7 +13,7 @@ export interface UrlQueryState {
   query?: string
   page?: number
   filter?: SimpleFilter[]
-  sort?: { field: string; order: string }[]
+  sort?: InputSearchSort[]
 }
 
 export function serializeQueryState(state: UrlQueryState) {
@@ -65,7 +65,7 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
   const filters: InputSearchTopLevelFilter[] = []
   const filterMap = new Map<string, string[]>()
 
-  const sorts: { field: string; order: string }[] = []
+  const sorts: InputSearchSort[] = []
 
   for (const [key, value] of searchParams.entries()) {
     if (key.startsWith(FILTER_PREFIX) && value.trim()) {
@@ -76,7 +76,10 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
       filterMap.get(field)!.push(value.trim())
     } else if (key.startsWith(SORT_PREFIX) && value.trim()) {
       const field = key.substring(SORT_PREFIX.length)
-      sorts.push({ field, order: value.trim() })
+      const order = value.trim()
+      if (order === "asc" || order === "desc") {
+        sorts.push({ field, order })
+      }
     }
   }
 
