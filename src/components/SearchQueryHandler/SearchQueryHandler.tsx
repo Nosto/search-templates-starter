@@ -1,5 +1,5 @@
-import { sizes, defaultConfig, sortOptions } from "@/config"
-import { useActions, useSizeOptions, useNostoAppState, useSort } from "@nosto/search-js/preact/hooks"
+import { sizes, defaultConfig } from "@/config"
+import { useActions, useSizeOptions, useNostoAppState } from "@nosto/search-js/preact/hooks"
 import { getCurrentUrlState, updateURL } from "@/utils/url"
 
 import { useEffect } from "preact/hooks"
@@ -7,7 +7,6 @@ import { useEffect } from "preact/hooks"
 export default function SearchQueryHandler() {
   const { newSearch } = useActions()
   const { size } = useSizeOptions(sizes, defaultConfig.serpSize)
-  const { setSort } = useSort(sortOptions)
 
   // Get current query, pagination, filter, and sort state from app
   const query = useNostoAppState(state => state.query?.query)
@@ -33,7 +32,7 @@ export default function SearchQueryHandler() {
 
       newSearch(searchConfig)
     }
-  }, [newSearch, size, setSort])
+  }, [newSearch, size])
 
   // Update URL when app state changes
   useEffect(() => {
