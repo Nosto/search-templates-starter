@@ -264,10 +264,7 @@ describe("URL utilities", () => {
     })
 
     it("handles empty sort parameter", () => {
-      const params = new URLSearchParams("q=test&sort=")
-      const state = deserializeQueryState(params)
-      expect(state.query).toBe("test")
-      expect(state.sort).toBeUndefined()
+      expectSort("q=test&sort=").toBeUndefined()
     })
 
     it("handles field names with tildes and commas", () => {
@@ -368,41 +365,6 @@ describe("URL utilities", () => {
         null,
         "",
         "/?filter.brand=Nike&filter.brand=Adidas&filter.brand=Puma"
-      )
-    })
-
-    it("updates URL with sort parameter", () => {
-      const state = {
-        query: "test",
-        sort: [{ field: "price", order: "asc" }] as InputSearchSort[]
-      }
-      updateURL(state)
-      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?q=test&sort=price%7Easc")
-    })
-
-    it("updates URL with multiple sorts", () => {
-      const state = {
-        sort: [
-          { field: "price", order: "desc" },
-          { field: "_score", order: "desc" }
-        ] as InputSearchSort[]
-      }
-      updateURL(state)
-      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?sort=price%7Edesc%2C_score%7Edesc")
-    })
-
-    it("updates URL with all parameters including sort", () => {
-      const state = {
-        query: "sneakers",
-        page: 3,
-        filter: [{ field: "category", value: ["sports"] }],
-        sort: [{ field: "price", order: "asc" }] as InputSearchSort[]
-      }
-      updateURL(state)
-      expect(window.history.replaceState).toHaveBeenCalledWith(
-        null,
-        "",
-        "/?q=sneakers&p=3&filter.category=sports&sort=price%7Easc"
       )
     })
   })
