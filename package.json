@@ -50,7 +50,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "husky": "^9.1.7",
     "jsdom": "^25.0.1",
-    "preact": "^10.26.9",
+    "preact": "^10.27.1",
     "prettier": "^3.3.3",
     "storybook": "^9.1.3",
     "typedoc": "^0.27.2",
