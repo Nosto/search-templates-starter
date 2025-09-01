@@ -1,7 +1,5 @@
 import { JSX } from "preact/jsx-runtime"
 import "@nosto/web-components"
-import cl from "@/utils/cl"
-import styles from "./Campaign.module.css"
 
 interface NostoCampaignElement extends JSX.HTMLAttributes<HTMLElement> {
   placement?: string
@@ -25,12 +23,12 @@ export default function Campaign({ placement, useTemplate, api, className, ...pr
     placement,
     "use-template": useTemplate,
     api,
-    className: className ? cl(styles.campaign, className) : styles.campaign,
+    className,
     ...props
   }
 
   return (
-    // @ts-ignore: Custom element types not properly recognized by TypeScript
+    // @ts-expect-error: Custom element types not properly recognized by TypeScript
     <nosto-campaign {...elementProps} />
   )
 }
