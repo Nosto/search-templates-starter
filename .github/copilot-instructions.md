@@ -135,7 +135,7 @@ git commit --no-verify -m "your commit message"
 - Ensure accessibility by using semantic HTML and proper aria attributes
 
 ### Testing with Vitest
-- Write unit tests using Vitest (see `test/utils/cl.spec.ts` as example)
+- Write unit tests using Vitest (see `test/utils/url.spec.ts` as example)
 - Use `describe` and `it` for test structure
 - Use `beforeEach` for setup, `afterEach` for cleanup
 - Use `expect` for assertions
