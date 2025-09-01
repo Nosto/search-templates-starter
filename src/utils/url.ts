@@ -5,8 +5,12 @@ const PAGE_PARAM = "p"
 const FILTER_PREFIX = "filter."
 const SORT_PARAM = "sort"
 
+function encodeSortField(field: string) {
+  return field.replace(/~/g, "%7E").replace(/,/g, "%2C")
+}
+
 function serializeSortToUrl(sort: InputSearchSort[]) {
-  return sort.map(s => `${s.field.replace(/~/g, "%7E").replace(/,/g, "%2C")}~${s.order}`).join(",")
+  return sort.map(s => `${encodeSortField(s.field)}~${s.order}`).join(",")
 }
 
 function deserializeSortFromUrl(sortString: string) {
