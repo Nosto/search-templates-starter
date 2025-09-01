@@ -74,7 +74,7 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
   return state
 }
 
-export function createUrlFromState(state: UrlQueryState): string {
+function createUrlFromState(state: UrlQueryState): string {
   const params = serializeQueryState(state)
   const url = new URL(window.location.pathname, window.location.origin)
   url.search = params.toString()

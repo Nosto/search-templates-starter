@@ -1,12 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from "vitest"
-import {
-  serializeQueryState,
-  deserializeQueryState,
-  updateURL,
-  getCurrentUrlState,
-  generatePageUrl,
-  createUrlFromState
-} from "@/utils/url"
+import { serializeQueryState, deserializeQueryState, updateURL, getCurrentUrlState, generatePageUrl } from "@/utils/url"
 
 describe("URL utilities", () => {
   describe("serializeQueryState", () => {
@@ -200,79 +193,6 @@ describe("URL utilities", () => {
         { field: "color", value: ["Red"] },
         { field: "size", value: ["8", "9"] }
       ])
-    })
-  })
-
-  describe("createUrlFromState", () => {
-    beforeEach(() => {
-      Object.defineProperty(window, "location", {
-        value: {
-          pathname: "/",
-          origin: "http://localhost:3000"
-        },
-        writable: true
-      })
-    })
-
-    it("creates URL from empty state", () => {
-      const state = {}
-      const url = createUrlFromState(state)
-      expect(url).toBe("/")
-    })
-
-    it("creates URL with query parameter", () => {
-      const state = { query: "test search" }
-      const url = createUrlFromState(state)
-      expect(url).toBe("/?q=test+search")
-    })
-
-    it("creates URL with query and page parameters", () => {
-      const state = { query: "test", page: 2 }
-      const url = createUrlFromState(state)
-      expect(url).toBe("/?q=test&p=2")
-    })
-
-    it("omits page parameter when equal to 1", () => {
-      const state = { query: "test", page: 1 }
-      const url = createUrlFromState(state)
-      expect(url).toBe("/?q=test")
-    })
-
-    it("creates URL with filter parameters", () => {
-      const state = {
-        query: "shoes",
-        filter: [
-          { field: "brand", value: ["Nike"] },
-          { field: "color", value: ["Red"] }
-        ]
-      }
-      const url = createUrlFromState(state)
-      expect(url).toBe("/?q=shoes&filter.brand=Nike&filter.color=Red")
-    })
-
-    it("creates URL with query, page, and filter parameters", () => {
-      const state = {
-        query: "sneakers",
-        page: 3,
-        filter: [{ field: "category", value: ["sports"] }]
-      }
-      const url = createUrlFromState(state)
-      expect(url).toBe("/?q=sneakers&p=3&filter.category=sports")
-    })
-
-    it("preserves pathname", () => {
-      window.location.pathname = "/search"
-      const state = { query: "test", page: 2 }
-      const url = createUrlFromState(state)
-      expect(url).toBe("/search?q=test&p=2")
-    })
-
-    it("creates URL with array filter parameters", () => {
-      const state = {
-        filter: [{ field: "brand", value: ["Nike", "Adidas", "Puma"] }]
-      }
-      const url = createUrlFromState(state)
-      expect(url).toBe("/?filter.brand=Nike&filter.brand=Adidas&filter.brand=Puma")
     })
   })
 
