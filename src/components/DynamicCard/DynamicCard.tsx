@@ -1,5 +1,4 @@
 import { JSX } from "preact/jsx-runtime"
-import "@nosto/web-components"
 
 type DynamicCardProps = {
   handle: string
