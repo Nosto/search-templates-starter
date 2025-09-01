@@ -38,9 +38,22 @@ describe("Campaign", () => {
     restoreNostojs()
   })
 
-  it("renders a div container", async () => {
+  it("renders a div container after loading", async () => {
+    mockLoadRecommendations.mockResolvedValue({
+      recommendations: {
+        "test-placement": "<div>Test Content</div>"
+      }
+    })
+
     const { container } = render(<Campaign placement="test-placement" />)
 
+    // Initially loading, should not render div
+    expect(container.querySelector("div")).toBeFalsy()
+
+    vi.advanceTimersByTime(100)
+    await vi.runAllTimersAsync()
+
+    // After loading, should render div
     const campaignElement = container.querySelector("div")
     expect(campaignElement).toBeTruthy()
   })
