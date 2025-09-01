@@ -1,5 +1,5 @@
 import style from "./Checkbox.module.css"
-import cl from "@/utils/cl"
+import { cl } from "@nosto/search-js/utils"
 
 type Props = {
   value: string

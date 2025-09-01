@@ -1,4 +1,4 @@
-import cl from "@/utils/cl"
+import { cl } from "@nosto/search-js/utils"
 import styles from "./Loader.module.css"
 
 type Props = {

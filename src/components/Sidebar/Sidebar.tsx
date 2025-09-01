@@ -5,7 +5,7 @@ import Icon from "@/elements/Icon/Icon"
 import { SearchStatsFacet, SearchTermsFacet } from "@nosto/nosto-js/client"
 import styles from "./Sidebar.module.css"
 import Button from "@/elements/Button/Button"
-import cl from "@/utils/cl"
+import { cl } from "@nosto/search-js/utils"
 
 export const toggleButtonId = "toggle-mobile-sidebar"
 
