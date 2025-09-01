@@ -3,6 +3,9 @@ import { InputSearchTopLevelFilter } from "@nosto/nosto-js/client"
 const QUERY_PARAM = "q"
 const PAGE_PARAM = "p"
 const FILTER_PREFIX = "filter."
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const SORT_PARAM = "s" // Reserved for future simple sort parameter usage
+const SORT_PREFIX = "sort."
 
 type SimpleFilter = Pick<InputSearchTopLevelFilter, "field" | "value" | "range">
 
@@ -10,6 +13,7 @@ export interface UrlQueryState {
   query?: string
   page?: number
   filter?: SimpleFilter[]
+  sort?: { field: string; order: string }[]
 }
 
 export function serializeQueryState(state: UrlQueryState) {
@@ -27,6 +31,14 @@ export function serializeQueryState(state: UrlQueryState) {
     state.filter.forEach(f => {
       if (f.field && f.value?.length) {
         f.value.forEach(val => params.append(`${FILTER_PREFIX}${f.field}`, val))
+      }
+    })
+  }
+
+  if (state.sort && state.sort.length > 0) {
+    state.sort.forEach(s => {
+      if (s.field && s.order) {
+        params.set(`${SORT_PREFIX}${s.field}`, s.order)
       }
     })
   }
@@ -53,6 +65,8 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
   const filters: InputSearchTopLevelFilter[] = []
   const filterMap = new Map<string, string[]>()
 
+  const sorts: { field: string; order: string }[] = []
+
   for (const [key, value] of searchParams.entries()) {
     if (key.startsWith(FILTER_PREFIX) && value.trim()) {
       const field = key.substring(FILTER_PREFIX.length)
@@ -60,6 +74,9 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
         filterMap.set(field, [])
       }
       filterMap.get(field)!.push(value.trim())
+    } else if (key.startsWith(SORT_PREFIX) && value.trim()) {
+      const field = key.substring(SORT_PREFIX.length)
+      sorts.push({ field, order: value.trim() })
     }
   }
 
@@ -69,6 +86,10 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
 
   if (filters.length > 0) {
     state.filter = filters
+  }
+
+  if (sorts.length > 0) {
+    state.sort = sorts
   }
 
   return state

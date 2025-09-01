@@ -94,6 +94,49 @@ describe("URL utilities", () => {
       expect(params.get("filter.color")).toBe("Red")
       expect(params.getAll("filter.size")).toEqual(["8", "9", "10"])
     })
+
+    it("creates URLSearchParams with sort parameter", () => {
+      const state = {
+        query: "test",
+        sort: [{ field: "price", order: "desc" }]
+      }
+      const params = serializeQueryState(state)
+      expect(params.get("q")).toBe("test")
+      expect(params.get("sort.price")).toBe("desc")
+    })
+
+    it("creates URLSearchParams with multiple sort parameters", () => {
+      const state = {
+        sort: [
+          { field: "price", order: "desc" },
+          { field: "rating", order: "asc" }
+        ]
+      }
+      const params = serializeQueryState(state)
+      expect(params.get("sort.price")).toBe("desc")
+      expect(params.get("sort.rating")).toBe("asc")
+    })
+
+    it("omits empty sort array", () => {
+      const state = { query: "test", sort: [] }
+      const params = serializeQueryState(state)
+      expect(params.get("q")).toBe("test")
+      expect(params.has("sort.price")).toBe(false)
+    })
+
+    it("handles sort with other parameters", () => {
+      const state = {
+        query: "shoes",
+        page: 2,
+        filter: [{ field: "brand", value: ["Nike"] }],
+        sort: [{ field: "price", order: "asc" }]
+      }
+      const params = serializeQueryState(state)
+      expect(params.get("q")).toBe("shoes")
+      expect(params.get("p")).toBe("2")
+      expect(params.get("filter.brand")).toBe("Nike")
+      expect(params.get("sort.price")).toBe("asc")
+    })
   })
 
   describe("deserializeQueryState", () => {
@@ -194,6 +237,51 @@ describe("URL utilities", () => {
         { field: "size", value: ["8", "9"] }
       ])
     })
+
+    it("parses sort parameter", () => {
+      const params = new URLSearchParams("q=test&sort.price=desc")
+      const state = deserializeQueryState(params)
+      expect(state.query).toBe("test")
+      expect(state.sort).toEqual([{ field: "price", order: "desc" }])
+    })
+
+    it("parses multiple sort parameters", () => {
+      const params = new URLSearchParams("sort.price=desc&sort.rating=asc")
+      const state = deserializeQueryState(params)
+      expect(state.sort).toEqual([
+        { field: "price", order: "desc" },
+        { field: "rating", order: "asc" }
+      ])
+    })
+
+    it("parses single sort parameter", () => {
+      const params = new URLSearchParams("sort.name=asc")
+      const state = deserializeQueryState(params)
+      expect(state.sort).toEqual([{ field: "name", order: "asc" }])
+    })
+
+    it("handles malformed sort parameter", () => {
+      const params = new URLSearchParams("sort.price=&sort.empty=")
+      const state = deserializeQueryState(params)
+      expect(state.sort).toBeUndefined()
+    })
+
+    it("filters out empty sort values", () => {
+      const params = new URLSearchParams("sort.price=desc&sort.empty=&sort.rating=")
+      const state = deserializeQueryState(params)
+      expect(state.sort).toEqual([{ field: "price", order: "desc" }])
+    })
+
+    it("handles sort with other parameters", () => {
+      const params = new URLSearchParams("q=shoes&filter.brand=Nike&sort.price=asc&p=2")
+      const state = deserializeQueryState(params)
+      expect(state).toEqual({
+        query: "shoes",
+        page: 2,
+        filter: [{ field: "brand", value: ["Nike"] }],
+        sort: [{ field: "price", order: "asc" }]
+      })
+    })
   })
 
   describe("updateURL", () => {
@@ -274,6 +362,41 @@ describe("URL utilities", () => {
         "/?filter.brand=Nike&filter.brand=Adidas&filter.brand=Puma"
       )
     })
+
+    it("updates URL with sort parameters", () => {
+      const state = {
+        query: "shoes",
+        sort: [{ field: "price", order: "desc" }]
+      }
+      updateURL(state)
+      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?q=shoes&sort.price=desc")
+    })
+
+    it("updates URL with multiple sort parameters", () => {
+      const state = {
+        sort: [
+          { field: "price", order: "desc" },
+          { field: "rating", order: "asc" }
+        ]
+      }
+      updateURL(state)
+      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?sort.price=desc&sort.rating=asc")
+    })
+
+    it("updates URL with query, page, filter, and sort parameters", () => {
+      const state = {
+        query: "sneakers",
+        page: 3,
+        filter: [{ field: "category", value: ["sports"] }],
+        sort: [{ field: "price", order: "asc" }]
+      }
+      updateURL(state)
+      expect(window.history.replaceState).toHaveBeenCalledWith(
+        null,
+        "",
+        "/?q=sneakers&p=3&filter.category=sports&sort.price=asc"
+      )
+    })
   })
 
   describe("getCurrentUrlState", () => {
@@ -327,6 +450,38 @@ describe("URL utilities", () => {
           { field: "brand", value: ["Nike", "Adidas"] },
           { field: "color", value: ["Red"] }
         ]
+      })
+    })
+
+    it("parses sort parameters from URL", () => {
+      window.location.search = "?q=shoes&sort.price=desc&p=2"
+      const state = getCurrentUrlState()
+      expect(state).toEqual({
+        query: "shoes",
+        page: 2,
+        sort: [{ field: "price", order: "desc" }]
+      })
+    })
+
+    it("parses multiple sort parameters from URL", () => {
+      window.location.search = "?sort.price=desc&sort.rating=asc"
+      const state = getCurrentUrlState()
+      expect(state).toEqual({
+        sort: [
+          { field: "price", order: "desc" },
+          { field: "rating", order: "asc" }
+        ]
+      })
+    })
+
+    it("parses all parameters together from URL", () => {
+      window.location.search = "?q=sneakers&filter.brand=Nike&sort.price=asc&p=3"
+      const state = getCurrentUrlState()
+      expect(state).toEqual({
+        query: "sneakers",
+        page: 3,
+        filter: [{ field: "brand", value: ["Nike"] }],
+        sort: [{ field: "price", order: "asc" }]
       })
     })
   })
