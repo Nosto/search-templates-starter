@@ -9,6 +9,10 @@ function encodeSortField(field: string) {
   return field.replace(/~/g, "%7E").replace(/,/g, "%2C")
 }
 
+function decodeSortField(field: string) {
+  return field.replace(/%7E/g, "~").replace(/%2C/g, ",")
+}
+
 function serializeSortToUrl(sort: InputSearchSort[]) {
   return sort.map(s => `${encodeSortField(s.field)}~${s.order}`).join(",")
 }
@@ -24,7 +28,7 @@ function deserializeSortFromUrl(sortString: string) {
     .map(item => {
       const lastTildeIndex = item.lastIndexOf("~")
       if (lastTildeIndex === -1) return null
-      const field = item.substring(0, lastTildeIndex).replace(/%7E/g, "~").replace(/%2C/g, ",")
+      const field = decodeSortField(item.substring(0, lastTildeIndex))
       const order = item.substring(lastTildeIndex + 1)
       if (!field || !order) return null
       return { field, order } as InputSearchSort

@@ -124,22 +124,6 @@ describe("URL utilities", () => {
       expect(params.has("sort")).toBe(false)
     })
 
-    it("encodes field names with tildes", () => {
-      const state = {
-        sort: [{ field: "my~field", order: "asc" }] as InputSearchSort[]
-      }
-      const params = serializeQueryState(state)
-      expect(params.get("sort")).toBe("my%7Efield~asc")
-    })
-
-    it("encodes field names with commas", () => {
-      const state = {
-        sort: [{ field: "my,field", order: "desc" }] as InputSearchSort[]
-      }
-      const params = serializeQueryState(state)
-      expect(params.get("sort")).toBe("my%2Cfield~desc")
-    })
-
     it("encodes field names with tildes and commas", () => {
       const state = {
         sort: [{ field: "my~field,test", order: "asc" }] as InputSearchSort[]
@@ -290,19 +274,6 @@ describe("URL utilities", () => {
       const state = deserializeQueryState(params)
       expect(state.query).toBe("test")
       expect(state.sort).toBeUndefined()
-    })
-
-    it("handles field names with tildes", () => {
-      const params = new URLSearchParams("sort=my%7Efield~asc")
-      const state = deserializeQueryState(params)
-      expect(state.sort).toEqual([{ field: "my~field", order: "asc" }])
-    })
-
-    it("handles field names with commas", () => {
-      const params = new URLSearchParams()
-      params.set("sort", "my%2Cfield~desc")
-      const state = deserializeQueryState(params)
-      expect(state.sort).toEqual([{ field: "my,field", order: "desc" }])
     })
 
     it("handles field names with tildes and commas", () => {
