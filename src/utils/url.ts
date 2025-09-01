@@ -26,10 +26,10 @@ function deserializeSortFromUrl(sortString: string) {
     .split(",")
     .map(item => item.trim())
     .map(item => {
-      const lastTildeIndex = item.lastIndexOf("~")
-      if (lastTildeIndex === -1) return null
-      const field = decodeSortField(item.substring(0, lastTildeIndex))
-      const order = item.substring(lastTildeIndex + 1)
+      const parts = item.split("~")
+      if (parts.length !== 2) return null
+      const field = decodeSortField(parts[0])
+      const order = parts[1]
       if (!field || !order) return null
       return { field, order } as InputSearchSort
     })

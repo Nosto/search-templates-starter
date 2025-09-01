@@ -9,10 +9,12 @@ export default function SearchQueryHandler() {
   const { size } = useSizeOptions(sizes, defaultConfig.serpSize)
 
   // Get current query, pagination, filter, and sort state from app
-  const query = useNostoAppState(state => state.query?.query)
-  const from = useNostoAppState(state => state.query?.products?.from)
-  const filter = useNostoAppState(state => state.query?.products?.filter)
-  const sort = useNostoAppState(state => state.query?.products?.sort)
+  const { query, from, filter, sort } = useNostoAppState(state => ({
+    query: state.query?.query,
+    from: state.query?.products?.from,
+    filter: state.query?.products?.filter,
+    sort: state.query?.products?.sort
+  }))
 
   // Initialize search from URL on first load
   useEffect(() => {
