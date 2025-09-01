@@ -2,6 +2,21 @@ import { describe, it, expect, beforeEach, vi } from "vitest"
 import { serializeQueryState, deserializeQueryState, updateURL, getCurrentUrlState } from "@/utils/url"
 import type { InputSearchSort } from "@nosto/nosto-js/client"
 
+// Helper function for concise sort testing
+function expectSort(input: InputSearchSort[] | string) {
+  if (Array.isArray(input)) {
+    // Serialization: sort array -> URL string
+    const state = { sort: input }
+    const params = serializeQueryState(state)
+    return expect(params.get("sort"))
+  } else {
+    // Deserialization: URL string -> sort array
+    const params = new URLSearchParams(input)
+    const state = deserializeQueryState(params)
+    return expect(state.sort)
+  }
+}
+
 describe("URL utilities", () => {
   describe("serializeQueryState", () => {
     it("creates URLSearchParams with query parameter", () => {
@@ -97,13 +112,7 @@ describe("URL utilities", () => {
     })
 
     it("creates URLSearchParams with sort parameter", () => {
-      const state = {
-        query: "test",
-        sort: [{ field: "price", order: "asc" }] as InputSearchSort[]
-      }
-      const params = serializeQueryState(state)
-      expect(params.get("q")).toBe("test")
-      expect(params.get("sort")).toBe("price~asc")
+      expectSort([{ field: "price", order: "asc" }]).toBe("price~asc")
     })
 
     it("creates URLSearchParams with multiple sorts", () => {
@@ -247,10 +256,7 @@ describe("URL utilities", () => {
     })
 
     it("parses sort parameter", () => {
-      const params = new URLSearchParams("q=test&sort=price~asc")
-      const state = deserializeQueryState(params)
-      expect(state.query).toBe("test")
-      expect(state.sort).toEqual([{ field: "price", order: "asc" }])
+      expectSort("q=test&sort=price~asc").toEqual([{ field: "price", order: "asc" }])
     })
 
     it("parses multiple sorts parameter", () => {
