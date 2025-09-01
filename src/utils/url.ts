@@ -20,12 +20,8 @@ function deserializeSortFromUrl(sortString: string) {
     .filter(item => item.includes("~"))
     .map(item => {
       const [field, order] = item.split("~")
-      if (field && (order === "asc" || order === "desc")) {
-        return { field: field.trim(), order }
-      }
-      return null
+      return { field: field.trim(), order: order as InputSearchSort["order"] }
     })
-    .filter((item): item is InputSearchSort => item !== null)
 }
 
 type SimpleFilter = Pick<InputSearchTopLevelFilter, "field" | "value" | "range">
