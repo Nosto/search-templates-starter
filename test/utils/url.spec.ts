@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from "vitest"
 import { serializeQueryState, deserializeQueryState, updateURL, getCurrentUrlState } from "@/utils/url"
+import { defaultConfig } from "@/config"
 
 describe("URL utilities", () => {
   describe("serializeQueryState", () => {
@@ -135,6 +136,45 @@ describe("URL utilities", () => {
       expect(params.get("q")).toBe("shoes")
       expect(params.get("p")).toBe("2")
       expect(params.get("filter.brand")).toBe("Nike")
+      expect(params.get("sort.price")).toBe("asc")
+    })
+
+    it("omits sort parameters when they match default configuration", () => {
+      const state = {
+        query: "test",
+        sort: defaultConfig.sort.value.sort
+      }
+      const params = serializeQueryState(state)
+      expect(params.get("q")).toBe("test")
+      expect(params.has("sort._score")).toBe(false)
+      expect(params.toString()).toBe("q=test")
+    })
+
+    it("includes sort parameters when they differ from default configuration", () => {
+      const state = {
+        query: "test",
+        sort: [{ field: "price", order: "desc" as const }]
+      }
+      const params = serializeQueryState(state)
+      expect(params.get("q")).toBe("test")
+      expect(params.get("sort.price")).toBe("desc")
+      expect(params.toString()).toBe("q=test&sort.price=desc")
+    })
+
+    it("omits only default sort when mixed with non-default sorts", () => {
+      // This tests a case where we might have a multi-sort with both default and custom
+      // In practice, this would be unusual, but we should test the logic
+      const state = {
+        query: "test",
+        sort: [
+          { field: "_score", order: "desc" as const }, // This matches default
+          { field: "price", order: "asc" as const } // This doesn't
+        ]
+      }
+      const params = serializeQueryState(state)
+      expect(params.get("q")).toBe("test")
+      // Since the array doesn't exactly match default (has extra price sort), it should be included
+      expect(params.get("sort._score")).toBe("desc")
       expect(params.get("sort.price")).toBe("asc")
     })
   })

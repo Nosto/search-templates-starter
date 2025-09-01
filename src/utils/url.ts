@@ -1,4 +1,6 @@
 import { InputSearchTopLevelFilter, InputSearchSort } from "@nosto/nosto-js/client"
+import { defaultConfig } from "@/config"
+import { isMatchingSort } from "./sorting"
 
 const QUERY_PARAM = "q"
 const PAGE_PARAM = "p"
@@ -34,11 +36,14 @@ export function serializeQueryState(state: UrlQueryState) {
   }
 
   if (state.sort && state.sort.length > 0) {
-    state.sort.forEach(s => {
-      if (s.field && s.order) {
-        params.set(`${SORT_PREFIX}${s.field}`, s.order)
-      }
-    })
+    // Don't include sort parameters if they match the default configuration
+    if (!isMatchingSort(defaultConfig.sort.value.sort, state.sort)) {
+      state.sort.forEach(s => {
+        if (s.field && s.order) {
+          params.set(`${SORT_PREFIX}${s.field}`, s.order)
+        }
+      })
+    }
   }
 
   return params
