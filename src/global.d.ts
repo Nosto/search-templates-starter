@@ -5,7 +5,7 @@ declare module "*.module.css" {
 
 // Extend global HTML elements for Nosto Web Components
 declare global {
-  namespace preact.JSX {
+  namespace JSX {
     interface IntrinsicElements {
       "nosto-campaign": {
         placement?: string
@@ -13,7 +13,7 @@ declare global {
         api?: string
         className?: string
         ref?: import("preact").RefObject<HTMLElement>
-      } & HTMLAttributes<HTMLElement>
+      } & import("preact").JSX.HTMLAttributes<HTMLElement>
 
       "nosto-dynamic-card": {
         key?: string
@@ -22,7 +22,7 @@ declare global {
         target?: string
         className?: string
         ref?: import("preact").RefObject<HTMLElement>
-      } & HTMLAttributes<HTMLElement>
+      } & import("preact").JSX.HTMLAttributes<HTMLElement>
     }
   }
 }
