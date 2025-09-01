@@ -124,6 +124,14 @@ describe("URL utilities", () => {
       expect(params.has("sort")).toBe(false)
     })
 
+    it("encodes field names with tildes", () => {
+      const state = {
+        sort: [{ field: "my~field", order: "asc" }] as InputSearchSort[]
+      }
+      const params = serializeQueryState(state)
+      expect(params.get("sort")).toBe("my%7Efield~asc")
+    })
+
     it("handles all parameters together", () => {
       const state = {
         query: "shoes",
@@ -266,6 +274,12 @@ describe("URL utilities", () => {
       const state = deserializeQueryState(params)
       expect(state.query).toBe("test")
       expect(state.sort).toBeUndefined()
+    })
+
+    it("handles field names with tildes", () => {
+      const params = new URLSearchParams("sort=my%7Efield~asc")
+      const state = deserializeQueryState(params)
+      expect(state.sort).toEqual([{ field: "my~field", order: "asc" }])
     })
 
     it("handles all parameters together", () => {

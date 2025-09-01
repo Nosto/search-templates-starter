@@ -6,7 +6,7 @@ const FILTER_PREFIX = "filter."
 const SORT_PARAM = "sort"
 
 function serializeSortToUrl(sort: InputSearchSort[]) {
-  return sort.map(s => `${s.field}~${s.order}`).join(",")
+  return sort.map(s => `${encodeURIComponent(s.field).replace(/~/g, "%7E")}~${s.order}`).join(",")
 }
 
 function deserializeSortFromUrl(sortString: string) {
@@ -18,7 +18,10 @@ function deserializeSortFromUrl(sortString: string) {
     .split(",")
     .map(item => item.trim())
     .map(item => {
-      const [field, order] = item.split("~")
+      const lastTildeIndex = item.lastIndexOf("~")
+      if (lastTildeIndex === -1) return null
+      const field = item.substring(0, lastTildeIndex)
+      const order = item.substring(lastTildeIndex + 1)
       if (!field || !order) return null
       return { field, order } as InputSearchSort
     })
