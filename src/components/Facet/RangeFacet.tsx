@@ -4,7 +4,7 @@ import RangeInput from "@/elements/RangeInput/RangeInput"
 import Icon from "@/elements/Icon/Icon"
 import { SearchStatsFacet } from "@nosto/nosto-js/client"
 import styles from "./Facet.module.css"
-import cl from "@/utils/cl"
+import { cl } from "@nosto/search-js/utils"
 
 type Props = {
   facet: SearchStatsFacet
