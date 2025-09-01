@@ -2,23 +2,14 @@ import { describe, it, expect, beforeEach, vi } from "vitest"
 import { serializeQueryState, deserializeQueryState, updateURL, getCurrentUrlState } from "@/utils/url"
 import type { InputSearchSort } from "@nosto/nosto-js/client"
 
-// Helper function for concise sort testing
-function expectSort(input: InputSearchSort[] | string) {
-  if (Array.isArray(input)) {
-    // Serialization: sort array -> URL string
-    const state = { sort: input }
-    const params = serializeQueryState(state)
-    return expect(params.get("sort"))
-  } else {
-    // Deserialization: URL string -> sort array
-    const params = new URLSearchParams(input)
-    const state = deserializeQueryState(params)
-    return expect(state.sort)
-  }
-}
-
 describe("URL utilities", () => {
   describe("serializeQueryState", () => {
+    // Helper function for concise sort serialization testing
+    function expectSort(sortArray: InputSearchSort[]) {
+      const state = { sort: sortArray }
+      const params = serializeQueryState(state)
+      return expect(params.get("sort"))
+    }
     it("creates URLSearchParams with query parameter", () => {
       const state = { query: "test search" }
       const params = serializeQueryState(state)
@@ -134,11 +125,7 @@ describe("URL utilities", () => {
     })
 
     it("encodes field names with tildes and commas", () => {
-      const state = {
-        sort: [{ field: "my~field,test", order: "asc" }] as InputSearchSort[]
-      }
-      const params = serializeQueryState(state)
-      expect(params.get("sort")).toBe("my%7Efield%2Ctest~asc")
+      expectSort([{ field: "my~field,test", order: "asc" }]).toBe("my%7Efield%2Ctest~asc")
     })
 
     it("handles all parameters together", () => {
@@ -157,6 +144,12 @@ describe("URL utilities", () => {
   })
 
   describe("deserializeQueryState", () => {
+    // Helper function for concise sort deserialization testing
+    function expectSort(urlString: string) {
+      const params = new URLSearchParams(urlString)
+      const state = deserializeQueryState(params)
+      return expect(state.sort)
+    }
     it("parses query parameter", () => {
       const params = new URLSearchParams("q=test+search")
       const state = deserializeQueryState(params)
@@ -260,9 +253,7 @@ describe("URL utilities", () => {
     })
 
     it("parses multiple sorts parameter", () => {
-      const params = new URLSearchParams("sort=price~desc,_score~desc")
-      const state = deserializeQueryState(params)
-      expect(state.sort).toEqual([
+      expectSort("sort=price~desc,_score~desc").toEqual([
         { field: "price", order: "desc" },
         { field: "_score", order: "desc" }
       ])
@@ -285,14 +276,11 @@ describe("URL utilities", () => {
     it("handles field names with tildes and commas", () => {
       const params = new URLSearchParams()
       params.set("sort", "my%7Efield%2Ctest~asc")
-      const state = deserializeQueryState(params)
-      expect(state.sort).toEqual([{ field: "my~field,test", order: "asc" }])
+      expect(deserializeQueryState(params).sort).toEqual([{ field: "my~field,test", order: "asc" }])
     })
 
     it("handles field names with dashes", () => {
-      const params = new URLSearchParams("sort=my-field~asc")
-      const state = deserializeQueryState(params)
-      expect(state.sort).toEqual([{ field: "my-field", order: "asc" }])
+      expectSort("sort=my-field~asc").toEqual([{ field: "my-field", order: "asc" }])
     })
 
     it("handles all parameters together", () => {
