@@ -107,21 +107,14 @@ describe("URL utilities", () => {
     })
 
     it("creates URLSearchParams with multiple sorts", () => {
-      const state = {
-        sort: [
-          { field: "price", order: "desc" },
-          { field: "_score", order: "desc" }
-        ] as InputSearchSort[]
-      }
-      const params = serializeQueryState(state)
-      expect(params.get("sort")).toBe("price~desc,_score~desc")
+      expectSort([
+        { field: "price", order: "desc" },
+        { field: "_score", order: "desc" }
+      ]).toBe("price~desc,_score~desc")
     })
 
     it("omits empty sort array", () => {
-      const state = { query: "test", sort: [] as InputSearchSort[] }
-      const params = serializeQueryState(state)
-      expect(params.get("q")).toBe("test")
-      expect(params.has("sort")).toBe(false)
+      expectSort([]).toBeNull()
     })
 
     it("encodes field names with tildes and commas", () => {
