@@ -86,3 +86,17 @@ export function getCurrentUrlState() {
   const searchParams = new URLSearchParams(window.location.search)
   return deserializeQueryState(searchParams)
 }
+
+export function generatePageUrl(page: number): string {
+  const currentState = getCurrentUrlState()
+  const newState = {
+    ...currentState,
+    page: page > 1 ? page : undefined
+  }
+
+  const params = serializeQueryState(newState)
+  const url = new URL(window.location.pathname, window.location.origin)
+  url.search = params.toString()
+
+  return url.pathname + url.search
+}

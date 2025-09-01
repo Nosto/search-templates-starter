@@ -3,6 +3,7 @@ import Icon from "@/elements/Icon/Icon"
 import { JSX } from "preact/jsx-runtime"
 import style from "./Pagination.module.css"
 import cl from "@/utils/cl"
+import { generatePageUrl } from "@/utils/url"
 
 type Props = {
   ariaLabel?: string
@@ -23,8 +24,9 @@ export default function Pagination() {
 
   const { updateSearch } = useActions()
 
-  function pageLinkProps({ from }: Page) {
+  function pageLinkProps({ from, page }: Page) {
     return {
+      href: generatePageUrl(page),
       onClick: (e: Event) => {
         e.preventDefault()
         updateSearch({ products: { from } })
