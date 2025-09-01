@@ -260,10 +260,7 @@ describe("URL utilities", () => {
     })
 
     it("handles invalid sort parameter", () => {
-      const params = new URLSearchParams("q=test&sort=invalid")
-      const state = deserializeQueryState(params)
-      expect(state.query).toBe("test")
-      expect(state.sort).toBeUndefined()
+      expectSort("q=test&sort=invalid").toBeUndefined()
     })
 
     it("handles empty sort parameter", () => {
