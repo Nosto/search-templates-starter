@@ -30,7 +30,7 @@ export default function SideBar() {
     <>
       <input type="checkbox" id={toggleButtonId} className={styles.toggle} />
       <label className={styles.backdrop} htmlFor={toggleButtonId} aria-label="Close sidebar" />
-      <div className={styles.wrapper} style={loading ? "opacity: 0.3;" : ""}>
+      <div className={cl(styles.wrapper, loading && styles.loading)}>
         <div className={styles.content}>
           <div className={styles.header}>
             <span className={styles.title}>Filters</span>
