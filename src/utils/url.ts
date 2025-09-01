@@ -1,29 +1,32 @@
-export interface Filter {
-  field?: string
-  value?: string[]
-}
+import { InputSearchTopLevelFilter } from "@nosto/nosto-js/client"
+
+const QUERY_PARAM = "q"
+const PAGE_PARAM = "p"
+const FILTER_PREFIX = "filter."
+
+type SimpleFilter = Pick<InputSearchTopLevelFilter, "field" | "value" | "range">
 
 export interface UrlQueryState {
   query?: string
   page?: number
-  filter?: Filter[]
+  filter?: SimpleFilter[]
 }
 
 export function serializeQueryState(state: UrlQueryState) {
   const params = new URLSearchParams()
 
   if (state.query) {
-    params.set("q", state.query)
+    params.set(QUERY_PARAM, state.query)
   }
 
   if (state.page && state.page > 1) {
-    params.set("p", state.page.toString())
+    params.set(PAGE_PARAM, state.page.toString())
   }
 
   if (state.filter && state.filter.length > 0) {
     state.filter.forEach(f => {
-      if (f.field && f.value !== undefined && f.value.length > 0) {
-        f.value.forEach(val => params.append(`filter.${f.field}`, String(val)))
+      if (f.field && f.value?.length) {
+        f.value.forEach(val => params.append(`${FILTER_PREFIX}${f.field}`, val))
       }
     })
   }
@@ -34,12 +37,12 @@ export function serializeQueryState(state: UrlQueryState) {
 export function deserializeQueryState(searchParams: URLSearchParams) {
   const state: UrlQueryState = {}
 
-  const q = searchParams.get("q")
+  const q = searchParams.get(QUERY_PARAM)
   if (q) {
     state.query = q
   }
 
-  const p = searchParams.get("p")
+  const p = searchParams.get(PAGE_PARAM)
   if (p) {
     const pageNum = parseInt(p, 10)
     if (!isNaN(pageNum) && pageNum > 1) {
@@ -47,12 +50,12 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
     }
   }
 
-  const filters: Filter[] = []
+  const filters: InputSearchTopLevelFilter[] = []
   const filterMap = new Map<string, string[]>()
 
   for (const [key, value] of searchParams.entries()) {
-    if (key.startsWith("filter.") && value.trim()) {
-      const field = key.substring(7) // Remove "filter." prefix
+    if (key.startsWith(FILTER_PREFIX) && value.trim()) {
+      const field = key.substring(FILTER_PREFIX.length)
       if (!filterMap.has(field)) {
         filterMap.set(field, [])
       }
@@ -60,8 +63,8 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
     }
   }
 
-  for (const [field, values] of filterMap.entries()) {
-    filters.push({ field, value: values })
+  for (const [field, value] of filterMap.entries()) {
+    filters.push({ field, value })
   }
 
   if (filters.length > 0) {
