@@ -1,7 +1,6 @@
 import { sizes, defaultConfig, sortOptions } from "@/config"
 import { useActions, useSizeOptions, useNostoAppState, useSort } from "@nosto/search-js/preact/hooks"
 import { getCurrentUrlState, updateURL } from "@/utils/url"
-import { findSortOptionId } from "@/utils/sorting"
 
 import { useEffect } from "preact/hooks"
 
@@ -33,14 +32,6 @@ export default function SearchQueryHandler() {
       }
 
       newSearch(searchConfig)
-
-      // Update sort dropdown if URL contains sort
-      if (urlSort) {
-        const sortOptionId = findSortOptionId(urlSort, sortOptions)
-        if (sortOptionId) {
-          setSort(sortOptionId)
-        }
-      }
     }
   }, [newSearch, size, setSort])
 

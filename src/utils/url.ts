@@ -1,10 +1,32 @@
 import { InputSearchTopLevelFilter, InputSearchSort } from "@nosto/nosto-js/client"
-import { serializeSortToUrl, deserializeSortFromUrl } from "./sorting"
 
 const QUERY_PARAM = "q"
 const PAGE_PARAM = "p"
 const FILTER_PREFIX = "filter."
 const SORT_PARAM = "sort"
+
+function serializeSortToUrl(sort: InputSearchSort[]) {
+  return sort.map(s => `${s.field}~${s.order}`).join(",")
+}
+
+function deserializeSortFromUrl(sortString: string) {
+  if (!sortString.trim()) {
+    return []
+  }
+
+  return sortString
+    .split(",")
+    .map(item => item.trim())
+    .filter(item => item.includes("~"))
+    .map(item => {
+      const [field, order] = item.split("~")
+      if (field && (order === "asc" || order === "desc")) {
+        return { field: field.trim(), order }
+      }
+      return null
+    })
+    .filter((item): item is InputSearchSort => item !== null)
+}
 
 type SimpleFilter = Pick<InputSearchTopLevelFilter, "field" | "value" | "range">
 
