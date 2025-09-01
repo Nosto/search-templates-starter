@@ -1,7 +1,6 @@
 import { sizes, defaultConfig } from "@/config"
 import { useActions, useSizeOptions, useNostoAppState } from "@nosto/search-js/preact/hooks"
 import { getCurrentUrlState, updateURL } from "@/utils/url"
-import type { InputSearchSort } from "@nosto/nosto-js/client"
 
 import { useEffect } from "preact/hooks"
 
@@ -21,19 +20,13 @@ export default function SearchQueryHandler() {
     if (query || page || filter || sort) {
       const searchFrom = page ? (page - 1) * size : 0
 
-      // Convert URL sort format to InputSearchSort format
-      const searchSort: InputSearchSort[] | undefined = sort?.map(s => ({
-        field: s.field,
-        order: s.order as "asc" | "desc"
-      }))
-
       const searchConfig = {
         query: query || "",
         products: {
           size,
           from: searchFrom,
           filter,
-          sort: searchSort
+          sort
         }
       }
 

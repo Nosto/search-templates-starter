@@ -3,8 +3,6 @@ import { InputSearchTopLevelFilter, InputSearchSort } from "@nosto/nosto-js/clie
 const QUERY_PARAM = "q"
 const PAGE_PARAM = "p"
 const FILTER_PREFIX = "filter."
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const SORT_PARAM = "s" // Reserved for future simple sort parameter usage
 const SORT_PREFIX = "sort."
 
 type SimpleFilter = Pick<InputSearchTopLevelFilter, "field" | "value" | "range">
