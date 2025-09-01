@@ -94,10 +94,8 @@ export function getCurrentUrlState() {
 
 export function generatePageUrl(page: number) {
   const currentState = getCurrentUrlState()
-  const newState = {
+  return createURLFromState({
     ...currentState,
     page: page > 1 ? page : undefined
-  }
-
-  return createURLFromState(newState)
+  })
 }
