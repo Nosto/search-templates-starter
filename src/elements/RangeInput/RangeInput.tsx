@@ -1,6 +1,6 @@
 import { JSX } from "preact"
 import styles from "./RangeInput.module.css"
-import cl from "@/utils/cl"
+import { cl } from "@nosto/search-js/utils"
 
 type Props = JSX.IntrinsicElements["input"]
 

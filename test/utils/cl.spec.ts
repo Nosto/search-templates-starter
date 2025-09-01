@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest"
-import cl from "../../src/utils/cl"
+import { cl } from "@nosto/search-js/utils"
 
 describe("cl - classname joining utility", () => {
   it("joins truthy class names with spaces", () => {
