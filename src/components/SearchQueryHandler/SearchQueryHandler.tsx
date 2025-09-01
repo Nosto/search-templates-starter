@@ -39,7 +39,7 @@ export default function SearchQueryHandler() {
     updateURL({
       query: query || undefined,
       page: currentPage > 1 ? currentPage : undefined,
-      filter: filter
+      filter
     })
   }, [query, from, size, filter])
 
