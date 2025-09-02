@@ -1,8 +1,15 @@
 import { describe, it, expect, beforeEach, vi } from "vitest"
+import type { InputSearchSort } from "@nosto/nosto-js/client"
 import { serializeQueryState, deserializeQueryState, updateUrl, getCurrentUrlState, getPageUrl } from "@/utils/url"
 
 describe("URL utilities", () => {
   describe("serializeQueryState", () => {
+    // Helper function for concise sort serialization testing
+    function expectSort(sortArray: InputSearchSort[]) {
+      const state = { sort: sortArray }
+      const params = serializeQueryState(state)
+      return expect(params.get("sort"))
+    }
     it("creates URLSearchParams with query parameter", () => {
       const state = { query: "test search" }
       const params = serializeQueryState(state)
@@ -94,9 +101,48 @@ describe("URL utilities", () => {
       expect(params.get("filter.color")).toBe("Red")
       expect(params.getAll("filter.size")).toEqual(["8", "9", "10"])
     })
+
+    it("creates URLSearchParams with sort parameter", () => {
+      expectSort([{ field: "price", order: "asc" }]).toBe("price~asc")
+    })
+
+    it("creates URLSearchParams with multiple sorts", () => {
+      expectSort([
+        { field: "price", order: "desc" },
+        { field: "_score", order: "desc" }
+      ]).toBe("price~desc,_score~desc")
+    })
+
+    it("omits empty sort array", () => {
+      expectSort([]).toBeNull()
+    })
+
+    it("encodes field names with tildes and commas", () => {
+      expectSort([{ field: "my~field,test", order: "asc" }]).toBe("my%7Efield%2Ctest~asc")
+    })
+
+    it("handles all parameters together", () => {
+      const state = {
+        query: "shoes",
+        page: 2,
+        filter: [{ field: "brand", value: ["Nike"] }],
+        sort: [{ field: "price", order: "asc" }] as InputSearchSort[]
+      }
+      const params = serializeQueryState(state)
+      expect(params.get("q")).toBe("shoes")
+      expect(params.get("p")).toBe("2")
+      expect(params.get("filter.brand")).toBe("Nike")
+      expect(params.get("sort")).toBe("price~asc")
+    })
   })
 
   describe("deserializeQueryState", () => {
+    // Helper function for concise sort deserialization testing
+    function expectSort(urlString: string) {
+      const params = new URLSearchParams(urlString)
+      const state = deserializeQueryState(params)
+      return expect(state.sort)
+    }
     it("parses query parameter", () => {
       const params = new URLSearchParams("q=test+search")
       const state = deserializeQueryState(params)
@@ -193,6 +239,46 @@ describe("URL utilities", () => {
         { field: "color", value: ["Red"] },
         { field: "size", value: ["8", "9"] }
       ])
+    })
+
+    it("parses sort parameter", () => {
+      expectSort("q=test&sort=price~asc").toEqual([{ field: "price", order: "asc" }])
+    })
+
+    it("parses multiple sorts parameter", () => {
+      expectSort("sort=price~desc,_score~desc").toEqual([
+        { field: "price", order: "desc" },
+        { field: "_score", order: "desc" }
+      ])
+    })
+
+    it("handles invalid sort parameter", () => {
+      expectSort("q=test&sort=invalid").toBeUndefined()
+    })
+
+    it("handles empty sort parameter", () => {
+      expectSort("q=test&sort=").toBeUndefined()
+    })
+
+    it("handles field names with tildes and commas", () => {
+      const params = new URLSearchParams()
+      params.set("sort", "my%7Efield%2Ctest~asc")
+      expect(deserializeQueryState(params).sort).toEqual([{ field: "my~field,test", order: "asc" }])
+    })
+
+    it("handles field names with dashes", () => {
+      expectSort("sort=my-field~asc").toEqual([{ field: "my-field", order: "asc" }])
+    })
+
+    it("handles all parameters together", () => {
+      const params = new URLSearchParams("q=shoes&p=2&filter.brand=Nike&sort=price~asc")
+      const state = deserializeQueryState(params)
+      expect(state).toEqual({
+        query: "shoes",
+        page: 2,
+        filter: [{ field: "brand", value: ["Nike"] }],
+        sort: [{ field: "price", order: "asc" }]
+      })
     })
   })
 
@@ -326,6 +412,29 @@ describe("URL utilities", () => {
         filter: [
           { field: "brand", value: ["Nike", "Adidas"] },
           { field: "color", value: ["Red"] }
+        ]
+      })
+    })
+
+    it("parses sort parameter from URL", () => {
+      window.location.search = "?q=shoes&sort=price~asc"
+      const state = getCurrentUrlState()
+      expect(state).toEqual({
+        query: "shoes",
+        sort: [{ field: "price", order: "asc" }]
+      })
+    })
+
+    it("parses all parameters including sort from URL", () => {
+      window.location.search = "?q=shoes&p=2&filter.brand=Nike&sort=price~desc,_score~desc"
+      const state = getCurrentUrlState()
+      expect(state).toEqual({
+        query: "shoes",
+        page: 2,
+        filter: [{ field: "brand", value: ["Nike"] }],
+        sort: [
+          { field: "price", order: "desc" },
+          { field: "_score", order: "desc" }
         ]
       })
     })
