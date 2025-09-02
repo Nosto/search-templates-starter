@@ -3,31 +3,21 @@ import Serp from "@/components/Serp/Serp"
 import "@/variable.css"
 import Products from "@/components/Autocomplete/Products/Products"
 import SearchQueryHandler from "@/components/SearchQueryHandler/SearchQueryHandler"
+import { autocompleteConfig, serpConfig } from "@/config"
 
 init({
   autocomplete: {
-    config: {
-      defaultCurrency: "EUR"
-    },
+    config: autocompleteConfig,
     inputCssSelector: "#search",
     formCssSelector: "#search-form",
     dropdownCssSelector: "#dropdown",
     onNavigateToSearch: query => {
       location.href = `/?q=${query.query}`
     },
-    renderAutocomplete: () => <Products />,
-    query: {
-      keywords: {
-        fields: ["keyword", "_highlight.keyword"],
-        size: 5,
-        facets: ["*"]
-      }
-    }
+    renderAutocomplete: () => <Products />
   },
   serp: {
-    config: {
-      defaultCurrency: "EUR"
-    },
+    config: serpConfig,
     cssSelector: "#serp",
     render: () => (
       <>
