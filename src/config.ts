@@ -1,8 +1,8 @@
-import { SerpConfig } from "@nosto/search-js/preact/serp"
 import { createSortOption } from "./utils/sorting"
 import { thumbnailDecorator } from "@nosto/search-js/thumbnails"
 import { priceDecorator } from "@nosto/search-js/currencies"
 import { AutocompleteConfig } from "@nosto/search-js/preact/autocomplete"
+import { SerpConfig } from "@nosto/search-js/preact/serp"
 
 export const sizes = [24, 48, 72]
 

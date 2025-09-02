@@ -1,4 +1,4 @@
-import cl from "@/utils/cl"
+import { cl } from "@nosto/search-js/utils"
 import styles from "./Icon.module.css"
 
 export type IconName =

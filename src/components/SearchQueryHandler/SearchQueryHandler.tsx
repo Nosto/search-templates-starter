@@ -1,6 +1,6 @@
 import { sizes, defaultConfig } from "@/config"
 import { useActions, useSizeOptions, useNostoAppState } from "@nosto/search-js/preact/hooks"
-import { getCurrentUrlState, updateURL } from "@/utils/url"
+import { getCurrentUrlState, updateUrl } from "@/utils/url"
 
 import { useEffect } from "preact/hooks"
 
@@ -8,15 +8,18 @@ export default function SearchQueryHandler() {
   const { newSearch } = useActions()
   const { size } = useSizeOptions(sizes, defaultConfig.serpSize)
 
-  // Get current query, pagination, and filter state from app
-  const query = useNostoAppState(state => state.query?.query)
-  const from = useNostoAppState(state => state.query?.products?.from)
-  const filter = useNostoAppState(state => state.query?.products?.filter)
+  // Get current query, pagination, filter, and sort state from app
+  const { query, from, filter, sort } = useNostoAppState(state => ({
+    query: state.query?.query,
+    from: state.query?.products?.from,
+    filter: state.query?.products?.filter,
+    sort: state.query?.products?.sort
+  }))
 
   // Initialize search from URL on first load
   useEffect(() => {
-    const { query, page, filter } = getCurrentUrlState()
-    if (query || page || filter) {
+    const { query, page, filter, sort } = getCurrentUrlState()
+    if (query || page || filter || sort) {
       const searchFrom = page ? (page - 1) * size : 0
 
       const searchConfig = {
@@ -24,7 +27,8 @@ export default function SearchQueryHandler() {
         products: {
           size,
           from: searchFrom,
-          filter
+          filter,
+          sort
         }
       }
 
@@ -36,12 +40,13 @@ export default function SearchQueryHandler() {
   useEffect(() => {
     const currentPage = from ? Math.floor(from / size) + 1 : 1
 
-    updateURL({
+    updateUrl({
       query: query || undefined,
       page: currentPage > 1 ? currentPage : undefined,
-      filter
+      filter,
+      sort
     })
-  }, [query, from, size, filter])
+  }, [query, from, size, filter, sort])
 
   return null
 }

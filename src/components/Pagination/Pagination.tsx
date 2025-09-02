@@ -2,7 +2,8 @@ import { usePagination, useActions, Page } from "@nosto/search-js/preact/hooks"
 import Icon from "@/elements/Icon/Icon"
 import { JSX } from "preact/jsx-runtime"
 import style from "./Pagination.module.css"
-import cl from "@/utils/cl"
+import { getPageUrl } from "@/utils/url"
+import { cl } from "@nosto/search-js/utils"
 
 type Props = {
   ariaLabel?: string
@@ -23,8 +24,9 @@ export default function Pagination() {
 
   const { updateSearch } = useActions()
 
-  function pageLinkProps({ from }: Page) {
+  function pageLinkProps({ from, page }: Page) {
     return {
+      href: getPageUrl(page),
       onClick: (e: Event) => {
         e.preventDefault()
         updateSearch({ products: { from } })
