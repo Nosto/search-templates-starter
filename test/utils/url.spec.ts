@@ -10,13 +10,6 @@ describe("URL utilities", () => {
       const params = serializeQueryState(state)
       return expect(params.get("sort"))
     }
-
-    // Helper function for concise filter serialization testing
-    function expectFilters(filters: { field: string; value: string[] }[]) {
-      const state = { filter: filters }
-      const params = serializeQueryState(state)
-      return expect(params.toString())
-    }
     it("creates URLSearchParams with query parameter", () => {
       const state = { query: "test search" }
       const params = serializeQueryState(state)
@@ -56,7 +49,9 @@ describe("URL utilities", () => {
         { field: "brand", value: ["Nike"] },
         { field: "color", value: ["Red"] }
       ]
-      expectFilters(filters).toBe("filter.brand=Nike&filter.color=Red")
+      const state = { filter: filters }
+      const params = serializeQueryState(state)
+      expect(params.toString()).toBe("filter.brand=Nike&filter.color=Red")
     })
 
     it("omits empty filter array", () => {
@@ -69,12 +64,16 @@ describe("URL utilities", () => {
 
     it("handles filters with query and page", () => {
       const filters = [{ field: "category", value: ["sports"] }]
-      expectFilters(filters).toBe("filter.category=sports")
+      const state = { filter: filters }
+      const params = serializeQueryState(state)
+      expect(params.toString()).toBe("filter.category=sports")
     })
 
     it("spreads array filter values to multiple parameters", () => {
       const filters = [{ field: "brand", value: ["Nike", "Adidas", "Puma"] }]
-      expectFilters(filters).toBe("filter.brand=Nike&filter.brand=Adidas&filter.brand=Puma")
+      const state = { filter: filters }
+      const params = serializeQueryState(state)
+      expect(params.toString()).toBe("filter.brand=Nike&filter.brand=Adidas&filter.brand=Puma")
     })
 
     it("handles mixed single and array filter values", () => {
@@ -83,7 +82,9 @@ describe("URL utilities", () => {
         { field: "color", value: ["Red"] },
         { field: "size", value: ["8", "9", "10"] }
       ]
-      expectFilters(filters).toBe(
+      const state = { filter: filters }
+      const params = serializeQueryState(state)
+      expect(params.toString()).toBe(
         "filter.brand=Nike&filter.brand=Adidas&filter.color=Red&filter.size=8&filter.size=9&filter.size=10"
       )
     })
