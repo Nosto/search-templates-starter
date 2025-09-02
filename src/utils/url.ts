@@ -61,6 +61,22 @@ export function serializeQueryState(state: UrlQueryState) {
       if (f.field && f.value?.length) {
         f.value.forEach(val => params.append(`${FILTER_PREFIX}${f.field}`, val))
       }
+      if (f.field && f.range?.length) {
+        f.range.forEach(rangeFilter => {
+          if (rangeFilter.gt !== undefined) {
+            params.set(`${FILTER_PREFIX}${f.field}.gt`, rangeFilter.gt)
+          }
+          if (rangeFilter.gte !== undefined) {
+            params.set(`${FILTER_PREFIX}${f.field}.gte`, rangeFilter.gte)
+          }
+          if (rangeFilter.lt !== undefined) {
+            params.set(`${FILTER_PREFIX}${f.field}.lt`, rangeFilter.lt)
+          }
+          if (rangeFilter.lte !== undefined) {
+            params.set(`${FILTER_PREFIX}${f.field}.lte`, rangeFilter.lte)
+          }
+        })
+      }
     })
   }
 
@@ -89,19 +105,50 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
 
   const filters: InputSearchTopLevelFilter[] = []
   const filterMap = new Map<string, string[]>()
+  const rangeMap = new Map<string, Record<string, string>>()
 
   for (const [key, value] of searchParams.entries()) {
     if (key.startsWith(FILTER_PREFIX) && value.trim()) {
-      const field = key.substring(FILTER_PREFIX.length)
-      if (!filterMap.has(field)) {
-        filterMap.set(field, [])
+      const filterKey = key.substring(FILTER_PREFIX.length)
+
+      // Check if this is a range filter (has .gt, .gte, .lt, .lte suffix)
+      const rangeMatch = filterKey.match(/^(.+)\.(gt|gte|lt|lte)$/)
+      if (rangeMatch) {
+        const [, field, rangeType] = rangeMatch
+        if (!rangeMap.has(field)) {
+          rangeMap.set(field, {})
+        }
+        rangeMap.get(field)![rangeType] = value.trim()
+      } else {
+        // Regular value filter
+        if (!filterMap.has(filterKey)) {
+          filterMap.set(filterKey, [])
+        }
+        filterMap.get(filterKey)!.push(value.trim())
       }
-      filterMap.get(field)!.push(value.trim())
     }
   }
 
+  // Add value filters
   for (const [field, value] of filterMap.entries()) {
     filters.push({ field, value })
+  }
+
+  // Add range filters
+  for (const [field, rangeValues] of rangeMap.entries()) {
+    const range = []
+    const rangeFilter: Record<string, string> = {}
+
+    if (rangeValues.gt) rangeFilter.gt = rangeValues.gt
+    if (rangeValues.gte) rangeFilter.gte = rangeValues.gte
+    if (rangeValues.lt) rangeFilter.lt = rangeValues.lt
+    if (rangeValues.lte) rangeFilter.lte = rangeValues.lte
+
+    // Only add if at least one range condition exists
+    if (Object.keys(rangeFilter).length > 0) {
+      range.push(rangeFilter)
+      filters.push({ field, range })
+    }
   }
 
   if (filters.length > 0) {

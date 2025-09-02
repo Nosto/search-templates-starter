@@ -121,6 +121,57 @@ describe("URL utilities", () => {
       expect(params.get("filter.brand")).toBe("Nike")
       expect(params.get("sort")).toBe("price~asc")
     })
+
+    it("creates URLSearchParams with range filter parameter", () => {
+      const filters = [{ field: "price", range: [{ gte: "10", lte: "50" }] }]
+      const state = { filter: filters }
+      const params = serializeQueryState(state)
+      expect(params.get("filter.price.gte")).toBe("10")
+      expect(params.get("filter.price.lte")).toBe("50")
+    })
+
+    it("creates URLSearchParams with partial range filters", () => {
+      const filters = [
+        { field: "price", range: [{ gte: "10" }] },
+        { field: "weight", range: [{ lt: "100" }] }
+      ]
+      const state = { filter: filters }
+      const params = serializeQueryState(state)
+      expect(params.get("filter.price.gte")).toBe("10")
+      expect(params.get("filter.price.lte")).toBeNull()
+      expect(params.get("filter.weight.lt")).toBe("100")
+      expect(params.get("filter.weight.gt")).toBeNull()
+    })
+
+    it("creates URLSearchParams with all range operators", () => {
+      const filters = [{ field: "score", range: [{ gt: "0", gte: "1", lt: "100", lte: "99" }] }]
+      const state = { filter: filters }
+      const params = serializeQueryState(state)
+      expect(params.get("filter.score.gt")).toBe("0")
+      expect(params.get("filter.score.gte")).toBe("1")
+      expect(params.get("filter.score.lt")).toBe("100")
+      expect(params.get("filter.score.lte")).toBe("99")
+    })
+
+    it("handles mixed value and range filters", () => {
+      const filters = [
+        { field: "brand", value: ["Nike", "Adidas"] },
+        { field: "price", range: [{ gte: "10", lte: "50" }] }
+      ]
+      const state = { filter: filters }
+      const params = serializeQueryState(state)
+      expect(params.toString()).toBe("filter.brand=Nike&filter.brand=Adidas&filter.price.gte=10&filter.price.lte=50")
+    })
+
+    it("omits undefined range values", () => {
+      const filters = [{ field: "price", range: [{ gte: "10", lt: undefined, lte: "50" }] }]
+      const state = { filter: filters }
+      const params = serializeQueryState(state)
+      expect(params.get("filter.price.gte")).toBe("10")
+      expect(params.get("filter.price.lte")).toBe("50")
+      expect(params.has("filter.price.lt")).toBe(false)
+      expect(params.has("filter.price.gt")).toBe(false)
+    })
   })
 
   describe("deserializeQueryState", () => {
@@ -259,6 +310,51 @@ describe("URL utilities", () => {
         sort: [{ field: "price", order: "asc" }]
       })
     })
+
+    it("parses range filter parameters", () => {
+      expectFilters("filter.price.gte=10&filter.price.lte=50").toEqual([
+        { field: "price", range: [{ gte: "10", lte: "50" }] }
+      ])
+    })
+
+    it("parses partial range filter parameters", () => {
+      expectFilters("filter.price.gte=10").toEqual([{ field: "price", range: [{ gte: "10" }] }])
+      expectFilters("filter.weight.lt=100").toEqual([{ field: "weight", range: [{ lt: "100" }] }])
+    })
+
+    it("parses all range operators", () => {
+      expectFilters("filter.score.gt=0&filter.score.gte=1&filter.score.lt=100&filter.score.lte=99").toEqual([
+        { field: "score", range: [{ gt: "0", gte: "1", lt: "100", lte: "99" }] }
+      ])
+    })
+
+    it("handles mixed value and range filter parameters", () => {
+      expectFilters("filter.brand=Nike&filter.brand=Adidas&filter.price.gte=10&filter.price.lte=50").toEqual([
+        { field: "brand", value: ["Nike", "Adidas"] },
+        { field: "price", range: [{ gte: "10", lte: "50" }] }
+      ])
+    })
+
+    it("handles multiple range filters for different fields", () => {
+      expectFilters("filter.price.gte=10&filter.price.lte=50&filter.weight.gt=5&filter.rating.lte=4").toEqual([
+        { field: "price", range: [{ gte: "10", lte: "50" }] },
+        { field: "weight", range: [{ gt: "5" }] },
+        { field: "rating", range: [{ lte: "4" }] }
+      ])
+    })
+
+    it("filters out empty range filter values", () => {
+      expectFilters("filter.price.gte=10&filter.price.lte=&filter.weight.gt=").toEqual([
+        { field: "price", range: [{ gte: "10" }] }
+      ])
+    })
+
+    it("handles URL encoded range filter values", () => {
+      expectFilters("filter.price.gte=10.50&filter.discount.lte=20%25").toEqual([
+        { field: "price", range: [{ gte: "10.50" }] },
+        { field: "discount", range: [{ lte: "20%" }] }
+      ])
+    })
   })
 
   describe("updateUrl", () => {
@@ -339,6 +435,29 @@ describe("URL utilities", () => {
         "/?filter.brand=Nike&filter.brand=Adidas&filter.brand=Puma"
       )
     })
+
+    it("updates URL with range filter parameters", () => {
+      const state = {
+        filter: [{ field: "price", range: [{ gte: "10", lte: "50" }] }]
+      }
+      updateUrl(state)
+      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?filter.price.gte=10&filter.price.lte=50")
+    })
+
+    it("updates URL with mixed value and range filters", () => {
+      const state = {
+        filter: [
+          { field: "brand", value: ["Nike"] },
+          { field: "price", range: [{ gte: "10", lte: "50" }] }
+        ]
+      }
+      updateUrl(state)
+      expect(window.history.replaceState).toHaveBeenCalledWith(
+        null,
+        "",
+        "/?filter.brand=Nike&filter.price.gte=10&filter.price.lte=50"
+      )
+    })
   })
 
   describe("getCurrentUrlState", () => {
@@ -417,6 +536,26 @@ describe("URL utilities", () => {
         ]
       })
     })
+
+    it("parses range filter parameters from URL", () => {
+      window.location.search = "?filter.price.gte=10&filter.price.lte=50"
+      const state = getCurrentUrlState()
+      expect(state).toEqual({
+        filter: [{ field: "price", range: [{ gte: "10", lte: "50" }] }]
+      })
+    })
+
+    it("parses mixed value and range filter parameters from URL", () => {
+      window.location.search = "?q=shoes&filter.brand=Nike&filter.brand=Adidas&filter.price.gte=10&filter.price.lte=50"
+      const state = getCurrentUrlState()
+      expect(state).toEqual({
+        query: "shoes",
+        filter: [
+          { field: "brand", value: ["Nike", "Adidas"] },
+          { field: "price", range: [{ gte: "10", lte: "50" }] }
+        ]
+      })
+    })
   })
 
   describe("getPageUrl", () => {
@@ -469,6 +608,18 @@ describe("URL utilities", () => {
       window.location.pathname = "/search"
       const url = getPageUrl(2)
       expect(url).toBe("/search?p=2")
+    })
+
+    it("preserves range filter parameters", () => {
+      window.location.search = "?q=shoes&filter.price.gte=10&filter.price.lte=50"
+      const url = getPageUrl(3)
+      expect(url).toBe("/?q=shoes&p=3&filter.price.gte=10&filter.price.lte=50")
+    })
+
+    it("preserves mixed value and range filter parameters", () => {
+      window.location.search = "?filter.brand=Nike&filter.price.gte=10&filter.price.lte=50"
+      const url = getPageUrl(2)
+      expect(url).toBe("/?p=2&filter.brand=Nike&filter.price.gte=10&filter.price.lte=50")
     })
   })
 })
