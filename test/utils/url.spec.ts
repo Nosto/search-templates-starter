@@ -15,7 +15,7 @@ describe("URL utilities", () => {
     function expectFilters(filters: { field: string; value: string[] }[]) {
       const state = { filter: filters }
       const params = serializeQueryState(state)
-      return params
+      return expect(params.toString())
     }
     it("creates URLSearchParams with query parameter", () => {
       const state = { query: "test search" }
@@ -56,10 +56,7 @@ describe("URL utilities", () => {
         { field: "brand", value: ["Nike"] },
         { field: "color", value: ["Red"] }
       ]
-      const params = expectFilters(filters)
-      expect(params.get("q")).toBeNull()
-      expect(params.get("filter.brand")).toBe("Nike")
-      expect(params.get("filter.color")).toBe("Red")
+      expectFilters(filters).toBe("filter.brand=Nike&filter.color=Red")
     })
 
     it("omits empty filter array", () => {
@@ -72,14 +69,12 @@ describe("URL utilities", () => {
 
     it("handles filters with query and page", () => {
       const filters = [{ field: "category", value: ["sports"] }]
-      const params = expectFilters(filters)
-      expect(params.get("filter.category")).toBe("sports")
+      expectFilters(filters).toBe("filter.category=sports")
     })
 
     it("spreads array filter values to multiple parameters", () => {
       const filters = [{ field: "brand", value: ["Nike", "Adidas", "Puma"] }]
-      const params = expectFilters(filters)
-      expect(params.getAll("filter.brand")).toEqual(["Nike", "Adidas", "Puma"])
+      expectFilters(filters).toBe("filter.brand=Nike&filter.brand=Adidas&filter.brand=Puma")
     })
 
     it("handles mixed single and array filter values", () => {
@@ -88,10 +83,9 @@ describe("URL utilities", () => {
         { field: "color", value: ["Red"] },
         { field: "size", value: ["8", "9", "10"] }
       ]
-      const params = expectFilters(filters)
-      expect(params.getAll("filter.brand")).toEqual(["Nike", "Adidas"])
-      expect(params.get("filter.color")).toBe("Red")
-      expect(params.getAll("filter.size")).toEqual(["8", "9", "10"])
+      expectFilters(filters).toBe(
+        "filter.brand=Nike&filter.brand=Adidas&filter.color=Red&filter.size=8&filter.size=9&filter.size=10"
+      )
     })
 
     it("creates URLSearchParams with sort parameter", () => {
