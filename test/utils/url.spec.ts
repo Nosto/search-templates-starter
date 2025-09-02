@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from "vitest"
-import { serializeQueryState, deserializeQueryState, updateURL, getCurrentUrlState } from "@/utils/url"
 import type { InputSearchSort } from "@nosto/nosto-js/client"
+import { serializeQueryState, deserializeQueryState, updateUrl, getCurrentUrlState, getPageUrl } from "@/utils/url"
 
 describe("URL utilities", () => {
   describe("serializeQueryState", () => {
@@ -282,7 +282,7 @@ describe("URL utilities", () => {
     })
   })
 
-  describe("updateURL", () => {
+  describe("updateUrl", () => {
     beforeEach(() => {
       // Mock window.location and window.history
       Object.defineProperty(window, "location", {
@@ -304,20 +304,20 @@ describe("URL utilities", () => {
 
     it("updates URL with query parameters", () => {
       const state = { query: "test search", page: 2 }
-      updateURL(state)
+      updateUrl(state)
       expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?q=test+search&p=2")
     })
 
     it("updates URL without parameters when state is empty", () => {
       const state = {}
-      updateURL(state)
+      updateUrl(state)
       expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/")
     })
 
     it("preserves pathname", () => {
       window.location.pathname = "/some/path"
       const state = { query: "test" }
-      updateURL(state)
+      updateUrl(state)
       expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/some/path?q=test")
     })
 
@@ -329,7 +329,7 @@ describe("URL utilities", () => {
           { field: "color", value: ["Red"] }
         ]
       }
-      updateURL(state)
+      updateUrl(state)
       expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?q=shoes&filter.brand=Nike&filter.color=Red")
     })
 
@@ -339,13 +339,13 @@ describe("URL utilities", () => {
         page: 3,
         filter: [{ field: "category", value: ["sports"] }]
       }
-      updateURL(state)
+      updateUrl(state)
       expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?q=sneakers&p=3&filter.category=sports")
     })
 
     it("updates URL with only filter parameters", () => {
       const state = { filter: [{ field: "brand", value: ["Adidas"] }] }
-      updateURL(state)
+      updateUrl(state)
       expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?filter.brand=Adidas")
     })
 
@@ -353,7 +353,7 @@ describe("URL utilities", () => {
       const state = {
         filter: [{ field: "brand", value: ["Nike", "Adidas", "Puma"] }]
       }
-      updateURL(state)
+      updateUrl(state)
       expect(window.history.replaceState).toHaveBeenCalledWith(
         null,
         "",
@@ -437,6 +437,59 @@ describe("URL utilities", () => {
           { field: "_score", order: "desc" }
         ]
       })
+    })
+  })
+
+  describe("getPageUrl", () => {
+    beforeEach(() => {
+      Object.defineProperty(window, "location", {
+        value: {
+          pathname: "/",
+          search: "",
+          origin: "http://localhost:3000"
+        },
+        writable: true
+      })
+    })
+
+    it("generates URL for page 1 without page parameter", () => {
+      const url = getPageUrl(1)
+      expect(url).toBe("/")
+    })
+
+    it("generates URL for page 2 with page parameter", () => {
+      const url = getPageUrl(2)
+      expect(url).toBe("/?p=2")
+    })
+
+    it("preserves existing query parameters", () => {
+      window.location.search = "?q=test+search"
+      const url = getPageUrl(3)
+      expect(url).toBe("/?q=test+search&p=3")
+    })
+
+    it("preserves existing query and filter parameters", () => {
+      window.location.search = "?q=shoes&filter.brand=Nike&filter.color=Red"
+      const url = getPageUrl(2)
+      expect(url).toBe("/?q=shoes&p=2&filter.brand=Nike&filter.color=Red")
+    })
+
+    it("replaces existing page parameter", () => {
+      window.location.search = "?q=test&p=5"
+      const url = getPageUrl(3)
+      expect(url).toBe("/?q=test&p=3")
+    })
+
+    it("removes page parameter when navigating to page 1", () => {
+      window.location.search = "?q=test&p=5"
+      const url = getPageUrl(1)
+      expect(url).toBe("/?q=test")
+    })
+
+    it("preserves pathname", () => {
+      window.location.pathname = "/search"
+      const url = getPageUrl(2)
+      expect(url).toBe("/search?p=2")
     })
   })
 })
