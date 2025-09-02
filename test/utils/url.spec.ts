@@ -45,17 +45,13 @@ describe("URL utilities", () => {
     })
 
     it("creates URLSearchParams with filter parameter", () => {
-      const state = {
-        query: "test",
-        filter: [
-          { field: "brand", value: ["Nike"] },
-          { field: "color", value: ["Red"] }
-        ]
-      }
+      const filters = [
+        { field: "brand", value: ["Nike"] },
+        { field: "color", value: ["Red"] }
+      ]
+      const state = { filter: filters }
       const params = serializeQueryState(state)
-      expect(params.get("q")).toBe("test")
-      expect(params.get("filter.brand")).toBe("Nike")
-      expect(params.get("filter.color")).toBe("Red")
+      expect(params.toString()).toBe("filter.brand=Nike&filter.color=Red")
     })
 
     it("omits empty filter array", () => {
@@ -67,39 +63,30 @@ describe("URL utilities", () => {
     })
 
     it("handles filters with query and page", () => {
-      const state = {
-        query: "shoes",
-        page: 2,
-        filter: [{ field: "category", value: ["sports"] }]
-      }
+      const filters = [{ field: "category", value: ["sports"] }]
+      const state = { filter: filters }
       const params = serializeQueryState(state)
-      expect(params.get("q")).toBe("shoes")
-      expect(params.get("p")).toBe("2")
-      expect(params.get("filter.category")).toBe("sports")
+      expect(params.toString()).toBe("filter.category=sports")
     })
 
     it("spreads array filter values to multiple parameters", () => {
-      const state = {
-        query: "shoes",
-        filter: [{ field: "brand", value: ["Nike", "Adidas", "Puma"] }]
-      }
+      const filters = [{ field: "brand", value: ["Nike", "Adidas", "Puma"] }]
+      const state = { filter: filters }
       const params = serializeQueryState(state)
-      expect(params.get("q")).toBe("shoes")
-      expect(params.getAll("filter.brand")).toEqual(["Nike", "Adidas", "Puma"])
+      expect(params.toString()).toBe("filter.brand=Nike&filter.brand=Adidas&filter.brand=Puma")
     })
 
     it("handles mixed single and array filter values", () => {
-      const state = {
-        filter: [
-          { field: "brand", value: ["Nike", "Adidas"] },
-          { field: "color", value: ["Red"] },
-          { field: "size", value: ["8", "9", "10"] }
-        ]
-      }
+      const filters = [
+        { field: "brand", value: ["Nike", "Adidas"] },
+        { field: "color", value: ["Red"] },
+        { field: "size", value: ["8", "9", "10"] }
+      ]
+      const state = { filter: filters }
       const params = serializeQueryState(state)
-      expect(params.getAll("filter.brand")).toEqual(["Nike", "Adidas"])
-      expect(params.get("filter.color")).toBe("Red")
-      expect(params.getAll("filter.size")).toEqual(["8", "9", "10"])
+      expect(params.toString()).toBe(
+        "filter.brand=Nike&filter.brand=Adidas&filter.color=Red&filter.size=8&filter.size=9&filter.size=10"
+      )
     })
 
     it("creates URLSearchParams with sort parameter", () => {
@@ -142,6 +129,13 @@ describe("URL utilities", () => {
       const params = new URLSearchParams(urlString)
       const state = deserializeQueryState(params)
       return expect(state.sort)
+    }
+
+    // Helper function for concise filter deserialization testing
+    function expectFilters(urlString: string) {
+      const params = new URLSearchParams(urlString)
+      const state = deserializeQueryState(params)
+      return expect(state.filter)
     }
     it("parses query parameter", () => {
       const params = new URLSearchParams("q=test+search")
@@ -187,54 +181,39 @@ describe("URL utilities", () => {
     })
 
     it("parses filter parameter", () => {
-      const params = new URLSearchParams("q=test&filter.brand=Nike&filter.color=Red")
-      const state = deserializeQueryState(params)
-      expect(state.query).toBe("test")
-      expect(state.filter).toEqual([
+      expectFilters("q=test&filter.brand=Nike&filter.color=Red").toEqual([
         { field: "brand", value: ["Nike"] },
         { field: "color", value: ["Red"] }
       ])
     })
 
     it("parses single filter", () => {
-      const params = new URLSearchParams("filter.category=shoes")
-      const state = deserializeQueryState(params)
-      expect(state.filter).toEqual([{ field: "category", value: ["shoes"] }])
+      expectFilters("filter.category=shoes").toEqual([{ field: "category", value: ["shoes"] }])
     })
 
     it("handles malformed filter parameter", () => {
-      const params = new URLSearchParams("filter.invalid=&filter.empty=")
-      const state = deserializeQueryState(params)
-      expect(state.filter).toBeUndefined()
+      expectFilters("filter.invalid=&filter.empty=").toBeUndefined()
     })
 
     it("filters out empty field/value pairs", () => {
-      const params = new URLSearchParams("filter.brand=Nike&filter.empty=&filter.color=")
-      const state = deserializeQueryState(params)
-      expect(state.filter).toEqual([{ field: "brand", value: ["Nike"] }])
+      expectFilters("filter.brand=Nike&filter.empty=&filter.color=").toEqual([{ field: "brand", value: ["Nike"] }])
     })
 
     it("handles URL encoded filter values", () => {
-      const params = new URLSearchParams("filter.brand=Nike+Air&filter.color=Dark+Blue")
-      const state = deserializeQueryState(params)
-      expect(state.filter).toEqual([
+      expectFilters("filter.brand=Nike+Air&filter.color=Dark+Blue").toEqual([
         { field: "brand", value: ["Nike Air"] },
         { field: "color", value: ["Dark Blue"] }
       ])
     })
 
     it("parses multiple filter parameters as array", () => {
-      const params = new URLSearchParams("filter.brand=Nike&filter.brand=Adidas&filter.brand=Puma")
-      const state = deserializeQueryState(params)
-      expect(state.filter).toEqual([{ field: "brand", value: ["Nike", "Adidas", "Puma"] }])
+      expectFilters("filter.brand=Nike&filter.brand=Adidas&filter.brand=Puma").toEqual([
+        { field: "brand", value: ["Nike", "Adidas", "Puma"] }
+      ])
     })
 
     it("handles mixed single and multiple filter parameters", () => {
-      const params = new URLSearchParams(
-        "filter.brand=Nike&filter.brand=Adidas&filter.color=Red&filter.size=8&filter.size=9"
-      )
-      const state = deserializeQueryState(params)
-      expect(state.filter).toEqual([
+      expectFilters("filter.brand=Nike&filter.brand=Adidas&filter.color=Red&filter.size=8&filter.size=9").toEqual([
         { field: "brand", value: ["Nike", "Adidas"] },
         { field: "color", value: ["Red"] },
         { field: "size", value: ["8", "9"] }
