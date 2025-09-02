@@ -1,4 +1,4 @@
-import { InputSearchTopLevelFilter, InputSearchSort } from "@nosto/nosto-js/client"
+import { InputSearchTopLevelFilter, InputSearchSort, InputSearchRangeFilter } from "@nosto/nosto-js/client"
 
 const QUERY_PARAM = "q"
 const PAGE_PARAM = "p"
@@ -11,6 +11,81 @@ function encodeSortField(field: string) {
 
 function decodeSortField(field: string) {
   return field.replace(/%7E/g, "~").replace(/%2C/g, ",")
+}
+
+function encodeValue(value: string) {
+  // Don't encode anything - let URLSearchParams handle the encoding
+  return value
+}
+
+function decodeValue(value: string) {
+  // Don't decode anything - URLSearchParams already decodes values
+  return value
+}
+
+function serializeRangeToUrl(ranges: InputSearchRangeFilter[]) {
+  if (!ranges || ranges.length === 0) {
+    return null
+  }
+
+  // For simplicity, we'll serialize the first range only
+  // In practice, most use cases involve a single range per field
+  const range = ranges[0]
+
+  let left = ""
+  let right = ""
+
+  if (range.gt !== undefined) {
+    left = `[${encodeValue(range.gt)}`
+  } else if (range.gte !== undefined) {
+    left = encodeValue(range.gte)
+  }
+
+  if (range.lt !== undefined) {
+    right = `${encodeValue(range.lt)}]`
+  } else if (range.lte !== undefined) {
+    right = encodeValue(range.lte)
+  }
+
+  return `${left}~${right}`
+}
+
+function deserializeRangeFromUrl(rangeString: string): InputSearchRangeFilter | null {
+  if (!rangeString.trim() || !rangeString.includes("~")) {
+    return null
+  }
+
+  const parts = rangeString.split("~")
+  if (parts.length !== 2) {
+    return null
+  }
+
+  const [leftPart, rightPart] = parts
+  const range: InputSearchRangeFilter = {}
+
+  // Parse left side
+  if (leftPart) {
+    if (leftPart.startsWith("[")) {
+      // gt (greater than, exclusive)
+      range.gt = decodeValue(leftPart.substring(1))
+    } else {
+      // gte (greater than or equal, inclusive)
+      range.gte = decodeValue(leftPart)
+    }
+  }
+
+  // Parse right side
+  if (rightPart) {
+    if (rightPart.endsWith("]")) {
+      // lt (less than, exclusive)
+      range.lt = decodeValue(rightPart.substring(0, rightPart.length - 1))
+    } else {
+      // lte (less than or equal, inclusive)
+      range.lte = decodeValue(rightPart)
+    }
+  }
+
+  return range
 }
 
 function serializeSortToUrl(sort: InputSearchSort[]) {
@@ -61,6 +136,12 @@ export function serializeQueryState(state: UrlQueryState) {
       if (f.field && f.value?.length) {
         f.value.forEach(val => params.append(`${FILTER_PREFIX}${f.field}`, val))
       }
+      if (f.field && f.range?.length) {
+        const rangeValue = serializeRangeToUrl(f.range)
+        if (rangeValue) {
+          params.append(`${FILTER_PREFIX}${f.field}`, rangeValue)
+        }
+      }
     })
   }
 
@@ -100,8 +181,35 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
     }
   }
 
-  for (const [field, value] of filterMap.entries()) {
-    filters.push({ field, value })
+  for (const [field, values] of filterMap.entries()) {
+    // Check if any value contains a range pattern (contains ~)
+    const rangeValues = values.filter(v => v.includes("~"))
+    const regularValues = values.filter(v => !v.includes("~"))
+
+    const filter: InputSearchTopLevelFilter = { field }
+
+    // Process regular values
+    if (regularValues.length > 0) {
+      filter.value = regularValues
+    }
+
+    // Process range values
+    if (rangeValues.length > 0) {
+      // Try to parse the first range value
+      const range = deserializeRangeFromUrl(rangeValues[0])
+      if (range) {
+        filter.range = [range]
+      } else {
+        // If range parsing failed, treat as regular values
+        const allValues = [...(filter.value || []), ...rangeValues]
+        filter.value = allValues
+      }
+    }
+
+    // Only add filter if it has either value or range
+    if (filter.value || filter.range) {
+      filters.push(filter)
+    }
   }
 
   if (filters.length > 0) {

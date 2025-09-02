@@ -121,6 +121,113 @@ describe("URL utilities", () => {
       expect(params.get("filter.brand")).toBe("Nike")
       expect(params.get("sort")).toBe("price~asc")
     })
+
+    it("handles range filters with both gte and lte", () => {
+      const filters = [{ field: "price", range: [{ gte: "100", lte: "500" }] }]
+      const state = { filter: filters }
+      const params = serializeQueryState(state)
+      expect(params.toString()).toBe("filter.price=100%7E500")
+    })
+
+    it("handles range filters with only gte", () => {
+      const filters = [{ field: "price", range: [{ gte: "100" }] }]
+      const state = { filter: filters }
+      const params = serializeQueryState(state)
+      expect(params.toString()).toBe("filter.price=100%7E")
+    })
+
+    it("handles range filters with only lte", () => {
+      const filters = [{ field: "price", range: [{ lte: "500" }] }]
+      const state = { filter: filters }
+      const params = serializeQueryState(state)
+      expect(params.toString()).toBe("filter.price=%7E500")
+    })
+
+    it("handles range filters with gt (exclusive)", () => {
+      const filters = [{ field: "price", range: [{ gt: "100", lte: "500" }] }]
+      const state = { filter: filters }
+      const params = serializeQueryState(state)
+      expect(params.toString()).toBe("filter.price=%5B100%7E500")
+    })
+
+    it("handles range filters with lt (exclusive)", () => {
+      const filters = [{ field: "price", range: [{ gte: "100", lt: "500" }] }]
+      const state = { filter: filters }
+      const params = serializeQueryState(state)
+      expect(params.toString()).toBe("filter.price=100%7E500%5D")
+    })
+
+    it("handles range filters with both gt and lt (exclusive)", () => {
+      const filters = [{ field: "price", range: [{ gt: "100", lt: "500" }] }]
+      const state = { filter: filters }
+      const params = serializeQueryState(state)
+      expect(params.toString()).toBe("filter.price=%5B100%7E500%5D")
+    })
+
+    it("handles range filters with values that need encoding", () => {
+      const filters = [{ field: "price", range: [{ gte: "10.5", lte: "99.9" }] }]
+      const state = { filter: filters }
+      const params = serializeQueryState(state)
+      expect(params.toString()).toBe("filter.price=10.5%7E99.9")
+    })
+
+    it("handles range filters with special characters", () => {
+      const filters = [{ field: "field~name", range: [{ gte: "val~ue", lte: "val,ue" }] }]
+      const state = { filter: filters }
+      const params = serializeQueryState(state)
+      expect(params.toString()).toBe("filter.field%7Ename=val%7Eue%7Eval%2Cue")
+    })
+
+    it("handles mixed value and range filters", () => {
+      const filters = [
+        { field: "brand", value: ["Nike", "Adidas"] },
+        { field: "price", range: [{ gte: "100", lte: "500" }] }
+      ]
+      const state = { filter: filters }
+      const params = serializeQueryState(state)
+      expect(params.toString()).toBe("filter.brand=Nike&filter.brand=Adidas&filter.price=100%7E500")
+    })
+
+    it("omits empty range array", () => {
+      const filters = [{ field: "price", range: [] }]
+      const state = { filter: filters }
+      const params = serializeQueryState(state)
+      expect(params.toString()).toBe("")
+    })
+
+    it("handles complex end-to-end scenario with all filter types", () => {
+      const state = {
+        query: "electronics",
+        page: 3,
+        filter: [
+          { field: "brand", value: ["Apple", "Samsung", "Google"] },
+          { field: "price", range: [{ gte: "100", lte: "1000" }] },
+          { field: "rating", range: [{ gt: "4" }] },
+          { field: "category", value: ["phones"] }
+        ],
+        sort: [{ field: "price", order: "asc" }] as InputSearchSort[]
+      }
+
+      // Test serialization
+      const params = serializeQueryState(state)
+      const urlString = params.toString()
+      expect(urlString).toContain("q=electronics")
+      expect(urlString).toContain("p=3")
+      expect(urlString).toContain("filter.brand=Apple")
+      expect(urlString).toContain("filter.brand=Samsung")
+      expect(urlString).toContain("filter.brand=Google")
+      expect(urlString).toContain("filter.price=100%7E1000")
+      expect(urlString).toContain("filter.rating=%5B4%7E")
+      expect(urlString).toContain("filter.category=phones")
+      expect(urlString).toContain("sort=price%7Easc")
+
+      // Test round-trip consistency
+      const deserialized = deserializeQueryState(params)
+      expect(deserialized.query).toBe("electronics")
+      expect(deserialized.page).toBe(3)
+      expect(deserialized.filter).toEqual(state.filter)
+      expect(deserialized.sort).toEqual(state.sort)
+    })
   })
 
   describe("deserializeQueryState", () => {
@@ -218,6 +325,65 @@ describe("URL utilities", () => {
         { field: "color", value: ["Red"] },
         { field: "size", value: ["8", "9"] }
       ])
+    })
+
+    it("parses range filters with both gte and lte", () => {
+      expectFilters("filter.price=100%7E500").toEqual([{ field: "price", range: [{ gte: "100", lte: "500" }] }])
+    })
+
+    it("parses range filters with only gte", () => {
+      expectFilters("filter.price=100%7E").toEqual([{ field: "price", range: [{ gte: "100" }] }])
+    })
+
+    it("parses range filters with only lte", () => {
+      expectFilters("filter.price=%7E500").toEqual([{ field: "price", range: [{ lte: "500" }] }])
+    })
+
+    it("parses range filters with gt (exclusive)", () => {
+      expectFilters("filter.price=%5B100%7E500").toEqual([{ field: "price", range: [{ gt: "100", lte: "500" }] }])
+    })
+
+    it("parses range filters with lt (exclusive)", () => {
+      expectFilters("filter.price=100%7E500%5D").toEqual([{ field: "price", range: [{ gte: "100", lt: "500" }] }])
+    })
+
+    it("parses range filters with both gt and lt (exclusive)", () => {
+      expectFilters("filter.price=%5B100%7E500%5D").toEqual([{ field: "price", range: [{ gt: "100", lt: "500" }] }])
+    })
+
+    it("parses range filters with encoded special characters", () => {
+      expectFilters("filter.price=val%2Cue%7E99%2C9").toEqual([
+        { field: "price", range: [{ gte: "val,ue", lte: "99,9" }] }
+      ])
+    })
+
+    it("parses mixed value and range filters", () => {
+      expectFilters("filter.brand=Nike&filter.brand=Adidas&filter.price=100%7E500").toEqual([
+        { field: "brand", value: ["Nike", "Adidas"] },
+        { field: "price", range: [{ gte: "100", lte: "500" }] }
+      ])
+    })
+
+    it("parses range filters with decimal values", () => {
+      expectFilters("filter.price=10.5%7E99.9").toEqual([{ field: "price", range: [{ gte: "10.5", lte: "99.9" }] }])
+    })
+
+    it("handles mixed value and range for same field", () => {
+      expectFilters("filter.price=Nike&filter.price=100%7E500").toEqual([
+        { field: "price", value: ["Nike"], range: [{ gte: "100", lte: "500" }] }
+      ])
+    })
+
+    it("ignores malformed range filters", () => {
+      expectFilters("filter.price=invalid").toEqual([{ field: "price", value: ["invalid"] }])
+    })
+
+    it("ignores range filters without tilde", () => {
+      expectFilters("filter.price=100").toEqual([{ field: "price", value: ["100"] }])
+    })
+
+    it("ignores range filters with multiple tildes", () => {
+      expectFilters("filter.price=100%7E200%7E300").toEqual([{ field: "price", value: ["100~200~300"] }])
     })
 
     it("parses sort parameter", () => {
