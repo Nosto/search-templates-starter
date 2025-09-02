@@ -1,6 +1,6 @@
 import { sizes, defaultConfig } from "@/config"
 import { useActions, useSizeOptions, useNostoAppState } from "@nosto/search-js/preact/hooks"
-import { getCurrentUrlState, updateURL } from "@/utils/url"
+import { getCurrentUrlState, updateUrl } from "@/utils/url"
 
 import { useEffect } from "preact/hooks"
 
@@ -36,7 +36,7 @@ export default function SearchQueryHandler() {
   useEffect(() => {
     const currentPage = from ? Math.floor(from / size) + 1 : 1
 
-    updateURL({
+    updateUrl({
       query: query || undefined,
       page: currentPage > 1 ? currentPage : undefined,
       filter
