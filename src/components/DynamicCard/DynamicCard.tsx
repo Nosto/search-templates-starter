@@ -2,7 +2,6 @@ type DynamicCardProps = {
   handle: string
   section?: string
   template?: string
-  [key: string]: unknown
 }
 
 /**

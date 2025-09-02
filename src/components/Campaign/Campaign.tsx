@@ -1,6 +1,5 @@
 type CampaignProps = {
   placement?: string
-  [key: string]: unknown
 }
 
 /**
