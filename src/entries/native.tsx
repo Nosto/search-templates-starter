@@ -6,7 +6,7 @@ import "@/variable.css"
 import { serpConfig } from "@/config"
 import { render } from "preact"
 
-function App() {
+function SearchApp() {
   return (
     <>
       <SearchPageProvider config={serpConfig}>
@@ -18,4 +18,15 @@ function App() {
   )
 }
 
-render(<App />, document.getElementById("app")!)
+/*function CategoryApp() {
+  return (
+    <>
+      <CategoryPageProvider config={categoryConfig}>
+        <SearchQueryHandler />
+        <Category />
+      </CategoryPageProvider>
+    </>
+  )
+}*/
+
+render(<SearchApp />, document.getElementById("app")!)

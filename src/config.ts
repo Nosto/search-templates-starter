@@ -2,6 +2,7 @@ import { createSortOption } from "./utils/sorting"
 import { thumbnailDecorator } from "@nosto/search-js/thumbnails"
 import { priceDecorator } from "@nosto/search-js/currencies"
 import { AutocompleteConfig } from "@nosto/search-js/preact/autocomplete"
+import { CategoryConfig } from "@nosto/search-js/preact/category"
 import { SerpConfig } from "@nosto/search-js/preact/serp"
 
 export const sizes = [24, 48, 72]
@@ -31,6 +32,13 @@ export const serpConfig = {
     hitDecorators
   }
 } satisfies SerpConfig
+
+export const categoryConfig = {
+  defaultCurrency,
+  search: {
+    hitDecorators
+  }
+} satisfies CategoryConfig
 
 export const autocompleteConfig = {
   defaultCurrency,

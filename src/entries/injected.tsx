@@ -26,4 +26,14 @@ init({
       </>
     )
   }
+  /*category: {
+    config: categoryConfig,
+    cssSelector: "#category",
+    render: () => (
+      <>
+        <SearchQueryHandler />
+        <Category />
+      </>
+    )
+  },*/
 })
