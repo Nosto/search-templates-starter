@@ -6,7 +6,7 @@ import Select from "@/elements/Select/Select"
 import { toggleButtonId } from "@/components/Sidebar/Sidebar"
 import style from "./Toolbar.module.css"
 import Button from "@/elements/Button/Button"
-import cl from "@/utils/cl"
+import { cl } from "@nosto/search-js/utils"
 
 type Props = {
   selectedFiltersCount: number

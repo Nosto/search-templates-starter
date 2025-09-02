@@ -1,6 +1,6 @@
 import { JSX } from "preact"
 import styles from "./Select.module.css"
-import cl from "@/utils/cl"
+import { cl } from "@nosto/search-js/utils"
 
 type Props = {
   options: { value: string | number; label: string }[]
