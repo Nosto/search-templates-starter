@@ -24,4 +24,15 @@ describe("DynamicCard", () => {
       '<nosto-dynamic-card variant-id="123" handle="h" section="main" template="card" placeholder="true" lazy="true"></nosto-dynamic-card>'
     )
   })
+
+  it("renders props with false values excluded", () => {
+    const { container } = render(
+      <DynamicCard handle="h" section="main" template="card" variantId="123" placeholder={false} lazy={false} />
+    )
+    const el = container.querySelector("nosto-dynamic-card") as HTMLElement
+    expect(el).toBeTruthy()
+    expect(el.outerHTML).toBe(
+      '<nosto-dynamic-card variant-id="123" handle="h" section="main" template="card"></nosto-dynamic-card>'
+    )
+  })
 })

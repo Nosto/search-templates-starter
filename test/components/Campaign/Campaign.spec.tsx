@@ -24,4 +24,15 @@ describe("Campaign", () => {
       '<nosto-campaign product-id="456" variant-id="789" placement="home-top" template="tpl-2" init="true" lazy="true"></nosto-campaign>'
     )
   })
+
+  it("renders props with false values excluded", () => {
+    const { container } = render(
+      <Campaign placement="home-top" productId="456" variantId="789" template="tpl-2" init={false} lazy={false} />
+    )
+    const el = container.querySelector("nosto-campaign") as HTMLElement
+    expect(el).toBeTruthy()
+    expect(el.outerHTML).toBe(
+      '<nosto-campaign product-id="456" variant-id="789" placement="home-top" template="tpl-2"></nosto-campaign>'
+    )
+  })
 })
