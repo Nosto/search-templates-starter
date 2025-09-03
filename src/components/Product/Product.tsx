@@ -1,10 +1,11 @@
 import { SerpElement } from "@nosto/search-js/preact/serp"
 import { productImagePlaceholder } from "@/helpers"
-import { SearchProduct } from "@nosto/nosto-js/client"
 import styles from "./Product.module.css"
+import { DecoratedProduct } from "@nosto/search-js"
+import { hitDecorators } from "@/config"
 
 type Props = {
-  product: SearchProduct
+  product: DecoratedProduct<typeof hitDecorators>
   previewImage?: string
   children?: preact.JSX.Element | preact.JSX.Element[]
 }
@@ -30,9 +31,9 @@ export default function Product({ product, previewImage, children }: Props) {
         {product.brand && <div>{product.brand}</div>}
         <div>{product.name}</div>
         <div aria-label="Price">
-          <span>{product.price}</span>
+          <span>{product.priceText}</span>
           {product.listPrice && product.price && product.listPrice > product.price && (
-            <span className={styles.specialPrice}>{product.listPrice}</span>
+            <span className={styles.specialPrice}>{product.listPriceText}</span>
           )}
         </div>
       </div>

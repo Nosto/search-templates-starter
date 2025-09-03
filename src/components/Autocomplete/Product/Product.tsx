@@ -1,10 +1,11 @@
 import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
 import { productImagePlaceholder } from "@/helpers"
 import style from "./Product.module.css"
-import { SearchProduct } from "@nosto/nosto-js/client"
+import { DecoratedProduct } from "@nosto/search-js"
+import { hitDecorators } from "@/config"
 
 type Props = {
-  hit: SearchProduct
+  hit: DecoratedProduct<typeof hitDecorators>
 }
 
 export default function Product({ hit }: Props) {
@@ -24,7 +25,7 @@ export default function Product({ hit }: Props) {
           <div>
             <span>{hit.priceText}</span>
             {hit.listPrice && hit.price && hit.listPrice > hit.price && (
-              <span className={style.strikedPrice}>{hit.listPrice}</span>
+              <span className={style.strikedPrice}>{hit.listPriceText}</span>
             )}
           </div>
         </div>
