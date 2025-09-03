@@ -1,16 +1,19 @@
+import type { DynamicCard as CustomElement } from "@nosto/web-components"
+
+// Documented interface that preserves JSDoc while maintaining type coupling with web components
 type DynamicCardProps = {
   /** The product handle to fetch data for. */
-  handle: string
+  handle: CustomElement["handle"]
   /** The section to use for rendering the product. section or template is required. */
-  section?: string
+  section?: CustomElement["section"]
   /** The template to use for rendering the product. section or template is required. */
-  template?: string
+  template?: CustomElement["template"]
   /** The variant ID to fetch specific variant data. */
-  variantId?: string
+  variantId?: CustomElement["variantId"]
   /** If true, the component will display placeholder content while loading. */
-  placeholder?: boolean
+  placeholder?: CustomElement["placeholder"]
   /** If true, the component will only fetch data when it comes into view. */
-  lazy?: boolean
+  lazy?: CustomElement["lazy"]
 }
 
 /**

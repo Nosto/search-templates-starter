@@ -1,16 +1,20 @@
+import type { Campaign as CustomElement } from "@nosto/web-components"
+
+// Documented interface that preserves JSDoc while maintaining type coupling with web components
+// Note: init is defined as boolean for better developer experience, even though the web component uses string
 type CampaignProps = {
   /** The placement identifier for the campaign. */
-  placement: string
+  placement: CustomElement["placement"]
   /** The ID of the product to associate with the campaign. */
-  productId?: string
+  productId?: CustomElement["productId"]
   /** The variant ID of the product. */
-  variantId?: string
+  variantId?: CustomElement["variantId"]
   /** The ID of the template to use for rendering the campaign. If provided, the campaign will be rendered using this template. */
-  template?: string
+  template?: CustomElement["template"]
   /** If set to "false", the component will not automatically load the campaign on connection. Defaults to "true". */
   init?: boolean
   /** If true, the component will only load the campaign when it comes into view using IntersectionObserver. Defaults to false. */
-  lazy?: boolean
+  lazy?: CustomElement["lazy"]
 }
 
 /**
