@@ -67,7 +67,7 @@ export function serializeQueryState(state: UrlQueryState) {
         f.range.forEach(rangeFilter => {
           RANGE_KEYS.forEach(rangeKey => {
             const value = rangeFilter[rangeKey]
-            if (value !== undefined) {
+            if (value) {
               params.set(`${FILTER_PREFIX}${f.field}.${rangeKey}`, value)
             }
           })
