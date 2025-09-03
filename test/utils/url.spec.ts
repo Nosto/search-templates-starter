@@ -339,6 +339,49 @@ describe("URL utilities", () => {
         "/?filter.brand=Nike&filter.brand=Adidas&filter.brand=Puma"
       )
     })
+
+    it("preserves unmapped query parameters", () => {
+      window.location.search = "?q=shoes&utm_source=email&analytics=true"
+      const state = { query: "sneakers", page: 2 }
+      updateUrl(state)
+      expect(window.history.replaceState).toHaveBeenCalledWith(
+        null,
+        "",
+        "/?utm_source=email&analytics=true&q=sneakers&p=2"
+      )
+    })
+
+    it("preserves unmapped parameters when updating filters", () => {
+      window.location.search = "?utm_campaign=summer&ref=homepage&q=shoes"
+      const state = {
+        query: "shoes",
+        filter: [{ field: "brand", value: ["Nike"] }]
+      }
+      updateUrl(state)
+      expect(window.history.replaceState).toHaveBeenCalledWith(
+        null,
+        "",
+        "/?utm_campaign=summer&ref=homepage&q=shoes&filter.brand=Nike"
+      )
+    })
+
+    it("preserves unmapped parameters when state is empty", () => {
+      window.location.search = "?tracking=abc123&source=direct"
+      const state = {}
+      updateUrl(state)
+      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?tracking=abc123&source=direct")
+    })
+
+    it("handles unmapped parameters with special characters", () => {
+      window.location.search = "?custom=value%20with%20spaces&other=test%26more"
+      const state = { query: "test" }
+      updateUrl(state)
+      expect(window.history.replaceState).toHaveBeenCalledWith(
+        null,
+        "",
+        "/?custom=value+with+spaces&other=test%26more&q=test"
+      )
+    })
   })
 
   describe("getCurrentUrlState", () => {
@@ -469,6 +512,30 @@ describe("URL utilities", () => {
       window.location.pathname = "/search"
       const url = getPageUrl(2)
       expect(url).toBe("/search?p=2")
+    })
+
+    it("preserves unmapped query parameters", () => {
+      window.location.search = "?q=shoes&utm_source=email&tracking=abc123"
+      const url = getPageUrl(3)
+      expect(url).toBe("/?utm_source=email&tracking=abc123&q=shoes&p=3")
+    })
+
+    it("preserves unmapped parameters when removing page parameter", () => {
+      window.location.search = "?q=test&p=5&ref=homepage&analytics=true"
+      const url = getPageUrl(1)
+      expect(url).toBe("/?ref=homepage&analytics=true&q=test")
+    })
+
+    it("preserves unmapped parameters with filters", () => {
+      window.location.search = "?utm_campaign=summer&filter.brand=Nike&custom=value"
+      const url = getPageUrl(2)
+      expect(url).toBe("/?utm_campaign=summer&custom=value&p=2&filter.brand=Nike")
+    })
+
+    it("handles only unmapped parameters", () => {
+      window.location.search = "?tracking=abc&source=direct&campaign=test"
+      const url = getPageUrl(2)
+      expect(url).toBe("/?tracking=abc&source=direct&campaign=test&p=2")
     })
   })
 })

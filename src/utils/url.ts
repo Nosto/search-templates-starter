@@ -71,6 +71,20 @@ export function serializeQueryState(state: UrlQueryState) {
   return params
 }
 
+function getUnmappedParameters() {
+  const currentParams = new URLSearchParams(window.location.search)
+  const unmappedParams = new URLSearchParams()
+
+  for (const [key, value] of currentParams.entries()) {
+    // Preserve parameters that are not mapped to our known parameters
+    if (key !== QUERY_PARAM && key !== PAGE_PARAM && !key.startsWith(FILTER_PREFIX) && key !== SORT_PARAM) {
+      unmappedParams.append(key, value)
+    }
+  }
+
+  return unmappedParams
+}
+
 export function deserializeQueryState(searchParams: URLSearchParams) {
   const state: UrlQueryState = {}
 
@@ -120,9 +134,24 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
 }
 
 function getUrlFromState(state: UrlQueryState) {
-  const params = serializeQueryState(state)
+  const unmappedParams = getUnmappedParameters()
+  const mappedParams = serializeQueryState(state)
+
+  // Merge unmapped parameters first, then mapped parameters
+  const finalParams = new URLSearchParams()
+
+  // Add unmapped parameters first
+  for (const [key, value] of unmappedParams.entries()) {
+    finalParams.append(key, value)
+  }
+
+  // Add mapped parameters
+  for (const [key, value] of mappedParams.entries()) {
+    finalParams.append(key, value)
+  }
+
   const url = new URL(window.location.pathname, window.location.origin)
-  url.search = params.toString()
+  url.search = finalParams.toString()
 
   return url.pathname + url.search
 }
