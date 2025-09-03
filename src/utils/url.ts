@@ -5,7 +5,7 @@ const QUERY_PARAM = "q"
 const PAGE_PARAM = "p"
 const FILTER_PREFIX = "filter."
 const SORT_PARAM = "sort"
-const RANGE_KEYS = ["gte", "gt", "lt", "lte"] as const
+const RANGE_KEYS = ["gte", "gt", "lt", "lte"]
 
 function encodeSortField(field: string) {
   return field.replace(/~/g, "%7E").replace(/,/g, "%2C")
