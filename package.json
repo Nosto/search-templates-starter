@@ -27,6 +27,7 @@
     "preview": "vite preview",
     "typedoc": "typedoc src/entries/native.tsx",
     "typedoc:injected": "typedoc src/entries/injected.tsx",
+    "typedoc-json": "typedoc src/entries/native.tsx --json build/typedoc.json",
     "prepare": "husky",
     "storybook": "storybook dev -p 6060"
   },

@@ -1,0 +1,114 @@
+{
+	"schemaVersion": "2.0",
+	"id": 0,
+	"name": "@nosto/search-templates-starter",
+	"variant": "project",
+	"kind": 1,
+	"flags": {},
+	"packageName": "@nosto/search-templates-starter",
+	"readme": [
+		{
+			"kind": "text",
+			"text": "# Search Templates Starter\n\nThis project is a starter template for building search interfaces using ["
+		},
+		{
+			"kind": "code",
+			"text": "`@nosto/search-js`"
+		},
+		{
+			"kind": "text",
+			"text": "](https://www.npmjs.com/package/@nosto/search-js) and ["
+		},
+		{
+			"kind": "code",
+			"text": "`preact`"
+		},
+		{
+			"kind": "text",
+			"text": "](https://preactjs.com/). It provides a foundation to kickstart development with pre-configured components, styles, and utilities for creating search experiences.\n\n## Features\n\n- **Preact Integration**: Lightweight and fast rendering with Preact.\n- **Search-js**: Leverage "
+		},
+		{
+			"kind": "code",
+			"text": "`@nosto/search-js`"
+		},
+		{
+			"kind": "text",
+			"text": " for search functionality and hooks\n- **Modular Components**: Prebuilt components like "
+		},
+		{
+			"kind": "code",
+			"text": "`Search`"
+		},
+		{
+			"kind": "text",
+			"text": ", "
+		},
+		{
+			"kind": "code",
+			"text": "`Serp`"
+		},
+		{
+			"kind": "text",
+			"text": ", "
+		},
+		{
+			"kind": "code",
+			"text": "`Autocomplete`"
+		},
+		{
+			"kind": "text",
+			"text": ", and more.\n- **CSS Modules**: Scoped and maintainable styles.\n\n## Getting Started\n\n### Prerequisites\n\nEnsure you have the following installed:\n\n- Node.js (v22 or higher)\n- npm\n\n### Installation\n\n1. Clone the repository:\n\n   "
+		},
+		{
+			"kind": "code",
+			"text": "```sh\n   git clone https://github.com/nosto/search-templates-starter.git\n   cd search-templates-starter\n   ```"
+		},
+		{
+			"kind": "text",
+			"text": "\n2. Install dependencies:\n\n    "
+		},
+		{
+			"kind": "code",
+			"text": "```sh\n    npm install\n    ```"
+		},
+		{
+			"kind": "text",
+			"text": "\n\n### Development\n\nStart the development server:\n"
+		},
+		{
+			"kind": "code",
+			"text": "```sh\nnpm run dev\n```"
+		},
+		{
+			"kind": "text",
+			"text": "\n\nThis will launch the application at http://localhost:8000.\n\n### Build\nTo build the project for production:\n"
+		},
+		{
+			"kind": "code",
+			"text": "```sh\nnpm run build\n```"
+		},
+		{
+			"kind": "text",
+			"text": "\n\n### Resources\n- [Search-js docs](https://docs.nosto.com/techdocs/apis/frontend/oss/search-js)\n- [Nosto-js docs](https://docs.nosto.com/techdocs/apis/frontend/oss/nosto-js)"
+		}
+	],
+	"symbolIdMap": {
+		"0": {
+			"packageName": "@nosto/search-templates-starter",
+			"packagePath": "src/entries/native.tsx",
+			"qualifiedName": ""
+		}
+	},
+	"files": {
+		"entries": {
+			"1": "src/entries/native.tsx",
+			"2": "README.md",
+			"3": ""
+		},
+		"reflections": {
+			"1": 0,
+			"2": 0,
+			"3": 0
+		}
+	}
+}

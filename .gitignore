@@ -2,6 +2,7 @@
 src/nosto/nosto.d.ts
 # Typedoc docs
 /docs
+build
 .env
 
 # Logs
