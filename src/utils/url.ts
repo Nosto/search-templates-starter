@@ -1,4 +1,4 @@
-import { InputSearchTopLevelFilter, InputSearchSort } from "@nosto/nosto-js/client"
+import { InputSearchTopLevelFilter, InputSearchSort, InputSearchRangeFilter } from "@nosto/nosto-js/client"
 import { ensureMapArray, ensureMapObject } from "./ensureMap"
 
 const QUERY_PARAM = "q"
@@ -66,8 +66,9 @@ export function serializeQueryState(state: UrlQueryState) {
       if (f.field && f.range?.length) {
         f.range.forEach(rangeFilter => {
           RANGE_KEYS.forEach(rangeKey => {
-            if (rangeFilter[rangeKey] !== undefined) {
-              params.set(`${FILTER_PREFIX}${f.field}.${rangeKey}`, rangeFilter[rangeKey])
+            const value = rangeFilter[rangeKey as keyof InputSearchRangeFilter]
+            if (value !== undefined) {
+              params.set(`${FILTER_PREFIX}${f.field}.${rangeKey}`, value)
             }
           })
         })
@@ -127,19 +128,17 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
 
   // Add range filters
   for (const [field, rangeValues] of rangeMap.entries()) {
-    const range = []
+    // Keep only keys from RANGE_KEYS that have a value
     const rangeFilter: Record<string, string> = {}
-
     RANGE_KEYS.forEach(rangeKey => {
       if (rangeValues[rangeKey]) {
         rangeFilter[rangeKey] = rangeValues[rangeKey]
       }
     })
 
-    // Only add if at least one range condition exists
+    // If rangeFilter has any keys, push { field, range: [rangeFilter] } into filters
     if (Object.keys(rangeFilter).length > 0) {
-      range.push(rangeFilter)
-      filters.push({ field, range })
+      filters.push({ field, range: [rangeFilter] })
     }
   }
 
