@@ -9,10 +9,7 @@ export function Search() {
 
   const onSearch = (value: string) => {
     newSearch({
-      query: value,
-      products: {
-        size: 24
-      }
+      query: value
     })
   }
 

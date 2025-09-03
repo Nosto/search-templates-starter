@@ -1,4 +1,5 @@
 import { init } from "@nosto/search-js/preact/inject"
+import { dispatchNostoEvent } from "@nosto/search-js/preact/events"
 import Serp from "@/components/Serp/Serp"
 import "@/variable.css"
 import Products from "@/components/Autocomplete/Products/Products"
@@ -12,7 +13,10 @@ init({
     formCssSelector: "#search-form",
     dropdownCssSelector: "#dropdown",
     onNavigateToSearch: query => {
-      location.href = `/?q=${query.query}`
+      dispatchNostoEvent({
+        event: "actions/newSearch",
+        params: { query, targetStore: "search" }
+      })
     },
     renderAutocomplete: () => <Products />
   },
