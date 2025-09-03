@@ -45,10 +45,7 @@ export interface UrlQueryState {
   sort?: InputSearchSort[]
 }
 
-export function serializeQueryState(state: UrlQueryState) {
-  // Create URLSearchParams starting with current search parameters
-  const params = new URLSearchParams(window.location.search || "")
-
+function clearMappedParameters(params: URLSearchParams) {
   // Clear existing mapped parameters
   params.delete(QUERY_PARAM)
   params.delete(PAGE_PARAM)
@@ -62,6 +59,14 @@ export function serializeQueryState(state: UrlQueryState) {
     }
   }
   keysToDelete.forEach(key => params.delete(key))
+}
+
+export function serializeQueryState(state: UrlQueryState) {
+  // Create URLSearchParams starting with current search parameters
+  const params = new URLSearchParams(window.location.search || "")
+
+  // Clear existing mapped parameters
+  clearMappedParameters(params)
 
   // Set new mapped parameters
   if (state.query) {
