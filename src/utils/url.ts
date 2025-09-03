@@ -46,8 +46,24 @@ export interface UrlQueryState {
 }
 
 export function serializeQueryState(state: UrlQueryState) {
-  const params = new URLSearchParams()
+  // Create URLSearchParams starting with current search parameters
+  const params = new URLSearchParams(window.location.search || "")
 
+  // Clear existing mapped parameters
+  params.delete(QUERY_PARAM)
+  params.delete(PAGE_PARAM)
+  params.delete(SORT_PARAM)
+
+  // Clear existing filter parameters
+  const keysToDelete = []
+  for (const [key] of params.entries()) {
+    if (key.startsWith(FILTER_PREFIX)) {
+      keysToDelete.push(key)
+    }
+  }
+  keysToDelete.forEach(key => params.delete(key))
+
+  // Set new mapped parameters
   if (state.query) {
     params.set(QUERY_PARAM, state.query)
   }
@@ -69,20 +85,6 @@ export function serializeQueryState(state: UrlQueryState) {
   }
 
   return params
-}
-
-function getUnmappedParameters() {
-  const currentParams = new URLSearchParams(window.location.search)
-  const unmappedParams = new URLSearchParams()
-
-  for (const [key, value] of currentParams.entries()) {
-    // Preserve parameters that are not mapped to our known parameters
-    if (key !== QUERY_PARAM && key !== PAGE_PARAM && !key.startsWith(FILTER_PREFIX) && key !== SORT_PARAM) {
-      unmappedParams.append(key, value)
-    }
-  }
-
-  return unmappedParams
 }
 
 export function deserializeQueryState(searchParams: URLSearchParams) {
@@ -134,24 +136,10 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
 }
 
 function getUrlFromState(state: UrlQueryState) {
-  const unmappedParams = getUnmappedParameters()
-  const mappedParams = serializeQueryState(state)
-
-  // Merge unmapped parameters first, then mapped parameters
-  const finalParams = new URLSearchParams()
-
-  // Add unmapped parameters first
-  for (const [key, value] of unmappedParams.entries()) {
-    finalParams.append(key, value)
-  }
-
-  // Add mapped parameters
-  for (const [key, value] of mappedParams.entries()) {
-    finalParams.append(key, value)
-  }
+  const params = serializeQueryState(state)
 
   const url = new URL(window.location.pathname, window.location.origin)
-  url.search = finalParams.toString()
+  url.search = params.toString()
 
   return url.pathname + url.search
 }
