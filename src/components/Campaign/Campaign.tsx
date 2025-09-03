@@ -1,17 +1,6 @@
-type CampaignProps = {
-  /** The placement identifier for the campaign. */
-  placement: string
-  /** The ID of the product to associate with the campaign. */
-  productId?: string
-  /** The variant ID of the product. */
-  variantId?: string
-  /** The ID of the template to use for rendering the campaign. If provided, the campaign will be rendered using this template. */
-  template?: string
-  /** If set to "false", the component will not automatically load the campaign on connection. Defaults to "true". */
-  init?: boolean
-  /** If true, the component will only load the campaign when it comes into view using IntersectionObserver. Defaults to false. */
-  lazy?: boolean
-}
+import type { Campaign as CustomElement } from "@nosto/web-components"
+
+type CampaignProps = Pick<CustomElement, "placement" | "productId" | "variantId" | "template" | "init" | "lazy">
 
 /**
  * A custom element wrapper that renders a Nosto campaign based on the provided placement and fetched campaign data.

@@ -16,7 +16,7 @@ describe("Campaign", () => {
 
   it("renders all supported props as attributes", () => {
     const { container } = render(
-      <Campaign placement="home-top" productId="456" variantId="789" template="tpl-2" init lazy />
+      <Campaign placement="home-top" productId="456" variantId="789" template="tpl-2" init="true" lazy />
     )
     const el = container.querySelector("nosto-campaign") as HTMLElement
     expect(el).toBeTruthy()
@@ -27,12 +27,12 @@ describe("Campaign", () => {
 
   it("renders props with false values excluded", () => {
     const { container } = render(
-      <Campaign placement="home-top" productId="456" variantId="789" template="tpl-2" init={false} lazy={false} />
+      <Campaign placement="home-top" productId="456" variantId="789" template="tpl-2" init="false" lazy={false} />
     )
     const el = container.querySelector("nosto-campaign") as HTMLElement
     expect(el).toBeTruthy()
     expect(el.outerHTML).toBe(
-      '<nosto-campaign product-id="456" variant-id="789" placement="home-top" template="tpl-2"></nosto-campaign>'
+      '<nosto-campaign product-id="456" variant-id="789" placement="home-top" template="tpl-2" init="false"></nosto-campaign>'
     )
   })
 })
