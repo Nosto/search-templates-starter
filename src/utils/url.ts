@@ -4,6 +4,7 @@ const QUERY_PARAM = "q"
 const PAGE_PARAM = "p"
 const FILTER_PREFIX = "filter."
 const SORT_PARAM = "sort"
+const RANGE_KEYS = ["gte", "gt", "lt", "lte"] as const
 
 function encodeSortField(field: string) {
   return field.replace(/~/g, "%7E").replace(/,/g, "%2C")
@@ -11,6 +12,22 @@ function encodeSortField(field: string) {
 
 function decodeSortField(field: string) {
   return field.replace(/%7E/g, "~").replace(/%2C/g, ",")
+}
+
+// Utility function to ensure a map has an array for a given key
+function ensureMapArray<K, V>(map: Map<K, V[]>, key: K): V[] {
+  if (!map.has(key)) {
+    map.set(key, [])
+  }
+  return map.get(key)!
+}
+
+// Utility function to ensure a map has an object for a given key
+function ensureMapObject<K, V extends Record<string, string>>(map: Map<K, V>, key: K): V {
+  if (!map.has(key)) {
+    map.set(key, {} as V)
+  }
+  return map.get(key)!
 }
 
 function serializeSortToUrl(sort: InputSearchSort[]) {
@@ -63,18 +80,11 @@ export function serializeQueryState(state: UrlQueryState) {
       }
       if (f.field && f.range?.length) {
         f.range.forEach(rangeFilter => {
-          if (rangeFilter.gt !== undefined) {
-            params.set(`${FILTER_PREFIX}${f.field}.gt`, rangeFilter.gt)
-          }
-          if (rangeFilter.gte !== undefined) {
-            params.set(`${FILTER_PREFIX}${f.field}.gte`, rangeFilter.gte)
-          }
-          if (rangeFilter.lt !== undefined) {
-            params.set(`${FILTER_PREFIX}${f.field}.lt`, rangeFilter.lt)
-          }
-          if (rangeFilter.lte !== undefined) {
-            params.set(`${FILTER_PREFIX}${f.field}.lte`, rangeFilter.lte)
-          }
+          RANGE_KEYS.forEach(rangeKey => {
+            if (rangeFilter[rangeKey] !== undefined) {
+              params.set(`${FILTER_PREFIX}${f.field}.${rangeKey}`, rangeFilter[rangeKey])
+            }
+          })
         })
       }
     })
@@ -115,16 +125,12 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
       const rangeMatch = filterKey.match(/^(.+)\.(gt|gte|lt|lte)$/)
       if (rangeMatch) {
         const [, field, rangeType] = rangeMatch
-        if (!rangeMap.has(field)) {
-          rangeMap.set(field, {})
-        }
-        rangeMap.get(field)![rangeType] = value.trim()
+        const rangeObj = ensureMapObject(rangeMap, field)
+        rangeObj[rangeType] = value.trim()
       } else {
         // Regular value filter
-        if (!filterMap.has(filterKey)) {
-          filterMap.set(filterKey, [])
-        }
-        filterMap.get(filterKey)!.push(value.trim())
+        const valueArray = ensureMapArray(filterMap, filterKey)
+        valueArray.push(value.trim())
       }
     }
   }
@@ -139,10 +145,11 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
     const range = []
     const rangeFilter: Record<string, string> = {}
 
-    if (rangeValues.gt) rangeFilter.gt = rangeValues.gt
-    if (rangeValues.gte) rangeFilter.gte = rangeValues.gte
-    if (rangeValues.lt) rangeFilter.lt = rangeValues.lt
-    if (rangeValues.lte) rangeFilter.lte = rangeValues.lte
+    RANGE_KEYS.forEach(rangeKey => {
+      if (rangeValues[rangeKey]) {
+        rangeFilter[rangeKey] = rangeValues[rangeKey]
+      }
+    })
 
     // Only add if at least one range condition exists
     if (Object.keys(rangeFilter).length > 0) {
