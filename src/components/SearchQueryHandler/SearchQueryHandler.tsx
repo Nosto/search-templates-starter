@@ -20,13 +20,13 @@ export default function SearchQueryHandler() {
   useEffect(() => {
     const { query, page, filter, sort } = getCurrentUrlState()
     if (query || page || filter || sort) {
-      const searchFrom = page ? (page - 1) * size : 0
+      const from = page ? (page - 1) * size : 0
 
       const searchConfig = {
-        query: query || "",
+        query,
         products: {
           size,
-          from: searchFrom,
+          from,
           filter,
           sort
         }
@@ -38,11 +38,11 @@ export default function SearchQueryHandler() {
 
   // Update URL when app state changes
   useEffect(() => {
-    const currentPage = from ? Math.floor(from / size) + 1 : 1
+    const page = from ? Math.floor(from / size) + 1 : 1
 
     updateUrl({
-      query: query || undefined,
-      page: currentPage > 1 ? currentPage : undefined,
+      query,
+      page,
       filter,
       sort
     })
