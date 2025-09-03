@@ -5,7 +5,7 @@ const QUERY_PARAM = "q"
 const PAGE_PARAM = "p"
 const FILTER_PREFIX = "filter."
 const SORT_PARAM = "sort"
-const RANGE_KEYS = ["gte", "gt", "lt", "lte"]
+const RANGE_KEYS: (keyof InputSearchRangeFilter)[] = ["gte", "gt", "lt", "lte"]
 
 function encodeSortField(field: string) {
   return field.replace(/~/g, "%7E").replace(/,/g, "%2C")
@@ -66,7 +66,7 @@ export function serializeQueryState(state: UrlQueryState) {
       if (f.field && f.range?.length) {
         f.range.forEach(rangeFilter => {
           RANGE_KEYS.forEach(rangeKey => {
-            const value = rangeFilter[rangeKey as keyof InputSearchRangeFilter]
+            const value = rangeFilter[rangeKey]
             if (value !== undefined) {
               params.set(`${FILTER_PREFIX}${f.field}.${rangeKey}`, value)
             }
