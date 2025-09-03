@@ -1,5 +1,5 @@
 import { InputSearchTopLevelFilter, InputSearchSort, InputSearchRangeFilter } from "@nosto/nosto-js/client"
-import { ensureMapValue } from "./ensureMap"
+import { ensureMapValue, appendMapArray } from "./ensureMap"
 
 const QUERY_PARAM = "q"
 const PAGE_PARAM = "p"
@@ -104,20 +104,21 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
   const rangeMap = new Map<string, Partial<InputSearchRangeFilter>>()
 
   for (const [key, value] of searchParams.entries()) {
-    if (key.startsWith(FILTER_PREFIX) && value.trim()) {
-      const filterKey = key.substring(FILTER_PREFIX.length)
+    if (!key.startsWith(FILTER_PREFIX) || !value.trim()) {
+      continue
+    }
 
-      // Check if this is a range filter (has .gt, .gte, .lt, .lte suffix)
-      const rangeMatch = filterKey.match(/^(.+)\.(gt|gte|lt|lte)$/)
-      if (rangeMatch) {
-        const [, field, rangeType] = rangeMatch
-        const rangeObj = ensureMapValue(rangeMap, field, () => ({}) as Partial<InputSearchRangeFilter>)
-        rangeObj[rangeType as keyof InputSearchRangeFilter] = value.trim()
-      } else {
-        // Regular value filter
-        const valueArray = ensureMapValue(filterMap, filterKey, () => [] as string[])
-        valueArray.push(value.trim())
-      }
+    const filterKey = key.substring(FILTER_PREFIX.length)
+
+    // Check if this is a range filter (has .gt, .gte, .lt, .lte suffix)
+    const rangeMatch = filterKey.match(/^(.+)\.(gt|gte|lt|lte)$/)
+    if (rangeMatch) {
+      const [, field, rangeType] = rangeMatch
+      const rangeObj = ensureMapValue(rangeMap, field, () => ({}) as Partial<InputSearchRangeFilter>)
+      rangeObj[rangeType as keyof InputSearchRangeFilter] = value.trim()
+    } else {
+      // Regular value filter
+      appendMapArray(filterMap, filterKey, value.trim())
     }
   }
 

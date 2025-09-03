@@ -5,3 +5,9 @@ export function ensureMapValue<K, V>(map: Map<K, V>, key: K, fallback: () => V):
   }
   return map.get(key)!
 }
+
+// Utility function to append a value to an array in a map, creating the array if needed
+export function appendMapArray<K>(map: Map<K, string[]>, key: K, value: string): void {
+  const array = ensureMapValue(map, key, () => [])
+  array.push(value)
+}
