@@ -7,39 +7,39 @@ describe("URL utilities", () => {
     // Helper function for concise sort serialization testing
     function expectSort(sortArray: InputSearchSort[]) {
       const state = { sort: sortArray }
-      const params = serializeQueryState(state)
+      const params = serializeQueryState(state, new URLSearchParams())
       return expect(params.get("sort"))
     }
     it("creates URLSearchParams with query parameter", () => {
       const state = { query: "test search" }
-      const params = serializeQueryState(state)
+      const params = serializeQueryState(state, new URLSearchParams())
       expect(params.get("q")).toBe("test search")
       expect(params.get("p")).toBeNull()
     })
 
     it("creates URLSearchParams with page parameter when greater than 1", () => {
       const state = { query: "test", page: 2 }
-      const params = serializeQueryState(state)
+      const params = serializeQueryState(state, new URLSearchParams())
       expect(params.get("q")).toBe("test")
       expect(params.get("p")).toBe("2")
     })
 
     it("omits page parameter when equal to 1", () => {
       const state = { query: "test", page: 1 }
-      const params = serializeQueryState(state)
+      const params = serializeQueryState(state, new URLSearchParams())
       expect(params.get("q")).toBe("test")
       expect(params.get("p")).toBeNull()
     })
 
     it("handles empty state", () => {
       const state = {}
-      const params = serializeQueryState(state)
+      const params = serializeQueryState(state, new URLSearchParams())
       expect(params.toString()).toBe("")
     })
 
     it("omits empty query", () => {
       const state = { query: "", page: 2 }
-      const params = serializeQueryState(state)
+      const params = serializeQueryState(state, new URLSearchParams())
       expect(params.get("q")).toBeNull()
       expect(params.get("p")).toBe("2")
     })
@@ -50,13 +50,13 @@ describe("URL utilities", () => {
         { field: "color", value: ["Red"] }
       ]
       const state = { filter: filters }
-      const params = serializeQueryState(state)
+      const params = serializeQueryState(state, new URLSearchParams())
       expect(params.toString()).toBe("filter.brand=Nike&filter.color=Red")
     })
 
     it("omits empty filter array", () => {
       const state = { query: "test", filter: [] }
-      const params = serializeQueryState(state)
+      const params = serializeQueryState(state, new URLSearchParams())
       expect(params.get("q")).toBe("test")
       expect(params.has("filter.brand")).toBe(false)
       expect(params.has("filter.color")).toBe(false)
@@ -65,14 +65,14 @@ describe("URL utilities", () => {
     it("handles filters with query and page", () => {
       const filters = [{ field: "category", value: ["sports"] }]
       const state = { filter: filters }
-      const params = serializeQueryState(state)
+      const params = serializeQueryState(state, new URLSearchParams())
       expect(params.toString()).toBe("filter.category=sports")
     })
 
     it("spreads array filter values to multiple parameters", () => {
       const filters = [{ field: "brand", value: ["Nike", "Adidas", "Puma"] }]
       const state = { filter: filters }
-      const params = serializeQueryState(state)
+      const params = serializeQueryState(state, new URLSearchParams())
       expect(params.toString()).toBe("filter.brand=Nike&filter.brand=Adidas&filter.brand=Puma")
     })
 
@@ -83,7 +83,7 @@ describe("URL utilities", () => {
         { field: "size", value: ["8", "9", "10"] }
       ]
       const state = { filter: filters }
-      const params = serializeQueryState(state)
+      const params = serializeQueryState(state, new URLSearchParams())
       expect(params.toString()).toBe(
         "filter.brand=Nike&filter.brand=Adidas&filter.color=Red&filter.size=8&filter.size=9&filter.size=10"
       )
@@ -115,7 +115,7 @@ describe("URL utilities", () => {
         filter: [{ field: "brand", value: ["Nike"] }],
         sort: [{ field: "price", order: "asc" }] as InputSearchSort[]
       }
-      const params = serializeQueryState(state)
+      const params = serializeQueryState(state, new URLSearchParams())
       expect(params.get("q")).toBe("shoes")
       expect(params.get("p")).toBe("2")
       expect(params.get("filter.brand")).toBe("Nike")

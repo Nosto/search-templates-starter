@@ -57,11 +57,7 @@ function clearMappedParameters(params: URLSearchParams) {
   keysToDelete.forEach(key => params.delete(key))
 }
 
-export function serializeQueryState(state: UrlQueryState, params?: URLSearchParams) {
-  if (!params) {
-    params = new URLSearchParams(window.location.search || "")
-  }
-
+export function serializeQueryState(state: UrlQueryState, params: URLSearchParams) {
   clearMappedParameters(params)
 
   if (state.query) {
@@ -136,7 +132,8 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
 }
 
 function getUrlFromState(state: UrlQueryState) {
-  const params = serializeQueryState(state)
+  const params = new URLSearchParams(window.location.search || "")
+  serializeQueryState(state, params)
 
   const url = new URL(window.location.pathname, window.location.origin)
   url.search = params.toString()
