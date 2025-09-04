@@ -154,44 +154,33 @@ describe("URL utilities", () => {
       return expect(state.filter)
     }
 
+    function expectQueryState(urlString: string) {
+      const params = new URLSearchParams(urlString)
+      return expect(deserializeQueryState(params))
+    }
+
     it("parses query parameter", () => {
-      const params = new URLSearchParams("q=test+search")
-      const state = deserializeQueryState(params)
-      expect(state.query).toBe("test search")
-      expect(state.page).toBeUndefined()
+      expectQueryState("q=test+search").toEqual({ query: "test search" })
     })
 
     it("parses page parameter when greater than 1", () => {
-      const params = new URLSearchParams("q=test&p=3")
-      const state = deserializeQueryState(params)
-      expect(state.query).toBe("test")
-      expect(state.page).toBe(3)
+      expectQueryState("q=test&p=3").toEqual({ query: "test", page: 3 })
     })
 
     it("omits page parameter when equal to 1", () => {
-      const params = new URLSearchParams("q=test&p=1")
-      const state = deserializeQueryState(params)
-      expect(state.query).toBe("test")
-      expect(state.page).toBeUndefined()
+      expectQueryState("q=test&p=1").toEqual({ query: "test" })
     })
 
     it("handles invalid page parameter", () => {
-      const params = new URLSearchParams("q=test&p=invalid")
-      const state = deserializeQueryState(params)
-      expect(state.query).toBe("test")
-      expect(state.page).toBeUndefined()
+      expectQueryState("q=test&p=invalid").toEqual({ query: "test" })
     })
 
     it("handles empty parameters", () => {
-      const params = new URLSearchParams("")
-      const state = deserializeQueryState(params)
-      expect(state).toEqual({})
+      expectQueryState("").toEqual({})
     })
 
     it("ignores unknown parameters", () => {
-      const params = new URLSearchParams("q=test&unknown=value&p=2")
-      const state = deserializeQueryState(params)
-      expect(state).toEqual({
+      expectQueryState("q=test&unknown=value&p=2").toEqual({
         query: "test",
         page: 2
       })
@@ -267,9 +256,7 @@ describe("URL utilities", () => {
     })
 
     it("handles all parameters together", () => {
-      const params = new URLSearchParams("q=shoes&p=2&filter.brand=Nike&sort=price~asc")
-      const state = deserializeQueryState(params)
-      expect(state).toEqual({
+      expectQueryState("q=shoes&p=2&filter.brand=Nike&sort=price~asc").toEqual({
         query: "shoes",
         page: 2,
         filter: [{ field: "brand", value: ["Nike"] }],
