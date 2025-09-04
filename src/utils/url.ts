@@ -102,7 +102,8 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
   const rangeMap = new Map<string, InputSearchRangeFilter>()
 
   for (const [key, value] of searchParams.entries()) {
-    if (!key.startsWith(FILTER_PREFIX) || !value.trim()) {
+    const trimmedValue = value.trim()
+    if (!key.startsWith(FILTER_PREFIX) || !trimmedValue) {
       continue
     }
 
@@ -113,10 +114,10 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
     if (rangeMatch) {
       const [, field, rangeType] = rangeMatch
       const rangeObj = ensureMapValue(rangeMap, field, {})
-      rangeObj[rangeType as keyof InputSearchRangeFilter] = value.trim()
+      rangeObj[rangeType as keyof InputSearchRangeFilter] = trimmedValue
     } else {
       // Regular value filter
-      ensureMapValue(filterMap, filterKey, []).push(value.trim())
+      ensureMapValue(filterMap, filterKey, []).push(trimmedValue)
     }
   }
 
