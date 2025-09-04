@@ -3,7 +3,7 @@ import { pick } from "@nosto/search-js/utils"
 import { sortOptions } from "@/config"
 import Icon from "@/elements/Icon/Icon"
 import Select from "@/elements/Select/Select"
-import { toggleButtonId } from "@/components/Sidebar/Sidebar"
+import { toggleSidebar } from "@/components/Sidebar/Sidebar"
 import style from "./Toolbar.module.css"
 import Button from "@/elements/Button/Button"
 import { cl } from "@nosto/search-js/utils"
@@ -15,11 +15,11 @@ type Props = {
 
 function ToggleMobileSidebarButton({ selectedFiltersCount, className }: Props) {
   return (
-    <Button light className={cl(style.mobile, style.filter, className)}>
-      <label htmlFor={toggleButtonId} className={style.label}>
+    <Button light className={cl(style.mobile, style.filter, className)} onClick={toggleSidebar}>
+      <div className={style.label}>
         <Icon name="filter" />
         <span>Filter</span>
-      </label>
+      </div>
       {selectedFiltersCount > 0 && <span className={style.badge}>{selectedFiltersCount}</span>}
     </Button>
   )

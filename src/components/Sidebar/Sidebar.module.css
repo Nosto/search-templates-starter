@@ -28,22 +28,16 @@
   max-width: 25%;
 }
 
-.toggle {
-  display: none;
-}
-
-.toggle:checked ~ .wrapper {
+/* Mobile: show sidebar when open */
+.wrapper.open {
   display: block !important;
   position: fixed !important;
   max-height: 100%;
 }
 
-.toggle:checked ~ .backdrop,
-.toggle:checked ~ .wrapper .close {
+/* Mobile: show close button when open */
+.wrapper.open .close {
   display: block !important;
-}
-
-.toggle:checked ~ .wrapper .close {
   z-index: var(--ns-z-index-sidebar-close);
 }
 
@@ -52,22 +46,17 @@
     display: block;
   }
 
-  .toggle:checked ~ .wrapper {
+  /* Desktop: override mobile open styles */
+  .wrapper.open {
     display: initial !important;
     position: initial !important;
     max-height: unset !important;
   }
 
-  .toggle:checked ~ .backdrop,
-  .toggle:checked ~ .wrapper .close {
-    display: none !important;
-  }
-
-  .toggle:checked ~ .wrapper .close {
-    z-index: unset;
-  }
+  /* Desktop: hide close button */
+  .wrapper.open .close,
   .close {
-    display: none;
+    display: none !important;
   }
 }
 
@@ -88,11 +77,17 @@
   width: 100%;
   height: 100%;
   background-color: var(--ns-color-black);
-  display: none;
+  border: none;
+  cursor: pointer;
+}
+
+.backdrop:focus {
+  outline: 2px solid var(--ns-color-primary);
+  outline-offset: -2px;
 }
 
 @media screen and (min-width: 768px) {
-  .toggle:checked ~ .backdrop {
+  .backdrop {
     display: none !important;
   }
 }
