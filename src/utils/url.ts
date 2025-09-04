@@ -103,6 +103,9 @@ export function serializeQueryState(state: UrlQueryState, params: URLSearchParam
   return params
 }
 
+/**
+ * Parse a string from URLSearchParams as a positive int > minValue, return undefined if invalid
+ */
 function parsePositiveIntParam(searchParams: URLSearchParams, paramName: string, minValue: number): number | undefined {
   const paramValue = searchParams.get(paramName)
   if (paramValue) {
