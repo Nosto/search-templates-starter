@@ -104,15 +104,12 @@ export function serializeQueryState(state: UrlQueryState, params: URLSearchParam
 }
 
 /**
- * Parse a string from URLSearchParams as a positive int > minValue, return undefined if invalid
+ * Parse a string as a positive int > minValue, return undefined if invalid
  */
-function parsePositiveIntParam(searchParams: URLSearchParams, paramName: string, minValue: number): number | undefined {
-  const paramValue = searchParams.get(paramName)
-  if (paramValue) {
-    const parsedNum = parseInt(paramValue, 10)
-    if (!isNaN(parsedNum) && parsedNum > minValue) {
-      return parsedNum
-    }
+function parsePositiveInt(value: string, minValue: number): number | undefined {
+  const parsedNum = parseInt(value, 10)
+  if (!isNaN(parsedNum) && parsedNum > minValue) {
+    return parsedNum
   }
   return undefined
 }
@@ -125,14 +122,20 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
     state.query = q
   }
 
-  const pageNum = parsePositiveIntParam(searchParams, PAGE_PARAM, 1)
-  if (pageNum) {
-    state.page = pageNum
+  const pageParamValue = searchParams.get(PAGE_PARAM)
+  if (pageParamValue) {
+    const pageNum = parsePositiveInt(pageParamValue, 1)
+    if (pageNum) {
+      state.page = pageNum
+    }
   }
 
-  const sizeNum = parsePositiveIntParam(searchParams, SIZE_PARAM, 0)
-  if (sizeNum) {
-    state.size = sizeNum
+  const sizeParamValue = searchParams.get(SIZE_PARAM)
+  if (sizeParamValue) {
+    const sizeNum = parsePositiveInt(sizeParamValue, 0)
+    if (sizeNum) {
+      state.size = sizeNum
+    }
   }
 
   const filters: InputSearchTopLevelFilter[] = []
