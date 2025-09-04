@@ -14,7 +14,7 @@ describe("URL utilities", () => {
     // Helper function for concise filter testing
     function expectFilters(filterArray: InputSearchTopLevelFilter[]) {
       const state = { filter: filterArray }
-      const params = serializeQueryState(state)
+      const params = serializeQueryState(state, new URLSearchParams())
       return (key: string) => expect(params.get(`filter.${key}`))
     }
     it("creates URLSearchParams with query parameter", () => {
@@ -163,14 +163,14 @@ describe("URL utilities", () => {
         { field: "price", range: [{ gte: "10", lte: "50" }] }
       ]
       const state = { filter: filters }
-      const params = serializeQueryState(state)
+      const params = serializeQueryState(state, new URLSearchParams())
       expect(params.toString()).toBe("filter.brand=Nike&filter.brand=Adidas&filter.price.gte=10&filter.price.lte=50")
     })
 
     it("omits undefined range values", () => {
       const filters = [{ field: "price", range: [{ gte: "10", lt: undefined, lte: "50" }] }]
       const state = { filter: filters }
-      const params = serializeQueryState(state)
+      const params = serializeQueryState(state, new URLSearchParams())
       expect(params.get("filter.price.gte")).toBe("10")
       expect(params.get("filter.price.lte")).toBe("50")
       expect(params.has("filter.price.lt")).toBe(false)
