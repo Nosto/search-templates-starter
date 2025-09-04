@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from "vitest"
-import type { InputSearchSort } from "@nosto/nosto-js/client"
+import type { InputSearchSort, InputSearchTopLevelFilter } from "@nosto/nosto-js/client"
 import { serializeQueryState, deserializeQueryState, updateUrl, getCurrentUrlState, getPageUrl } from "@/utils/url"
 
 describe("URL utilities", () => {
@@ -9,6 +9,13 @@ describe("URL utilities", () => {
       const state = { sort: sortArray }
       const params = serializeQueryState(state, new URLSearchParams())
       return expect(params.get("sort"))
+    }
+
+    // Helper function for concise filter testing
+    function expectFilters(filterArray: InputSearchTopLevelFilter[]) {
+      const state = { filter: filterArray }
+      const params = serializeQueryState(state, new URLSearchParams())
+      return (key: string) => expect(params.get(`filter.${key}`))
     }
     it("creates URLSearchParams with query parameter", () => {
       const state = { query: "test search" }
@@ -120,6 +127,54 @@ describe("URL utilities", () => {
       expect(params.get("p")).toBe("2")
       expect(params.get("filter.brand")).toBe("Nike")
       expect(params.get("sort")).toBe("price~asc")
+    })
+
+    it("creates URLSearchParams with range filter parameter", () => {
+      const filters = [{ field: "price", range: [{ gte: "10", lte: "50" }] }]
+      const expectFiltersHelper = expectFilters(filters)
+      expectFiltersHelper("price.gte").toBe("10")
+      expectFiltersHelper("price.lte").toBe("50")
+    })
+
+    it("creates URLSearchParams with partial range filters", () => {
+      const filters = [
+        { field: "price", range: [{ gte: "10" }] },
+        { field: "weight", range: [{ lt: "100" }] }
+      ]
+      const expectFiltersHelper = expectFilters(filters)
+      expectFiltersHelper("price.gte").toBe("10")
+      expectFiltersHelper("price.lte").toBeNull()
+      expectFiltersHelper("weight.lt").toBe("100")
+      expectFiltersHelper("weight.gt").toBeNull()
+    })
+
+    it("creates URLSearchParams with all range operators", () => {
+      const filters = [{ field: "score", range: [{ gt: "0", gte: "1", lt: "100", lte: "99" }] }]
+      const expectFiltersHelper = expectFilters(filters)
+      expectFiltersHelper("score.gt").toBe("0")
+      expectFiltersHelper("score.gte").toBe("1")
+      expectFiltersHelper("score.lt").toBe("100")
+      expectFiltersHelper("score.lte").toBe("99")
+    })
+
+    it("handles mixed value and range filters", () => {
+      const filters = [
+        { field: "brand", value: ["Nike", "Adidas"] },
+        { field: "price", range: [{ gte: "10", lte: "50" }] }
+      ]
+      const state = { filter: filters }
+      const params = serializeQueryState(state, new URLSearchParams())
+      expect(params.toString()).toBe("filter.brand=Nike&filter.brand=Adidas&filter.price.gte=10&filter.price.lte=50")
+    })
+
+    it("omits undefined range values", () => {
+      const filters = [{ field: "price", range: [{ gte: "10", lt: undefined, lte: "50" }] }]
+      const state = { filter: filters }
+      const params = serializeQueryState(state, new URLSearchParams())
+      expect(params.get("filter.price.gte")).toBe("10")
+      expect(params.get("filter.price.lte")).toBe("50")
+      expect(params.has("filter.price.lt")).toBe(false)
+      expect(params.has("filter.price.gt")).toBe(false)
     })
   })
 
@@ -258,6 +313,45 @@ describe("URL utilities", () => {
         filter: [{ field: "brand", value: ["Nike"] }],
         sort: [{ field: "price", order: "asc" }]
       })
+    })
+
+    it("parses partial range filter parameters", () => {
+      expectFilters("filter.price.gte=10").toEqual([{ field: "price", range: [{ gte: "10" }] }])
+      expectFilters("filter.weight.lt=100").toEqual([{ field: "weight", range: [{ lt: "100" }] }])
+    })
+
+    it("parses all range operators", () => {
+      expectFilters("filter.score.gt=0&filter.score.gte=1&filter.score.lt=100&filter.score.lte=99").toEqual([
+        { field: "score", range: [{ gt: "0", gte: "1", lt: "100", lte: "99" }] }
+      ])
+    })
+
+    it("handles mixed value and range filter parameters", () => {
+      expectFilters("filter.brand=Nike&filter.brand=Adidas&filter.price.gte=10&filter.price.lte=50").toEqual([
+        { field: "brand", value: ["Nike", "Adidas"] },
+        { field: "price", range: [{ gte: "10", lte: "50" }] }
+      ])
+    })
+
+    it("handles multiple range filters for different fields", () => {
+      expectFilters("filter.price.gte=10&filter.price.lte=50&filter.weight.gt=5&filter.rating.lte=4").toEqual([
+        { field: "price", range: [{ gte: "10", lte: "50" }] },
+        { field: "weight", range: [{ gt: "5" }] },
+        { field: "rating", range: [{ lte: "4" }] }
+      ])
+    })
+
+    it("filters out empty range filter values", () => {
+      expectFilters("filter.price.gte=10&filter.price.lte=&filter.weight.gt=").toEqual([
+        { field: "price", range: [{ gte: "10" }] }
+      ])
+    })
+
+    it("handles URL encoded range filter values", () => {
+      expectFilters("filter.price.gte=10.50&filter.discount.lte=20%25").toEqual([
+        { field: "price", range: [{ gte: "10.50" }] },
+        { field: "discount", range: [{ lte: "20%" }] }
+      ])
     })
   })
 
@@ -457,6 +551,26 @@ describe("URL utilities", () => {
         sort: [
           { field: "price", order: "desc" },
           { field: "_score", order: "desc" }
+        ]
+      })
+    })
+
+    it("parses range filter parameters from URL", () => {
+      window.location.search = "?filter.price.gte=10&filter.price.lte=50"
+      const state = getCurrentUrlState()
+      expect(state).toEqual({
+        filter: [{ field: "price", range: [{ gte: "10", lte: "50" }] }]
+      })
+    })
+
+    it("parses mixed value and range filter parameters from URL", () => {
+      window.location.search = "?q=shoes&filter.brand=Nike&filter.brand=Adidas&filter.price.gte=10&filter.price.lte=50"
+      const state = getCurrentUrlState()
+      expect(state).toEqual({
+        query: "shoes",
+        filter: [
+          { field: "brand", value: ["Nike", "Adidas"] },
+          { field: "price", range: [{ gte: "10", lte: "50" }] }
         ]
       })
     })

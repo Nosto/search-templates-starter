@@ -1,4 +1,5 @@
-import { InputSearchTopLevelFilter, InputSearchSort } from "@nosto/nosto-js/client"
+import { InputSearchTopLevelFilter, InputSearchSort, InputSearchRangeFilter } from "@nosto/nosto-js/client"
+import { ensureMapValue } from "./ensureMap"
 
 const QUERY_PARAM = "q"
 const PAGE_PARAM = "p"
@@ -67,9 +68,23 @@ export function serializeQueryState(state: UrlQueryState, params: URLSearchParam
   }
 
   if (state.filter && state.filter.length > 0) {
-    state.filter.forEach(f => {
-      if (f.field && f.value?.length) {
-        f.value.forEach(val => params.append(`${FILTER_PREFIX}${f.field}`, val))
+    state.filter.forEach(filter => {
+      const { field, value, range } = filter
+      if (!field) {
+        return
+      }
+
+      if (value?.length) {
+        value.forEach(val => params.append(`${FILTER_PREFIX}${field}`, val))
+      }
+      if (range?.length) {
+        range.forEach(rangeFilter => {
+          Object.entries(rangeFilter).forEach(([rangeKey, rangeValue]) => {
+            if (rangeValue) {
+              params.set(`${FILTER_PREFIX}${field}.${rangeKey}`, rangeValue)
+            }
+          })
+        })
       }
     })
   }
@@ -99,19 +114,36 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
 
   const filters: InputSearchTopLevelFilter[] = []
   const filterMap = new Map<string, string[]>()
+  const rangeMap = new Map<string, InputSearchRangeFilter>()
 
   for (const [key, value] of searchParams.entries()) {
-    if (key.startsWith(FILTER_PREFIX) && value.trim()) {
-      const field = key.substring(FILTER_PREFIX.length)
-      if (!filterMap.has(field)) {
-        filterMap.set(field, [])
-      }
-      filterMap.get(field)!.push(value.trim())
+    const trimmedValue = value.trim()
+    if (!key.startsWith(FILTER_PREFIX) || !trimmedValue) {
+      continue
+    }
+
+    const filterKey = key.substring(FILTER_PREFIX.length)
+
+    // Check if this is a range filter (has .gt, .gte, .lt, .lte suffix)
+    const rangeMatch = filterKey.match(/^(.+)\.(gt|gte|lt|lte)$/)
+    if (rangeMatch) {
+      const [, field, rangeType] = rangeMatch
+      const rangeObj = ensureMapValue(rangeMap, field, {})
+      rangeObj[rangeType as keyof InputSearchRangeFilter] = trimmedValue
+    } else {
+      // Regular value filter
+      ensureMapValue(filterMap, filterKey, []).push(trimmedValue)
     }
   }
 
+  // Add value filters
   for (const [field, value] of filterMap.entries()) {
     filters.push({ field, value })
+  }
+
+  // Add range filters
+  for (const [field, range] of rangeMap.entries()) {
+    filters.push({ field, range: [range] })
   }
 
   if (filters.length > 0) {
