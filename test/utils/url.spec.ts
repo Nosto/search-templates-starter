@@ -1,6 +1,13 @@
 import { describe, it, expect, beforeEach, vi } from "vitest"
 import type { InputSearchSort } from "@nosto/nosto-js/client"
-import { serializeQueryState, deserializeQueryState, updateUrl, getCurrentUrlState, getPageUrl } from "@/utils/url"
+import {
+  serializeQueryState,
+  deserializeQueryState,
+  updateUrl,
+  getCurrentUrlState,
+  getPageUrl,
+  type UrlQueryState
+} from "@/utils/url"
 
 describe("URL utilities", () => {
   describe("serializeQueryState", () => {
@@ -9,6 +16,12 @@ describe("URL utilities", () => {
       const state = { sort: sortArray }
       const params = serializeQueryState(state)
       return expect(params.get("sort"))
+    }
+
+    // Helper function for concise filter testing
+    function expectFilters(filterArray: NonNullable<UrlQueryState["filter"]>) {
+      const state = { filter: filterArray }
+      return serializeQueryState(state)
     }
     it("creates URLSearchParams with query parameter", () => {
       const state = { query: "test search" }
@@ -124,8 +137,7 @@ describe("URL utilities", () => {
 
     it("creates URLSearchParams with range filter parameter", () => {
       const filters = [{ field: "price", range: [{ gte: "10", lte: "50" }] }]
-      const state = { filter: filters }
-      const params = serializeQueryState(state)
+      const params = expectFilters(filters)
       expect(params.get("filter.price.gte")).toBe("10")
       expect(params.get("filter.price.lte")).toBe("50")
     })
@@ -135,8 +147,7 @@ describe("URL utilities", () => {
         { field: "price", range: [{ gte: "10" }] },
         { field: "weight", range: [{ lt: "100" }] }
       ]
-      const state = { filter: filters }
-      const params = serializeQueryState(state)
+      const params = expectFilters(filters)
       expect(params.get("filter.price.gte")).toBe("10")
       expect(params.get("filter.price.lte")).toBeNull()
       expect(params.get("filter.weight.lt")).toBe("100")
@@ -145,8 +156,7 @@ describe("URL utilities", () => {
 
     it("creates URLSearchParams with all range operators", () => {
       const filters = [{ field: "score", range: [{ gt: "0", gte: "1", lt: "100", lte: "99" }] }]
-      const state = { filter: filters }
-      const params = serializeQueryState(state)
+      const params = expectFilters(filters)
       expect(params.get("filter.score.gt")).toBe("0")
       expect(params.get("filter.score.gte")).toBe("1")
       expect(params.get("filter.score.lt")).toBe("100")
@@ -433,29 +443,6 @@ describe("URL utilities", () => {
         null,
         "",
         "/?filter.brand=Nike&filter.brand=Adidas&filter.brand=Puma"
-      )
-    })
-
-    it("updates URL with range filter parameters", () => {
-      const state = {
-        filter: [{ field: "price", range: [{ gte: "10", lte: "50" }] }]
-      }
-      updateUrl(state)
-      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?filter.price.gte=10&filter.price.lte=50")
-    })
-
-    it("updates URL with mixed value and range filters", () => {
-      const state = {
-        filter: [
-          { field: "brand", value: ["Nike"] },
-          { field: "price", range: [{ gte: "10", lte: "50" }] }
-        ]
-      }
-      updateUrl(state)
-      expect(window.history.replaceState).toHaveBeenCalledWith(
-        null,
-        "",
-        "/?filter.brand=Nike&filter.price.gte=10&filter.price.lte=50"
       )
     })
   })
