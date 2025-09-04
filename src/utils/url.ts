@@ -47,9 +47,8 @@ export interface UrlQueryState {
 
 function clearMappedParameters(params: URLSearchParams) {
   // Clear existing mapped parameters
-  params.delete(QUERY_PARAM)
-  params.delete(PAGE_PARAM)
-  params.delete(SORT_PARAM)
+  const MAPPED_PARAMS = [QUERY_PARAM, PAGE_PARAM, SORT_PARAM]
+  MAPPED_PARAMS.forEach(param => params.delete(param))
 
   // Clear existing filter parameters
   const keysToDelete = []
