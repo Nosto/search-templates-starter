@@ -38,7 +38,7 @@ describe("build output integration", () => {
     const content = readFileSync(jsFile, "utf-8")
 
     // Check that it's IIFE wrapped
-    expect(content.trim().startsWith("(function()")).toBe(true)
+    expect(content).toMatch(/^\s*\(function\s*\(/)
 
     // Check for "use strict" which should be present in the IIFE
     expect(content).toContain('"use strict"')
