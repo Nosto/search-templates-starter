@@ -1,7 +1,7 @@
 /**
  * Parse a string as a positive int > minValue, return undefined if invalid
  */
-export function parsePositiveInt(value: string | null, minValue: number) {
+export function parsePositiveInt(minValue: number, value?: string) {
   if (!value) {
     return undefined
   }

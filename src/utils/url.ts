@@ -112,12 +112,12 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
     state.query = q
   }
 
-  const pageValue = parsePositiveInt(searchParams.get(PAGE_PARAM), 1)
+  const pageValue = parsePositiveInt(1, searchParams.get(PAGE_PARAM) ?? undefined)
   if (pageValue) {
     state.page = pageValue
   }
 
-  const sizeValue = parsePositiveInt(searchParams.get(SIZE_PARAM), 0)
+  const sizeValue = parsePositiveInt(0, searchParams.get(SIZE_PARAM) ?? undefined)
   if (sizeValue) {
     state.size = sizeValue
   }
