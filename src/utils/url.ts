@@ -1,5 +1,6 @@
 import { InputSearchTopLevelFilter, InputSearchSort, InputSearchRangeFilter } from "@nosto/nosto-js/client"
 import { ensureMapValue } from "./ensureMap"
+import { parsePositiveInt } from "./number"
 
 const QUERY_PARAM = "q"
 const PAGE_PARAM = "p"
@@ -101,20 +102,6 @@ export function serializeQueryState(state: UrlQueryState, params: URLSearchParam
   }
 
   return params
-}
-
-/**
- * Parse a string as a positive int > minValue, return undefined if invalid
- */
-function parsePositiveInt(value: string | null, minValue: number): number | undefined {
-  if (!value) {
-    return undefined
-  }
-  const parsedNum = parseInt(value, 10)
-  if (!isNaN(parsedNum) && parsedNum > minValue) {
-    return parsedNum
-  }
-  return undefined
 }
 
 export function deserializeQueryState(searchParams: URLSearchParams) {
