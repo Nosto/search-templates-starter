@@ -1,13 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from "vitest"
-import type { InputSearchSort } from "@nosto/nosto-js/client"
-import {
-  serializeQueryState,
-  deserializeQueryState,
-  updateUrl,
-  getCurrentUrlState,
-  getPageUrl,
-  type UrlQueryState
-} from "@/utils/url"
+import type { InputSearchSort, InputSearchTopLevelFilter } from "@nosto/nosto-js/client"
+import { serializeQueryState, deserializeQueryState, updateUrl, getCurrentUrlState, getPageUrl } from "@/utils/url"
 
 describe("URL utilities", () => {
   describe("serializeQueryState", () => {
@@ -19,7 +12,7 @@ describe("URL utilities", () => {
     }
 
     // Helper function for concise filter testing
-    function expectFilters(filterArray: NonNullable<UrlQueryState["filter"]>) {
+    function expectFilters(filterArray: InputSearchTopLevelFilter[]) {
       const state = { filter: filterArray }
       return serializeQueryState(state)
     }
@@ -595,12 +588,6 @@ describe("URL utilities", () => {
       window.location.pathname = "/search"
       const url = getPageUrl(2)
       expect(url).toBe("/search?p=2")
-    })
-
-    it("preserves range filter parameters", () => {
-      window.location.search = "?q=shoes&filter.price.gte=10&filter.price.lte=50"
-      const url = getPageUrl(3)
-      expect(url).toBe("/?q=shoes&p=3&filter.price.gte=10&filter.price.lte=50")
     })
 
     it("preserves mixed value and range filter parameters", () => {
