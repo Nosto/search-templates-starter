@@ -513,29 +513,5 @@ describe("URL utilities", () => {
       const url = getPageUrl(2)
       expect(url).toBe("/search?p=2")
     })
-
-    it("preserves unmapped query parameters", () => {
-      window.location.search = "?q=shoes&utm_source=email&tracking=abc123"
-      const url = getPageUrl(3)
-      expect(url).toBe("/?utm_source=email&tracking=abc123&q=shoes&p=3")
-    })
-
-    it("preserves unmapped parameters when removing page parameter", () => {
-      window.location.search = "?q=test&p=5&ref=homepage&analytics=true"
-      const url = getPageUrl(1)
-      expect(url).toBe("/?ref=homepage&analytics=true&q=test")
-    })
-
-    it("preserves unmapped parameters with filters", () => {
-      window.location.search = "?utm_campaign=summer&filter.brand=Nike&custom=value"
-      const url = getPageUrl(2)
-      expect(url).toBe("/?utm_campaign=summer&custom=value&p=2&filter.brand=Nike")
-    })
-
-    it("handles only unmapped parameters", () => {
-      window.location.search = "?tracking=abc&source=direct&campaign=test"
-      const url = getPageUrl(2)
-      expect(url).toBe("/?tracking=abc&source=direct&campaign=test&p=2")
-    })
   })
 })

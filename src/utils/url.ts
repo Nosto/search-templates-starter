@@ -46,11 +46,9 @@ export interface UrlQueryState {
 }
 
 function clearMappedParameters(params: URLSearchParams) {
-  // Clear existing mapped parameters
   const MAPPED_PARAMS = [QUERY_PARAM, PAGE_PARAM, SORT_PARAM]
   MAPPED_PARAMS.forEach(param => params.delete(param))
 
-  // Clear existing filter parameters
   const keysToDelete = []
   for (const [key] of params.entries()) {
     if (key.startsWith(FILTER_PREFIX)) {
@@ -61,13 +59,10 @@ function clearMappedParameters(params: URLSearchParams) {
 }
 
 export function serializeQueryState(state: UrlQueryState) {
-  // Create URLSearchParams starting with current search parameters
   const params = new URLSearchParams(window.location.search || "")
 
-  // Clear existing mapped parameters
   clearMappedParameters(params)
 
-  // Set new mapped parameters
   if (state.query) {
     params.set(QUERY_PARAM, state.query)
   }
