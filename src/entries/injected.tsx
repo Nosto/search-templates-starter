@@ -5,6 +5,7 @@ import "@/variable.css"
 import Products from "@/components/Autocomplete/Products/Products"
 import SearchQueryHandler from "@/components/SearchQueryHandler/SearchQueryHandler"
 import { autocompleteConfig, serpConfig } from "@/config"
+import { nostojs } from "@nosto/nosto-js"
 
 init({
   autocomplete: {
@@ -13,6 +14,9 @@ init({
     formCssSelector: "#search-form",
     dropdownCssSelector: "#dropdown",
     onNavigateToSearch: query => {
+      nostojs(api => {
+        api.recordSearchSubmit(query.query!)
+      })
       dispatchNostoEvent({
         event: "actions/newSearch",
         params: { query, targetStore: "search" }
