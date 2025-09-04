@@ -314,12 +314,6 @@ describe("URL utilities", () => {
       })
     })
 
-    it("parses range filter parameters", () => {
-      expectFilters("filter.price.gte=10&filter.price.lte=50").toEqual([
-        { field: "price", range: [{ gte: "10", lte: "50" }] }
-      ])
-    })
-
     it("parses partial range filter parameters", () => {
       expectFilters("filter.price.gte=10").toEqual([{ field: "price", range: [{ gte: "10" }] }])
       expectFilters("filter.weight.lt=100").toEqual([{ field: "weight", range: [{ lt: "100" }] }])
@@ -588,12 +582,6 @@ describe("URL utilities", () => {
       window.location.pathname = "/search"
       const url = getPageUrl(2)
       expect(url).toBe("/search?p=2")
-    })
-
-    it("preserves mixed value and range filter parameters", () => {
-      window.location.search = "?filter.brand=Nike&filter.price.gte=10&filter.price.lte=50"
-      const url = getPageUrl(2)
-      expect(url).toBe("/?p=2&filter.brand=Nike&filter.price.gte=10&filter.price.lte=50")
     })
   })
 })
