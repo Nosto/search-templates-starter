@@ -58,15 +58,20 @@ export function serializeQueryState(state: UrlQueryState) {
   }
 
   if (state.filter && state.filter.length > 0) {
-    state.filter.forEach(f => {
-      if (f.field && f.value?.length) {
-        f.value.forEach(val => params.append(`${FILTER_PREFIX}${f.field}`, val))
+    state.filter.forEach(filter => {
+      const { field, value, range } = filter
+      if (!field) {
+        return
       }
-      if (f.field && f.range?.length) {
-        f.range.forEach(rangeFilter => {
-          Object.entries(rangeFilter).forEach(([rangeKey, value]) => {
-            if (value) {
-              params.set(`${FILTER_PREFIX}${f.field}.${rangeKey}`, value)
+
+      if (value?.length) {
+        value.forEach(val => params.append(`${FILTER_PREFIX}${field}`, val))
+      }
+      if (range?.length) {
+        range.forEach(rangeFilter => {
+          Object.entries(rangeFilter).forEach(([rangeKey, rangeValue]) => {
+            if (rangeValue) {
+              params.set(`${FILTER_PREFIX}${field}.${rangeKey}`, rangeValue)
             }
           })
         })
