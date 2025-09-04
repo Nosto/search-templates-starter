@@ -47,15 +47,14 @@ export interface UrlQueryState {
 
 function clearMappedParameters(params: URLSearchParams) {
   const keysToDelete = [QUERY_PARAM, PAGE_PARAM, SORT_PARAM]
-  const allKeysToDelete = []
 
   for (const [key] of params.entries()) {
     if (keysToDelete.includes(key) || key.startsWith(FILTER_PREFIX)) {
-      allKeysToDelete.push(key)
+      keysToDelete.push(key)
     }
   }
 
-  allKeysToDelete.forEach(key => params.delete(key))
+  keysToDelete.forEach(key => params.delete(key))
 }
 
 export function serializeQueryState(state: UrlQueryState, params?: URLSearchParams) {
