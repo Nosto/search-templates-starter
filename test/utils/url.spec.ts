@@ -119,14 +119,30 @@ describe("URL utilities", () => {
       const state = {
         query: "shoes",
         page: 2,
+        size: 20,
         filter: [{ field: "brand", value: ["Nike"] }],
         sort: [{ field: "price", order: "asc" }] as InputSearchSort[]
       }
       const params = serializeQueryState(state, new URLSearchParams())
       expect(params.get("q")).toBe("shoes")
       expect(params.get("p")).toBe("2")
+      expect(params.get("size")).toBe("20")
       expect(params.get("filter.brand")).toBe("Nike")
       expect(params.get("sort")).toBe("price~asc")
+    })
+
+    it("creates URLSearchParams with size parameter", () => {
+      const state = { size: 24 }
+      const params = serializeQueryState(state, new URLSearchParams())
+      expect(params.get("size")).toBe("24")
+    })
+
+    it("omits size parameter when not provided", () => {
+      const state = { query: "test", page: 2 }
+      const params = serializeQueryState(state, new URLSearchParams())
+      expect(params.get("q")).toBe("test")
+      expect(params.get("p")).toBe("2")
+      expect(params.get("size")).toBeNull()
     })
 
     it("creates URLSearchParams with range filter parameter", () => {
@@ -305,14 +321,51 @@ describe("URL utilities", () => {
     })
 
     it("handles all parameters together", () => {
-      const params = new URLSearchParams("q=shoes&p=2&filter.brand=Nike&sort=price~asc")
+      const params = new URLSearchParams("q=shoes&p=2&size=20&filter.brand=Nike&sort=price~asc")
       const state = deserializeQueryState(params)
       expect(state).toEqual({
         query: "shoes",
         page: 2,
+        size: 20,
         filter: [{ field: "brand", value: ["Nike"] }],
         sort: [{ field: "price", order: "asc" }]
       })
+    })
+
+    it("parses size parameter", () => {
+      const params = new URLSearchParams("q=test&size=12")
+      const state = deserializeQueryState(params)
+      expect(state.query).toBe("test")
+      expect(state.size).toBe(12)
+    })
+
+    it("omits size parameter when not provided", () => {
+      const params = new URLSearchParams("q=test&p=2")
+      const state = deserializeQueryState(params)
+      expect(state.query).toBe("test")
+      expect(state.page).toBe(2)
+      expect(state.size).toBeUndefined()
+    })
+
+    it("handles invalid size parameter", () => {
+      const params = new URLSearchParams("q=test&size=invalid")
+      const state = deserializeQueryState(params)
+      expect(state.query).toBe("test")
+      expect(state.size).toBeUndefined()
+    })
+
+    it("handles negative size parameter", () => {
+      const params = new URLSearchParams("q=test&size=-5")
+      const state = deserializeQueryState(params)
+      expect(state.query).toBe("test")
+      expect(state.size).toBeUndefined()
+    })
+
+    it("handles zero size parameter", () => {
+      const params = new URLSearchParams("q=test&size=0")
+      const state = deserializeQueryState(params)
+      expect(state.query).toBe("test")
+      expect(state.size).toBeUndefined()
     })
 
     it("parses partial range filter parameters", () => {
@@ -376,9 +429,15 @@ describe("URL utilities", () => {
     })
 
     it("updates URL with query parameters", () => {
-      const state = { query: "test search", page: 2 }
+      const state = { query: "test search", page: 2, size: 20 }
       updateUrl(state)
-      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?q=test+search&p=2")
+      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?q=test+search&p=2&size=20")
+    })
+
+    it("updates URL with only size parameter", () => {
+      const state = { size: 12 }
+      updateUrl(state)
+      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?size=12")
     })
 
     it("updates URL without parameters when state is empty", () => {
@@ -489,9 +548,9 @@ describe("URL utilities", () => {
     })
 
     it("parses current URL search parameters", () => {
-      window.location.search = "?q=current+search&p=3"
+      window.location.search = "?q=current+search&p=3&size=15"
       const state = getCurrentUrlState()
-      expect(state).toEqual({ query: "current search", page: 3 })
+      expect(state).toEqual({ query: "current search", page: 3, size: 15 })
     })
 
     it("handles empty search parameters", () => {
@@ -541,12 +600,13 @@ describe("URL utilities", () => {
       })
     })
 
-    it("parses all parameters including sort from URL", () => {
-      window.location.search = "?q=shoes&p=2&filter.brand=Nike&sort=price~desc,_score~desc"
+    it("parses all parameters including sort and size from URL", () => {
+      window.location.search = "?q=shoes&p=2&size=24&filter.brand=Nike&sort=price~desc,_score~desc"
       const state = getCurrentUrlState()
       expect(state).toEqual({
         query: "shoes",
         page: 2,
+        size: 24,
         filter: [{ field: "brand", value: ["Nike"] }],
         sort: [
           { field: "price", order: "desc" },

@@ -5,6 +5,7 @@ const QUERY_PARAM = "q"
 const PAGE_PARAM = "p"
 const FILTER_PREFIX = "filter."
 const SORT_PARAM = "sort"
+const PAGE_SIZE_PARAM = "size"
 
 function encodeSortField(field: string) {
   return field.replace(/~/g, "%7E").replace(/,/g, "%2C")
@@ -42,6 +43,7 @@ type SimpleFilter = Pick<InputSearchTopLevelFilter, "field" | "value" | "range">
 export interface UrlQueryState {
   query?: string
   page?: number
+  size?: number
   filter?: SimpleFilter[]
   sort?: InputSearchSort[]
 }
@@ -50,6 +52,7 @@ function clearMappedParameters(params: URLSearchParams) {
   const keysToDelete = [
     QUERY_PARAM,
     PAGE_PARAM,
+    PAGE_SIZE_PARAM,
     SORT_PARAM,
     ...Array.from(params.keys()).filter(key => key.startsWith(FILTER_PREFIX))
   ]
@@ -65,6 +68,10 @@ export function serializeQueryState(state: UrlQueryState, params: URLSearchParam
 
   if (state.page && state.page > 1) {
     params.set(PAGE_PARAM, state.page.toString())
+  }
+
+  if (state.size) {
+    params.set(PAGE_SIZE_PARAM, state.size.toString())
   }
 
   if (state.filter && state.filter.length > 0) {
@@ -109,6 +116,14 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
     const pageNum = parseInt(p, 10)
     if (!isNaN(pageNum) && pageNum > 1) {
       state.page = pageNum
+    }
+  }
+
+  const sizeParam = searchParams.get(PAGE_SIZE_PARAM)
+  if (sizeParam) {
+    const sizeNum = parseInt(sizeParam, 10)
+    if (!isNaN(sizeNum) && sizeNum > 0) {
+      state.size = sizeNum
     }
   }
 
