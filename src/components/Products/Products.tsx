@@ -3,10 +3,11 @@ import Product from "@/components/Product/Product"
 import { useDecoratedSearchResults, useNostoAppState } from "@nosto/search-js/preact/hooks"
 import style from "./Products.module.css"
 import { cl } from "@nosto/search-js/utils"
+import { hitDecorators } from "@/config"
 
 export default function Products() {
   const { loading } = useNostoAppState(state => pick(state, "loading"))
-  const { products } = useDecoratedSearchResults()
+  const { products } = useDecoratedSearchResults<typeof hitDecorators>()
 
   return (
     <div className={cl(style.container, loading && style.loading)}>

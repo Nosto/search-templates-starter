@@ -2,9 +2,10 @@ import { useDecoratedSearchResults } from "@nosto/search-js/preact/hooks"
 import Button from "@/elements/Button/Button"
 import style from "./Products.module.css"
 import Product from "@/components/Autocomplete/Product/Product"
+import { hitDecorators } from "@/config"
 
 export default function Autocomplete() {
-  const { products } = useDecoratedSearchResults()
+  const { products } = useDecoratedSearchResults<typeof hitDecorators>()
 
   if (!products?.hits?.length) {
     return
