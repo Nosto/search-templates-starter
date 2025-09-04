@@ -46,16 +46,16 @@ export interface UrlQueryState {
 }
 
 function clearMappedParameters(params: URLSearchParams) {
-  const MAPPED_PARAMS = [QUERY_PARAM, PAGE_PARAM, SORT_PARAM]
-  MAPPED_PARAMS.forEach(param => params.delete(param))
+  const keysToDelete = [QUERY_PARAM, PAGE_PARAM, SORT_PARAM]
+  keysToDelete.forEach(param => params.delete(param))
 
-  const keysToDelete = []
+  const filterKeysToDelete = []
   for (const [key] of params.entries()) {
     if (key.startsWith(FILTER_PREFIX)) {
-      keysToDelete.push(key)
+      filterKeysToDelete.push(key)
     }
   }
-  keysToDelete.forEach(key => params.delete(key))
+  filterKeysToDelete.forEach(key => params.delete(key))
 }
 
 export function serializeQueryState(state: UrlQueryState) {
