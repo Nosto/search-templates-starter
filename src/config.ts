@@ -19,7 +19,8 @@ export const defaultConfig = {
   serpSize: sizes[0],
   autocompleteProductsSize: 4,
   autocompleteKeywordsSize: 5,
-  historySize: 5
+  historySize: 5,
+  useSkeletonLoading: false
 }
 
 const thumbnailSize = "9" // 750x750
