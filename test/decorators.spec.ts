@@ -22,6 +22,14 @@ describe("handleDecorator", () => {
     expect(handleDecorator(product)).toEqual({ url: "https://example.com/products/abc-123/", handle: undefined })
   })
 
+  it("should handle url with parameters", () => {
+    const product = { url: "https://example.com/products/abc-123?ref=homepage" }
+    expect(handleDecorator(product)).toEqual({
+      url: "https://example.com/products/abc-123?ref=homepage",
+      handle: "abc-123"
+    })
+  })
+
   it("should preserve other product properties", () => {
     const product = { url: "https://example.com/products/xyz", name: "Test Product", price: 10 }
     expect(handleDecorator(product)).toEqual({
