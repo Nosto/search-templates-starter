@@ -23,10 +23,10 @@ function ContentWrapper({ type, children }: ContentWrapperProps) {
     initialized: state.initialized
   }))
 
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
 
   const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen)
+    setMobileSidebarOpen(!mobileSidebarOpen)
   }
 
   if (!initialized) {
@@ -35,7 +35,7 @@ function ContentWrapper({ type, children }: ContentWrapperProps) {
 
   return (
     <div className={styles.wrapper} data-nosto-element={type}>
-      {foundProducts && <Sidebar isOpen={sidebarOpen} onSetOpen={setSidebarOpen} />}
+      {foundProducts && <Sidebar isOpen={mobileSidebarOpen} onSetOpen={setMobileSidebarOpen} />}
       <div className={cl(styles.container, loading && styles.loading)}>
         {children({ loading, foundProducts, onToggleSidebar: toggleSidebar })}
       </div>
