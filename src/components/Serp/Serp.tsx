@@ -6,9 +6,10 @@ import { ContentChildrenProps, wrapContent } from "@/components/ContentWrapper/C
 import { InfiniteScroll } from "@nosto/search-js/preact/common"
 import Loader from "@/elements/Loader/Loader"
 import NoResults from "@/components/NoResults/NoResults"
+import { defaultConfig } from "@/config"
 
 export function SerpBody({ loading, foundProducts, onToggleSidebar }: ContentChildrenProps) {
-  if (loading) return <Loader />
+  if (loading && !defaultConfig.useSkeletonLoading) return <Loader />
   return foundProducts ? (
     <>
       <SelectedFilters />
@@ -22,7 +23,7 @@ export function SerpBody({ loading, foundProducts, onToggleSidebar }: ContentChi
 }
 
 export function SerpBodyInfiniteScroll({ loading, foundProducts, onToggleSidebar }: ContentChildrenProps) {
-  if (!foundProducts) return loading ? <Loader /> : <NoResults />
+  if (!foundProducts) return loading && !defaultConfig.useSkeletonLoading ? <Loader /> : <NoResults />
   return (
     <>
       <SelectedFilters />
