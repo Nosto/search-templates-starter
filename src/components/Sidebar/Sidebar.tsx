@@ -1,5 +1,4 @@
 import { useFacets } from "@nosto/search-js/preact/hooks"
-import { useState, useEffect } from "preact/hooks"
 import Facet from "@/components/Facet/Facet"
 import RangeFacet from "@/components/Facet/RangeFacet"
 import Icon from "@/elements/Icon/Icon"
@@ -10,17 +9,15 @@ import { cl } from "@nosto/search-js/utils"
 
 export const toggleButtonId = "toggle-mobile-sidebar"
 
-// Create a context for sidebar state management
-let sidebarState: {
-  isOpen: boolean
-  setIsOpen: (open: boolean) => void
-} | null = null
-
 type Props = {
   className?: string
+  isOpen: boolean
+  onToggle: () => void
+  onClose: () => void
 }
 
-type ToggleProps = Props & {
+type ToggleProps = {
+  className?: string
   onClick?: () => void
 }
 
@@ -32,33 +29,11 @@ function ToggleSidebarButton({ className, onClick }: ToggleProps = {}) {
   )
 }
 
-export default function SideBar() {
+export default function SideBar({ isOpen, onClose }: Props) {
   const { loading, facets } = useFacets()
-  const [isOpen, setIsOpen] = useState(false)
-
-  // Store state in a module-level variable for external access
-  sidebarState = { isOpen, setIsOpen }
-
-  // Handle responsive behavior - automatically close on desktop
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        setIsOpen(false)
-      }
-    }
-
-    window.addEventListener("resize", handleResize)
-    handleResize() // Check initial size
-
-    return () => window.removeEventListener("resize", handleResize)
-  }, [])
-
-  const handleClose = () => {
-    setIsOpen(false)
-  }
 
   const handleBackdropClick = () => {
-    setIsOpen(false)
+    onClose()
   }
 
   return facets?.length > 0 ? (
@@ -80,7 +55,7 @@ export default function SideBar() {
         <div className={styles.content}>
           <div className={styles.header}>
             <span className={styles.title}>Filters</span>
-            <ToggleSidebarButton onClick={handleClose} />
+            <ToggleSidebarButton onClick={onClose} />
           </div>
           <div>
             <ul className={styles.facets}>
@@ -102,11 +77,4 @@ export default function SideBar() {
   ) : (
     ""
   )
-}
-
-// Export function to toggle sidebar from external components
-export const toggleSidebar = () => {
-  if (sidebarState) {
-    sidebarState.setIsOpen(!sidebarState.isOpen)
-  }
 }

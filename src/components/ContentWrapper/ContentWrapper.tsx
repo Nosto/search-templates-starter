@@ -1,10 +1,11 @@
 import { JSX } from "preact"
+import { useState, useEffect } from "preact/hooks"
 import Sidebar from "@/components/Sidebar/Sidebar"
 import { useNostoAppState } from "@nosto/search-js/preact/hooks"
 import styles from "./ContentWrapper.module.css"
 import { cl } from "@nosto/search-js/utils"
 
-export type ContentChildrenProps = { loading: boolean; foundProducts: boolean }
+export type ContentChildrenProps = { loading: boolean; foundProducts: boolean; toggleSidebar: () => void }
 
 type ContentWrapperProps = {
   type: string
@@ -22,14 +23,39 @@ function ContentWrapper({ type, children }: ContentWrapperProps) {
     initialized: state.initialized
   }))
 
+  // Manage sidebar state at this level
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+
+  // Handle responsive behavior - automatically close on desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsSidebarOpen(false)
+      }
+    }
+
+    window.addEventListener("resize", handleResize)
+    handleResize() // Check initial size
+
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen)
+  }
+
   if (!initialized) {
     return null
   }
 
   return (
     <div className={styles.wrapper} data-nosto-element={type}>
-      {foundProducts && <Sidebar />}
-      <div className={cl(styles.container, loading && styles.loading)}>{children({ loading, foundProducts })}</div>
+      {foundProducts && (
+        <Sidebar isOpen={isSidebarOpen} onToggle={toggleSidebar} onClose={() => setIsSidebarOpen(false)} />
+      )}
+      <div className={cl(styles.container, loading && styles.loading)}>
+        {children({ loading, foundProducts, toggleSidebar })}
+      </div>
     </div>
   )
 }
