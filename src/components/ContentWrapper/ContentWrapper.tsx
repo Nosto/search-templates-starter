@@ -1,5 +1,5 @@
 import { JSX } from "preact"
-import { useState, useEffect } from "preact/hooks"
+import { useState } from "preact/hooks"
 import Sidebar from "@/components/Sidebar/Sidebar"
 import { useNostoAppState } from "@nosto/search-js/preact/hooks"
 import styles from "./ContentWrapper.module.css"
@@ -25,20 +25,6 @@ function ContentWrapper({ type, children }: ContentWrapperProps) {
 
   // Manage sidebar state at this level
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
-
-  // Handle responsive behavior - automatically close on desktop
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        setIsSidebarOpen(false)
-      }
-    }
-
-    window.addEventListener("resize", handleResize)
-    handleResize() // Check initial size
-
-    return () => window.removeEventListener("resize", handleResize)
-  }, [])
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen)
