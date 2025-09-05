@@ -1,5 +1,6 @@
 import { pick } from "@nosto/search-js/utils"
 import Product from "@/components/Product/Product"
+import Skeleton from "@/elements/Skeleton/Skeleton"
 import { useDecoratedSearchResults, useNostoAppState } from "@nosto/search-js/preact/hooks"
 import style from "./Products.module.css"
 import { cl } from "@nosto/search-js/utils"
@@ -14,12 +15,7 @@ export default function Products() {
     return (
       <div className={cl(style.container, loading && style.loading)}>
         {Array.from({ length: 8 }).map((_, index) => (
-          <Product
-            key={`skeleton-${index}`}
-            product={{} as any}
-            loading={loading}
-            useSkeleton={defaultConfig.useSkeletonLoading}
-          />
+          <Skeleton key={`skeleton-${index}`} />
         ))}
       </div>
     )
