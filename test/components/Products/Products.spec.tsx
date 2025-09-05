@@ -12,7 +12,8 @@ vi.mock("@nosto/search-js/preact/hooks", () => ({
 vi.mock("../../../src/config", () => ({
   hitDecorators: [],
   defaultConfig: {
-    useSkeletonLoading: true
+    useSkeletonLoading: true,
+    serpSize: 24
   }
 }))
 
@@ -44,8 +45,8 @@ describe("Products", () => {
     const { container } = render(<Products />)
     const skeletons = container.querySelectorAll('[data-testid="skeleton"]')
 
-    // Should render 9 skeleton placeholders when loading with skeleton enabled
-    expect(skeletons).toHaveLength(9)
+    // Should render 24 skeleton placeholders when loading with skeleton enabled (defaultConfig.serpSize)
+    expect(skeletons).toHaveLength(24)
   })
 
   it("renders actual products when not loading", () => {

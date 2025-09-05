@@ -14,7 +14,7 @@ export default function Products() {
   if (loading && defaultConfig.useSkeletonLoading && (!products?.hits || products.hits.length === 0)) {
     return (
       <div className={cl(style.container, loading && style.loading)}>
-        {Array.from({ length: 9 }).map((_, index) => (
+        {Array.from({ length: defaultConfig.serpSize }).map((_, index) => (
           <Skeleton key={`skeleton-${index}`} />
         ))}
       </div>
