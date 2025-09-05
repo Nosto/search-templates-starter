@@ -86,7 +86,8 @@
 
 .header {
   display: flex;
-  align-items: baseline padding var(--ns-space-4);
+  align-items: baseline;
+  padding: var(--ns-space-4);
   border-bottom: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
 }
 

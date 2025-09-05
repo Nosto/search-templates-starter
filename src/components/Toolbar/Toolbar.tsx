@@ -15,7 +15,7 @@ type Props = {
 
 function ToggleSidebarButton({ selectedFiltersCount, className, onToggleSidebar }: Props) {
   return (
-    <Button light className={cl(style.mobile, style.filter, className)} onClick={onToggleSidebar}>
+    <Button light className={cl(style.filter, className)} onClick={onToggleSidebar}>
       <div className={style.label}>
         <Icon name="filter" />
         <span>Filter</span>
