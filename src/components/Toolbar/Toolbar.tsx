@@ -3,7 +3,6 @@ import { pick } from "@nosto/search-js/utils"
 import { sortOptions } from "@/config"
 import Icon from "@/elements/Icon/Icon"
 import Select from "@/elements/Select/Select"
-import { toggleButtonId } from "@/components/Sidebar/Sidebar"
 import style from "./Toolbar.module.css"
 import Button from "@/elements/Button/Button"
 import { cl } from "@nosto/search-js/utils"
@@ -11,21 +10,26 @@ import { cl } from "@nosto/search-js/utils"
 type Props = {
   selectedFiltersCount: number
   className?: string
+  onToggleSidebar: () => void
 }
 
-function ToggleMobileSidebarButton({ selectedFiltersCount, className }: Props) {
+function ToggleSidebarButton({ selectedFiltersCount, className, onToggleSidebar }: Props) {
   return (
-    <Button light className={cl(style.mobile, style.filter, className)}>
-      <label htmlFor={toggleButtonId} className={style.label}>
+    <Button light className={cl(style.mobile, style.filter, className)} onClick={onToggleSidebar}>
+      <div className={style.label}>
         <Icon name="filter" />
         <span>Filter</span>
-      </label>
+      </div>
       {selectedFiltersCount > 0 && <span className={style.badge}>{selectedFiltersCount}</span>}
     </Button>
   )
 }
 
-export default function Toolbar() {
+type ToolbarProps = {
+  onToggleSidebar: () => void
+}
+
+export default function Toolbar({ onToggleSidebar }: ToolbarProps) {
   const { loading, response } = useNostoAppState(state => pick(state, "loading", "response"))
   const { activeSort, setSort } = useSort(sortOptions)
   const selectedFiltersCount = useSelectedFiltersCount()
@@ -42,7 +46,7 @@ export default function Toolbar() {
         </span>
       )}
       <div className={style.buttons}>
-        <ToggleMobileSidebarButton selectedFiltersCount={selectedFiltersCount} />
+        <ToggleSidebarButton selectedFiltersCount={selectedFiltersCount} onToggleSidebar={onToggleSidebar} />
         <Select
           value={activeSort}
           onChange={e => setSort((e.target as HTMLSelectElement)?.value)}
