@@ -20,7 +20,7 @@ export const defaultConfig = {
   autocompleteProductsSize: 4,
   autocompleteKeywordsSize: 5,
   historySize: 5,
-  useSkeletonLoading: true
+  useSkeletonLoading: false
 }
 
 const thumbnailSize = "9" // 750x750
