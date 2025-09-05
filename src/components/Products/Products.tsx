@@ -9,6 +9,22 @@ export default function Products() {
   const { loading } = useNostoAppState(state => pick(state, "loading"))
   const { products } = useDecoratedSearchResults<typeof hitDecorators>()
 
+  // Show skeleton placeholders when loading with skeleton enabled
+  if (loading && defaultConfig.useSkeletonLoading && (!products?.hits || products.hits.length === 0)) {
+    return (
+      <div className={cl(style.container, loading && style.loading)}>
+        {Array.from({ length: 8 }).map((_, index) => (
+          <Product
+            key={`skeleton-${index}`}
+            product={{} as any}
+            loading={loading}
+            useSkeleton={defaultConfig.useSkeletonLoading}
+          />
+        ))}
+      </div>
+    )
+  }
+
   return (
     <div className={cl(style.container, loading && style.loading)}>
       {products?.hits.map((hit, index) => {

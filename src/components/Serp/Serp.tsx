@@ -10,6 +10,19 @@ import { defaultConfig } from "@/config"
 
 export function SerpBody({ loading, foundProducts, onToggleSidebar }: ContentChildrenProps) {
   if (loading && !defaultConfig.useSkeletonLoading) return <Loader />
+  
+  // Show skeleton loading when enabled and loading
+  if (loading && defaultConfig.useSkeletonLoading) {
+    return (
+      <>
+        <SelectedFilters />
+        <Toolbar onToggleSidebar={onToggleSidebar} />
+        <Products />
+        <BottomToolbar />
+      </>
+    )
+  }
+  
   return foundProducts ? (
     <>
       <SelectedFilters />
@@ -23,6 +36,23 @@ export function SerpBody({ loading, foundProducts, onToggleSidebar }: ContentChi
 }
 
 export function SerpBodyInfiniteScroll({ loading, foundProducts, onToggleSidebar }: ContentChildrenProps) {
+  // Handle skeleton loading when enabled and loading
+  if (loading && defaultConfig.useSkeletonLoading) {
+    return (
+      <>
+        <SelectedFilters />
+        <Toolbar onToggleSidebar={onToggleSidebar} />
+        <InfiniteScroll
+          observerOptions={{
+            rootMargin: "100% 0px"
+          }}
+        >
+          <Products />
+        </InfiniteScroll>
+      </>
+    )
+  }
+  
   if (!foundProducts) return loading && !defaultConfig.useSkeletonLoading ? <Loader /> : <NoResults />
   return (
     <>
