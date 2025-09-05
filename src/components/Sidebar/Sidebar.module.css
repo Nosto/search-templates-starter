@@ -42,20 +42,7 @@
 
 @media screen and (min-width: 768px) {
   .wrapper {
-    display: block;
-  }
-
-  /* Desktop view */
-  .wrapper.open {
-    display: initial !important;
-    position: initial !important;
-    max-height: unset !important;
-  }
-
-  /* Desktop: hide close button */
-  .wrapper.open .close,
-  .close {
-    display: none !important;
+    display: none;
   }
 }
 
@@ -85,12 +72,6 @@
   outline-offset: -2px;
 }
 
-@media screen and (min-width: 768px) {
-  .backdrop {
-    display: none !important;
-  }
-}
-
 .content {
   overflow-y: auto;
   position: relative;
@@ -101,16 +82,12 @@
   min-width: var(--ns-width-mobile-sidebar);
 }
 
-@media screen and (min-width: 768px) {
-  .content {
-    margin-right: 0;
-    min-width: initial;
-  }
-}
+
 
 .header {
   display: flex;
-  align-items: baseline padding var(--ns-space-4);
+  align-items: baseline;
+  padding: var(--ns-space-4);
   border-bottom: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
 }
 

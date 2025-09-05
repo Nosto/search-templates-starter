@@ -17,12 +17,6 @@
   gap: var(--ns-space-2);
 }
 
-@media (min-width: 768px) {
-  .mobile {
-    display: none !important;
-  }
-}
-
 .container {
   display: flex;
   flex-direction: column;
@@ -67,15 +61,15 @@
 .buttons {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  gap: var(--ns-space-3);
   width: 100%;
   margin-bottom: var(--ns-space-4);
 }
 
 @media (min-width: 768px) {
   .buttons {
-    display: block;
     width: auto;
+    margin-bottom: 0;
   }
 }
 
