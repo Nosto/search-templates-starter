@@ -6,11 +6,10 @@ import { ContentChildrenProps, wrapContent } from "@/components/ContentWrapper/C
 import { InfiniteScroll } from "@nosto/search-js/preact/common"
 import Loader from "@/elements/Loader/Loader"
 import NoResults from "@/components/NoResults/NoResults"
-import { defaultConfig } from "@/config"
 
 export function CategoryBody({ loading, foundProducts, onToggleSidebar }: ContentChildrenProps) {
-  if (loading && !defaultConfig.useSkeletonLoading) return <Loader />
-  return foundProducts || (loading && defaultConfig.useSkeletonLoading) ? (
+  if (loading) return <Loader />
+  return foundProducts ? (
     <>
       <SelectedFilters />
       <Toolbar onToggleSidebar={onToggleSidebar} />
@@ -23,7 +22,7 @@ export function CategoryBody({ loading, foundProducts, onToggleSidebar }: Conten
 }
 
 export function CategoryBodyInfiniteScroll({ loading, foundProducts, onToggleSidebar }: ContentChildrenProps) {
-  if (!foundProducts && !(loading && defaultConfig.useSkeletonLoading)) return loading ? <Loader /> : <NoResults />
+  if (!foundProducts) return loading ? <Loader /> : <NoResults />
   return (
     <>
       <SelectedFilters />
