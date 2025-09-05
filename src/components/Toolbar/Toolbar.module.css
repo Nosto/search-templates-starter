@@ -38,8 +38,6 @@
 .total {
   display: inline-block;
   text-align: center;
-  -ms-flex-order: 3;
-  order: 3;
   color: var(--ns-color-black);
 }
 
@@ -48,26 +46,23 @@
   align-items: center;
 }
 
-@media (min-width: 768px) {
-  .total {
-    -ms-flex-item-align: center;
-    align-self: center;
-    -ms-flex-order: -1;
-    order: -1;
-    display: block;
-  }
+.leftSide {
+  display: flex;
+  align-items: center;
 }
 
-.buttons {
+.rightSide {
   display: flex;
   flex-wrap: wrap;
   gap: var(--ns-space-3);
+  align-items: center;
   width: 100%;
+  justify-content: flex-end;
   margin-bottom: var(--ns-space-4);
 }
 
 @media (min-width: 768px) {
-  .buttons {
+  .rightSide {
     width: auto;
     margin-bottom: 0;
   }

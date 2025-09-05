@@ -40,13 +40,15 @@ export default function Toolbar({ onToggleSidebar }: ToolbarProps) {
 
   return (
     <div className={cl(style.container, loading && style.loading)}>
-      {!loading && (
-        <span className={style.total} data-nosto-element="totalResults">
-          {docCount} products
-        </span>
-      )}
-      <div className={style.buttons}>
+      <div className={style.leftSide}>
         <ToggleSidebarButton selectedFiltersCount={selectedFiltersCount} onToggleSidebar={onToggleSidebar} />
+      </div>
+      <div className={style.rightSide}>
+        {!loading && (
+          <span className={style.total} data-nosto-element="totalResults">
+            {docCount} products
+          </span>
+        )}
         <Select
           value={activeSort}
           onChange={e => setSort((e.target as HTMLSelectElement)?.value)}
