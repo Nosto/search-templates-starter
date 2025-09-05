@@ -25,7 +25,7 @@ export function SidebarProvider({ children }: SidebarProviderProps) {
     setIsOpen(!isOpen)
   }
 
-  const contextValue: SidebarContextType = {
+  const contextValue = {
     isOpen,
     setOpen,
     toggle

@@ -7,7 +7,6 @@ import styles from "./Sidebar.module.css"
 import Button from "@/elements/Button/Button"
 import { cl } from "@nosto/search-js/utils"
 import { useSidebar } from "@/contexts/SidebarContext"
-import { JSX } from "preact"
 
 export const toggleButtonId = "toggle-mobile-sidebar"
 
