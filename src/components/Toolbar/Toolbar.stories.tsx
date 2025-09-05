@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Toolbar from "./Toolbar"
+import { SidebarProvider } from "@/contexts/SidebarContext"
 
 export default {
   title: "Components/Toolbar",
@@ -13,5 +14,9 @@ export default {
 type Story = StoryObj<typeof Toolbar>
 
 export const Default: Story = {
-  render: () => <Toolbar onToggleSidebar={() => console.info("Toggle sidebar")} />
+  render: () => (
+    <SidebarProvider>
+      <Toolbar />
+    </SidebarProvider>
+  )
 }
