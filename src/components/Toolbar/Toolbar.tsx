@@ -26,10 +26,10 @@ function ToggleSidebarButton({ selectedFiltersCount, className, onToggleSidebar 
 }
 
 type ToolbarProps = {
-  toggleSidebar: () => void
+  onToggleSidebar: () => void
 }
 
-export default function Toolbar({ toggleSidebar }: ToolbarProps) {
+export default function Toolbar({ onToggleSidebar }: ToolbarProps) {
   const { loading, response } = useNostoAppState(state => pick(state, "loading", "response"))
   const { activeSort, setSort } = useSort(sortOptions)
   const selectedFiltersCount = useSelectedFiltersCount()
@@ -46,7 +46,7 @@ export default function Toolbar({ toggleSidebar }: ToolbarProps) {
         </span>
       )}
       <div className={style.buttons}>
-        <ToggleSidebarButton selectedFiltersCount={selectedFiltersCount} onToggleSidebar={toggleSidebar} />
+        <ToggleSidebarButton selectedFiltersCount={selectedFiltersCount} onToggleSidebar={onToggleSidebar} />
         <Select
           value={activeSort}
           onChange={e => setSort((e.target as HTMLSelectElement)?.value)}

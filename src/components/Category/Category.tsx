@@ -7,12 +7,12 @@ import { InfiniteScroll } from "@nosto/search-js/preact/common"
 import Loader from "@/elements/Loader/Loader"
 import NoResults from "@/components/NoResults/NoResults"
 
-export function CategoryBody({ loading, foundProducts, toggleSidebar }: ContentChildrenProps) {
+export function CategoryBody({ loading, foundProducts, onToggleSidebar }: ContentChildrenProps) {
   if (loading) return <Loader />
   return foundProducts ? (
     <>
       <SelectedFilters />
-      <Toolbar toggleSidebar={toggleSidebar} />
+      <Toolbar onToggleSidebar={onToggleSidebar} />
       <Products />
       <BottomToolbar />
     </>
@@ -21,12 +21,12 @@ export function CategoryBody({ loading, foundProducts, toggleSidebar }: ContentC
   )
 }
 
-export function CategoryBodyInfiniteScroll({ loading, foundProducts, toggleSidebar }: ContentChildrenProps) {
+export function CategoryBodyInfiniteScroll({ loading, foundProducts, onToggleSidebar }: ContentChildrenProps) {
   if (!foundProducts) return loading ? <Loader /> : <NoResults />
   return (
     <>
       <SelectedFilters />
-      <Toolbar toggleSidebar={toggleSidebar} />
+      <Toolbar onToggleSidebar={onToggleSidebar} />
       <InfiniteScroll>
         <Products />
       </InfiniteScroll>

@@ -5,7 +5,7 @@ import { useNostoAppState } from "@nosto/search-js/preact/hooks"
 import styles from "./ContentWrapper.module.css"
 import { cl } from "@nosto/search-js/utils"
 
-export type ContentChildrenProps = { loading: boolean; foundProducts: boolean; toggleSidebar: () => void }
+export type ContentChildrenProps = { loading: boolean; foundProducts: boolean; onToggleSidebar: () => void }
 
 type ContentWrapperProps = {
   type: string
@@ -38,7 +38,7 @@ function ContentWrapper({ type, children }: ContentWrapperProps) {
     <div className={styles.wrapper} data-nosto-element={type}>
       {foundProducts && <Sidebar isOpen={sidebarOpen} onSetOpen={setSidebarOpen} />}
       <div className={cl(styles.container, loading && styles.loading)}>
-        {children({ loading, foundProducts, toggleSidebar })}
+        {children({ loading, foundProducts, onToggleSidebar: toggleSidebar })}
       </div>
     </div>
   )
