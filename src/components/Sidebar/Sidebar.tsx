@@ -12,8 +12,7 @@ export const toggleButtonId = "toggle-mobile-sidebar"
 type Props = {
   className?: string
   isOpen: boolean
-  onToggle: () => void
-  onClose: () => void
+  onSetOpen: (open: boolean) => void
 }
 
 type ToggleProps = {
@@ -29,11 +28,11 @@ function ToggleSidebarButton({ className, onClick }: ToggleProps = {}) {
   )
 }
 
-export default function SideBar({ isOpen, onClose }: Props) {
+export default function SideBar({ isOpen, onSetOpen }: Props) {
   const { loading, facets } = useFacets()
 
   const handleBackdropClick = () => {
-    onClose()
+    onSetOpen(false)
   }
 
   return facets?.length > 0 ? (
@@ -55,7 +54,7 @@ export default function SideBar({ isOpen, onClose }: Props) {
         <div className={styles.content}>
           <div className={styles.header}>
             <span className={styles.title}>Filters</span>
-            <ToggleSidebarButton onClick={onClose} />
+            <ToggleSidebarButton onClick={() => onSetOpen(false)} />
           </div>
           <div>
             <ul className={styles.facets}>

@@ -36,7 +36,7 @@ function ContentWrapper({ type, children }: ContentWrapperProps) {
 
   return (
     <div className={styles.wrapper} data-nosto-element={type}>
-      {foundProducts && <Sidebar isOpen={sidebarOpen} onToggle={toggleSidebar} onClose={() => setSidebarOpen(false)} />}
+      {foundProducts && <Sidebar isOpen={sidebarOpen} onSetOpen={setSidebarOpen} />}
       <div className={cl(styles.container, loading && styles.loading)}>
         {children({ loading, foundProducts, toggleSidebar })}
       </div>

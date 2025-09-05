@@ -13,21 +13,9 @@ export default {
 type Story = StoryObj<typeof Sidebar>
 
 export const Default: Story = {
-  render: () => (
-    <Sidebar
-      isOpen={false}
-      onToggle={() => console.log("Toggle sidebar")}
-      onClose={() => console.log("Close sidebar")}
-    />
-  )
+  render: () => <Sidebar isOpen={false} onSetOpen={open => console.log(`Set sidebar open: ${open}`)} />
 }
 
 export const Open: Story = {
-  render: () => (
-    <Sidebar
-      isOpen={true}
-      onToggle={() => console.log("Toggle sidebar")}
-      onClose={() => console.log("Close sidebar")}
-    />
-  )
+  render: () => <Sidebar isOpen={true} onSetOpen={open => console.log(`Set sidebar open: ${open}`)} />
 }
