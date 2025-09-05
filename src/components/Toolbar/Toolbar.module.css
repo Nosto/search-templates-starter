@@ -56,16 +56,9 @@
   flex-wrap: wrap;
   gap: var(--ns-space-3);
   align-items: center;
-  width: 100%;
+  width: auto;
   justify-content: flex-end;
-  margin-bottom: var(--ns-space-4);
-}
-
-@media (min-width: 768px) {
-  .rightSide {
-    width: auto;
-    margin-bottom: 0;
-  }
+  margin-bottom: 0;
 }
 
 .loading {
