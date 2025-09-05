@@ -3,7 +3,7 @@ import Sidebar from "@/components/Sidebar/Sidebar"
 import { useNostoAppState } from "@nosto/search-js/preact/hooks"
 import styles from "./ContentWrapper.module.css"
 import { cl } from "@nosto/search-js/utils"
-import { SidebarProvider, useSidebar } from "@/contexts/SidebarContext"
+import { SidebarProvider } from "@/contexts/SidebarContext"
 
 export type ContentChildrenProps = { loading: boolean; foundProducts: boolean }
 
@@ -13,7 +13,7 @@ type ContentWrapperProps = {
 }
 
 /**
- * Inner wrapper component that has access to sidebar context
+ * Inner wrapper component that renders the content with sidebar
  */
 function ContentWrapperInner({ type, children }: ContentWrapperProps) {
   const { foundProducts, loading, initialized } = useNostoAppState(state => ({
@@ -22,15 +22,13 @@ function ContentWrapperInner({ type, children }: ContentWrapperProps) {
     initialized: state.initialized
   }))
 
-  const { isOpen, setOpen } = useSidebar()
-
   if (!initialized) {
     return null
   }
 
   return (
     <div className={styles.wrapper} data-nosto-element={type}>
-      {foundProducts && <Sidebar isOpen={isOpen} onSetOpen={setOpen} />}
+      {foundProducts && <Sidebar />}
       <div className={cl(styles.container, loading && styles.loading)}>{children({ loading, foundProducts })}</div>
     </div>
   )

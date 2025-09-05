@@ -6,14 +6,10 @@ import { SearchStatsFacet, SearchTermsFacet } from "@nosto/nosto-js/client"
 import styles from "./Sidebar.module.css"
 import Button from "@/elements/Button/Button"
 import { cl } from "@nosto/search-js/utils"
+import { useSidebar } from "@/contexts/SidebarContext"
+import { JSX } from "preact"
 
 export const toggleButtonId = "toggle-mobile-sidebar"
-
-type Props = {
-  className?: string
-  isOpen: boolean
-  onSetOpen: (open: boolean) => void
-}
 
 type ToggleProps = {
   className?: string
@@ -28,11 +24,12 @@ function ToggleSidebarButton({ className, onClick }: ToggleProps = {}) {
   )
 }
 
-export default function SideBar({ isOpen, onSetOpen }: Props) {
+export default function SideBar() {
   const { loading, facets } = useFacets()
+  const { isOpen, setOpen } = useSidebar()
 
   const handleBackdropClick = () => {
-    onSetOpen(false)
+    setOpen(false)
   }
 
   return facets?.length > 0 ? (
@@ -54,7 +51,7 @@ export default function SideBar({ isOpen, onSetOpen }: Props) {
         <div className={styles.content}>
           <div className={styles.header}>
             <span className={styles.title}>Filters</span>
-            <ToggleSidebarButton onClick={() => onSetOpen(false)} />
+            <ToggleSidebarButton onClick={() => setOpen(false)} />
           </div>
           <div>
             <ul className={styles.facets}>
@@ -73,7 +70,5 @@ export default function SideBar({ isOpen, onSetOpen }: Props) {
         </div>
       </div>
     </>
-  ) : (
-    ""
-  )
+  ) : null
 }
