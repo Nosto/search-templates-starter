@@ -4,6 +4,7 @@ import { priceDecorator } from "@nosto/search-js/currencies"
 import { AutocompleteConfig } from "@nosto/search-js/preact/autocomplete"
 import { SerpConfig } from "@nosto/search-js/preact/serp"
 import { handleDecorator } from "./decorators"
+import { CategoryConfig } from "@nosto/search-js/preact/category"
 
 export const sizes = [24, 48, 72]
 
@@ -43,3 +44,12 @@ export const autocompleteConfig = {
     hitDecorators
   }
 } satisfies AutocompleteConfig
+
+export const categoryConfig = {
+  defaultCurrency,
+  search: {
+    hitDecorators
+  },
+  persistentSearchCache: false,
+  preservePageScroll: false
+} satisfies CategoryConfig
