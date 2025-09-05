@@ -39,11 +39,13 @@ npm test
 
 ### Run Linting
 ```bash
-npm run lint        # Check for issues
-npm run lint-fix    # Auto-fix issues
+npm run lint             # Check for JavaScript/TypeScript issues
+npm run lint-fix         # Auto-fix JavaScript/TypeScript issues
+npm run style-lint       # Check for CSS issues
+npm run style-lint-fix   # Auto-fix CSS issues
 ```
 - **Time**: ~2-3 seconds each
-- **CRITICAL**: Always run `npm run lint-fix` before committing or CI will fail
+- **CRITICAL**: Always run `npm run lint-fix` and `npm run style-lint-fix` before committing or CI will fail
 
 ## Validation and Testing
 
@@ -63,7 +65,8 @@ After making changes, ALWAYS test these user scenarios:
    - Check `docs/` contains generated TypeDoc documentation
 
 3. **Code Quality Checks**:
-   - Run `npm run lint` and verify no linting errors
+   - Run `npm run lint` and verify no JavaScript/TypeScript linting errors
+   - Run `npm run style-lint` and verify no CSS linting errors
    - Run `npm test` and verify all tests pass
 
 ### CI Pipeline Validation
@@ -73,11 +76,12 @@ npm ci
 npm run build
 npm run test
 npm run lint
+npm run style-lint
 ```
 - **Total time**: ~2.5 minutes
 - **NEVER CANCEL**: Set timeout to 10+ minutes total
 - This matches the CI pipeline in `.github/workflows/ci.yml`
-- **CRITICAL**: Only commit if all commands pass (typecheck, lint, and test must all succeed)
+- **CRITICAL**: Only commit if all commands pass (typecheck, lint, style-lint, and test must all succeed)
 
 ### Committing Code
 When committing code, ALWAYS run git commit with `--no-verify` to avoid Husky failing and erroring out your pipeline:

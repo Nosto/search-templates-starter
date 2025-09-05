@@ -45,3 +45,6 @@ jobs:
 
       - name: Run lint
         run: npm run lint
+
+      - name: Run style lint
+        run: npm run style-lint
