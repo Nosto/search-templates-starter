@@ -23,7 +23,6 @@ function ContentWrapper({ type, children }: ContentWrapperProps) {
     initialized: state.initialized
   }))
 
-  // Manage sidebar state at this level
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const toggleSidebar = () => {

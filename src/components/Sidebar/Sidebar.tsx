@@ -37,7 +37,7 @@ export default function SideBar({ isOpen, onSetOpen }: Props) {
 
   return facets?.length > 0 ? (
     <>
-      {/* Backdrop - only show on mobile when open */}
+      {/* Backdrop */}
       {isOpen && (
         <button
           className={styles.backdrop}

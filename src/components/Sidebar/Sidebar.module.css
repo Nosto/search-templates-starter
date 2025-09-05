@@ -28,14 +28,13 @@
   max-width: 25%;
 }
 
-/* Mobile: show sidebar when open */
+/* Mobile view */
 .wrapper.open {
   display: block !important;
   position: fixed !important;
   max-height: 100%;
 }
 
-/* Mobile: show close button when open */
 .wrapper.open .close {
   display: block !important;
   z-index: var(--ns-z-index-sidebar-close);
@@ -46,7 +45,7 @@
     display: block;
   }
 
-  /* Desktop: override mobile open styles */
+  /* Desktop view */
   .wrapper.open {
     display: initial !important;
     position: initial !important;
