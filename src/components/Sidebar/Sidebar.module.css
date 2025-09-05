@@ -42,20 +42,7 @@
 
 @media screen and (min-width: 768px) {
   .wrapper {
-    display: block;
-  }
-
-  /* Desktop view */
-  .wrapper.open {
-    display: initial !important;
-    position: initial !important;
-    max-height: unset !important;
-  }
-
-  /* Desktop: hide close button */
-  .wrapper.open .close,
-  .close {
-    display: none !important;
+    display: none;
   }
 }
 
@@ -83,12 +70,6 @@
 .backdrop:focus {
   outline: 2px solid var(--ns-color-primary);
   outline-offset: -2px;
-}
-
-@media screen and (min-width: 768px) {
-  .backdrop {
-    display: none !important;
-  }
 }
 
 .content {

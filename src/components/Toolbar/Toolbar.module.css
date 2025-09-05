@@ -17,12 +17,6 @@
   gap: var(--ns-space-2);
 }
 
-@media (min-width: 768px) {
-  .mobile {
-    display: none !important;
-  }
-}
-
 .container {
   display: flex;
   flex-direction: column;
