@@ -24,10 +24,10 @@ function ContentWrapper({ type, children }: ContentWrapperProps) {
   }))
 
   // Manage sidebar state at this level
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen)
+    setSidebarOpen(!sidebarOpen)
   }
 
   if (!initialized) {
@@ -36,9 +36,7 @@ function ContentWrapper({ type, children }: ContentWrapperProps) {
 
   return (
     <div className={styles.wrapper} data-nosto-element={type}>
-      {foundProducts && (
-        <Sidebar isOpen={isSidebarOpen} onToggle={toggleSidebar} onClose={() => setIsSidebarOpen(false)} />
-      )}
+      {foundProducts && <Sidebar isOpen={sidebarOpen} onToggle={toggleSidebar} onClose={() => setSidebarOpen(false)} />}
       <div className={cl(styles.container, loading && styles.loading)}>
         {children({ loading, foundProducts, toggleSidebar })}
       </div>
