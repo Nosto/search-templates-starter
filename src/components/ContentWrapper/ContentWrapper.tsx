@@ -12,9 +12,10 @@ type ContentWrapperProps = {
 }
 
 /**
- * Inner wrapper component that renders the content with sidebar
+ * ContentWrapper takes a function to render non-empty results in the content area.
+ * On loading the Loader is used and for empty results the NoResults component is used.
  */
-function ContentWrapperInner({ type, children }: ContentWrapperProps) {
+function ContentWrapper({ type, children }: ContentWrapperProps) {
   const { foundProducts, loading, initialized } = useNostoAppState(state => ({
     foundProducts: (state.response.products?.total || 0) > 0,
     loading: state.loading,
@@ -31,14 +32,6 @@ function ContentWrapperInner({ type, children }: ContentWrapperProps) {
       <div className={cl(styles.container, loading && styles.loading)}>{children({ loading, foundProducts })}</div>
     </div>
   )
-}
-
-/**
- * ContentWrapper takes a function to render non-empty results in the content area.
- * On loading the Loader is used and for empty results the NoResults component is used.
- */
-function ContentWrapper({ type, children }: ContentWrapperProps) {
-  return <ContentWrapperInner type={type}>{children}</ContentWrapperInner>
 }
 
 export function wrapContent(type: string, Component: ContentWrapperProps["children"]) {
