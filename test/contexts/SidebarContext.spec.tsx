@@ -2,7 +2,6 @@ import { render, screen, fireEvent } from "@testing-library/preact"
 import { describe, it, expect } from "vitest"
 import { SidebarProvider, useSidebar } from "@/contexts/SidebarContext"
 
-// Test component that uses the sidebar context
 function TestSidebarComponent() {
   const { isOpen, toggle, setOpen } = useSidebar()
 

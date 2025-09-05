@@ -3,7 +3,6 @@ import Sidebar from "@/components/Sidebar/Sidebar"
 import { useNostoAppState } from "@nosto/search-js/preact/hooks"
 import styles from "./ContentWrapper.module.css"
 import { cl } from "@nosto/search-js/utils"
-import { SidebarProvider } from "@/contexts/SidebarContext"
 
 export type ContentChildrenProps = { loading: boolean; foundProducts: boolean }
 
@@ -39,11 +38,7 @@ function ContentWrapperInner({ type, children }: ContentWrapperProps) {
  * On loading the Loader is used and for empty results the NoResults component is used.
  */
 function ContentWrapper({ type, children }: ContentWrapperProps) {
-  return (
-    <SidebarProvider>
-      <ContentWrapperInner type={type}>{children}</ContentWrapperInner>
-    </SidebarProvider>
-  )
+  return <ContentWrapperInner type={type}>{children}</ContentWrapperInner>
 }
 
 export function wrapContent(type: string, Component: ContentWrapperProps["children"]) {

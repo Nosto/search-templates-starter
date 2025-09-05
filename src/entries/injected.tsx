@@ -5,6 +5,7 @@ import "@/variable.css"
 import Products from "@/components/Autocomplete/Products/Products"
 import SearchQueryHandler from "@/components/SearchQueryHandler/SearchQueryHandler"
 import { autocompleteConfig, serpConfig } from "@/config"
+import { SidebarProvider } from "@/contexts/SidebarContext"
 
 init({
   autocomplete: {
@@ -24,10 +25,10 @@ init({
     config: serpConfig,
     cssSelector: "#serp",
     render: () => (
-      <>
+      <SidebarProvider>
         <SearchQueryHandler />
         <Serp />
-      </>
+      </SidebarProvider>
     )
   }
 })
