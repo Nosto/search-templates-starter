@@ -82,12 +82,7 @@
   min-width: var(--ns-width-mobile-sidebar);
 }
 
-@media screen and (min-width: 768px) {
-  .content {
-    margin-right: 0;
-    min-width: initial;
-  }
-}
+
 
 .header {
   display: flex;
