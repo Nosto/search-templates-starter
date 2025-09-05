@@ -3,6 +3,7 @@ import { productImagePlaceholder } from "@/helpers"
 import style from "./Product.module.css"
 import { DecoratedProduct } from "@nosto/search-js"
 import { hitDecorators } from "@/config"
+import DynamicCard from "@/components/DynamicCard/DynamicCard"
 
 type Props = {
   hit: DecoratedProduct<typeof hitDecorators>
@@ -30,6 +31,20 @@ export default function Product({ hit }: Props) {
           </div>
         </div>
       </div>
+    </AutocompleteElement>
+  )
+}
+
+export function DynamicCardProduct({ hit }: Props) {
+  return (
+    <AutocompleteElement
+      key={hit.productId}
+      hit={{
+        productId: hit.productId!,
+        url: hit.url
+      }}
+    >
+      <DynamicCard handle={hit.handle!} template="card" />
     </AutocompleteElement>
   )
 }
