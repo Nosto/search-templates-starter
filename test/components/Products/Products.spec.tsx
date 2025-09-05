@@ -27,11 +27,7 @@ vi.mock("../../../src/components/Product/Product", () => ({
 
 // Mock the Skeleton component
 vi.mock("../../../src/elements/Skeleton/Skeleton", () => ({
-  default: () => (
-    <div data-testid="skeleton">
-      Skeleton Mock
-    </div>
-  )
+  default: () => <div data-testid="skeleton">Skeleton Mock</div>
 }))
 
 import { useNostoAppState, useDecoratedSearchResults } from "@nosto/search-js/preact/hooks"
@@ -48,8 +44,8 @@ describe("Products", () => {
     const { container } = render(<Products />)
     const skeletons = container.querySelectorAll('[data-testid="skeleton"]')
 
-    // Should render 8 skeleton placeholders when loading with skeleton enabled
-    expect(skeletons).toHaveLength(8)
+    // Should render 9 skeleton placeholders when loading with skeleton enabled
+    expect(skeletons).toHaveLength(9)
   })
 
   it("renders actual products when not loading", () => {
