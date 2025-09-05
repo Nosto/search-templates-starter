@@ -28,7 +28,7 @@ vi.mock("../../../src/components/Product/Product", () => ({
 import { useNostoAppState, useDecoratedSearchResults } from "@nosto/search-js/preact/hooks"
 
 describe("Products", () => {
-  it("renders skeleton loaders when loading and skeleton is enabled", () => {
+  it("renders no products when loading and no hits available", () => {
     ;(useNostoAppState as Mock).mockReturnValue({ loading: true })
     ;(useDecoratedSearchResults as Mock).mockReturnValue({
       products: {
@@ -39,14 +39,8 @@ describe("Products", () => {
     const { container } = render(<Products />)
     const products = container.querySelectorAll('[data-testid="product"]')
 
-    // Should render 6 skeleton products
-    expect(products).toHaveLength(6)
-
-    // Each should have skeleton props
-    products.forEach(product => {
-      expect(product.getAttribute("data-loading")).toBe("true")
-      expect(product.getAttribute("data-skeleton")).toBe("true")
-    })
+    // Should render 0 products when no hits are available
+    expect(products).toHaveLength(0)
   })
 
   it("renders actual products when not loading", () => {
