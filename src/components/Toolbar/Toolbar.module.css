@@ -19,20 +19,12 @@
 
 .container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   padding: 0 var(--ns-space-2) var(--ns-space-1) var(--ns-space-2);
   z-index: var(--ns-header-control);
-}
-@media (min-width: 768px) {
-  .container {
-    flex-direction: row;
-    -ms-flex-direction: row;
-    display: -ms-flexbox;
-    display: flex;
-  }
 }
 
 .total {
