@@ -16,14 +16,18 @@ export default function Results() {
       <div className={style.container}>
         <div className={style.items}>
           {keywords?.hits?.length > 0 && (
-            <div className={style.keywords}>
-              {keywords.hits.map((keyword, index) => (
-                <Keyword key={index} keyword={keyword} />
-              ))}
+            <div className={style.suggestionsColumn}>
+              <div className={style.sectionHeader}>Suggestions</div>
+              <div className={style.keywords}>
+                {keywords.hits.map((keyword, index) => (
+                  <Keyword key={index} keyword={keyword} />
+                ))}
+              </div>
             </div>
           )}
           {products?.hits?.length > 0 && (
-            <div>
+            <div className={style.productsColumn}>
+              <div className={style.sectionHeader}>Products</div>
               <div className={style.products}>
                 {products.hits.map(hit => (
                   <Product key={hit.productId} hit={hit} />

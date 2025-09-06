@@ -43,7 +43,7 @@ export const autocompleteConfig = {
   search: {
     hitDecorators
   },
-  queryModifications: (query) => ({
+  queryModifications: query => ({
     ...query,
     keywords: {
       fields: ["keyword", "_highlight.keyword"],
