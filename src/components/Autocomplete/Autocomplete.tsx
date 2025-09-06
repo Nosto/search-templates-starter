@@ -1,7 +1,8 @@
 import Products from "@/components/Autocomplete/Products/Products"
-import { useEffect, useState, useCallback } from "preact/hooks"
+import { useEffect, useState, useCallback, useRef } from "preact/hooks"
 import { useActions } from "@nosto/search-js/preact/hooks"
 import { SearchInput } from "@nosto/search-js/preact/autocomplete"
+import { useEventListener } from "@/utils/useEventListener"
 
 type Props = {
   onSubmit: (input: string) => void
@@ -11,6 +12,7 @@ export default function Autocomplete({ onSubmit }: Props) {
   const [input, setInput] = useState<string>("")
   const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false)
   const { newSearch } = useActions()
+  const autocompleteRef = useRef<HTMLFormElement>(null)
 
   const debounceSearch = useCallback(() => {
     const handler = setTimeout(() => {
@@ -23,6 +25,19 @@ export default function Autocomplete({ onSubmit }: Props) {
 
   useEffect(debounceSearch, [input, debounceSearch])
 
+  const handleClickOutside = useCallback((event: Event) => {
+    if (autocompleteRef.current && !autocompleteRef.current.contains(event.target as Node)) {
+      setShowAutocomplete(false)
+    }
+  }, [])
+
+  useEventListener({
+    target: document,
+    eventName: "click",
+    listener: handleClickOutside,
+    condition: showAutocomplete
+  })
+
   const handleSearch = () => {
     if (input.trim()) {
       onSubmit?.(input)
@@ -31,6 +46,7 @@ export default function Autocomplete({ onSubmit }: Props) {
 
   return (
     <form
+      ref={autocompleteRef}
       onSubmit={e => {
         e.preventDefault()
         handleSearch()
@@ -39,7 +55,6 @@ export default function Autocomplete({ onSubmit }: Props) {
       <SearchInput
         onSearchInput={target => setInput(target.value)}
         componentProps={{
-          onBlur: () => setShowAutocomplete(false),
           onFocus: () => setShowAutocomplete(true)
         }}
       />
