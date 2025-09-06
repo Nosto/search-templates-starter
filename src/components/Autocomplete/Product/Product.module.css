@@ -3,6 +3,8 @@
   flex-direction: row;
   cursor: pointer;
   padding: var(--ns-space-2);
+  color: inherit;
+  text-decoration: none;
 }
 
 .image {
