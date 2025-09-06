@@ -19,6 +19,20 @@ export default {
     "no-descending-specificity": null,
     "rule-empty-line-before": null,
     "at-rule-empty-line-before": null,
-    "declaration-block-no-redundant-longhand-properties": null
+    "declaration-block-no-redundant-longhand-properties": null,
+    // Enforce modern CSS standards
+    "property-disallowed-list": [
+      // Disallow deprecated MS vendor prefixes
+      "-ms-flex",
+      "-ms-flex-direction",
+      "-ms-flex-pack",
+      "-ms-user-select",
+      "-ms-transform",
+      "-ms-transition"
+    ],
+    "selector-pseudo-element-disallowed-list": [
+      // Disallow deprecated MS pseudo-elements
+      "ms-expand"
+    ]
   }
 }

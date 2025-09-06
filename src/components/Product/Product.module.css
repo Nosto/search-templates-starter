@@ -3,27 +3,9 @@
   color: inherit;
   margin: var(--ns-space-2) 0;
   box-sizing: border-box;
-  flex: 0 0 100%;
-  max-width: 100%;
   position: relative;
   width: 100%;
   text-decoration: none;
-}
-
-@media (min-width: 375px) {
-  .container {
-    -ms-flex: 0 0 50%;
-    flex: 0 0 50%;
-    max-width: 50%;
-  }
-}
-
-@media (min-width: 1024px) {
-  .container {
-    -ms-flex: 0 0 33.333333%;
-    flex: 0 0 33.333333%;
-    max-width: 33.333333%;
-  }
 }
 
 .image img {

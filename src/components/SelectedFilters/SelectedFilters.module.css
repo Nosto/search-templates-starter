@@ -11,7 +11,6 @@
   align-items: center;
   position: relative;
   width: 100%;
-  -ms-flex: 0 0 83.333333%;
   flex: 0 0 83.333333%;
   max-width: 83.333333%;
   gap: var(--ns-space-2);
@@ -42,12 +41,11 @@
   cursor: pointer;
   position: relative;
   width: 100%;
-  -ms-flex: 0 0 16.666667%;
   flex: 0 0 16.666667%;
   max-width: 16.666667%;
   text-align: right;
   color: var(--ns-color-link);
-  font-size: var(--ns-font-4);
+  font-size: var(--ns-font-size-4);
   margin-left: auto;
   margin-right: 0;
   background: none;
