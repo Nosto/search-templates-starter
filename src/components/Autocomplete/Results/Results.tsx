@@ -1,15 +1,12 @@
 import { useResponse } from "@nosto/search-js/preact/hooks"
 import Button from "@/elements/Button/Button"
+import SectionHeader from "@/elements/SectionHeader/SectionHeader"
 import style from "./Results.module.css"
 import Product from "@/components/Autocomplete/Product/Product"
 import Keyword from "@/components/Autocomplete/Keyword/Keyword"
 
 interface ResultsProps {
   onSubmit: (query: string) => void
-}
-
-function SectionHeader({ children }: { children: string }) {
-  return <div className={style.sectionHeader}>{children}</div>
 }
 
 export default function Results({ onSubmit }: ResultsProps) {

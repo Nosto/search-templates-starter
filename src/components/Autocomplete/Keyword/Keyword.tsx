@@ -12,8 +12,6 @@ export default function Keyword({ keyword, onSubmit }: KeywordProps) {
     <AutocompleteElement
       hit={keyword}
       componentProps={{
-        href: `/search/?q=${keyword.keyword}`,
-        "aria-label": `Keyword ${keyword.keyword}`,
         className: style.keyword,
         onClick: (e: Event) => {
           e.preventDefault()
