@@ -106,6 +106,26 @@ describe("URL utilities", () => {
       }).toBe("q=shoes&p=2&filter.brand=Nike&sort=price%7Easc")
     })
 
+    it("creates URLSearchParams with size parameter when not default", () => {
+      expectParams({ size: 48 }).toBe("size=48")
+    })
+
+    it("omits size parameter when equal to default", () => {
+      expectParams({ size: 24 }).toBe("")
+    })
+
+    it("omits size parameter when undefined", () => {
+      expectParams({ query: "test" }).toBe("q=test")
+    })
+
+    it("handles size with other parameters", () => {
+      expectParams({
+        query: "shoes",
+        page: 2,
+        size: 72
+      }).toBe("q=shoes&p=2&size=72")
+    })
+
     it("creates URLSearchParams with range filter parameter", () => {
       expectFilters([{ field: "price", range: [{ gte: "10", lte: "50" }] }]).toBe(
         "filter.price.gte=10&filter.price.lte=50"
@@ -262,6 +282,30 @@ describe("URL utilities", () => {
         filter: [{ field: "brand", value: ["Nike"] }],
         sort: [{ field: "price", order: "asc" }]
       })
+    })
+
+    it("parses size parameter", () => {
+      expectQueryState("size=48").toEqual({ size: 48 })
+    })
+
+    it("parses size parameter with other parameters", () => {
+      expectQueryState("q=test&size=72&p=2").toEqual({
+        query: "test",
+        page: 2,
+        size: 72
+      })
+    })
+
+    it("handles invalid size parameter", () => {
+      expectQueryState("q=test&size=invalid").toEqual({ query: "test" })
+    })
+
+    it("handles negative size parameter", () => {
+      expectQueryState("q=test&size=-10").toEqual({ query: "test" })
+    })
+
+    it("handles zero size parameter", () => {
+      expectQueryState("q=test&size=0").toEqual({ query: "test" })
     })
 
     it("parses partial range filter parameters", () => {
@@ -425,6 +469,24 @@ describe("URL utilities", () => {
         "/?custom=value+with+spaces&other=test%26more&q=test"
       )
     })
+
+    it("updates URL with size parameter", () => {
+      const state = { size: 48 }
+      updateUrl(state)
+      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?size=48")
+    })
+
+    it("omits size parameter when equal to default", () => {
+      const state = { size: 24, query: "test" }
+      updateUrl(state)
+      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?q=test")
+    })
+
+    it("updates URL with size and other parameters", () => {
+      const state = { query: "shoes", page: 2, size: 72 }
+      updateUrl(state)
+      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?q=shoes&p=2&size=72")
+    })
   })
 
   describe("getCurrentUrlState", () => {
@@ -523,6 +585,23 @@ describe("URL utilities", () => {
         ]
       })
     })
+
+    it("parses size parameter from URL", () => {
+      window.location.search = "?size=48"
+      const state = getCurrentUrlState()
+      expect(state).toEqual({ size: 48 })
+    })
+
+    it("parses size with other parameters from URL", () => {
+      window.location.search = "?q=shoes&p=2&size=72&filter.brand=Nike"
+      const state = getCurrentUrlState()
+      expect(state).toEqual({
+        query: "shoes",
+        page: 2,
+        size: 72,
+        filter: [{ field: "brand", value: ["Nike"] }]
+      })
+    })
   })
 
   describe("getPageUrl", () => {
@@ -575,6 +654,18 @@ describe("URL utilities", () => {
       window.location.pathname = "/search"
       const url = getPageUrl(2)
       expect(url).toBe("/search?p=2")
+    })
+
+    it("preserves size parameter", () => {
+      window.location.search = "?q=test&size=48"
+      const url = getPageUrl(2)
+      expect(url).toBe("/?q=test&p=2&size=48")
+    })
+
+    it("preserves size parameter when navigating to page 1", () => {
+      window.location.search = "?q=test&p=3&size=72"
+      const url = getPageUrl(1)
+      expect(url).toBe("/?q=test&size=72")
     })
   })
 })
