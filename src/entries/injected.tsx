@@ -2,7 +2,7 @@ import { init } from "@nosto/search-js/preact/inject"
 import { dispatchNostoEvent } from "@nosto/search-js/preact/events"
 import Serp from "@/components/Serp/Serp"
 import "@/variable.css"
-import Products from "@/components/Autocomplete/Products/Products"
+import Results from "@/components/Autocomplete/Results/Results"
 import SearchQueryHandler from "@/components/SearchQueryHandler/SearchQueryHandler"
 import { autocompleteConfig, serpConfig } from "@/config"
 
@@ -18,7 +18,7 @@ init({
         params: { query, targetStore: "search" }
       })
     },
-    renderAutocomplete: () => <Products />
+    renderAutocomplete: () => <Results />
   },
   serp: {
     config: serpConfig,

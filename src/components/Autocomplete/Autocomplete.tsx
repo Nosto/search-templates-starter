@@ -1,8 +1,8 @@
-import Products from "@/components/Autocomplete/Products/Products"
+import Results from "@/components/Autocomplete/Results/Results"
 import { useEffect, useState, useCallback, useRef } from "preact/hooks"
 import { useActions } from "@nosto/search-js/preact/hooks"
 import { SearchInput } from "@nosto/search-js/preact/autocomplete"
-import { useEventListener } from "@/utils/useEventListener"
+import { useEventListener } from "@/hooks/useEventListener"
 
 type Props = {
   onSubmit: (input: string) => void
@@ -32,10 +32,9 @@ export default function Autocomplete({ onSubmit }: Props) {
   }, [])
 
   useEventListener({
-    target: document,
+    target: showAutocomplete ? document : null,
     eventName: "click",
-    listener: handleClickOutside,
-    condition: showAutocomplete
+    listener: handleClickOutside
   })
 
   const handleSearch = () => {
@@ -61,7 +60,7 @@ export default function Autocomplete({ onSubmit }: Props) {
       <button type="submit">Search</button>
       {showAutocomplete && (
         <div>
-          <Products />
+          <Results />
         </div>
       )}
     </form>

@@ -4,12 +4,11 @@ type UseEventListenerProps = {
   target: EventTarget | null
   eventName: string
   listener: (event: Event) => void
-  condition?: boolean
 }
 
-export function useEventListener({ target, eventName, listener, condition = true }: UseEventListenerProps) {
+export function useEventListener({ target, eventName, listener }: UseEventListenerProps) {
   useEffect(() => {
-    if (!target || !condition) {
+    if (!target) {
       return
     }
 
@@ -18,5 +17,5 @@ export function useEventListener({ target, eventName, listener, condition = true
     return () => {
       target.removeEventListener(eventName, listener)
     }
-  }, [target, eventName, listener, condition])
+  }, [target, eventName, listener])
 }
