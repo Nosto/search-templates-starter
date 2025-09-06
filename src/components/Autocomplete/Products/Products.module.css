@@ -1,7 +1,6 @@
 .autocomplete {
   position: absolute;
   display: flex;
-  flex-direction: column;
   flex-direction: row;
   align-items: start;
   background-color: var(--ns-color-white);
