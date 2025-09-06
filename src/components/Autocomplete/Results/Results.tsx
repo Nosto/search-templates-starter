@@ -8,6 +8,10 @@ interface ResultsProps {
   onSubmit: (query: string) => void
 }
 
+function SectionHeader({ children }: { children: string }) {
+  return <div className={style.sectionHeader}>{children}</div>
+}
+
 export default function Results({ onSubmit }: ResultsProps) {
   const { keywords, products } = useResponse()
 
@@ -17,11 +21,11 @@ export default function Results({ onSubmit }: ResultsProps) {
 
   return (
     <div className={style.autocomplete} data-nosto-element="autocomplete">
-      <div className={style.container}>
+      <div className={`${style.container} ${style.paddingContainer}`}>
         <div className={style.items}>
           {keywords?.hits?.length > 0 && (
             <div className={style.suggestionsColumn}>
-              <div className={style.sectionHeader}>Suggestions</div>
+              <SectionHeader>Suggestions</SectionHeader>
               <div className={style.keywords}>
                 {keywords.hits.map((keyword, index) => (
                   <Keyword key={index} keyword={keyword} onSubmit={onSubmit} />
@@ -31,7 +35,7 @@ export default function Results({ onSubmit }: ResultsProps) {
           )}
           {products?.hits?.length > 0 && (
             <div className={style.productsColumn}>
-              <div className={style.sectionHeader}>Products</div>
+              <SectionHeader>Products</SectionHeader>
               <div className={style.products}>
                 {products.hits.map(hit => (
                   <Product key={hit.productId} hit={hit} />
