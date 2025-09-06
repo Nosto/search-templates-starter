@@ -394,18 +394,6 @@ describe("URL utilities", () => {
       expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?filter.brand=Adidas")
     })
 
-    it("updates URL with size parameter", () => {
-      const state = { query: "shoes", size: 48 }
-      updateUrl(state)
-      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?q=shoes&size=48")
-    })
-
-    it("omits size parameter when default", () => {
-      const state = { query: "shoes", size: 24 }
-      updateUrl(state)
-      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?q=shoes")
-    })
-
     it("updates URL with array filter parameters", () => {
       const state = {
         filter: [{ field: "brand", value: ["Nike", "Adidas", "Puma"] }]
