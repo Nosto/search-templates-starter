@@ -18,7 +18,10 @@ init({
         params: { query, targetStore: "search" }
       })
     },
-    renderAutocomplete: () => <Results />
+    renderAutocomplete: () => <Results onSubmit={query => {
+      // Navigate to search with the string query
+      window.location.href = `/search/?q=${encodeURIComponent(query)}`
+    }} />
   },
   serp: {
     config: serpConfig,

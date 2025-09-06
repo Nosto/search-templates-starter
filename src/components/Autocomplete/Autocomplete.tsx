@@ -61,7 +61,7 @@ export default function Autocomplete({ onSubmit }: Props) {
       <button type="submit">Search</button>
       {showAutocomplete && (
         <div>
-          <Results />
+          <Results onSubmit={onSubmit} />
         </div>
       )}
     </form>

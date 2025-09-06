@@ -4,7 +4,11 @@ import style from "./Results.module.css"
 import Product from "@/components/Autocomplete/Product/Product"
 import Keyword from "@/components/Autocomplete/Keyword/Keyword"
 
-export default function Results() {
+interface ResultsProps {
+  onSubmit: (query: string) => void
+}
+
+export default function Results({ onSubmit }: ResultsProps) {
   const { keywords, products } = useResponse()
 
   if (!keywords?.hits?.length && !products?.hits?.length) {
@@ -20,7 +24,7 @@ export default function Results() {
               <div className={style.sectionHeader}>Suggestions</div>
               <div className={style.keywords}>
                 {keywords.hits.map((keyword, index) => (
-                  <Keyword key={index} keyword={keyword} />
+                  <Keyword key={index} keyword={keyword} onSubmit={onSubmit} />
                 ))}
               </div>
             </div>
