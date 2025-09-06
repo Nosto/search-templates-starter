@@ -40,6 +40,7 @@ export default function Autocomplete({ onSubmit }: Props) {
   const handleSearch = () => {
     if (input.trim()) {
       onSubmit?.(input)
+      setShowAutocomplete(false)
     }
   }
 
