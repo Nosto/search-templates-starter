@@ -2,7 +2,6 @@
   position: absolute;
   display: flex;
   flex-direction: column;
-  -ms-flex-direction: row;
   flex-direction: row;
   align-items: start;
   background-color: var(--ns-color-white);
@@ -33,7 +32,6 @@
 .items {
   display: flex;
   flex-direction: column;
-  -ms-flex-direction: row;
 }
 
 .products {
