@@ -2,6 +2,7 @@ import { useResponse } from "@nosto/search-js/preact/hooks"
 import Button from "@/elements/Button/Button"
 import style from "./Results.module.css"
 import Product from "@/components/Autocomplete/Product/Product"
+import Keyword from "@/components/Autocomplete/Keyword/Keyword"
 
 export default function Results() {
   const { keywords, products } = useResponse()
@@ -14,15 +15,7 @@ export default function Results() {
     <div className={style.autocomplete} data-nosto-element="autocomplete">
       <div className={style.container}>
         <div className={style.items}>
-          {keywords?.hits?.length > 0 && (
-            <div className={style.keywords}>
-              {keywords.hits.map((keyword, index) => (
-                <a key={index} href={`?q=${encodeURIComponent(keyword.keyword)}`} className={style.keyword}>
-                  {keyword.keyword}
-                </a>
-              ))}
-            </div>
-          )}
+          <Keyword keywords={keywords?.hits || []} />
           {products?.hits?.length > 0 && (
             <div>
               <div className={style.products}>
