@@ -11,7 +11,6 @@ export default function Keyword({ keyword, onSubmit }: KeywordProps) {
   return (
     <AutocompleteElement
       hit={keyword}
-      as="a"
       componentProps={{
         href: `/search/?q=${keyword.keyword}`,
         "aria-label": `Keyword ${keyword.keyword}`,
