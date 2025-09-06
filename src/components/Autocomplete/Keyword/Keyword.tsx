@@ -1,3 +1,4 @@
+import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
 import style from "./Keyword.module.css"
 
 interface KeywordProps {
@@ -6,8 +7,16 @@ interface KeywordProps {
 
 export default function Keyword({ keyword }: KeywordProps) {
   return (
-    <a href={`?q=${encodeURIComponent(keyword.keyword)}`} className={style.keyword}>
+    <AutocompleteElement
+      hit={keyword}
+      as="a"
+      componentProps={{
+        href: `/search/?q=${keyword.keyword}`,
+        "aria-label": `Keyword ${keyword.keyword}`,
+        className: style.keyword
+      }}
+    >
       {keyword.keyword}
-    </a>
+    </AutocompleteElement>
   )
 }

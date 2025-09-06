@@ -42,7 +42,15 @@ export const autocompleteConfig = {
   defaultCurrency,
   search: {
     hitDecorators
-  }
+  },
+  queryModifications: (query) => ({
+    ...query,
+    keywords: {
+      fields: ["keyword", "_highlight.keyword"],
+      size: 5,
+      facets: ["*"]
+    }
+  })
 } satisfies AutocompleteConfig
 
 export const categoryConfig = {
