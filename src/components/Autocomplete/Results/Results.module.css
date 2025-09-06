@@ -36,6 +36,13 @@
   -ms-flex-direction: row;
 }
 
+.keywords {
+  display: flex;
+  flex-direction: column;
+  padding: var(--ns-spacing-2);
+  border-bottom: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
+}
+
 .products {
   display: flex;
   flex-direction: column;

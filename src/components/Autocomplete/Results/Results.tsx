@@ -15,7 +15,13 @@ export default function Results() {
     <div className={style.autocomplete} data-nosto-element="autocomplete">
       <div className={style.container}>
         <div className={style.items}>
-          <Keyword keywords={keywords?.hits || []} />
+          {keywords?.hits?.length > 0 && (
+            <div className={style.keywords}>
+              {keywords.hits.map((keyword, index) => (
+                <Keyword key={index} keyword={keyword} />
+              ))}
+            </div>
+          )}
           {products?.hits?.length > 0 && (
             <div>
               <div className={style.products}>
