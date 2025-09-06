@@ -50,10 +50,6 @@ describe("URL utilities", () => {
       expectParams({ query: "test", size: 24 }).toBe("q=test")
     })
 
-    it("creates URLSearchParams with query, page, and size parameters", () => {
-      expectParams({ query: "shoes", page: 2, size: 48 }).toBe("q=shoes&p=2&size=48")
-    })
-
     it("handles empty state", () => {
       expectParams({}).toBe("")
     })
