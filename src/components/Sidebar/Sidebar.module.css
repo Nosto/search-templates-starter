@@ -16,9 +16,6 @@
   left: 0;
   z-index: var(--ns-z-index-sidebar-wrapper);
   max-width: var(--ns-width-mobile-sidebar);
-  -webkit-transition: all 0.3s ease;
-  -moz-transition: all 0.3s ease;
-  -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
   display: none;
   height: 100%;
