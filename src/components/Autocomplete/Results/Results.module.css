@@ -10,7 +10,7 @@
   left: 0;
   right: 0;
   z-index: var(--ns-z-index-autocomplete);
-  max-width: 900px;
+  max-width: var(--ns-max-width-autocomplete);
   border: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
   border-radius: var(--ns-border-radius-3);
   box-shadow: var(--ns-box-shadow-autocomplete);
