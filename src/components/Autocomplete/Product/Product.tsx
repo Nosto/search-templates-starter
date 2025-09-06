@@ -28,7 +28,7 @@ export default function Product({ hit }: Props) {
       <div className={style.details} data-nosto-element="product">
         {hit.brand && <div>{hit.brand}</div>}
         <div className={style.name}>{hit.name}</div>
-        <div>
+        <div className={style.price}>
           <span>{hit.priceText}</span>
           {hit.listPrice && hit.price && hit.listPrice > hit.price && (
             <span className={style.strikedPrice}>{hit.listPriceText}</span>
