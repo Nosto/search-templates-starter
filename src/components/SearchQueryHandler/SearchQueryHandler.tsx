@@ -18,14 +18,15 @@ export default function SearchQueryHandler() {
 
   // Initialize search from URL on first load
   useEffect(() => {
-    const { query, page, filter, sort } = getCurrentUrlState()
-    if (query || page || filter || sort) {
-      const from = page ? (page - 1) * size : 0
+    const { query, page, size: urlSize, filter, sort } = getCurrentUrlState()
+    if (query || page || urlSize || filter || sort) {
+      const searchSize = urlSize || size
+      const from = page ? (page - 1) * searchSize : 0
 
       const searchConfig = {
         query,
         products: {
-          size,
+          size: searchSize,
           from,
           filter,
           sort
@@ -43,6 +44,7 @@ export default function SearchQueryHandler() {
     updateUrl({
       query,
       page,
+      size,
       filter,
       sort
     })

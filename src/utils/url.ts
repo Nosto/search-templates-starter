@@ -1,8 +1,10 @@
 import { InputSearchTopLevelFilter, InputSearchSort, InputSearchRangeFilter } from "@nosto/nosto-js/client"
 import { ensureMapValue } from "./ensureMap"
+import { defaultConfig } from "@/config"
 
 const QUERY_PARAM = "q"
 const PAGE_PARAM = "p"
+const SIZE_PARAM = "size"
 const FILTER_PREFIX = "filter."
 const SORT_PARAM = "sort"
 
@@ -42,6 +44,7 @@ type SimpleFilter = Pick<InputSearchTopLevelFilter, "field" | "value" | "range">
 export interface UrlQueryState {
   query?: string
   page?: number
+  size?: number
   filter?: SimpleFilter[]
   sort?: InputSearchSort[]
 }
@@ -50,6 +53,7 @@ function clearMappedParameters(params: URLSearchParams) {
   const keysToDelete = [
     QUERY_PARAM,
     PAGE_PARAM,
+    SIZE_PARAM,
     SORT_PARAM,
     ...Array.from(params.keys()).filter(key => key.startsWith(FILTER_PREFIX))
   ]
@@ -65,6 +69,10 @@ export function serializeQueryState(state: UrlQueryState, params: URLSearchParam
 
   if (state.page && state.page > 1) {
     params.set(PAGE_PARAM, state.page.toString())
+  }
+
+  if (state.size && state.size !== defaultConfig.serpSize) {
+    params.set(SIZE_PARAM, state.size.toString())
   }
 
   if (state.filter && state.filter.length > 0) {
@@ -109,6 +117,14 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
     const pageNum = parseInt(p, 10)
     if (!isNaN(pageNum) && pageNum > 1) {
       state.page = pageNum
+    }
+  }
+
+  const size = searchParams.get(SIZE_PARAM)
+  if (size) {
+    const sizeNum = parseInt(size, 10)
+    if (!isNaN(sizeNum) && sizeNum > 0) {
+      state.size = sizeNum
     }
   }
 
