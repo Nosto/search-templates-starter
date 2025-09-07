@@ -9,17 +9,15 @@ export default function InputEventHandler({ inputElement }: Props) {
   const { newSearch } = useActions()
 
   useEffect(() => {
-    if (inputElement) {
-      const handleInputChange = () => {
-        const query = inputElement.value.trim()
-        newSearch({ query })
-      }
+    const handleInputChange = () => {
+      const query = inputElement.value.trim()
+      newSearch({ query })
+    }
 
-      inputElement.addEventListener("input", handleInputChange)
+    inputElement.addEventListener("input", handleInputChange)
 
-      return () => {
-        inputElement.removeEventListener("input", handleInputChange)
-      }
+    return () => {
+      inputElement.removeEventListener("input", handleInputChange)
     }
   }, [newSearch, inputElement])
 
