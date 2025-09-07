@@ -1,11 +1,15 @@
 import { useActions } from "@nosto/search-js/preact/hooks"
 import { useEffect } from "preact/hooks"
 
-export default function InputEventHandler() {
+type Props = {
+  selector: string
+}
+
+export default function InputEventHandler({ selector }: Props) {
   const { newSearch } = useActions()
 
   useEffect(() => {
-    const searchInput = document.querySelector<HTMLInputElement>("#search")
+    const searchInput = document.querySelector<HTMLInputElement>(selector)
 
     if (searchInput) {
       const handleInputChange = () => {
@@ -19,7 +23,7 @@ export default function InputEventHandler() {
         searchInput.removeEventListener("input", handleInputChange)
       }
     }
-  }, [newSearch])
+  }, [newSearch, selector])
 
   return null
 }

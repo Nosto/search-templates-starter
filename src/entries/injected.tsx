@@ -20,7 +20,7 @@ function App() {
       {dropdownElement &&
         createPortal(
           <AutocompletePageProvider config={autocompleteConfig}>
-            <InputEventHandler />
+            <InputEventHandler selector="#search" />
             <Products />
           </AutocompletePageProvider>,
           dropdownElement
