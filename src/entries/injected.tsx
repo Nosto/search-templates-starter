@@ -40,7 +40,7 @@ function App() {
   const dropdownElement = document.querySelector<HTMLElement>("#dropdown")
 
   return (
-    <>
+    <SearchPageProvider config={serpConfig}>
       <SearchQueryHandler />
       <Serp />
 
@@ -51,16 +51,11 @@ function App() {
           </AutocompletePageProvider>,
           dropdownElement
         )}
-    </>
+    </SearchPageProvider>
   )
 }
 
 const serpElement = document.querySelector<HTMLElement>("#serp")
 if (serpElement) {
-  render(
-    <SearchPageProvider config={serpConfig}>
-      <App />
-    </SearchPageProvider>,
-    serpElement
-  )
+  render(<App />, serpElement)
 }
