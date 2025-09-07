@@ -15,7 +15,7 @@ function App() {
   return (
     <SearchPageProvider config={serpConfig}>
       <SearchQueryHandler />
-      <FormSubmitHandler />
+      <FormSubmitHandler inputSelector="#search" formSelector="#search-form" />
 
       {dropdownElement &&
         createPortal(
