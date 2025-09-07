@@ -7,9 +7,9 @@ import style from "./Search.module.css"
 export function Search() {
   const { newSearch } = useActions()
 
-  const onSearch = (value: string) => {
+  const onSearch = (query: string) => {
     newSearch({
-      query: value
+      query
     })
   }
 

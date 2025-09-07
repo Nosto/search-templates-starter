@@ -17,8 +17,6 @@ export const sortOptions = [
 export const defaultConfig = {
   sort: sortOptions[0],
   serpSize: sizes[0],
-  autocompleteProductsSize: 4,
-  autocompleteKeywordsSize: 5,
   historySize: 5
 }
 
@@ -45,6 +43,10 @@ export const autocompleteConfig = {
   },
   queryModifications: query => ({
     ...query,
+    products: {
+      ...query.products,
+      size: 5
+    },
     keywords: {
       fields: ["keyword", "_highlight.keyword"],
       size: 5,

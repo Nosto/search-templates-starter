@@ -6,12 +6,12 @@ import Results from "@/components/Autocomplete/Results/Results"
 import SearchQueryHandler from "@/components/SearchQueryHandler/SearchQueryHandler"
 import { autocompleteConfig, serpConfig } from "@/config"
 
-function onNavigateToSearch(query: string) {
+function onSearchSubmit(query: string) {
+  // TODO change location in case not on search page
   dispatchNostoEvent({
     event: "actions/newSearch",
     params: { query: { query }, targetStore: "search" }
   })
-  window.location.href = `/search/?q=${encodeURIComponent(query)}`
 }
 
 init({
@@ -21,11 +21,9 @@ init({
     formCssSelector: "#search-form",
     dropdownCssSelector: "#dropdown",
     onNavigateToSearch: query => {
-      // Handle SearchQuery object by extracting the query string
-      const queryString = typeof query === "string" ? query : query.query || ""
-      onNavigateToSearch(queryString)
+      onSearchSubmit(query.query!)
     },
-    renderAutocomplete: () => <Results onSubmit={onNavigateToSearch} />
+    renderAutocomplete: () => <Results onSubmit={onSearchSubmit} />
   },
   serp: {
     config: serpConfig,
