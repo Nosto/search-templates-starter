@@ -1,0 +1,80 @@
+.autocomplete {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  background-color: var(--ns-color-white);
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  z-index: var(--ns-z-index-autocomplete);
+  max-width: var(--ns-max-width-autocomplete);
+  border: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
+  border-radius: var(--ns-border-radius-3);
+  box-shadow: var(--ns-box-shadow-autocomplete);
+  width: calc(100% - var(--ns-width-autocomplete-offset));
+}
+
+@media only screen and (min-width: 768px) {
+  .autocomplete {
+    width: auto;
+  }
+}
+
+.container {
+  margin-top: auto;
+  width: 100%;
+}
+
+.paddingContainer {
+  padding: var(--ns-spacing-2);
+}
+
+.items {
+  display: flex;
+  flex-direction: row;
+}
+
+.suggestionsColumn {
+  display: flex;
+  flex-direction: column;
+  border-right: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
+  min-width: 200px;
+  padding-right: var(--ns-spacing-2);
+}
+
+.productsColumn {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-left: var(--ns-spacing-2);
+}
+
+.keywords {
+  display: flex;
+  flex-direction: column;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--ns-spacing-2);
+  margin-bottom: var(--ns-spacing-2);
+}
+
+.button {
+  border-top-color: var(--ns-color-grey-light);
+  border-top-width: var(--ns-border-width-thin);
+  border-top-style: solid;
+  border-radius: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.submit {
+  border-radius: 0;
+  text-align: center;
+  width: 100%;
+}

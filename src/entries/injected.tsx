@@ -2,9 +2,17 @@ import { init } from "@nosto/search-js/preact/inject"
 import { dispatchNostoEvent } from "@nosto/search-js/preact/events"
 import Serp from "@/components/Serp/Serp"
 import "@/variable.css"
-import Products from "@/components/Autocomplete/Products/Products"
+import Results from "@/components/Autocomplete/Results/Results"
 import SearchQueryHandler from "@/components/SearchQueryHandler/SearchQueryHandler"
 import { autocompleteConfig, serpConfig } from "@/config"
+
+function onSearchSubmit(query: string) {
+  // TODO change location in case not on search page
+  dispatchNostoEvent({
+    event: "actions/newSearch",
+    params: { query: { query }, targetStore: "search" }
+  })
+}
 
 init({
   autocomplete: {
@@ -13,12 +21,9 @@ init({
     formCssSelector: "#search-form",
     dropdownCssSelector: "#dropdown",
     onNavigateToSearch: query => {
-      dispatchNostoEvent({
-        event: "actions/newSearch",
-        params: { query, targetStore: "search" }
-      })
+      onSearchSubmit(query.query!)
     },
-    renderAutocomplete: () => <Products />
+    renderAutocomplete: () => <Results onSubmit={onSearchSubmit} />
   },
   serp: {
     config: serpConfig,
