@@ -11,11 +11,13 @@ import InputEventHandler from "./InputEventHandler"
 
 function App() {
   const dropdownElement = document.querySelector<HTMLElement>("#dropdown")
+  const searchInput = document.querySelector<HTMLInputElement>("#search")
+  const searchForm = document.querySelector<HTMLFormElement>("#search-form")
 
   return (
     <SearchPageProvider config={serpConfig}>
       <SearchQueryHandler />
-      <FormSubmitHandler inputSelector="#search" formSelector="#search-form" />
+      {searchInput && <FormSubmitHandler inputElement={searchInput} formElement={searchForm} />}
 
       {dropdownElement &&
         createPortal(

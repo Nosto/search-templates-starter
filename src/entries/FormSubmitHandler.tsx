@@ -2,37 +2,34 @@ import { useActions } from "@nosto/search-js/preact/hooks"
 import { useEffect } from "preact/hooks"
 
 type Props = {
-  inputSelector: string
-  formSelector?: string
+  inputElement: HTMLInputElement
+  formElement?: HTMLFormElement | null
 }
 
-export default function FormSubmitHandler({ inputSelector, formSelector }: Props) {
+export default function FormSubmitHandler({ inputElement, formElement }: Props) {
   const { newSearch } = useActions()
 
   useEffect(() => {
-    const searchForm = formSelector ? document.querySelector<HTMLFormElement>(formSelector) : null
-    const searchInput = document.querySelector<HTMLInputElement>(inputSelector)
-
-    if (searchInput && (searchForm || !formSelector)) {
+    if (inputElement && (formElement || formElement === null)) {
       const handleFormSubmit = (e: SubmitEvent) => {
         e.preventDefault()
-        const query = searchInput.value.trim()
+        const query = inputElement.value.trim()
         if (query) {
           newSearch({ query })
         }
       }
 
-      if (searchForm) {
-        searchForm.addEventListener("submit", handleFormSubmit)
+      if (formElement) {
+        formElement.addEventListener("submit", handleFormSubmit)
       }
 
       return () => {
-        if (searchForm) {
-          searchForm.removeEventListener("submit", handleFormSubmit)
+        if (formElement) {
+          formElement.removeEventListener("submit", handleFormSubmit)
         }
       }
     }
-  }, [newSearch, inputSelector, formSelector])
+  }, [newSearch, inputElement, formElement])
 
   return null
 }
