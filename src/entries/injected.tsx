@@ -38,7 +38,7 @@ function FormSubmitHandler() {
   return null
 }
 
-function AutocompleteInputHandler() {
+function InputEventHandler() {
   const { newSearch } = useActions()
 
   useEffect(() => {
@@ -72,7 +72,7 @@ function App() {
       {dropdownElement &&
         createPortal(
           <AutocompletePageProvider config={autocompleteConfig}>
-            <AutocompleteInputHandler />
+            <InputEventHandler />
             <Products />
           </AutocompletePageProvider>,
           dropdownElement
