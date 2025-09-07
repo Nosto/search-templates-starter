@@ -29,10 +29,23 @@ function App() {
         }
       }
 
+      const handleInputChange = () => {
+        const query = searchInput.value.trim()
+        dispatchNostoEvent({
+          event: "actions/newSearch",
+          params: {
+            query: { query },
+            targetStore: "autocomplete"
+          }
+        })
+      }
+
       searchForm.addEventListener("submit", handleFormSubmit)
+      searchInput.addEventListener("input", handleInputChange)
 
       return () => {
         searchForm.removeEventListener("submit", handleFormSubmit)
+        searchInput.removeEventListener("input", handleInputChange)
       }
     }
   }, [])
@@ -42,7 +55,6 @@ function App() {
   return (
     <SearchPageProvider config={serpConfig}>
       <SearchQueryHandler />
-      <Serp />
 
       {dropdownElement &&
         createPortal(
@@ -51,6 +63,8 @@ function App() {
           </AutocompletePageProvider>,
           dropdownElement
         )}
+
+      <Serp />
     </SearchPageProvider>
   )
 }
