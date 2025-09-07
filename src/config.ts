@@ -5,6 +5,7 @@ import { AutocompleteConfig } from "@nosto/search-js/preact/autocomplete"
 import { SerpConfig } from "@nosto/search-js/preact/serp"
 import { handleDecorator } from "./decorators"
 import { CategoryConfig } from "@nosto/search-js/preact/category"
+import { SearchQuery } from "@nosto/nosto-js/client"
 
 export const sizes = [24, 48, 72]
 
@@ -23,6 +24,16 @@ export const defaultConfig = {
 const thumbnailSize = "9" // 750x750
 const defaultCurrency = "EUR"
 
+function withBaseSize(query: SearchQuery) {
+  return {
+    ...query,
+    products: {
+      size: defaultConfig.serpSize,
+      ...query.products
+    }
+  }
+}
+
 export const hitDecorators = [
   handleDecorator,
   thumbnailDecorator({ size: thumbnailSize }),
@@ -33,7 +44,10 @@ export const serpConfig = {
   defaultCurrency,
   search: {
     hitDecorators
-  }
+  },
+  queryModifications: withBaseSize,
+  persistentSearchCache: false,
+  preservePageScroll: false
 } satisfies SerpConfig
 
 export const autocompleteConfig = {
@@ -60,6 +74,7 @@ export const categoryConfig = {
   search: {
     hitDecorators
   },
+  queryModifications: withBaseSize,
   persistentSearchCache: false,
   preservePageScroll: false
 } satisfies CategoryConfig
