@@ -12,8 +12,8 @@ import { autocompleteConfig, serpConfig } from "@/config"
 function App() {
   useEffect(() => {
     // Connect the existing #search input to handle form submissions
-    const searchForm = document.getElementById("search-form") as HTMLFormElement
-    const searchInput = document.getElementById("search") as HTMLInputElement
+    const searchForm = document.querySelector<HTMLFormElement>("#search-form")
+    const searchInput = document.querySelector<HTMLInputElement>("#search")
 
     if (searchForm && searchInput) {
       const handleFormSubmit = (e: SubmitEvent) => {
@@ -38,8 +38,8 @@ function App() {
     }
   }, [])
 
-  const serpElement = document.getElementById("serp")
-  const dropdownElement = document.getElementById("dropdown")
+  const serpElement = document.querySelector<HTMLElement>("#serp")
+  const dropdownElement = document.querySelector<HTMLElement>("#dropdown")
 
   return (
     <>
