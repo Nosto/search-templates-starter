@@ -4,6 +4,7 @@ import styles from "./Product.module.css"
 import { DecoratedProduct } from "@nosto/search-js"
 import { hitDecorators } from "@/config"
 import DynamicCard from "../DynamicCard/DynamicCard"
+import { useState } from "preact/hooks"
 
 type Props = {
   product: DecoratedProduct<typeof hitDecorators>
@@ -12,6 +13,25 @@ type Props = {
 }
 
 export default function Product({ product, previewImage, children }: Props) {
+  const [isHovered, setIsHovered] = useState(false)
+
+  const handleMouseEnter = () => {
+    setIsHovered(true)
+  }
+
+  const handleMouseLeave = () => {
+    setIsHovered(false)
+  }
+
+  // Determine which image to show
+  const currentImage = (() => {
+    if (previewImage) return previewImage
+    if (isHovered && product.alternateImageUrls?.[0]) {
+      return product.alternateImageUrls[0]
+    }
+    return product.imageUrl ?? productImagePlaceholder
+  })()
+
   return (
     <SerpElement
       as="a"
@@ -22,11 +42,13 @@ export default function Product({ product, previewImage, children }: Props) {
       componentProps={{
         "aria-label": `Product ${product.name}`,
         className: styles.container,
-        href: product.url
+        href: product.url,
+        onMouseEnter: handleMouseEnter,
+        onMouseLeave: handleMouseLeave
       }}
     >
       <div className={styles.image}>
-        <img src={previewImage ?? product.imageUrl ?? productImagePlaceholder} alt={product.name} />
+        <img src={currentImage} alt={product.name} />
       </div>
       <div className={styles.info} data-nosto-element="product">
         {product.brand && <div>{product.brand}</div>}
