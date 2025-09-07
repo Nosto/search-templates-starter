@@ -1,7 +1,7 @@
 import { SearchPageProvider } from "@nosto/search-js/preact/serp"
 import { AutocompletePageProvider } from "@nosto/search-js/preact/autocomplete"
 import { dispatchNostoEvent } from "@nosto/search-js/preact/events"
-import { render } from "preact"
+import { render, createPortal } from "preact/compat"
 import { useEffect } from "preact/hooks"
 import Serp from "@/components/Serp/Serp"
 import "@/variable.css"
@@ -9,18 +9,7 @@ import Products from "@/components/Autocomplete/Products/Products"
 import SearchQueryHandler from "@/components/SearchQueryHandler/SearchQueryHandler"
 import { autocompleteConfig, serpConfig } from "@/config"
 
-// Render SERP to #serp element
-function SerpApp() {
-  return (
-    <SearchPageProvider config={serpConfig}>
-      <SearchQueryHandler />
-      <Serp />
-    </SearchPageProvider>
-  )
-}
-
-// Wrapper component for autocomplete that handles search input connection
-function AutocompleteApp() {
+function App() {
   useEffect(() => {
     // Connect the existing #search input to handle form submissions
     const searchForm = document.getElementById("search-form") as HTMLFormElement
@@ -49,21 +38,32 @@ function AutocompleteApp() {
     }
   }, [])
 
+  const serpElement = document.getElementById("serp")
+  const dropdownElement = document.getElementById("dropdown")
+
   return (
-    <AutocompletePageProvider config={autocompleteConfig}>
-      <Products />
-    </AutocompletePageProvider>
+    <>
+      {/* Portal SERP to #serp element */}
+      {serpElement &&
+        createPortal(
+          <SearchPageProvider config={serpConfig}>
+            <SearchQueryHandler />
+            <Serp />
+          </SearchPageProvider>,
+          serpElement
+        )}
+
+      {/* Portal Autocomplete to #dropdown element */}
+      {dropdownElement &&
+        createPortal(
+          <AutocompletePageProvider config={autocompleteConfig}>
+            <Products />
+          </AutocompletePageProvider>,
+          dropdownElement
+        )}
+    </>
   )
 }
 
-// Mount components to their respective DOM elements
-const serpElement = document.getElementById("serp")
-const dropdownElement = document.getElementById("dropdown")
-
-if (serpElement) {
-  render(<SerpApp />, serpElement)
-}
-
-if (dropdownElement) {
-  render(<AutocompleteApp />, dropdownElement)
-}
+// Mount the single app
+render(<App />, document.body)
