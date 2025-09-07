@@ -10,7 +10,7 @@ export default function FormSubmitHandler({ inputElement, formElement }: Props) 
   const { newSearch } = useActions()
 
   useEffect(() => {
-    if (inputElement && (formElement || formElement === null)) {
+    if (inputElement) {
       const handleFormSubmit = (e: SubmitEvent) => {
         e.preventDefault()
         const query = inputElement.value.trim()
@@ -21,11 +21,15 @@ export default function FormSubmitHandler({ inputElement, formElement }: Props) 
 
       if (formElement) {
         formElement.addEventListener("submit", handleFormSubmit)
+      } else {
+        inputElement.addEventListener("submit", handleFormSubmit)
       }
 
       return () => {
         if (formElement) {
           formElement.removeEventListener("submit", handleFormSubmit)
+        } else {
+          inputElement.removeEventListener("submit", handleFormSubmit)
         }
       }
     }
