@@ -11,7 +11,6 @@ import { autocompleteConfig, serpConfig } from "@/config"
 
 function App() {
   useEffect(() => {
-    // Connect the existing #search input to handle form submissions
     const searchForm = document.querySelector<HTMLFormElement>("#search-form")
     const searchInput = document.querySelector<HTMLInputElement>("#search")
 
@@ -23,7 +22,7 @@ function App() {
           dispatchNostoEvent({
             event: "actions/newSearch",
             params: {
-              query: { query }, // SearchQuery expects an object with query property
+              query: { query },
               targetStore: "search"
             }
           })
@@ -38,22 +37,13 @@ function App() {
     }
   }, [])
 
-  const serpElement = document.querySelector<HTMLElement>("#serp")
   const dropdownElement = document.querySelector<HTMLElement>("#dropdown")
 
   return (
     <>
-      {/* Portal SERP to #serp element */}
-      {serpElement &&
-        createPortal(
-          <SearchPageProvider config={serpConfig}>
-            <SearchQueryHandler />
-            <Serp />
-          </SearchPageProvider>,
-          serpElement
-        )}
+      <SearchQueryHandler />
+      <Serp />
 
-      {/* Portal Autocomplete to #dropdown element */}
       {dropdownElement &&
         createPortal(
           <AutocompletePageProvider config={autocompleteConfig}>
@@ -65,5 +55,12 @@ function App() {
   )
 }
 
-// Mount the single app
-render(<App />, document.body)
+const serpElement = document.querySelector<HTMLElement>("#serp")
+if (serpElement) {
+  render(
+    <SearchPageProvider config={serpConfig}>
+      <App />
+    </SearchPageProvider>,
+    serpElement
+  )
+}
