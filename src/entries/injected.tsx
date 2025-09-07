@@ -10,6 +10,7 @@ import FormSubmitHandler from "./FormSubmitHandler"
 import InputEventHandler from "./InputEventHandler"
 
 function App() {
+  // TODO: wait for elements is missing
   const dropdownElement = document.querySelector<HTMLElement>("#dropdown")
   const searchInput = document.querySelector<HTMLInputElement>("#search")
   const searchForm = document.querySelector<HTMLFormElement>("#search-form")
