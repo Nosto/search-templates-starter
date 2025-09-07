@@ -40,21 +40,22 @@ export const hitDecorators = [
   priceDecorator({ defaultCurrency })
 ] as const
 
-export const serpConfig = {
+const baseConfig = {
   defaultCurrency,
   search: {
     hitDecorators
   },
-  queryModifications: withBaseSize,
+  queryModifications: withBaseSize
+}
+
+export const serpConfig = {
+  ...baseConfig,
   persistentSearchCache: false,
   preservePageScroll: false
 } satisfies SerpConfig
 
 export const autocompleteConfig = {
-  defaultCurrency,
-  search: {
-    hitDecorators
-  },
+  ...baseConfig,
   queryModifications: query => ({
     ...query,
     products: {
@@ -70,11 +71,7 @@ export const autocompleteConfig = {
 } satisfies AutocompleteConfig
 
 export const categoryConfig = {
-  defaultCurrency,
-  search: {
-    hitDecorators
-  },
-  queryModifications: withBaseSize,
+  ...baseConfig,
   persistentSearchCache: false,
   preservePageScroll: false
 } satisfies CategoryConfig
