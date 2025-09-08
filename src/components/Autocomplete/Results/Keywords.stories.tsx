@@ -56,19 +56,6 @@ export const Default: Story = {
   )
 }
 
-export const WithMultipleKeywords: Story = {
-  render: () => (
-    <Keywords keywords={mockKeywords} onSubmit={(query: string) => console.info("Search submitted:", query)} />
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Keywords component displaying multiple keyword suggestions with highlighting."
-      }
-    }
-  }
-}
-
 export const EmptyKeywords: Story = {
   render: () => (
     <Keywords keywords={emptyKeywords} onSubmit={(query: string) => console.info("Search submitted:", query)} />
