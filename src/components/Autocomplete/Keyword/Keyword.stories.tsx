@@ -33,19 +33,6 @@ export const Default: Story = {
   render: () => <Keyword keyword={mockKeyword} onSubmit={(query: string) => console.info("Search submitted:", query)} />
 }
 
-export const WithHighlight: Story = {
-  render: () => (
-    <Keyword keyword={mockKeyword} onSubmit={(query: string) => console.info("Search submitted:", query)} />
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Keyword with highlighted text matching the search query."
-      }
-    }
-  }
-}
-
 export const WithoutHighlight: Story = {
   render: () => (
     <Keyword keyword={mockKeywordNoHighlight} onSubmit={(query: string) => console.info("Search submitted:", query)} />

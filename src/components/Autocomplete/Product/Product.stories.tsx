@@ -50,17 +50,6 @@ export const Default: Story = {
   render: () => <Product hit={mockProduct} />
 }
 
-export const OnSale: Story = {
-  render: () => <Product hit={mockProduct} />,
-  parameters: {
-    docs: {
-      description: {
-        story: "Product showing with sale price (price lower than list price)."
-      }
-    }
-  }
-}
-
 export const RegularPrice: Story = {
   render: () => <Product hit={mockProductNoSale} />,
   parameters: {
