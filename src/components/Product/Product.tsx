@@ -4,21 +4,14 @@ import styles from "./Product.module.css"
 import { DecoratedProduct } from "@nosto/search-js"
 import { hitDecorators } from "@/config"
 import DynamicCard from "../DynamicCard/DynamicCard"
-import Skeleton from "@/elements/Skeleton/Skeleton"
 
 type Props = {
   product: DecoratedProduct<typeof hitDecorators>
   previewImage?: string
   children?: preact.JSX.Element | preact.JSX.Element[]
-  loading?: boolean
-  useSkeleton?: boolean
 }
 
-export default function Product({ product, previewImage, children, loading = false, useSkeleton = false }: Props) {
-  if (loading && useSkeleton) {
-    return <Skeleton className={styles.container} />
-  }
-
+export default function Product({ product, previewImage, children }: Props) {
   return (
     <SerpElement
       as="a"

@@ -19,11 +19,7 @@ vi.mock("../../../src/config", () => ({
 
 // Mock the Product component to avoid SerpElement issues
 vi.mock("../../../src/components/Product/Product", () => ({
-  default: ({ loading, useSkeleton }: { loading?: boolean; useSkeleton?: boolean }) => (
-    <div data-testid="product" data-loading={loading} data-skeleton={useSkeleton}>
-      Product Mock
-    </div>
-  )
+  default: () => <div data-testid="product">Product Mock</div>
 }))
 
 // Mock the Skeleton component
@@ -71,9 +67,5 @@ describe("Products", () => {
 
     // Should render 1 actual product
     expect(products).toHaveLength(1)
-
-    // Should not have skeleton props
-    expect(products[0].getAttribute("data-loading")).toBe("false")
-    expect(products[0].getAttribute("data-skeleton")).toBe("true") // Config has skeleton enabled
   })
 })

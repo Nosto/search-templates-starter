@@ -24,14 +24,7 @@ export default function Products() {
   return (
     <div className={cl(style.container, loading && style.loading)}>
       {products?.hits.map((hit, index) => {
-        return (
-          <Product
-            product={hit}
-            key={hit.productId || index}
-            loading={loading}
-            useSkeleton={defaultConfig.useSkeletonLoading}
-          />
-        )
+        return <Product product={hit} key={hit.productId || index} />
       })}
     </div>
   )
