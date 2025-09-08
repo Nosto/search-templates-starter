@@ -21,6 +21,7 @@ export const defaultConfig = {
   historySize: 5
 }
 
+const autocompleteThumbnailSize = "7" // 400x400
 const thumbnailSize = "9" // 750x750
 const defaultCurrency = "EUR"
 
@@ -40,7 +41,13 @@ export const hitDecorators = [
   priceDecorator({ defaultCurrency })
 ] as const
 
-const baseConfig = {
+const autocompleteDecorators = [
+  handleDecorator,
+  thumbnailDecorator({ size: autocompleteThumbnailSize }),
+  priceDecorator({ defaultCurrency })
+]
+
+export const baseConfig = {
   defaultCurrency,
   search: {
     hitDecorators
@@ -56,6 +63,12 @@ export const serpConfig = {
 
 export const autocompleteConfig = {
   ...baseConfig,
+  memoryCache: true,
+  historyEnabled: true,
+  historySize: 10,
+  search: {
+    hitDecorators: autocompleteDecorators
+  }
   queryModifications: query => ({
     ...query,
     products: {

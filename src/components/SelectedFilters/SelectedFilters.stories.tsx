@@ -13,5 +13,9 @@ export default {
 type Story = StoryObj<typeof SelectedFilters>
 
 export const Default: Story = {
-  render: () => <SelectedFilters />
+  render: () => (
+    <div style="width: 600px">
+      <SelectedFilters />
+    </div>
+  )
 }
