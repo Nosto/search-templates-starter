@@ -6,7 +6,7 @@ function TestSidebarComponent() {
   const { isOpen, toggle, setOpen } = useSidebar()
 
   return (
-    <div>
+    <>
       <div data-testid="sidebar-status">{isOpen ? "open" : "closed"}</div>
       <button data-testid="toggle-button" onClick={toggle}>
         Toggle
@@ -17,7 +17,7 @@ function TestSidebarComponent() {
       <button data-testid="close-button" onClick={() => setOpen(false)}>
         Close
       </button>
-    </div>
+    </>
   )
 }
 

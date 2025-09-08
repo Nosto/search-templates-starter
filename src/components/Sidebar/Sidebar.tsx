@@ -31,7 +31,11 @@ export default function SideBar() {
     setOpen(false)
   }
 
-  return facets?.length > 0 ? (
+  if (facets?.length === 0) {
+    return null
+  }
+
+  return (
     <>
       {/* Backdrop */}
       {isOpen && (
@@ -69,5 +73,5 @@ export default function SideBar() {
         </div>
       </div>
     </>
-  ) : null
+  )
 }

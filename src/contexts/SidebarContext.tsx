@@ -1,6 +1,6 @@
 import { createContext } from "preact"
 import { useContext, useState } from "preact/hooks"
-import { JSX } from "preact"
+import { ComponentChildren } from "preact"
 
 type SidebarContextType = {
   isOpen: boolean
@@ -11,7 +11,7 @@ type SidebarContextType = {
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined)
 
 type SidebarProviderProps = {
-  children: JSX.Element | JSX.Element[]
+  children: ComponentChildren
 }
 
 export function SidebarProvider({ children }: SidebarProviderProps) {
