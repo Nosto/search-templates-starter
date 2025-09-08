@@ -3,33 +3,11 @@ import Button from "@/elements/Button/Button"
 import SectionHeader from "@/elements/SectionHeader/SectionHeader"
 import style from "./Results.module.css"
 import Product from "@/components/Autocomplete/Product/Product"
-import Keyword from "@/components/Autocomplete/Keyword/Keyword"
+import Keywords from "./Keywords"
 import { SearchResponse } from "@nosto/search-js"
 
 interface ResultsProps {
   onSubmit: (query: string) => void
-}
-
-interface KeywordsProps {
-  keywords: SearchResponse["keywords"]
-  onSubmit: (query: string) => void
-}
-
-function Keywords({ keywords, onSubmit }: KeywordsProps) {
-  if (!keywords?.hits?.length) {
-    return null
-  }
-
-  return (
-    <div className={style.suggestionsColumn}>
-      <SectionHeader>Suggestions</SectionHeader>
-      <div className={style.keywords}>
-        {keywords.hits.map((keyword, index) => (
-          <Keyword key={index} keyword={keyword} onSubmit={onSubmit} />
-        ))}
-      </div>
-    </div>
-  )
 }
 
 interface ProductsProps {
