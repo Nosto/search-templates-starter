@@ -24,7 +24,7 @@ export default function SearchQueryHandler() {
     }
 
     const { query, page, size: urlSize, filter, sort } = urlStateParams
-    const effectiveSize = urlSize || defaultConfig.serpSize
+    const effectiveSize = urlSize || size || defaultConfig.serpSize
     const from = page ? (page - 1) * effectiveSize : 0
 
     const searchConfig = {
