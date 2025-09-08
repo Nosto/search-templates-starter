@@ -61,16 +61,7 @@ export const Default: Story = {
   render: () => <Products products={mockProducts} />
 }
 
-export const WithMultipleProducts: Story = {
-  render: () => <Products products={mockProducts} />,
-  parameters: {
-    docs: {
-      description: {
-        story: "Products component displaying multiple product suggestions with images, names, brands, and pricing."
-      }
-    }
-  }
-}
+
 
 export const EmptyProducts: Story = {
   render: () => <Products products={emptyProducts} />,
