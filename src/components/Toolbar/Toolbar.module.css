@@ -17,35 +17,19 @@
   gap: var(--ns-space-2);
 }
 
-@media (min-width: 768px) {
-  .mobile {
-    display: none !important;
-  }
-}
-
 .container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   padding: 0 var(--ns-space-2) var(--ns-space-1) var(--ns-space-2);
   z-index: var(--ns-header-control);
 }
-@media (min-width: 768px) {
-  .container {
-    flex-direction: row;
-    -ms-flex-direction: row;
-    display: -ms-flexbox;
-    display: flex;
-  }
-}
 
 .total {
   display: inline-block;
   text-align: center;
-  -ms-flex-order: 3;
-  order: 3;
   color: var(--ns-color-black);
 }
 
@@ -54,29 +38,19 @@
   align-items: center;
 }
 
-@media (min-width: 768px) {
-  .total {
-    -ms-flex-item-align: center;
-    align-self: center;
-    -ms-flex-order: -1;
-    order: -1;
-    display: block;
-  }
+.leftSide {
+  display: flex;
+  align-items: center;
 }
 
-.buttons {
+.rightSide {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: var(--ns-space-4);
-}
-
-@media (min-width: 768px) {
-  .buttons {
-    display: block;
-    width: auto;
-  }
+  gap: var(--ns-space-3);
+  align-items: center;
+  width: auto;
+  justify-content: flex-end;
+  margin-bottom: 0;
 }
 
 .loading {

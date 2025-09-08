@@ -1,6 +1,13 @@
 import { describe, it, expect, beforeEach, vi } from "vitest"
 import type { InputSearchSort, InputSearchTopLevelFilter } from "@nosto/nosto-js/client"
-import { serializeQueryState, deserializeQueryState, updateUrl, getCurrentUrlState, getPageUrl } from "@/utils/url"
+import {
+  serializeQueryState,
+  deserializeQueryState,
+  updateUrl,
+  getCurrentUrlState,
+  getPageUrl,
+  UrlQueryState
+} from "@/utils/url"
 
 describe("URL utilities", () => {
   describe("serializeQueryState", () => {
@@ -15,85 +22,61 @@ describe("URL utilities", () => {
     function expectFilters(filterArray: InputSearchTopLevelFilter[]) {
       const state = { filter: filterArray }
       const params = serializeQueryState(state, new URLSearchParams())
-      return (key: string) => expect(params.get(`filter.${key}`))
+      return expect(params.toString())
     }
-    it("creates URLSearchParams with query parameter", () => {
-      const state = { query: "test search" }
+
+    function expectParams(state: UrlQueryState) {
       const params = serializeQueryState(state, new URLSearchParams())
-      expect(params.get("q")).toBe("test search")
-      expect(params.get("p")).toBeNull()
+      return expect(params.toString())
+    }
+
+    it("creates URLSearchParams with query parameter", () => {
+      expectParams({ query: "test search" }).toBe("q=test+search")
     })
 
     it("creates URLSearchParams with page parameter when greater than 1", () => {
-      const state = { query: "test", page: 2 }
-      const params = serializeQueryState(state, new URLSearchParams())
-      expect(params.get("q")).toBe("test")
-      expect(params.get("p")).toBe("2")
+      expectParams({ query: "test", page: 2 }).toBe("q=test&p=2")
     })
 
     it("omits page parameter when equal to 1", () => {
-      const state = { query: "test", page: 1 }
-      const params = serializeQueryState(state, new URLSearchParams())
-      expect(params.get("q")).toBe("test")
-      expect(params.get("p")).toBeNull()
+      expectParams({ query: "test", page: 1 }).toBe("q=test")
     })
 
     it("handles empty state", () => {
-      const state = {}
-      const params = serializeQueryState(state, new URLSearchParams())
-      expect(params.toString()).toBe("")
+      expectParams({}).toBe("")
     })
 
     it("omits empty query", () => {
-      const state = { query: "", page: 2 }
-      const params = serializeQueryState(state, new URLSearchParams())
-      expect(params.get("q")).toBeNull()
-      expect(params.get("p")).toBe("2")
+      expectParams({ query: "", page: 2 }).toBe("p=2")
     })
 
     it("creates URLSearchParams with filter parameter", () => {
-      const filters = [
+      expectFilters([
         { field: "brand", value: ["Nike"] },
         { field: "color", value: ["Red"] }
-      ]
-      const state = { filter: filters }
-      const params = serializeQueryState(state, new URLSearchParams())
-      expect(params.toString()).toBe("filter.brand=Nike&filter.color=Red")
+      ]).toBe("filter.brand=Nike&filter.color=Red")
     })
 
     it("omits empty filter array", () => {
-      const state = { query: "test", filter: [] }
-      const params = serializeQueryState(state, new URLSearchParams())
-      expect(params.get("q")).toBe("test")
-      expect(params.has("filter.brand")).toBe(false)
-      expect(params.has("filter.color")).toBe(false)
+      expectParams({ query: "test", filter: [] }).toBe("q=test")
     })
 
     it("handles filters with query and page", () => {
-      const filters = [{ field: "category", value: ["sports"] }]
-      const state = { filter: filters }
-      const params = serializeQueryState(state, new URLSearchParams())
-      expect(params.toString()).toBe("filter.category=sports")
+      expectFilters([{ field: "category", value: ["sports"] }]).toBe("filter.category=sports")
     })
 
     it("spreads array filter values to multiple parameters", () => {
-      const filters = [{ field: "brand", value: ["Nike", "Adidas", "Puma"] }]
-      const state = { filter: filters }
-      const params = serializeQueryState(state, new URLSearchParams())
-      expect(params.toString()).toBe("filter.brand=Nike&filter.brand=Adidas&filter.brand=Puma")
+      expectFilters([{ field: "brand", value: ["Nike", "Adidas", "Puma"] }]).toBe(
+        "filter.brand=Nike&filter.brand=Adidas&filter.brand=Puma"
+      )
     })
 
     it("handles mixed single and array filter values", () => {
-      const filters = [
+      expectFilters([
         { field: "brand", value: ["Nike", "Adidas"] },
         { field: "color", value: ["Red"] },
         { field: "size", value: ["8", "9", "10"] }
-      ]
-      const state = { filter: filters }
-      const params = serializeQueryState(state, new URLSearchParams())
-      expect(params.toString()).toBe(
-        "filter.brand=Nike&filter.brand=Adidas&filter.color=Red&filter.size=8&filter.size=9&filter.size=10"
-      )
+      ]).toBe("filter.brand=Nike&filter.brand=Adidas&filter.color=Red&filter.size=8&filter.size=9&filter.size=10")
     })
 
     it("creates URLSearchParams with sort parameter", () => {
@@ -114,21 +97,14 @@ describe("URL utilities", () => {
     it("encodes field names with tildes and commas", () => {
       expectSort([{ field: "my~field,test", order: "asc" }]).toBe("my%7Efield%2Ctest~asc")
     })
-
     it("handles all parameters together", () => {
-      const state = {
+      expectParams({
         query: "shoes",
         page: 2,
         size: 20,
         filter: [{ field: "brand", value: ["Nike"] }],
-        sort: [{ field: "price", order: "asc" }] as InputSearchSort[]
-      }
-      const params = serializeQueryState(state, new URLSearchParams())
-      expect(params.get("q")).toBe("shoes")
-      expect(params.get("p")).toBe("2")
-      expect(params.get("size")).toBe("20")
-      expect(params.get("filter.brand")).toBe("Nike")
-      expect(params.get("sort")).toBe("price~asc")
+        sort: [{ field: "price", order: "asc" }]
+      }).toBe("q=shoes&p=2&size=20&filter.brand=Nike&sort=price%7Easc")
     })
 
     it("creates URLSearchParams with size parameter", () => {
@@ -146,51 +122,35 @@ describe("URL utilities", () => {
     })
 
     it("creates URLSearchParams with range filter parameter", () => {
-      const filters = [{ field: "price", range: [{ gte: "10", lte: "50" }] }]
-      const expectFiltersHelper = expectFilters(filters)
-      expectFiltersHelper("price.gte").toBe("10")
-      expectFiltersHelper("price.lte").toBe("50")
+      expectFilters([{ field: "price", range: [{ gte: "10", lte: "50" }] }]).toBe(
+        "filter.price.gte=10&filter.price.lte=50"
+      )
     })
 
     it("creates URLSearchParams with partial range filters", () => {
-      const filters = [
+      expectFilters([
         { field: "price", range: [{ gte: "10" }] },
         { field: "weight", range: [{ lt: "100" }] }
-      ]
-      const expectFiltersHelper = expectFilters(filters)
-      expectFiltersHelper("price.gte").toBe("10")
-      expectFiltersHelper("price.lte").toBeNull()
-      expectFiltersHelper("weight.lt").toBe("100")
-      expectFiltersHelper("weight.gt").toBeNull()
+      ]).toBe("filter.price.gte=10&filter.weight.lt=100")
     })
 
     it("creates URLSearchParams with all range operators", () => {
-      const filters = [{ field: "score", range: [{ gt: "0", gte: "1", lt: "100", lte: "99" }] }]
-      const expectFiltersHelper = expectFilters(filters)
-      expectFiltersHelper("score.gt").toBe("0")
-      expectFiltersHelper("score.gte").toBe("1")
-      expectFiltersHelper("score.lt").toBe("100")
-      expectFiltersHelper("score.lte").toBe("99")
+      expectFilters([{ field: "score", range: [{ gt: "0", gte: "1", lt: "100", lte: "99" }] }]).toBe(
+        "filter.score.gt=0&filter.score.gte=1&filter.score.lt=100&filter.score.lte=99"
+      )
     })
 
     it("handles mixed value and range filters", () => {
-      const filters = [
+      expectFilters([
         { field: "brand", value: ["Nike", "Adidas"] },
         { field: "price", range: [{ gte: "10", lte: "50" }] }
-      ]
-      const state = { filter: filters }
-      const params = serializeQueryState(state, new URLSearchParams())
-      expect(params.toString()).toBe("filter.brand=Nike&filter.brand=Adidas&filter.price.gte=10&filter.price.lte=50")
+      ]).toBe("filter.brand=Nike&filter.brand=Adidas&filter.price.gte=10&filter.price.lte=50")
     })
 
     it("omits undefined range values", () => {
-      const filters = [{ field: "price", range: [{ gte: "10", lt: undefined, lte: "50" }] }]
-      const state = { filter: filters }
-      const params = serializeQueryState(state, new URLSearchParams())
-      expect(params.get("filter.price.gte")).toBe("10")
-      expect(params.get("filter.price.lte")).toBe("50")
-      expect(params.has("filter.price.lt")).toBe(false)
-      expect(params.has("filter.price.gt")).toBe(false)
+      expectFilters([{ field: "price", range: [{ gte: "10", lt: undefined, lte: "50" }] }]).toBe(
+        "filter.price.gte=10&filter.price.lte=50"
+      )
     })
   })
 
@@ -208,44 +168,34 @@ describe("URL utilities", () => {
       const state = deserializeQueryState(params)
       return expect(state.filter)
     }
+
+    function expectQueryState(urlString: string) {
+      const params = new URLSearchParams(urlString)
+      return expect(deserializeQueryState(params))
+    }
+
     it("parses query parameter", () => {
-      const params = new URLSearchParams("q=test+search")
-      const state = deserializeQueryState(params)
-      expect(state.query).toBe("test search")
-      expect(state.page).toBeUndefined()
+      expectQueryState("q=test+search").toEqual({ query: "test search" })
     })
 
     it("parses page parameter when greater than 1", () => {
-      const params = new URLSearchParams("q=test&p=3")
-      const state = deserializeQueryState(params)
-      expect(state.query).toBe("test")
-      expect(state.page).toBe(3)
+      expectQueryState("q=test&p=3").toEqual({ query: "test", page: 3 })
     })
 
     it("omits page parameter when equal to 1", () => {
-      const params = new URLSearchParams("q=test&p=1")
-      const state = deserializeQueryState(params)
-      expect(state.query).toBe("test")
-      expect(state.page).toBeUndefined()
+      expectQueryState("q=test&p=1").toEqual({ query: "test" })
     })
 
     it("handles invalid page parameter", () => {
-      const params = new URLSearchParams("q=test&p=invalid")
-      const state = deserializeQueryState(params)
-      expect(state.query).toBe("test")
-      expect(state.page).toBeUndefined()
+      expectQueryState("q=test&p=invalid").toEqual({ query: "test" })
     })
 
     it("handles empty parameters", () => {
-      const params = new URLSearchParams("")
-      const state = deserializeQueryState(params)
-      expect(state).toEqual({})
+      expectQueryState("").toEqual({})
     })
 
     it("ignores unknown parameters", () => {
-      const params = new URLSearchParams("q=test&unknown=value&p=2")
-      const state = deserializeQueryState(params)
-      expect(state).toEqual({
+      expectQueryState("q=test&unknown=value&p=2").toEqual({
         query: "test",
         page: 2
       })
@@ -321,9 +271,7 @@ describe("URL utilities", () => {
     })
 
     it("handles all parameters together", () => {
-      const params = new URLSearchParams("q=shoes&p=2&size=20&filter.brand=Nike&sort=price~asc")
-      const state = deserializeQueryState(params)
-      expect(state).toEqual({
+      expectQueryState("q=shoes&p=2&size=20&filter.brand=Nike&sort=price~asc").toEqual({
         query: "shoes",
         page: 2,
         size: 20,

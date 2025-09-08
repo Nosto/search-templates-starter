@@ -11,30 +11,50 @@ export const toggleButtonId = "toggle-mobile-sidebar"
 
 type Props = {
   className?: string
+  isOpen: boolean
+  onSetOpen: (open: boolean) => void
 }
 
-function ToggleSidebarButton({ className }: Props = {}) {
+type ToggleProps = {
+  className?: string
+  onClick?: () => void
+}
+
+function ToggleSidebarButton({ className, onClick }: ToggleProps = {}) {
   return (
-    <Button className={cl(styles.close, className)}>
-      <label htmlFor={toggleButtonId} aria-label="Close sidebar filters">
-        <Icon name="close" />
-      </label>
+    <Button className={cl(styles.close, className)} onClick={onClick}>
+      <Icon name="close" />
     </Button>
   )
 }
 
-export default function SideBar() {
+export default function SideBar({ isOpen, onSetOpen }: Props) {
   const { loading, facets } = useFacets()
+
+  const handleBackdropClick = () => {
+    onSetOpen(false)
+  }
 
   return facets?.length > 0 ? (
     <>
-      <input type="checkbox" id={toggleButtonId} className={styles.toggle} />
-      <label className={styles.backdrop} htmlFor={toggleButtonId} aria-label="Close sidebar" />
-      <div className={cl(styles.wrapper, loading && styles.loading)}>
+      {/* Backdrop */}
+      {isOpen && (
+        <button
+          className={styles.backdrop}
+          onClick={handleBackdropClick}
+          onKeyDown={e => {
+            if (e.key === "Escape") {
+              handleBackdropClick()
+            }
+          }}
+          aria-label="Close sidebar filters"
+        />
+      )}
+      <div className={cl(styles.wrapper, loading && styles.loading, isOpen && styles.open)}>
         <div className={styles.content}>
           <div className={styles.header}>
             <span className={styles.title}>Filters</span>
-            <ToggleSidebarButton />
+            <ToggleSidebarButton onClick={() => onSetOpen(false)} />
           </div>
           <div>
             <ul className={styles.facets}>
