@@ -16,7 +16,9 @@ type Story = StoryObj<typeof Toolbar>
 export const Default: Story = {
   render: () => (
     <SidebarProvider>
-      <Toolbar />
+      <div style="width: 600px">
+        <Toolbar onToggleSidebar={() => console.info("Toggle sidebar")} />
+      </div>
     </SidebarProvider>
   )
 }
