@@ -1,39 +1,10 @@
 import { useResponse } from "@nosto/search-js/preact/hooks"
-import Button from "@/elements/Button/Button"
-import SectionHeader from "@/elements/SectionHeader/SectionHeader"
 import style from "./Results.module.css"
-import Product from "@/components/Autocomplete/Product/Product"
 import Keywords from "./Keywords"
-import { SearchResponse } from "@nosto/search-js"
+import Products from "./Products"
 
 interface ResultsProps {
   onSubmit: (query: string) => void
-}
-
-interface ProductsProps {
-  products: SearchResponse["products"]
-}
-
-function Products({ products }: ProductsProps) {
-  if (!products?.hits?.length) {
-    return null
-  }
-
-  return (
-    <div className={style.productsColumn}>
-      <SectionHeader>Products</SectionHeader>
-      <div className={style.products}>
-        {products.hits.map(hit => (
-          <Product key={hit.productId} hit={hit} />
-        ))}
-      </div>
-      <div className={style.button}>
-        <Button type="submit" className={style.submit}>
-          See all search results
-        </Button>
-      </div>
-    </div>
-  )
 }
 
 export default function Results({ onSubmit }: ResultsProps) {
