@@ -1,5 +1,5 @@
 .sectionHeader {
   font-weight: bold;
-  margin-bottom: var(--ns-spacing-2);
-  color: var(--ns-color-text);
+  margin-bottom: var(--ns-space-2);
+  color: var(--ns-color-black);
 }

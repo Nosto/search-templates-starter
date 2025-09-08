@@ -57,6 +57,7 @@
     "stylelint": "^16.23.1",
     "stylelint-config-css-modules": "^4.5.1",
     "stylelint-config-standard": "^39.0.0",
+    "stylelint-value-no-unknown-custom-properties": "^6.0.1",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.41.0",
     "typescript-plugin-css-modules": "^5.2.0",
