@@ -9,51 +9,31 @@ import NoResults from "@/components/NoResults/NoResults"
 import { defaultConfig } from "@/config"
 
 export function SerpBody({ loading, foundProducts, onToggleSidebar }: ContentChildrenProps) {
+  // Show Loader component if loading is true and useSkeletonLoading is false
   if (loading && !defaultConfig.useSkeletonLoading) return <Loader />
 
-  // Show skeleton loading when enabled and loading
-  if (loading && defaultConfig.useSkeletonLoading) {
-    return (
-      <>
-        <SelectedFilters />
-        <Toolbar onToggleSidebar={onToggleSidebar} />
-        <Products />
-        <BottomToolbar />
-      </>
-    )
-  }
+  // Show NoResults if not loading and foundProducts are false
+  if (!loading && !foundProducts) return <NoResults />
 
-  return foundProducts ? (
+  // Show current structure if loading and useSkeletonLoading are true, or when foundProducts is true
+  return (
     <>
       <SelectedFilters />
       <Toolbar onToggleSidebar={onToggleSidebar} />
       <Products />
       <BottomToolbar />
     </>
-  ) : (
-    <NoResults />
   )
 }
 
 export function SerpBodyInfiniteScroll({ loading, foundProducts, onToggleSidebar }: ContentChildrenProps) {
-  // Handle skeleton loading when enabled and loading
-  if (loading && defaultConfig.useSkeletonLoading) {
-    return (
-      <>
-        <SelectedFilters />
-        <Toolbar onToggleSidebar={onToggleSidebar} />
-        <InfiniteScroll
-          observerOptions={{
-            rootMargin: "100% 0px"
-          }}
-        >
-          <Products />
-        </InfiniteScroll>
-      </>
-    )
-  }
+  // Show Loader component if loading is true and useSkeletonLoading is false
+  if (loading && !defaultConfig.useSkeletonLoading) return <Loader />
 
-  if (!foundProducts) return loading && !defaultConfig.useSkeletonLoading ? <Loader /> : <NoResults />
+  // Show NoResults if not loading and foundProducts are false
+  if (!loading && !foundProducts) return <NoResults />
+
+  // Show current structure if loading and useSkeletonLoading are true, or when foundProducts is true
   return (
     <>
       <SelectedFilters />
