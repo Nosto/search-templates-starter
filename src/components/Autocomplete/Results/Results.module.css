@@ -42,14 +42,14 @@
   flex-direction: column;
   border-right: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
   min-width: 200px;
-  padding-right: var(--ns-spacing-2);
+  padding: var(--ns-space-2);
 }
 
 .productsColumn {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  padding-left: var(--ns-spacing-2);
+  padding: var(--ns-space-2);
 }
 
 .keywords {
@@ -61,7 +61,7 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: var(--ns-spacing-2);
-  margin-bottom: var(--ns-spacing-2);
+  margin-bottom: var(--ns-space-2);
 }
 
 .button {
