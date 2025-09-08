@@ -51,23 +51,9 @@ export const Default: Story = {
 }
 
 export const RegularPrice: Story = {
-  render: () => <Product hit={mockProductNoSale} />,
-  parameters: {
-    docs: {
-      description: {
-        story: "Product with regular pricing (no sale)."
-      }
-    }
-  }
+  render: () => <Product hit={mockProductNoSale} />
 }
 
 export const NoBrand: Story = {
-  render: () => <Product hit={mockProductNoBrand} />,
-  parameters: {
-    docs: {
-      description: {
-        story: "Product without brand information."
-      }
-    }
-  }
+  render: () => <Product hit={mockProductNoBrand} />
 }
