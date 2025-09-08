@@ -1,11 +1,11 @@
-import { SearchResponse } from "@nosto/search-js"
+import { SearchProducts } from "@nosto/nosto-js/client"
 import Button from "@/elements/Button/Button"
 import SectionHeader from "@/elements/SectionHeader/SectionHeader"
 import Product from "@/components/Autocomplete/Product/Product"
 import style from "./Results.module.css"
 
 export interface ProductsProps {
-  products: SearchResponse["products"]
+  products: SearchProducts
 }
 
 export default function Products({ products }: ProductsProps) {

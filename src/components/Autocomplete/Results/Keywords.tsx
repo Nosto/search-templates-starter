@@ -1,10 +1,10 @@
-import { SearchResponse } from "@nosto/search-js"
+import { SearchKeywords } from "@nosto/nosto-js/client"
 import SectionHeader from "@/elements/SectionHeader/SectionHeader"
 import Keyword from "@/components/Autocomplete/Keyword/Keyword"
 import style from "./Results.module.css"
 
 export interface KeywordsProps {
-  keywords: SearchResponse["keywords"]
+  keywords: SearchKeywords
   onSubmit: (query: string) => void
 }
 
