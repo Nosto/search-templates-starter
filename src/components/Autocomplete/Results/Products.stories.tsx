@@ -61,8 +61,6 @@ export const Default: Story = {
   render: () => <Products products={mockProducts} />
 }
 
-
-
 export const EmptyProducts: Story = {
   render: () => <Products products={emptyProducts} />,
   parameters: {
