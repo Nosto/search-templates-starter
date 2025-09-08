@@ -1,23 +1,30 @@
-import { useEffect } from "preact/hooks"
+import { useEffect, useRef } from "preact/hooks"
 
 export function useEventListener<K extends keyof DocumentEventMap>({
   target,
   eventName,
   listener
 }: {
-  target: Document | null
+  target?: Document | null
   eventName: K
   listener: (event: DocumentEventMap[K]) => void
-}): void {
+}) {
+  const listenerRef = useRef(listener)
+
+  useEffect(() => {
+    listenerRef.current = listener
+  }, [listener])
+
   useEffect(() => {
     if (!target) {
       return
     }
 
-    target.addEventListener(eventName, listener)
+    const currentListener = (event: DocumentEventMap[K]) => listenerRef.current(event)
+    target.addEventListener(eventName, currentListener)
 
     return () => {
-      target.removeEventListener(eventName, listener)
+      target.removeEventListener(eventName, currentListener)
     }
-  }, [target, eventName, listener])
+  }, [target, eventName])
 }
