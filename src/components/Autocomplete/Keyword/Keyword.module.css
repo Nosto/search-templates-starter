@@ -4,6 +4,7 @@
   text-decoration: none;
   border-radius: var(--ns-border-radius-2);
   transition: background-color 0.2s ease;
+  cursor: pointer;
 }
 
 .keyword:hover {
