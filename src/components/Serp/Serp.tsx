@@ -6,23 +6,34 @@ import { ContentChildrenProps, wrapContent } from "@/components/ContentWrapper/C
 import { InfiniteScroll } from "@nosto/search-js/preact/common"
 import Loader from "@/elements/Loader/Loader"
 import NoResults from "@/components/NoResults/NoResults"
+import { defaultConfig } from "@/config"
 
 export function SerpBody({ loading, foundProducts, onToggleSidebar }: ContentChildrenProps) {
-  if (loading) return <Loader />
-  return foundProducts ? (
+  // Show Loader component if loading is true and useSkeletonLoading is false
+  if (loading && !defaultConfig.useSkeletonLoading) return <Loader />
+
+  // Show NoResults if not loading and foundProducts are false
+  if (!loading && !foundProducts) return <NoResults />
+
+  // Show current structure if loading and useSkeletonLoading are true, or when foundProducts is true
+  return (
     <>
       <SelectedFilters />
       <Toolbar onToggleSidebar={onToggleSidebar} />
       <Products />
       <BottomToolbar />
     </>
-  ) : (
-    <NoResults />
   )
 }
 
 export function SerpBodyInfiniteScroll({ loading, foundProducts, onToggleSidebar }: ContentChildrenProps) {
-  if (!foundProducts) return loading ? <Loader /> : <NoResults />
+  // Show Loader component if loading is true and useSkeletonLoading is false
+  if (loading && !defaultConfig.useSkeletonLoading) return <Loader />
+
+  // Show NoResults if not loading and foundProducts are false
+  if (!loading && !foundProducts) return <NoResults />
+
+  // Show current structure if loading and useSkeletonLoading are true, or when foundProducts is true
   return (
     <>
       <SelectedFilters />
