@@ -18,10 +18,6 @@ export const MockedView: Story = {
     <SidebarProvider>
       <div style={{ position: "relative", width: "300px", height: "400px" }}>
         <Sidebar />
-        <p style={{ margin: "10px", fontSize: "12px", color: "#666" }}>
-          Note: This component requires Nosto search context with facets to display content. The sidebar state is
-          managed internally via SidebarContext.
-        </p>
       </div>
     </SidebarProvider>
   )
