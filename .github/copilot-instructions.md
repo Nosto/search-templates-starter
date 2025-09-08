@@ -152,6 +152,7 @@ git commit --no-verify -m "your commit message"
   - Use inline styles for quick mockups rather than complex demo components
 - Keep stories focused on demonstrating the actual component structure and behavior
 - Avoid creating elaborate custom demo components that duplicate functionality
+- **Never create functionally identical stories** - each story should demonstrate a unique state, behavior, or variation of the component
 
 ### Pull Request Documentation
 - **PR descriptions should summarize the complete impact** of all changes made across the entire PR, not just the latest commit
