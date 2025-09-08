@@ -68,7 +68,7 @@ export const autocompleteConfig = {
   historySize: 10,
   search: {
     hitDecorators: autocompleteDecorators
-  }
+  },
   queryModifications: query => ({
     ...query,
     products: {
