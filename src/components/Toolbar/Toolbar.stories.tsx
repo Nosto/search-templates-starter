@@ -17,7 +17,7 @@ export const Default: Story = {
   render: () => (
     <SidebarProvider>
       <div style="width: 600px">
-        <Toolbar onToggleSidebar={() => console.info("Toggle sidebar")} />
+        <Toolbar />
       </div>
     </SidebarProvider>
   )
