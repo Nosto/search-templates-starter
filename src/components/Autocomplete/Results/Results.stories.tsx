@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/preact"
 import Results from "./Results"
 
 export default {
-  title: "Components/Autocomplete/Results",
+  title: "Autocomplete/Results",
   component: Results,
   tags: ["autodocs"]
 } as Meta<typeof Results>

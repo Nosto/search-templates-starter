@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/preact"
 import Autocomplete from "./Autocomplete"
 
 export default {
-  title: "Components/Autocomplete",
+  title: "Autocomplete/Autocomplete",
   component: Autocomplete,
   parameters: {
     layout: "centered"

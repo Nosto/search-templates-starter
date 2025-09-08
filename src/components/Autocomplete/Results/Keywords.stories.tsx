@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/preact"
 import Keywords from "./Keywords"
 
 export default {
-  title: "Components/Autocomplete/Keywords",
+  title: "Autocomplete/Keywords",
   component: Keywords,
   parameters: {
     layout: "centered"
