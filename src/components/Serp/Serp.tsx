@@ -7,12 +7,12 @@ import { InfiniteScroll } from "@nosto/search-js/preact/common"
 import Loader from "@/elements/Loader/Loader"
 import NoResults from "@/components/NoResults/NoResults"
 
-export function SerpBody({ loading, foundProducts, onToggleSidebar }: ContentChildrenProps) {
+export function SerpBody({ loading, foundProducts }: ContentChildrenProps) {
   if (loading) return <Loader />
   return foundProducts ? (
     <>
       <SelectedFilters />
-      <Toolbar onToggleSidebar={onToggleSidebar} />
+      <Toolbar />
       <Products />
       <BottomToolbar />
     </>
@@ -21,12 +21,12 @@ export function SerpBody({ loading, foundProducts, onToggleSidebar }: ContentChi
   )
 }
 
-export function SerpBodyInfiniteScroll({ loading, foundProducts, onToggleSidebar }: ContentChildrenProps) {
+export function SerpBodyInfiniteScroll({ loading, foundProducts }: ContentChildrenProps) {
   if (!foundProducts) return loading ? <Loader /> : <NoResults />
   return (
     <>
       <SelectedFilters />
-      <Toolbar onToggleSidebar={onToggleSidebar} />
+      <Toolbar />
       <InfiniteScroll
         observerOptions={{
           rootMargin: "100% 0px"

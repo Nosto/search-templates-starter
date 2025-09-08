@@ -1,11 +1,10 @@
 import { JSX } from "preact"
-import { useState } from "preact/hooks"
 import Sidebar from "@/components/Sidebar/Sidebar"
 import { useNostoAppState } from "@nosto/search-js/preact/hooks"
 import styles from "./ContentWrapper.module.css"
 import { cl } from "@nosto/search-js/utils"
 
-export type ContentChildrenProps = { loading: boolean; foundProducts: boolean; onToggleSidebar: () => void }
+export type ContentChildrenProps = { loading: boolean; foundProducts: boolean }
 
 type ContentWrapperProps = {
   type: string
@@ -23,22 +22,14 @@ function ContentWrapper({ type, children }: ContentWrapperProps) {
     initialized: state.initialized
   }))
 
-  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
-
-  const toggleSidebar = () => {
-    setMobileSidebarOpen(!mobileSidebarOpen)
-  }
-
   if (!initialized) {
     return null
   }
 
   return (
     <div className={styles.wrapper} data-nosto-element={type}>
-      {foundProducts && <Sidebar isOpen={mobileSidebarOpen} onSetOpen={setMobileSidebarOpen} />}
-      <div className={cl(styles.container, loading && styles.loading)}>
-        {children({ loading, foundProducts, onToggleSidebar: toggleSidebar })}
-      </div>
+      {foundProducts && <Sidebar />}
+      <div className={cl(styles.container, loading && styles.loading)}>{children({ loading, foundProducts })}</div>
     </div>
   )
 }

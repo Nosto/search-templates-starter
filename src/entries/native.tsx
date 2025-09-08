@@ -5,14 +5,17 @@ import { Search } from "@/components/Search/Search"
 import "@/variable.css"
 import { serpConfig } from "@/config"
 import { render } from "preact"
+import { SidebarProvider } from "@/contexts/SidebarContext"
 
 function App() {
   return (
     <>
       <SearchPageProvider config={serpConfig}>
-        <SearchQueryHandler />
-        <Search />
-        <Serp />
+        <SidebarProvider>
+          <SearchQueryHandler />
+          <Search />
+          <Serp />
+        </SidebarProvider>
       </SearchPageProvider>
     </>
   )
