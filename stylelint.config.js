@@ -19,6 +19,20 @@ export default {
     "no-descending-specificity": null,
     "rule-empty-line-before": null,
     "at-rule-empty-line-before": null,
-    "declaration-block-no-redundant-longhand-properties": null
+    "declaration-block-no-redundant-longhand-properties": null,
+    // Prevent IE-specific hacks and deprecated properties
+    "property-disallowed-list": [
+      "-ms-flex",
+      "-webkit-transform",
+      "-moz-transform",
+      "-ms-transform",
+      "-webkit-transition",
+      "-moz-transition",
+      "-ms-transition",
+      "-o-transition"
+    ],
+    "selector-pseudo-element-disallowed-list": ["-ms-expand"],
+    // Warn about some legacy patterns
+    "media-query-no-invalid": true
   }
 }
