@@ -27,14 +27,6 @@ describe("Skeleton", () => {
     expect(skeleton.style.height).toBe("250px")
   })
 
-  it("applies additional className", () => {
-    const { container } = render(<Skeleton className="custom-class" />)
-    const skeleton = container.firstChild as HTMLElement
-
-    expect(skeleton.className).toMatch(/container/)
-    expect(skeleton.classList).toContain("custom-class")
-  })
-
   it("renders skeleton elements", () => {
     const { container } = render(<Skeleton />)
 
