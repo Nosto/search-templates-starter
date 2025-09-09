@@ -1,7 +1,3 @@
-// ============================================================================
-// Product Mock Data Generation
-// ============================================================================
-
 export function generateMockProducts(count: number) {
   const categories = ["Clothing", "Electronics", "Home & Garden", "Sports", "Books", "Beauty"]
   const brands = ["BrandA", "BrandB", "BrandC", "BrandD", "BrandE", "BrandF"]
@@ -31,10 +27,6 @@ export function generateMockProducts(count: number) {
     }
   })
 }
-
-// ============================================================================
-// Individual Product Mock Data (for components)
-// ============================================================================
 
 export const mockAutocompleteProduct = {
   productId: "12345",
@@ -79,10 +71,6 @@ export const mockSerpProduct = {
   imageUrl: "https://picsum.photos/300/300",
   url: "#"
 }
-
-// ============================================================================
-// Product Collections
-// ============================================================================
 
 export const mockAutocompleteProducts = {
   hits: [

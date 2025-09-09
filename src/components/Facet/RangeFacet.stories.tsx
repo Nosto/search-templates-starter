@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import RangeFacet from "./RangeFacet"
-import { mockPriceFacet, mockRatingFacet, mockWeightFacet } from "@mocks/mocks"
+import { mockPriceFacet, mockRatingFacet, mockWeightFacet } from "@mocks/facets"
 
 export default {
   title: "Components/Facet/RangeFacet",

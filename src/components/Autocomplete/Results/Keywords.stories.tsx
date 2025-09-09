@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Keywords from "./Keywords"
-import { mockKeywords, mockEmptyKeywords } from "@mocks/mocks"
+import { mockKeywords, mockEmptyKeywords } from "@mocks/keywords"
 
 export default {
   title: "Autocomplete/Keywords",
