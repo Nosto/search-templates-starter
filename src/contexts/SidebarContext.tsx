@@ -15,14 +15,10 @@ type SidebarProviderProps = {
 }
 
 export function SidebarProvider({ children }: SidebarProviderProps) {
-  const [isOpen, setIsOpen] = useState(false)
-
-  const setOpen = (open: boolean) => {
-    setIsOpen(open)
-  }
+  const [isOpen, setOpen] = useState(false)
 
   const toggle = () => {
-    setIsOpen(!isOpen)
+    setOpen(!isOpen)
   }
 
   const contextValue = {
