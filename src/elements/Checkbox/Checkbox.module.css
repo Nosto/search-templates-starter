@@ -28,8 +28,6 @@
   height: var(--ns-height-input-checkbox-tick);
   border: solid var(--ns-color-white);
   border-width: 0 var(--ns-border-width-medium) var(--ns-border-width-medium) 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
 

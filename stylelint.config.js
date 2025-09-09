@@ -1,5 +1,6 @@
 export default {
   extends: ["stylelint-config-standard", "stylelint-config-css-modules"],
+  plugins: ["stylelint-value-no-unknown-custom-properties"],
   rules: {
     "custom-property-pattern": "^ns-[a-z][a-z0-9]*(-[a-z0-9]+)*$",
     "selector-class-pattern": null,
@@ -19,6 +20,27 @@ export default {
     "no-descending-specificity": null,
     "rule-empty-line-before": null,
     "at-rule-empty-line-before": null,
-    "declaration-block-no-redundant-longhand-properties": null
+    "declaration-block-no-redundant-longhand-properties": null,
+    // Prevent IE-specific hacks and deprecated properties
+    "property-disallowed-list": [
+      "-ms-flex",
+      "-webkit-transform",
+      "-moz-transform",
+      "-ms-transform",
+      "-webkit-transition",
+      "-moz-transition",
+      "-ms-transition",
+      "-o-transition"
+    ],
+    "selector-pseudo-element-disallowed-list": ["-ms-expand"],
+    // Warn about some legacy patterns
+    "media-query-no-invalid": true,
+    // Validate CSS custom properties usage
+    "csstools/value-no-unknown-custom-properties": [
+      true,
+      {
+        importFrom: "src/variable.css"
+      }
+    ]
   }
 }

@@ -27,7 +27,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: var(--ns-font-3);
+  font-size: var(--ns-font-size-3);
 }
 
 .dropdown > .anchor .icon {
@@ -55,7 +55,7 @@
 
 .title {
   color: var(--ns-color-black);
-  font-size: var(--ns-font-4);
+  font-size: var(--ns-font-size-4);
 }
 
 .count {
@@ -64,8 +64,8 @@
   line-height: var(--ns-line-height-tiny);
   display: inline-block;
   text-align: center;
-  font-size: var(--ns-font-3);
-  font-weight: var(--ns-font-bold);
+  font-size: var(--ns-font-size-3);
+  font-weight: var(--ns-weight-bold);
 }
 
 .anchor .count {
@@ -86,13 +86,12 @@
 .range {
   display: flex;
   justify-content: space-between;
-  font-size: var(--ns-font-4);
+  font-size: var(--ns-font-size-4);
 }
 
 .input {
   position: relative;
   width: 100%;
-  -ms-flex: 0 0 50%;
   flex: 0 0 50%;
   max-width: 50%;
   margin-right: var(--ns-space-2);
