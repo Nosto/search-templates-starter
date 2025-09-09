@@ -1,6 +1,5 @@
 .wrapper {
   min-height: var(--ns-min-height-content);
-  max-width: var(--ns-max-width-search-template);
   display: flex;
   flex-direction: column;
   font: inherit;
@@ -27,6 +26,5 @@
   }
   .container {
     display: inline-block;
-    padding-left: var(--ns-space-5);
   }
 }
