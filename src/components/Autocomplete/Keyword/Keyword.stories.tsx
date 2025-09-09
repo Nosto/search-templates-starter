@@ -7,17 +7,7 @@ export default {
   parameters: {
     layout: "centered"
   },
-  tags: ["autodocs"],
-  argTypes: {
-    keyword: {
-      control: "object",
-      description: "Keyword object with highlighting information"
-    },
-    onSubmit: {
-      action: "submitted",
-      description: "Function called when keyword is clicked"
-    }
-  }
+  tags: ["autodocs"]
 } as Meta<typeof Keyword>
 
 type Story = StoryObj<typeof Keyword>

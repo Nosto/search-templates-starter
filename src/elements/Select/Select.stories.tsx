@@ -7,21 +7,7 @@ export default {
   parameters: {
     layout: "centered"
   },
-  tags: ["autodocs"],
-  argTypes: {
-    options: {
-      control: "object",
-      description: "Array of options with value and label"
-    },
-    label: {
-      control: "text",
-      description: "Label for the select"
-    },
-    value: {
-      control: "text",
-      description: "Selected value"
-    }
-  }
+  tags: ["autodocs"]
 } as Meta<typeof Select>
 
 type Story = StoryObj<typeof Select>

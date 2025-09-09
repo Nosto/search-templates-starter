@@ -7,13 +7,7 @@ export default {
   parameters: {
     layout: "centered"
   },
-  tags: ["autodocs"],
-  argTypes: {
-    onSubmit: {
-      action: "submitted",
-      description: "Function called when search is submitted"
-    }
-  }
+  tags: ["autodocs"]
 } as Meta<typeof Autocomplete>
 
 type Story = StoryObj<typeof Autocomplete>

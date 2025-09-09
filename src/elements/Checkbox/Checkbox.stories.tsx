@@ -7,21 +7,7 @@ export default {
   parameters: {
     layout: "centered"
   },
-  tags: ["autodocs"],
-  argTypes: {
-    value: {
-      control: "text",
-      description: "Label text for the checkbox"
-    },
-    selected: {
-      control: "boolean",
-      description: "Whether the checkbox is checked"
-    },
-    className: {
-      control: "text",
-      description: "Additional CSS classes"
-    }
-  }
+  tags: ["autodocs"]
 } as Meta<typeof Checkbox>
 
 type Story = StoryObj<typeof Checkbox>

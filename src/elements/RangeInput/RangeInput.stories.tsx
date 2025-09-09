@@ -7,29 +7,7 @@ export default {
   parameters: {
     layout: "centered"
   },
-  tags: ["autodocs"],
-  argTypes: {
-    placeholder: {
-      control: "text",
-      description: "Placeholder text"
-    },
-    value: {
-      control: "number",
-      description: "Input value"
-    },
-    min: {
-      control: "number",
-      description: "Minimum value"
-    },
-    max: {
-      control: "number",
-      description: "Maximum value"
-    },
-    disabled: {
-      control: "boolean",
-      description: "Whether the input is disabled"
-    }
-  }
+  tags: ["autodocs"]
 } as Meta<typeof RangeInput>
 
 type Story = StoryObj<typeof RangeInput>
