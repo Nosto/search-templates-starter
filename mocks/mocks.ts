@@ -2,10 +2,6 @@ import { type SerpConfig } from "@nosto/search-js/preact/serp"
 import { type State } from "@nosto/search-js/preact/common"
 import { generateMockProducts } from "./products"
 
-// ============================================================================
-// Search Config & State Mocks
-// ============================================================================
-
 export const mockConfig: SerpConfig = {
   defaultCurrency: "EUR",
   search: {
