@@ -7,13 +7,7 @@ export default {
   parameters: {
     layout: "centered"
   },
-  tags: ["autodocs"],
-  argTypes: {
-    hit: {
-      control: "object",
-      description: "Product hit object from search results"
-    }
-  }
+  tags: ["autodocs"]
 } as Meta<typeof Product>
 
 type Story = StoryObj<typeof Product>

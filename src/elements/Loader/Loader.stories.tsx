@@ -7,13 +7,7 @@ export default {
   parameters: {
     layout: "centered"
   },
-  tags: ["autodocs"],
-  argTypes: {
-    className: {
-      control: "text",
-      description: "Additional CSS classes"
-    }
-  }
+  tags: ["autodocs"]
 } as Meta<typeof Loader>
 
 type Story = StoryObj<typeof Loader>

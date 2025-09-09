@@ -8,29 +8,7 @@ export default {
   parameters: {
     layout: "centered"
   },
-  tags: ["autodocs"],
-  argTypes: {
-    name: {
-      control: "select",
-      options: [
-        "close",
-        "arrow",
-        "arrow-left",
-        "arrow-right",
-        "arrow-up",
-        "arrow-down",
-        "search",
-        "page-prev",
-        "page-next",
-        "filter"
-      ],
-      description: "Icon name to display"
-    },
-    className: {
-      control: "text",
-      description: "Additional CSS classes"
-    }
-  }
+  tags: ["autodocs"]
 } as Meta<typeof Icon>
 
 type Story = StoryObj<typeof Icon>

@@ -19,13 +19,7 @@ export default {
   parameters: {
     layout: "centered"
   },
-  tags: ["autodocs"],
-  argTypes: {
-    facet: {
-      control: "object",
-      description: "Facet configuration object"
-    }
-  }
+  tags: ["autodocs"]
 } as Meta<typeof Facet>
 
 type Story = StoryObj<typeof Facet>

@@ -7,17 +7,7 @@ export default {
   parameters: {
     layout: "centered"
   },
-  tags: ["autodocs"],
-  argTypes: {
-    product: {
-      control: "object",
-      description: "Product data object"
-    },
-    previewImage: {
-      control: "text",
-      description: "Optional preview image URL"
-    }
-  }
+  tags: ["autodocs"]
 } as Meta<typeof Product>
 
 type Story = StoryObj<typeof Product>
