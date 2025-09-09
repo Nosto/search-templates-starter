@@ -13,5 +13,5 @@ export default {
 type Story = StoryObj<typeof Products>
 
 export const Default: Story = {
-  render: () => <Products />
+  args: {}
 }

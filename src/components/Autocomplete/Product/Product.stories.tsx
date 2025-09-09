@@ -7,7 +7,13 @@ export default {
   parameters: {
     layout: "centered"
   },
-  tags: ["autodocs"]
+  tags: ["autodocs"],
+  argTypes: {
+    hit: {
+      control: "object",
+      description: "Product hit object from search results"
+    }
+  }
 } as Meta<typeof Product>
 
 type Story = StoryObj<typeof Product>
@@ -47,13 +53,19 @@ const mockProductNoBrand = {
 }
 
 export const Default: Story = {
-  render: () => <Product hit={mockProduct} />
+  args: {
+    hit: mockProduct
+  }
 }
 
 export const RegularPrice: Story = {
-  render: () => <Product hit={mockProductNoSale} />
+  args: {
+    hit: mockProductNoSale
+  }
 }
 
 export const NoBrand: Story = {
-  render: () => <Product hit={mockProductNoBrand} />
+  args: {
+    hit: mockProductNoBrand
+  }
 }

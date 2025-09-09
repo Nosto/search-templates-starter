@@ -7,7 +7,17 @@ export default {
   parameters: {
     layout: "centered"
   },
-  tags: ["autodocs"]
+  tags: ["autodocs"],
+  argTypes: {
+    keyword: {
+      control: "object",
+      description: "Keyword object with highlighting information"
+    },
+    onSubmit: {
+      action: "submitted",
+      description: "Function called when keyword is clicked"
+    }
+  }
 } as Meta<typeof Keyword>
 
 type Story = StoryObj<typeof Keyword>
@@ -30,13 +40,17 @@ const mockKeywordNoHighlight = {
 }
 
 export const Default: Story = {
-  render: () => <Keyword keyword={mockKeyword} onSubmit={(query: string) => console.info("Search submitted:", query)} />
+  args: {
+    keyword: mockKeyword,
+    onSubmit: (query: string) => console.info("Search submitted:", query)
+  }
 }
 
 export const WithoutHighlight: Story = {
-  render: () => (
-    <Keyword keyword={mockKeywordNoHighlight} onSubmit={(query: string) => console.info("Search submitted:", query)} />
-  ),
+  args: {
+    keyword: mockKeywordNoHighlight,
+    onSubmit: (query: string) => console.info("Search submitted:", query)
+  },
   parameters: {
     docs: {
       description: {

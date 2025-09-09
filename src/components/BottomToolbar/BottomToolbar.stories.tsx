@@ -18,5 +18,5 @@ export default {
 type Story = StoryObj<typeof BottomToolbar>
 
 export const Default: Story = {
-  render: () => <BottomToolbar />
+  args: {}
 }

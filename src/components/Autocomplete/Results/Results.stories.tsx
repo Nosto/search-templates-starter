@@ -4,11 +4,19 @@ import Results from "./Results"
 export default {
   title: "Autocomplete/Results",
   component: Results,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
+  argTypes: {
+    onSubmit: {
+      action: "submitted",
+      description: "Function called when a search is submitted"
+    }
+  }
 } as Meta<typeof Results>
 
 type Story = StoryObj<typeof Results>
 
 export const Default: Story = {
-  render: () => <Results onSubmit={(query: string) => console.log("Search submitted:", query)} />
+  args: {
+    onSubmit: (query: string) => console.log("Search submitted:", query)
+  }
 }

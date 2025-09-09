@@ -7,7 +7,13 @@ export default {
   parameters: {
     layout: "centered"
   },
-  tags: ["autodocs"]
+  tags: ["autodocs"],
+  argTypes: {
+    products: {
+      control: "object",
+      description: "Products object with search results"
+    }
+  }
 } as Meta<typeof Products>
 
 type Story = StoryObj<typeof Products>
@@ -58,11 +64,15 @@ const emptyProducts = {
 }
 
 export const Default: Story = {
-  render: () => <Products products={mockProducts} />
+  args: {
+    products: mockProducts
+  }
 }
 
 export const EmptyProducts: Story = {
-  render: () => <Products products={emptyProducts} />,
+  args: {
+    products: emptyProducts
+  },
   parameters: {
     docs: {
       description: {

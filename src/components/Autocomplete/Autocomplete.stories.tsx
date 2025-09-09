@@ -7,17 +7,27 @@ export default {
   parameters: {
     layout: "centered"
   },
-  tags: ["autodocs"]
+  tags: ["autodocs"],
+  argTypes: {
+    onSubmit: {
+      action: "submitted",
+      description: "Function called when search is submitted"
+    }
+  }
 } as Meta<typeof Autocomplete>
 
 type Story = StoryObj<typeof Autocomplete>
 
 export const Default: Story = {
-  render: () => <Autocomplete onSubmit={(input: string) => console.info("Search submitted:", input)} />
+  args: {
+    onSubmit: (input: string) => console.info("Search submitted:", input)
+  }
 }
 
 export const Interactive: Story = {
-  render: () => <Autocomplete onSubmit={(input: string) => console.info("Search submitted:", input)} />,
+  args: {
+    onSubmit: (input: string) => console.info("Search submitted:", input)
+  },
   parameters: {
     docs: {
       description: {
