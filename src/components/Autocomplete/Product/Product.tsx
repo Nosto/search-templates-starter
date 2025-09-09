@@ -1,5 +1,4 @@
 import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
-import { productImagePlaceholder } from "@/helpers"
 import style from "./Product.module.css"
 import { DecoratedProduct } from "@nosto/search-js"
 import { hitDecorators } from "@/config"
@@ -24,7 +23,7 @@ export default function Product({ hit }: Props) {
         href: hit.url
       }}
     >
-      <img className={style.image} src={hit.imageUrl ?? productImagePlaceholder} alt={hit.name} />
+      <img className={style.image} src={hit.imageUrl} alt={hit.name} />
       <div className={style.details} data-nosto-element="product">
         {hit.brand && <div>{hit.brand}</div>}
         <div className={style.name}>{hit.name}</div>
