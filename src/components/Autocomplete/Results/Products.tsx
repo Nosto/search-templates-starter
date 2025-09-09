@@ -4,7 +4,7 @@ import SectionHeader from "@/elements/SectionHeader/SectionHeader"
 import Product from "@/components/Autocomplete/Product/Product"
 import style from "./Results.module.css"
 
-export interface ProductsProps {
+export type ProductsProps = {
   products: SearchProducts
 }
 
