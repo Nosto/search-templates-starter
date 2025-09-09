@@ -16,28 +16,34 @@ export default {
   parameters: {
     layout: "centered"
   },
-  tags: ["autodocs"]
+  tags: ["autodocs"],
+  argTypes: {
+    facet: {
+      control: "object",
+      description: "Range facet configuration object"
+    }
+  }
 } as Meta<typeof RangeFacet>
 
 type Story = StoryObj<typeof RangeFacet>
 
 export const Default: Story = {
-  render: () => <RangeFacet facet={mockRangeFacet} />
+  args: {
+    facet: mockRangeFacet
+  }
 }
 
 export const LargeRange: Story = {
-  render: () => (
-    <RangeFacet
-      facet={{
-        id: "rating",
-        name: "Customer Rating",
-        field: "rating",
-        type: "stats" as const,
-        min: 1,
-        max: 5
-      }}
-    />
-  ),
+  args: {
+    facet: {
+      id: "rating",
+      name: "Customer Rating",
+      field: "rating",
+      type: "stats" as const,
+      min: 1,
+      max: 5
+    }
+  },
   parameters: {
     docs: {
       description: {
@@ -48,16 +54,14 @@ export const LargeRange: Story = {
 }
 
 export const WeightRange: Story = {
-  render: () => (
-    <RangeFacet
-      facet={{
-        id: "weight",
-        name: "Weight (kg)",
-        field: "weight",
-        type: "stats" as const,
-        min: 0.1,
-        max: 25.0
-      }}
-    />
-  )
+  args: {
+    facet: {
+      id: "weight",
+      name: "Weight (kg)",
+      field: "weight",
+      type: "stats" as const,
+      min: 0.1,
+      max: 25.0
+    }
+  }
 }

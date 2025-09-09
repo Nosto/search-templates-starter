@@ -13,5 +13,5 @@ export default {
 type Story = StoryObj<typeof Search>
 
 export const Default: Story = {
-  render: () => <Search />
+  args: {}
 }

@@ -13,5 +13,5 @@ export default {
 type Story = StoryObj<typeof Pagination>
 
 export const Default: Story = {
-  render: () => <Pagination />
+  args: {}
 }

@@ -7,7 +7,17 @@ export default {
   parameters: {
     layout: "centered"
   },
-  tags: ["autodocs"]
+  tags: ["autodocs"],
+  argTypes: {
+    keywords: {
+      control: "object",
+      description: "Keywords object with search suggestions"
+    },
+    onSubmit: {
+      action: "submitted",
+      description: "Function called when a keyword is selected"
+    }
+  }
 } as Meta<typeof Keywords>
 
 type Story = StoryObj<typeof Keywords>
@@ -51,15 +61,17 @@ const emptyKeywords = {
 }
 
 export const Default: Story = {
-  render: () => (
-    <Keywords keywords={mockKeywords} onSubmit={(query: string) => console.info("Search submitted:", query)} />
-  )
+  args: {
+    keywords: mockKeywords,
+    onSubmit: (query: string) => console.info("Search submitted:", query)
+  }
 }
 
 export const EmptyKeywords: Story = {
-  render: () => (
-    <Keywords keywords={emptyKeywords} onSubmit={(query: string) => console.info("Search submitted:", query)} />
-  ),
+  args: {
+    keywords: emptyKeywords,
+    onSubmit: (query: string) => console.info("Search submitted:", query)
+  },
   parameters: {
     docs: {
       description: {
