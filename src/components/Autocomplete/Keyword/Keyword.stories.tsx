@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Keyword from "./Keyword"
+import { mockKeyword, mockKeywordNoHighlight } from "@/mocks/mocks"
 
 export default {
   title: "Autocomplete/Keyword",
@@ -11,23 +12,6 @@ export default {
 } as Meta<typeof Keyword>
 
 type Story = StoryObj<typeof Keyword>
-
-const mockKeyword = {
-  keyword: "running shoes",
-  _highlight: {
-    keyword: "<b>running</b> shoes"
-  },
-  facets: [],
-  priority: 1,
-  total: 1
-}
-
-const mockKeywordNoHighlight = {
-  keyword: "sneakers",
-  facets: [],
-  priority: 1,
-  total: 1
-}
 
 export const Default: Story = {
   args: {

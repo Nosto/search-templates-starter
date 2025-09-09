@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Keywords from "./Keywords"
+import { mockKeywords, mockEmptyKeywords } from "@/mocks/mocks"
 
 export default {
   title: "Autocomplete/Keywords",
@@ -12,44 +13,6 @@ export default {
 
 type Story = StoryObj<typeof Keywords>
 
-const mockKeywords = {
-  hits: [
-    {
-      keyword: "running shoes",
-      _highlight: {
-        keyword: "<b>running</b> shoes"
-      },
-      facets: [],
-      priority: 1,
-      total: 3
-    },
-    {
-      keyword: "running gear",
-      _highlight: {
-        keyword: "<b>running</b> gear"
-      },
-      facets: [],
-      priority: 2,
-      total: 3
-    },
-    {
-      keyword: "marathon training",
-      _highlight: {
-        keyword: "marathon training"
-      },
-      facets: [],
-      priority: 3,
-      total: 3
-    }
-  ],
-  total: 3
-}
-
-const emptyKeywords = {
-  hits: [],
-  total: 0
-}
-
 export const Default: Story = {
   args: {
     keywords: mockKeywords,
@@ -59,7 +22,7 @@ export const Default: Story = {
 
 export const EmptyKeywords: Story = {
   args: {
-    keywords: emptyKeywords,
+    keywords: mockEmptyKeywords,
     onSubmit: (query: string) => console.info("Search submitted:", query)
   },
   parameters: {
