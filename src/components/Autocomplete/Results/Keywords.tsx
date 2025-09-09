@@ -1,5 +1,5 @@
 import { SearchKeywords } from "@nosto/nosto-js/client"
-import SectionHeader from "@/elements/SectionHeader/SectionHeader"
+import Heading from "@/elements/Heading/Heading"
 import Keyword from "@/components/Autocomplete/Keyword/Keyword"
 import style from "./Results.module.css"
 
@@ -15,7 +15,7 @@ export default function Keywords({ keywords, onSubmit }: KeywordsProps) {
 
   return (
     <div className={style.suggestionsColumn}>
-      <SectionHeader>Suggestions</SectionHeader>
+      <Heading>Suggestions</Heading>
       <div className={style.keywords}>
         {keywords.hits.map((keyword, index) => (
           <Keyword key={index} keyword={keyword} onSubmit={onSubmit} />

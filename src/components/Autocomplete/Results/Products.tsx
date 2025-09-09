@@ -1,6 +1,6 @@
 import { SearchProducts } from "@nosto/nosto-js/client"
 import Button from "@/elements/Button/Button"
-import SectionHeader from "@/elements/SectionHeader/SectionHeader"
+import Heading from "@/elements/Heading/Heading"
 import Product from "@/components/Autocomplete/Product/Product"
 import style from "./Results.module.css"
 
@@ -15,7 +15,7 @@ export default function Products({ products }: ProductsProps) {
 
   return (
     <div className={style.productsColumn}>
-      <SectionHeader>Products</SectionHeader>
+      <Heading>Products</Heading>
       <div className={style.products}>
         {products.hits.map(hit => (
           <Product key={hit.productId} hit={hit} />
