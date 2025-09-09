@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Product from "./Product"
-import { mockSerpProduct } from "@/mocks/mocks"
+import { mockSerpProduct } from "@/mocks/products"
 
 export default {
   title: "Components/Product",

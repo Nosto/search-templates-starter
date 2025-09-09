@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Products from "./Products"
-import { mockAutocompleteProducts, mockEmptyProducts } from "@/mocks/mocks"
+import { mockAutocompleteProducts, mockEmptyProducts } from "@/mocks/products"
 
 export default {
   title: "Autocomplete/Products",
