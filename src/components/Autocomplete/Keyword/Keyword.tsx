@@ -2,7 +2,7 @@ import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
 import { SearchKeyword } from "@nosto/nosto-js/client"
 import style from "./Keyword.module.css"
 
-interface KeywordProps {
+type KeywordProps = {
   keyword: SearchKeyword
   onSubmit: (query: string) => void
 }

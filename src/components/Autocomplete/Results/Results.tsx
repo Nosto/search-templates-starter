@@ -3,7 +3,7 @@ import style from "./Results.module.css"
 import Keywords from "./Keywords"
 import Products from "./Products"
 
-interface ResultsProps {
+type ResultsProps = {
   onSubmit: (query: string) => void
 }
 

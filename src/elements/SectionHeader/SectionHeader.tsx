@@ -1,6 +1,6 @@
 import style from "./SectionHeader.module.css"
 
-interface SectionHeaderProps {
+type SectionHeaderProps = {
   children: string
 }
 
