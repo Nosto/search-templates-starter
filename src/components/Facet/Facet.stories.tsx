@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Facet from "./Facet"
-import { mockCategoryFacet, mockBrandFacet } from "@/mocks/mocks"
+import { mockCategoryFacet, mockBrandFacet } from "@mocks/mocks"
 
 export default {
   title: "Components/Facet/Facet",
