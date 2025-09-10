@@ -1,15 +1,8 @@
 import { InputSearchSort } from "@nosto/nosto-js/client"
-import { serializeFilters, deserializeFilters, clearFilterParameters, SimpleFilter, FILTER_PREFIX } from "./filter"
-import {
-  serializeSort,
-  deserializeSort,
-  clearSortParameters,
-  SORT_PARAM,
-  serializeSortToUrl,
-  deserializeSortFromUrl
-} from "./sort"
-import { serializePage, deserializePage, clearPageParameters, PAGE_PARAM } from "./page"
-import { serializeSize, deserializeSize, clearSizeParameters, SIZE_PARAM } from "./size"
+import { serializeFilters, deserializeFilters, SimpleFilter, FILTER_PREFIX } from "./filter"
+import { serializeSort, deserializeSort, SORT_PARAM } from "./sort"
+import { serializePage, deserializePage, PAGE_PARAM } from "./page"
+import { serializeSize, deserializeSize, SIZE_PARAM } from "./size"
 
 const QUERY_PARAM = "q"
 
@@ -104,23 +97,4 @@ export function getPageUrl(page: number) {
     ...currentState,
     page: page > 1 ? page : undefined
   })
-}
-
-// Re-export types and individual functions for backward compatibility and direct access
-export type { SimpleFilter }
-export { FILTER_PREFIX, SORT_PARAM, PAGE_PARAM, SIZE_PARAM }
-export { serializeSortToUrl, deserializeSortFromUrl }
-export {
-  serializeFilters,
-  deserializeFilters,
-  clearFilterParameters,
-  serializeSort,
-  deserializeSort,
-  clearSortParameters,
-  serializePage,
-  deserializePage,
-  clearPageParameters,
-  serializeSize,
-  deserializeSize,
-  clearSizeParameters
 }

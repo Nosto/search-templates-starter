@@ -7,7 +7,7 @@ import {
   getCurrentUrlState,
   getPageUrl,
   UrlQueryState
-} from "@/utils/url"
+} from "@/url/url"
 
 describe("URL utilities", () => {
   describe("serializeQueryState", () => {
