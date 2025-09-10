@@ -1,3 +1,5 @@
+import { createProductsResponse, createEmptyResponse } from "./utils"
+
 export function generateMockProducts(count: number) {
   const categories = ["Clothing", "Electronics", "Home & Garden", "Sports", "Books", "Beauty"]
   const brands = ["BrandA", "BrandB", "BrandC", "BrandD", "BrandE", "BrandF"]
@@ -72,12 +74,6 @@ export const mockSerpProduct = {
   url: "#"
 }
 
-export const mockProducts = {
-  hits: generateMockProducts(5),
-  total: 5
-}
+export const mockProducts = createProductsResponse(generateMockProducts(5))
 
-export const mockEmptyProducts = {
-  hits: [],
-  total: 0
-}
+export const mockEmptyProducts = createEmptyResponse()
