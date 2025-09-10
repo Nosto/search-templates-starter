@@ -1,27 +1,33 @@
 import { SearchTermsFacet, SearchStatsFacet, SearchFacetTerm } from "@nosto/nosto-js/client"
 
-const createTermsFacet = (id: string, name: string, field: string, data: SearchFacetTerm[]): SearchTermsFacet => ({
-  id,
-  name,
-  field,
-  type: "terms",
-  data
-})
+function createTermsFacet(id: string, name: string, field: string, data: SearchFacetTerm[]): SearchTermsFacet {
+  return {
+    id,
+    name,
+    field,
+    type: "terms",
+    data
+  }
+}
 
-const createStatsFacet = (id: string, name: string, field: string, min: number, max: number): SearchStatsFacet => ({
-  id,
-  name,
-  field,
-  type: "stats",
-  min,
-  max
-})
+function createStatsFacet(id: string, name: string, field: string, min: number, max: number): SearchStatsFacet {
+  return {
+    id,
+    name,
+    field,
+    type: "stats",
+    min,
+    max
+  }
+}
 
-const createFacetDataItem = (value: string, count: number, selected = false): SearchFacetTerm => ({
-  value,
-  count,
-  selected
-})
+function createFacetDataItem(value: string, count: number, selected = false): SearchFacetTerm {
+  return {
+    value,
+    count,
+    selected
+  }
+}
 
 export const mockCategoryFacet = createTermsFacet("category", "Category", "categories", [
   createFacetDataItem("shoes", 42),

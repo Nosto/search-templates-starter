@@ -1,25 +1,31 @@
 import { SearchKeywords, SearchKeyword, SearchFacet } from "@nosto/nosto-js/client"
 
-const createEmptyResponse = (): Pick<SearchKeywords, "hits" | "total"> => ({
-  hits: [],
-  total: 0
-})
+function createEmptyResponse(): Pick<SearchKeywords, "hits" | "total"> {
+  return {
+    hits: [],
+    total: 0
+  }
+}
 
-const createKeyword = (
+function createKeyword(
   keyword: string,
   options: { highlight?: string; facets?: SearchFacet[]; priority?: number; total?: number } = {}
-): SearchKeyword => ({
-  keyword,
-  ...(options.highlight ? { _highlight: { keyword: options.highlight } } : {}),
-  facets: options.facets || [],
-  priority: options.priority || 1,
-  total: options.total || 1
-})
+): SearchKeyword {
+  return {
+    keyword,
+    ...(options.highlight ? { _highlight: { keyword: options.highlight } } : {}),
+    facets: options.facets || [],
+    priority: options.priority || 1,
+    total: options.total || 1
+  }
+}
 
-const createKeywordsResponse = (keywords: SearchKeyword[]): SearchKeywords => ({
-  hits: keywords,
-  total: keywords.length
-})
+function createKeywordsResponse(keywords: SearchKeyword[]): SearchKeywords {
+  return {
+    hits: keywords,
+    total: keywords.length
+  }
+}
 
 export const mockKeyword = createKeyword("running shoes", {
   highlight: "<b>running</b> shoes"

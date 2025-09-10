@@ -1,14 +1,18 @@
 import { SearchProducts, SearchProduct } from "@nosto/nosto-js/client"
 
-const createProductsResponse = (products: SearchProduct[]): SearchProducts => ({
-  hits: products,
-  total: products.length
-})
+function createProductsResponse(products: SearchProduct[]): SearchProducts {
+  return {
+    hits: products,
+    total: products.length
+  }
+}
 
-const createEmptyResponse = (): Pick<SearchProducts, "hits" | "total"> => ({
-  hits: [],
-  total: 0
-})
+function createEmptyResponse(): Pick<SearchProducts, "hits" | "total"> {
+  return {
+    hits: [],
+    total: 0
+  }
+}
 
 export function generateMockProducts(count: number): SearchProduct[] {
   const categories = ["Clothing", "Electronics", "Home & Garden", "Sports", "Books", "Beauty"]
