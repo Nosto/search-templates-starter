@@ -6,8 +6,7 @@ import { ContentChildrenProps, wrapContent } from "@/components/ContentWrapper/C
 import { InfiniteScroll } from "@nosto/search-js/preact/common"
 import NoResults from "@/components/NoResults/NoResults"
 
-export function CategoryBody({ loading, foundProducts }: ContentChildrenProps) {
-  if (loading) return null
+export function CategoryBody({ foundProducts }: ContentChildrenProps) {
   return foundProducts ? (
     <>
       <SelectedFilters />
@@ -21,7 +20,7 @@ export function CategoryBody({ loading, foundProducts }: ContentChildrenProps) {
 }
 
 export function CategoryBodyInfiniteScroll({ loading, foundProducts }: ContentChildrenProps) {
-  if (!foundProducts) return loading ? null : <NoResults />
+  if (!foundProducts && !loading) return <NoResults />
   return (
     <>
       <SelectedFilters />
