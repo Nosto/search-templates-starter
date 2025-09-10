@@ -28,7 +28,7 @@ export function generateMockProducts(count: number) {
   })
 }
 
-export const mockAutocompleteProduct = {
+export const mockProduct = {
   productId: "12345",
   name: "Running Shoes",
   brand: "Nike",
@@ -41,7 +41,7 @@ export const mockAutocompleteProduct = {
   handle: "running-shoes"
 }
 
-export const mockAutocompleteProductNoSale = {
+export const mockProductNoSale = {
   productId: "67890",
   name: "Casual Sneakers",
   brand: "Adidas",
@@ -52,7 +52,7 @@ export const mockAutocompleteProductNoSale = {
   handle: "casual-sneakers"
 }
 
-export const mockAutocompleteProductNoBrand = {
+export const mockProductNoBrand = {
   productId: "54321",
   name: "Generic Sports Shoes",
   price: 60.0,
@@ -72,33 +72,9 @@ export const mockSerpProduct = {
   url: "#"
 }
 
-export const mockAutocompleteProducts = {
-  hits: [
-    mockAutocompleteProduct,
-    {
-      productId: "67890",
-      name: "Casual Sneakers",
-      brand: "Adidas",
-      price: 80.0,
-      priceText: "€80.00",
-      imageUrl: "https://picsum.photos/300/300?random=2",
-      url: "/products/casual-sneakers",
-      handle: "casual-sneakers"
-    },
-    {
-      productId: "54321",
-      name: "Sports Shoes",
-      brand: "Puma",
-      price: 95.0,
-      listPrice: 110.0,
-      priceText: "€95.00",
-      listPriceText: "€110.00",
-      imageUrl: "https://picsum.photos/300/300?random=3",
-      url: "/products/sports-shoes",
-      handle: "sports-shoes"
-    }
-  ],
-  total: 3
+export const mockProducts = {
+  hits: generateMockProducts(5),
+  total: 5
 }
 
 export const mockEmptyProducts = {

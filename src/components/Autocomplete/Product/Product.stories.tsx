@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Product from "./Product"
-import { mockAutocompleteProduct, mockAutocompleteProductNoSale, mockAutocompleteProductNoBrand } from "@mocks/products"
+import { mockProduct, mockProductNoSale, mockProductNoBrand } from "@mocks/products"
 
 export default {
   title: "Autocomplete/Product",
@@ -15,18 +15,18 @@ type Story = StoryObj<typeof Product>
 
 export const Default: Story = {
   args: {
-    hit: mockAutocompleteProduct
+    hit: mockProduct
   }
 }
 
 export const RegularPrice: Story = {
   args: {
-    hit: mockAutocompleteProductNoSale
+    hit: mockProductNoSale
   }
 }
 
 export const NoBrand: Story = {
   args: {
-    hit: mockAutocompleteProductNoBrand
+    hit: mockProductNoBrand
   }
 }
