@@ -1,4 +1,4 @@
-import { InputSearchTopLevelFilter, InputSearchSort } from "@nosto/nosto-js/client"
+import type { InputSearchTopLevelFilter, InputSearchSort } from "@nosto/nosto-js/client"
 
 type SimpleFilter = Pick<InputSearchTopLevelFilter, "field" | "value" | "range">
 

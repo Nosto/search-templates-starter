@@ -1,3 +1,4 @@
+import type { InputSearchSort } from "@nosto/nosto-js/client"
 import { defaultConfig } from "@/config"
 import { UrlQueryState } from "./types"
 import { QUERY_PARAM, PAGE_PARAM, SIZE_PARAM, FILTER_PREFIX, SORT_PARAM } from "./constants"
@@ -6,7 +7,7 @@ function encodeSortField(field: string) {
   return field.replace(/~/g, "%7E").replace(/,/g, "%2C")
 }
 
-function serializeSortToUrl(sort: import("@nosto/nosto-js/client").InputSearchSort[]) {
+function serializeSortToUrl(sort: InputSearchSort[]) {
   return sort.map(s => `${encodeSortField(s.field)}~${s.order}`).join(",")
 }
 

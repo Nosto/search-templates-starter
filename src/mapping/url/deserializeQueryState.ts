@@ -1,4 +1,4 @@
-import { InputSearchTopLevelFilter, InputSearchRangeFilter } from "@nosto/nosto-js/client"
+import type { InputSearchTopLevelFilter, InputSearchRangeFilter, InputSearchSort } from "@nosto/nosto-js/client"
 import { ensureMapValue } from "@/utils/ensureMap"
 import { UrlQueryState } from "./types"
 import { QUERY_PARAM, PAGE_PARAM, SIZE_PARAM, FILTER_PREFIX, SORT_PARAM } from "./constants"
@@ -21,7 +21,7 @@ function deserializeSortFromUrl(sortString: string) {
       const field = decodeSortField(parts[0])
       const order = parts[1]
       if (!field || !order) return null
-      return { field, order } as import("@nosto/nosto-js/client").InputSearchSort
+      return { field, order } as InputSearchSort
     })
     .filter(item => item !== null)
 }
