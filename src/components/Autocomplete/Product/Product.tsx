@@ -1,11 +1,10 @@
 import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
 import style from "./Product.module.css"
-import { DecoratedProduct } from "@nosto/search-js"
-import { hitDecorators } from "@/config"
+import type { Product } from "@/types"
 import DynamicCard from "@/components/DynamicCard/DynamicCard"
 
 type Props = {
-  hit: DecoratedProduct<typeof hitDecorators>
+  hit: Product
 }
 
 export default function Product({ hit }: Props) {

@@ -1,8 +1,7 @@
 import { SearchProducts } from "@nosto/nosto-js/client"
-import { DecoratedProduct } from "@nosto/search-js"
-import { hitDecorators } from "../src/config"
+import type { Product } from "../src/types"
 
-function createProductsResponse(products: DecoratedProduct<typeof hitDecorators>[]): SearchProducts {
+function createProductsResponse(products: Product[]): SearchProducts {
   return {
     hits: products,
     total: products.length
@@ -16,7 +15,7 @@ function createEmptyResponse() {
   }
 }
 
-export function generateMockProducts(count: number): DecoratedProduct<typeof hitDecorators>[] {
+export function generateMockProducts(count: number): Product[] {
   const categories = ["Clothing", "Electronics", "Home & Garden", "Sports", "Books", "Beauty"]
   const brands = ["BrandA", "BrandB", "BrandC", "BrandD", "BrandE", "BrandF"]
   const adjectives = ["Premium", "Classic", "Modern", "Vintage", "Eco-Friendly", "Luxury"]
@@ -46,7 +45,7 @@ export function generateMockProducts(count: number): DecoratedProduct<typeof hit
   })
 }
 
-export const mockProduct: DecoratedProduct<typeof hitDecorators> = {
+export const mockProduct: Product = {
   productId: "12345",
   name: "Running Shoes",
   brand: "Nike",
@@ -59,7 +58,7 @@ export const mockProduct: DecoratedProduct<typeof hitDecorators> = {
   handle: "running-shoes"
 }
 
-export const mockProductNoSale: DecoratedProduct<typeof hitDecorators> = {
+export const mockProductNoSale: Product = {
   productId: "67890",
   name: "Casual Sneakers",
   brand: "Adidas",
@@ -70,7 +69,7 @@ export const mockProductNoSale: DecoratedProduct<typeof hitDecorators> = {
   handle: "casual-sneakers"
 }
 
-export const mockProductNoBrand: DecoratedProduct<typeof hitDecorators> = {
+export const mockProductNoBrand: Product = {
   productId: "54321",
   name: "Generic Sports Shoes",
   price: 60.0,
@@ -80,7 +79,7 @@ export const mockProductNoBrand: DecoratedProduct<typeof hitDecorators> = {
   handle: "generic-sports-shoes"
 }
 
-export const mockSerpProduct: DecoratedProduct<typeof hitDecorators> = {
+export const mockSerpProduct: Product = {
   productId: "1",
   name: "Sample Product",
   price: 30.0,
