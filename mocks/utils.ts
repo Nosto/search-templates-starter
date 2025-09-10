@@ -1,5 +1,12 @@
 /**
  * Utility functions for creating mock data with common shapes
+ * 
+ * This module provides reusable utilities to eliminate code duplication
+ * across mock data files by providing consistent patterns for:
+ * - Terms and stats facets
+ * - Keyword responses  
+ * - Product responses
+ * - Empty responses
  */
 
 // Types for facets
