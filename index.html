@@ -44,17 +44,15 @@
       renderApp()
     </script>
     <script type="module">
+      import { mockNostojs } from "@nosto/nosto-js/testing"
+      import { mockSearch } from "@mocks/search"
+      import { init } from "@nosto/nosto-js"
+      
       async function setupNosto() {
         const mode = import.meta.env.MODE
         if (mode === "mocked") {
-          // Use mockNostojs for mocked mode
-          const { mockNostojs } = await import("@nosto/nosto-js/testing")
-          const { mockSearch } = await import("@mocks/search")
-          
           mockNostojs({ search: mockSearch })
         } else {
-          // Use regular init for other modes
-          const { init } = await import("@nosto/nosto-js")
           init({
             merchantId: import.meta.env.VITE_MERCHANT_ID
           })
