@@ -1,6 +1,8 @@
-import { SearchProducts, SearchProduct } from "@nosto/nosto-js/client"
+import { SearchProducts } from "@nosto/nosto-js/client"
+import { DecoratedProduct } from "@nosto/search-js"
+import { hitDecorators } from "../src/config"
 
-function createProductsResponse(products: SearchProduct[]): SearchProducts {
+function createProductsResponse(products: DecoratedProduct<typeof hitDecorators>[]): SearchProducts {
   return {
     hits: products,
     total: products.length
@@ -14,7 +16,7 @@ function createEmptyResponse() {
   }
 }
 
-export function generateMockProducts(count: number): SearchProduct[] {
+export function generateMockProducts(count: number): DecoratedProduct<typeof hitDecorators>[] {
   const categories = ["Clothing", "Electronics", "Home & Garden", "Sports", "Books", "Beauty"]
   const brands = ["BrandA", "BrandB", "BrandC", "BrandD", "BrandE", "BrandF"]
   const adjectives = ["Premium", "Classic", "Modern", "Vintage", "Eco-Friendly", "Luxury"]
@@ -44,37 +46,41 @@ export function generateMockProducts(count: number): SearchProduct[] {
   })
 }
 
-export const mockProduct: SearchProduct = {
+export const mockProduct: DecoratedProduct<typeof hitDecorators> = {
   productId: "12345",
   name: "Running Shoes",
   brand: "Nike",
   price: 120.0,
   listPrice: 150.0,
   priceText: "€120.00",
+  listPriceText: "€150.00",
   imageUrl: "https://picsum.photos/300/300",
-  url: "/products/running-shoes"
+  url: "/products/running-shoes",
+  handle: "running-shoes"
 }
 
-export const mockProductNoSale: SearchProduct = {
+export const mockProductNoSale: DecoratedProduct<typeof hitDecorators> = {
   productId: "67890",
   name: "Casual Sneakers",
   brand: "Adidas",
   price: 80.0,
   priceText: "€80.00",
   imageUrl: "https://picsum.photos/300/300?random=2",
-  url: "/products/casual-sneakers"
+  url: "/products/casual-sneakers",
+  handle: "casual-sneakers"
 }
 
-export const mockProductNoBrand: SearchProduct = {
+export const mockProductNoBrand: DecoratedProduct<typeof hitDecorators> = {
   productId: "54321",
   name: "Generic Sports Shoes",
   price: 60.0,
   priceText: "€60.00",
   imageUrl: "https://picsum.photos/300/300?random=3",
-  url: "/products/generic-sports-shoes"
+  url: "/products/generic-sports-shoes",
+  handle: "generic-sports-shoes"
 }
 
-export const mockSerpProduct: SearchProduct = {
+export const mockSerpProduct: DecoratedProduct<typeof hitDecorators> = {
   productId: "1",
   name: "Sample Product",
   price: 30.0,
