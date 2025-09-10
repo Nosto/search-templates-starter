@@ -12,10 +12,11 @@ const SidebarContext = createContext<SidebarContextType | undefined>(undefined)
 
 type SidebarProviderProps = {
   children: ComponentChildren
+  initialOpen?: boolean
 }
 
-export function SidebarProvider({ children }: SidebarProviderProps) {
-  const [isOpen, setOpen] = useState(false)
+export function SidebarProvider({ children, initialOpen = false }: SidebarProviderProps) {
+  const [isOpen, setOpen] = useState(initialOpen)
 
   const toggle = () => {
     setOpen(!isOpen)

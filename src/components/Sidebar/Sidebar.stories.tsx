@@ -6,7 +6,7 @@ export default {
   title: "Components/Sidebar",
   component: Sidebar,
   parameters: {
-    layout: "centered"
+    layout: "fullscreen"
   },
   tags: ["autodocs"]
 } as Meta<typeof Sidebar>
@@ -15,8 +15,8 @@ type Story = StoryObj<typeof Sidebar>
 
 export const MockedView: Story = {
   render: () => (
-    <SidebarProvider>
-      <div style={{ position: "relative", width: "300px", height: "400px" }}>
+    <SidebarProvider initialOpen={true}>
+      <div style={{ position: "relative", width: "100vw", height: "100vh" }}>
         <Sidebar />
       </div>
     </SidebarProvider>

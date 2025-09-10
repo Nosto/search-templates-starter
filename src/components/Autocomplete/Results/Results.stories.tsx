@@ -4,6 +4,9 @@ import Results from "./Results"
 export default {
   title: "Autocomplete/Results",
   component: Results,
+  parameters: {
+    layout: "fullscreen"
+  },
   tags: ["autodocs"]
 } as Meta<typeof Results>
 
