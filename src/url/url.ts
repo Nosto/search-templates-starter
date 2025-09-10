@@ -25,6 +25,16 @@ function clearMappedParameters(params: URLSearchParams) {
   keysToDelete.forEach(key => params.delete(key))
 }
 
+function assignIfTruthy<K extends keyof UrlQueryState>(
+  target: UrlQueryState,
+  key: K,
+  value: UrlQueryState[K] | undefined
+) {
+  if (value) {
+    target[key] = value
+  }
+}
+
 export function serializeQueryState(state: UrlQueryState, params: URLSearchParams) {
   clearMappedParameters(params)
 
@@ -40,30 +50,11 @@ export function serializeQueryState(state: UrlQueryState, params: URLSearchParam
 export function deserializeQueryState(searchParams: URLSearchParams) {
   const state: UrlQueryState = {}
 
-  const query = deserializeQuery(searchParams)
-  if (query) {
-    state.query = query
-  }
-
-  const page = deserializePage(searchParams)
-  if (page) {
-    state.page = page
-  }
-
-  const size = deserializeSize(searchParams)
-  if (size) {
-    state.size = size
-  }
-
-  const filter = deserializeFilters(searchParams)
-  if (filter) {
-    state.filter = filter
-  }
-
-  const sort = deserializeSort(searchParams)
-  if (sort) {
-    state.sort = sort
-  }
+  assignIfTruthy(state, "query", deserializeQuery(searchParams))
+  assignIfTruthy(state, "page", deserializePage(searchParams))
+  assignIfTruthy(state, "size", deserializeSize(searchParams))
+  assignIfTruthy(state, "filter", deserializeFilters(searchParams))
+  assignIfTruthy(state, "sort", deserializeSort(searchParams))
 
   return state
 }
