@@ -7,7 +7,7 @@ function createProductsResponse(products: SearchProduct[]): SearchProducts {
   }
 }
 
-function createEmptyResponse(): Pick<SearchProducts, "hits" | "total"> {
+function createEmptyResponse() {
   return {
     hits: [],
     total: 0
