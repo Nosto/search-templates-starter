@@ -3,7 +3,7 @@ import { mockInitialState } from "./mocks"
 /**
  * Mock search function that returns mock data for testing purposes
  */
-export const mockSearch = async (query: { query?: string }) => {
+export async function mockSearch(query: { query?: string }) {
   // Return mock search result based on mockInitialState
   return {
     query: query.query || "shoes",
