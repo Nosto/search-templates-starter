@@ -70,7 +70,6 @@
   --ns-width-input-checkbox: 16px;
   --ns-width-input-checkbox-tick: 5px;
   --ns-width-select: 150px;
-  --ns-width-loader: 60px;
   --ns-width-product-image: 60px;
   --ns-width-autocomplete-offset: 4px;
 
@@ -78,7 +77,5 @@
   --ns-height-icon: 12px;
   --ns-height-input-checkbox: 16px;
   --ns-height-input-checkbox-tick: 10px;
-  --ns-height-loader: 60px;
-  --ns-height-loader-container: 300px;
   --ns-min-height-content: 890px;
 }

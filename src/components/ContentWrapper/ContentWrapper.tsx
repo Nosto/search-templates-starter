@@ -8,12 +8,12 @@ export type ContentChildrenProps = { loading: boolean; foundProducts: boolean }
 
 type ContentWrapperProps = {
   type: string
-  children: (props: ContentChildrenProps) => JSX.Element
+  children: (props: ContentChildrenProps) => JSX.Element | null
 }
 
 /**
  * ContentWrapper takes a function to render non-empty results in the content area.
- * On loading the Loader is used and for empty results the NoResults component is used.
+ * On loading nothing is shown and for empty results the NoResults component is used.
  */
 function ContentWrapper({ type, children }: ContentWrapperProps) {
   const { foundProducts, loading, initialized } = useNostoAppState(state => ({
