@@ -8,7 +8,7 @@ export function serializeSize(size: number | undefined, params: URLSearchParams)
   }
 }
 
-export function deserializeSize(searchParams: URLSearchParams): number | undefined {
+export function deserializeSize(searchParams: URLSearchParams) {
   const size = searchParams.get(SIZE_PARAM)
   if (size) {
     const sizeNum = parseInt(size, 10)

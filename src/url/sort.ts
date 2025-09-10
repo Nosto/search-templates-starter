@@ -39,7 +39,7 @@ export function serializeSort(sort: InputSearchSort[], params: URLSearchParams) 
   }
 }
 
-export function deserializeSort(searchParams: URLSearchParams): InputSearchSort[] | undefined {
+export function deserializeSort(searchParams: URLSearchParams) {
   const sortParam = searchParams.get(SORT_PARAM)
   if (sortParam) {
     const sort = deserializeSortFromUrl(sortParam)

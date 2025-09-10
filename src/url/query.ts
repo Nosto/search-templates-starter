@@ -6,7 +6,7 @@ export function serializeQuery(query: string | undefined, params: URLSearchParam
   }
 }
 
-export function deserializeQuery(searchParams: URLSearchParams): string | undefined {
+export function deserializeQuery(searchParams: URLSearchParams) {
   const q = searchParams.get(QUERY_PARAM)
   if (q) {
     return q

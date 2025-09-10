@@ -8,7 +8,7 @@ export function serializePage(page: number | undefined, params: URLSearchParams)
   }
 }
 
-export function deserializePage(searchParams: URLSearchParams): number | undefined {
+export function deserializePage(searchParams: URLSearchParams) {
   const p = searchParams.get(PAGE_PARAM)
   if (p) {
     const pageNum = parseInt(p, 10)
