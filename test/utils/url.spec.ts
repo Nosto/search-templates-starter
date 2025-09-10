@@ -1,13 +1,11 @@
 import { describe, it, expect, beforeEach, vi } from "vitest"
 import type { InputSearchSort, InputSearchTopLevelFilter } from "@nosto/nosto-js/client"
-import {
-  serializeQueryState,
-  deserializeQueryState,
-  updateUrl,
-  getCurrentUrlState,
-  getPageUrl,
-  UrlQueryState
-} from "@/mapping/url"
+import { serializeQueryState } from "@/mapping/url/serializeQueryState"
+import { deserializeQueryState } from "@/mapping/url/deserializeQueryState"
+import { updateUrl } from "@/mapping/url/updateUrl"
+import { getCurrentUrlState } from "@/mapping/url/getCurrentUrlState"
+import { getPageUrl } from "@/mapping/url/getPageUrl"
+import type { UrlQueryState } from "@/mapping/url/types"
 
 describe("URL utilities", () => {
   describe("serializeQueryState", () => {
