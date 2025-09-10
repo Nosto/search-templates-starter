@@ -1,6 +1,3 @@
-import { type SerpConfig } from "@nosto/search-js/preact/serp"
-import { type State } from "@nosto/search-js/preact/common"
-
 export function generateMockProducts(count: number) {
   const categories = ["Clothing", "Electronics", "Home & Garden", "Sports", "Books", "Beauty"]
   const brands = ["BrandA", "BrandB", "BrandC", "BrandD", "BrandE", "BrandF"]
@@ -31,43 +28,56 @@ export function generateMockProducts(count: number) {
   })
 }
 
-export const mockConfig: SerpConfig = {
-  defaultCurrency: "EUR",
-  search: {
-    hitDecorators: []
-  }
+export const mockProduct = {
+  productId: "12345",
+  name: "Running Shoes",
+  brand: "Nike",
+  price: 120.0,
+  listPrice: 150.0,
+  priceText: "€120.00",
+  listPriceText: "€150.00",
+  imageUrl: "https://picsum.photos/300/300",
+  url: "/products/running-shoes",
+  handle: "running-shoes"
 }
 
-export const mockInitialState: Partial<State> = {
-  loading: false,
-  initialized: true,
-  query: {
-    query: "shoes",
-    products: {
-      filter: [
-        {
-          field: "color",
-          value: ["red"]
-        },
-        {
-          field: "price",
-          range: [
-            {
-              gte: "50",
-              lte: "150"
-            }
-          ]
-        }
-      ]
-    }
-  },
-  response: {
-    query: "shoes",
-    products: {
-      from: 1,
-      size: 24,
-      total: 142,
-      hits: generateMockProducts(24)
-    }
-  }
+export const mockProductNoSale = {
+  productId: "67890",
+  name: "Casual Sneakers",
+  brand: "Adidas",
+  price: 80.0,
+  priceText: "€80.00",
+  imageUrl: "https://picsum.photos/300/300?random=2",
+  url: "/products/casual-sneakers",
+  handle: "casual-sneakers"
+}
+
+export const mockProductNoBrand = {
+  productId: "54321",
+  name: "Generic Sports Shoes",
+  price: 60.0,
+  priceText: "€60.00",
+  imageUrl: "https://picsum.photos/300/300?random=3",
+  url: "/products/generic-sports-shoes",
+  handle: "generic-sports-shoes"
+}
+
+export const mockSerpProduct = {
+  product_id: "1",
+  name: "Sample Product",
+  price: 30.0,
+  listPrice: 40.0,
+  currency: "EUR",
+  imageUrl: "https://picsum.photos/300/300",
+  url: "#"
+}
+
+export const mockProducts = {
+  hits: generateMockProducts(5),
+  total: 5
+}
+
+export const mockEmptyProducts = {
+  hits: [],
+  total: 0
 }

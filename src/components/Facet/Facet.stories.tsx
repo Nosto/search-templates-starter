@@ -1,17 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Facet from "./Facet"
-
-const mockFacet = {
-  id: "category",
-  name: "Category",
-  field: "categories",
-  type: "terms" as const,
-  data: [
-    { value: "shoes", count: 42, selected: false },
-    { value: "clothing", count: 28, selected: true },
-    { value: "accessories", count: 15, selected: false }
-  ]
-}
+import { mockCategoryFacet, mockBrandFacet } from "@mocks/facets"
 
 export default {
   title: "Components/Facet/Facet",
@@ -26,14 +15,14 @@ type Story = StoryObj<typeof Facet>
 
 export const Default: Story = {
   args: {
-    facet: mockFacet
+    facet: mockCategoryFacet
   }
 }
 
 export const WithSelectedFilters: Story = {
   args: {
     facet: {
-      ...mockFacet,
+      ...mockCategoryFacet,
       data: [
         { value: "shoes", count: 42, selected: true },
         { value: "clothing", count: 28, selected: true },
@@ -52,19 +41,6 @@ export const WithSelectedFilters: Story = {
 
 export const LargeFacet: Story = {
   args: {
-    facet: {
-      id: "brand",
-      name: "Brand",
-      field: "brand",
-      type: "terms" as const,
-      data: [
-        { value: "nike", count: 125, selected: false },
-        { value: "adidas", count: 98, selected: true },
-        { value: "puma", count: 67, selected: false },
-        { value: "reebok", count: 45, selected: false },
-        { value: "new-balance", count: 34, selected: false },
-        { value: "under-armour", count: 23, selected: false }
-      ]
-    }
+    facet: mockBrandFacet
   }
 }
