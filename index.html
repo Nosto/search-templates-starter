@@ -52,17 +52,17 @@
         const mode = import.meta.env.MODE
         if (mode === "mocked") {
           mockNostojs({ search: mockSearch })
-        } else {
-          init({
-            merchantId: import.meta.env.VITE_MERCHANT_ID
-          })
-          setTimeout(() => {
-            nosto.reload({
+          return
+        }
+        init({
+          merchantId: import.meta.env.VITE_MERCHANT_ID
+        })
+        setTimeout(() => {
+          nosto.reload({
               site: location.href,
               searchTemplatesEnabled: false
             })
           }, 500)
-        }
       }
       setupNosto()
     </script>

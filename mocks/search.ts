@@ -1,21 +1,21 @@
-import { mockInitialState } from "./mocks"
+import { mockKeywords } from "./keywords"
+import { generateMockProducts } from "./products"
 
 /**
  * Mock search function that returns mock data for testing purposes
  */
 export async function mockSearch(query: { query?: string }) {
-  // Return mock search result based on mockInitialState
   return {
     query: query.query || "shoes",
-    products: mockInitialState.response?.products || {
-      from: 1,
+    products: {
+      from: 0,
       size: 24,
-      total: 0,
-      hits: []
+      total: 24,
+      hits: generateMockProducts(24)
     },
     keywords: {
-      hits: [],
-      total: 0
+      hits: mockKeywords.hits,
+      total: mockKeywords.hits.length
     }
   }
 }
