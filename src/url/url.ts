@@ -3,8 +3,7 @@ import { serializeFilters, deserializeFilters, SimpleFilter, FILTER_PREFIX } fro
 import { serializeSort, deserializeSort, SORT_PARAM } from "./sort"
 import { serializePage, deserializePage, PAGE_PARAM } from "./page"
 import { serializeSize, deserializeSize, SIZE_PARAM } from "./size"
-
-const QUERY_PARAM = "q"
+import { serializeQuery, deserializeQuery, QUERY_PARAM } from "./query"
 
 export interface UrlQueryState {
   query?: string
@@ -28,10 +27,7 @@ function clearMappedParameters(params: URLSearchParams) {
 export function serializeQueryState(state: UrlQueryState, params: URLSearchParams) {
   clearMappedParameters(params)
 
-  if (state.query) {
-    params.set(QUERY_PARAM, state.query)
-  }
-
+  serializeQuery(state.query, params)
   serializePage(state.page, params)
   serializeSize(state.size, params)
   serializeFilters(state.filter || [], params)
@@ -43,9 +39,9 @@ export function serializeQueryState(state: UrlQueryState, params: URLSearchParam
 export function deserializeQueryState(searchParams: URLSearchParams) {
   const state: UrlQueryState = {}
 
-  const q = searchParams.get(QUERY_PARAM)
-  if (q) {
-    state.query = q
+  const query = deserializeQuery(searchParams)
+  if (query) {
+    state.query = query
   }
 
   const page = deserializePage(searchParams)
@@ -71,7 +67,7 @@ export function deserializeQueryState(searchParams: URLSearchParams) {
   return state
 }
 
-function getUrlFromState(state: UrlQueryState) {
+export function getUrlFromState(state: UrlQueryState) {
   const params = new URLSearchParams(window.location.search || "")
   serializeQueryState(state, params)
 
@@ -89,12 +85,4 @@ export function updateUrl(state: UrlQueryState) {
 export function getCurrentUrlState() {
   const searchParams = new URLSearchParams(window.location.search)
   return deserializeQueryState(searchParams)
-}
-
-export function getPageUrl(page: number) {
-  const currentState = getCurrentUrlState()
-  return getUrlFromState({
-    ...currentState,
-    page: page > 1 ? page : undefined
-  })
 }

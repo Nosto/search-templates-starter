@@ -1,3 +1,5 @@
+import { getCurrentUrlState, getUrlFromState } from "./url"
+
 export const PAGE_PARAM = "p"
 
 export function serializePage(page: number | undefined, params: URLSearchParams) {
@@ -19,4 +21,12 @@ export function deserializePage(searchParams: URLSearchParams): number | undefin
 
 export function clearPageParameters(params: URLSearchParams) {
   params.delete(PAGE_PARAM)
+}
+
+export function getPageUrl(page: number) {
+  const currentState = getCurrentUrlState()
+  return getUrlFromState({
+    ...currentState,
+    page: page > 1 ? page : undefined
+  })
 }
