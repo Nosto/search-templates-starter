@@ -1,4 +1,4 @@
-import { InputSearchSort } from "@nosto/nosto-js/client"
+import type { InputSearchSort } from "@nosto/nosto-js/client"
 
 export const SORT_PARAM = "sort"
 

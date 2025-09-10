@@ -1,5 +1,6 @@
-import { InputSearchSort } from "@nosto/nosto-js/client"
-import { serializeFilters, deserializeFilters, SimpleFilter, FILTER_PREFIX } from "./filter"
+import type { InputSearchSort } from "@nosto/nosto-js/client"
+import { serializeFilters, deserializeFilters, FILTER_PREFIX } from "./filter"
+import type { SimpleFilter } from "./filter"
 import { serializeSort, deserializeSort, SORT_PARAM } from "./sort"
 import { serializePage, deserializePage, PAGE_PARAM } from "./page"
 import { serializeSize, deserializeSize, SIZE_PARAM } from "./size"

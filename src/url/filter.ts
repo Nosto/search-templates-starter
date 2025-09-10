@@ -1,4 +1,4 @@
-import { InputSearchTopLevelFilter, InputSearchRangeFilter } from "@nosto/nosto-js/client"
+import type { InputSearchTopLevelFilter, InputSearchRangeFilter } from "@nosto/nosto-js/client"
 import { ensureMapValue } from "@/utils/ensureMap"
 
 export const FILTER_PREFIX = "filter."
