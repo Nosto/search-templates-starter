@@ -38,18 +38,16 @@ export default function SideBar() {
   return (
     <>
       {/* Backdrop */}
-      {isOpen && (
-        <button
-          className={styles.backdrop}
-          onClick={handleBackdropClick}
-          onKeyDown={e => {
-            if (e.key === "Escape") {
-              handleBackdropClick()
-            }
-          }}
-          aria-label="Close sidebar filters"
-        />
-      )}
+      <button
+        className={cl(styles.backdrop, isOpen && styles.visible)}
+        onClick={handleBackdropClick}
+        onKeyDown={e => {
+          if (e.key === "Escape") {
+            handleBackdropClick()
+          }
+        }}
+        aria-label="Close sidebar filters"
+      />
       <div className={cl(styles.wrapper, loading && styles.loading, isOpen && styles.open)}>
         <div className={styles.content}>
           <div className={styles.header}>

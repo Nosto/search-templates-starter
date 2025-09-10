@@ -9,8 +9,12 @@
 }
 
 .menu {
-  display: none;
   padding: var(--ns-space-4);
+
+  /* Animation properties for expand/collapse */
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
 }
 
 .list {
@@ -38,7 +42,7 @@
 }
 
 .dropdown.active .menu {
-  display: block;
+  max-height: 500px; /* Large enough to accommodate content */
 }
 
 .anchor {

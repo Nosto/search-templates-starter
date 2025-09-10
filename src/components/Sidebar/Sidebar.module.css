@@ -16,17 +16,19 @@
   left: 0;
   z-index: var(--ns-z-index-sidebar-wrapper);
   max-width: var(--ns-width-mobile-sidebar);
-  transition: all 0.3s ease;
-  display: none;
   height: 100%;
   flex: 0 0 25%;
   max-width: 25%;
+
+  /* Animation properties */
+  position: fixed;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
 }
 
 /* Mobile view */
 .wrapper.open {
-  display: block !important;
-  position: fixed !important;
+  transform: translateX(0);
   max-height: 100%;
 }
 
@@ -37,7 +39,8 @@
 
 @media screen and (min-width: 768px) {
   .wrapper {
-    display: none;
+    /* Hide on desktop - keep transform but make invisible */
+    transform: translateX(-100%);
   }
 }
 
@@ -45,6 +48,9 @@
   .wrapper {
     flex: 0 0 16.666667%;
     max-width: 16.666667%;
+
+    /* Hide on desktop - keep transform but make invisible */
+    transform: translateX(-100%);
   }
 }
 
@@ -52,13 +58,22 @@
   top: 0;
   left: 0;
   z-index: var(--ns-z-index-sidebar-backdrop);
-  opacity: 0.5;
   position: fixed;
   width: 100%;
   height: 100%;
   background-color: var(--ns-color-black);
   border: none;
   cursor: pointer;
+
+  /* Animation properties */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.backdrop.visible {
+  opacity: 0.5;
+  pointer-events: auto;
 }
 
 .backdrop:focus {
