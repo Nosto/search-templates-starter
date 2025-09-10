@@ -34,7 +34,7 @@
     <script type="module">
       function renderApp() {
         const mode = import.meta.env.MODE
-        if (mode === "injected") {
+        if (mode === "injected" || mode === "mocked") {
           import("/src/entries/injected.tsx")
           return
         }
@@ -44,16 +44,47 @@
       renderApp()
     </script>
     <script type="module">
-      import { init } from "@nosto/nosto-js"
-      init({
-        merchantId: import.meta.env.VITE_MERCHANT_ID
-      })
-      setTimeout(() => {
-        nosto.reload({
-          site: location.href,
-          searchTemplatesEnabled: false
-        })
-      }, 500)
+      async function setupNosto() {
+        const mode = import.meta.env.MODE
+        if (mode === "mocked") {
+          // Use mockNostojs for mocked mode
+          const { mockNostojs } = await import("@nosto/nosto-js/testing")
+          const { mockInitialState } = await import("@mocks/mocks")
+          
+          // Create mock search function using mock data
+          const mockSearch = async (query) => {
+            // Return mock search result based on mockInitialState
+            return {
+              query: query.query || "shoes",
+              products: mockInitialState.response?.products || {
+                from: 1,
+                size: 24,
+                total: 0,
+                hits: []
+              },
+              keywords: {
+                hits: [],
+                total: 0
+              }
+            }
+          }
+          
+          mockNostojs({ search: mockSearch })
+        } else {
+          // Use regular init for other modes
+          const { init } = await import("@nosto/nosto-js")
+          init({
+            merchantId: import.meta.env.VITE_MERCHANT_ID
+          })
+          setTimeout(() => {
+            nosto.reload({
+              site: location.href,
+              searchTemplatesEnabled: false
+            })
+          }, 500)
+        }
+      }
+      setupNosto()
     </script>
   </body>
 </html>
