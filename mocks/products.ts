@@ -1,4 +1,12 @@
-import { createProductsResponse, createEmptyResponse } from "./utils"
+const createProductsResponse = (products: object[]) => ({
+  hits: products,
+  total: products.length
+})
+
+const createEmptyResponse = () => ({
+  hits: [],
+  total: 0
+})
 
 export function generateMockProducts(count: number) {
   const categories = ["Clothing", "Electronics", "Home & Garden", "Sports", "Books", "Beauty"]
