@@ -2,7 +2,7 @@ import { usePagination, useActions, Page } from "@nosto/search-js/preact/hooks"
 import Icon from "@/elements/Icon/Icon"
 import { JSX } from "preact/jsx-runtime"
 import style from "./Pagination.module.css"
-import { getPageUrl } from "@/utils/url"
+import { getPageUrl } from "@/mapping/url"
 import { cl } from "@nosto/search-js/utils"
 
 type Props = {

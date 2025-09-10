@@ -1,6 +1,6 @@
 import { defaultConfig } from "@/config"
 import { useActions, useNostoAppState } from "@nosto/search-js/preact/hooks"
-import { getCurrentUrlState, updateUrl } from "@/utils/url"
+import { getCurrentUrlState, updateUrl } from "@/mapping/url"
 
 import { useEffect } from "preact/hooks"
 
