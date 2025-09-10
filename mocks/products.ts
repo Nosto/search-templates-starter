@@ -1,14 +1,16 @@
-const createProductsResponse = (products: object[]) => ({
+import { SearchProducts, SearchProduct } from "@nosto/nosto-js/client"
+
+const createProductsResponse = (products: SearchProduct[]): SearchProducts => ({
   hits: products,
   total: products.length
 })
 
-const createEmptyResponse = () => ({
+const createEmptyResponse = (): Pick<SearchProducts, "hits" | "total"> => ({
   hits: [],
   total: 0
 })
 
-export function generateMockProducts(count: number) {
+export function generateMockProducts(count: number): SearchProduct[] {
   const categories = ["Clothing", "Electronics", "Home & Garden", "Sports", "Books", "Beauty"]
   const brands = ["BrandA", "BrandB", "BrandC", "BrandD", "BrandE", "BrandF"]
   const adjectives = ["Premium", "Classic", "Modern", "Vintage", "Eco-Friendly", "Luxury"]
@@ -38,46 +40,42 @@ export function generateMockProducts(count: number) {
   })
 }
 
-export const mockProduct = {
+export const mockProduct: SearchProduct = {
   productId: "12345",
   name: "Running Shoes",
   brand: "Nike",
   price: 120.0,
   listPrice: 150.0,
   priceText: "€120.00",
-  listPriceText: "€150.00",
   imageUrl: "https://picsum.photos/300/300",
-  url: "/products/running-shoes",
-  handle: "running-shoes"
+  url: "/products/running-shoes"
 }
 
-export const mockProductNoSale = {
+export const mockProductNoSale: SearchProduct = {
   productId: "67890",
   name: "Casual Sneakers",
   brand: "Adidas",
   price: 80.0,
   priceText: "€80.00",
   imageUrl: "https://picsum.photos/300/300?random=2",
-  url: "/products/casual-sneakers",
-  handle: "casual-sneakers"
+  url: "/products/casual-sneakers"
 }
 
-export const mockProductNoBrand = {
+export const mockProductNoBrand: SearchProduct = {
   productId: "54321",
   name: "Generic Sports Shoes",
   price: 60.0,
   priceText: "€60.00",
   imageUrl: "https://picsum.photos/300/300?random=3",
-  url: "/products/generic-sports-shoes",
-  handle: "generic-sports-shoes"
+  url: "/products/generic-sports-shoes"
 }
 
-export const mockSerpProduct = {
-  product_id: "1",
+export const mockSerpProduct: SearchProduct = {
+  productId: "1",
   name: "Sample Product",
   price: 30.0,
   listPrice: 40.0,
-  currency: "EUR",
+  priceCurrencyCode: "EUR",
   imageUrl: "https://picsum.photos/300/300",
   url: "#"
 }

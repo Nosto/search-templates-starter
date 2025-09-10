@@ -1,21 +1,23 @@
-const createTermsFacet = (id: string, name: string, field: string, data: object[]) => ({
+import { SearchTermsFacet, SearchStatsFacet, SearchFacetTerm } from "@nosto/nosto-js/client"
+
+const createTermsFacet = (id: string, name: string, field: string, data: SearchFacetTerm[]): SearchTermsFacet => ({
   id,
   name,
   field,
-  type: "terms" as const,
+  type: "terms",
   data
 })
 
-const createStatsFacet = (id: string, name: string, field: string, min: number, max: number) => ({
+const createStatsFacet = (id: string, name: string, field: string, min: number, max: number): SearchStatsFacet => ({
   id,
   name,
   field,
-  type: "stats" as const,
+  type: "stats",
   min,
   max
 })
 
-const createFacetDataItem = (value: string, count: number, selected = false) => ({
+const createFacetDataItem = (value: string, count: number, selected = false): SearchFacetTerm => ({
   value,
   count,
   selected

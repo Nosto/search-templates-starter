@@ -1,17 +1,22 @@
-const createEmptyResponse = () => ({
+import { SearchKeywords, SearchKeyword, SearchFacet } from "@nosto/nosto-js/client"
+
+const createEmptyResponse = (): Pick<SearchKeywords, "hits" | "total"> => ({
   hits: [],
   total: 0
 })
 
-const createKeyword = (keyword: string, options: object = {}) => ({
+const createKeyword = (
+  keyword: string,
+  options: { highlight?: string; facets?: SearchFacet[]; priority?: number; total?: number } = {}
+): SearchKeyword => ({
   keyword,
-  ...(options && "highlight" in options && options.highlight ? { _highlight: { keyword: options.highlight } } : {}),
-  facets: (options && "facets" in options && options.facets) || [],
-  priority: (options && "priority" in options && options.priority) || 1,
-  total: (options && "total" in options && options.total) || 1
+  ...(options.highlight ? { _highlight: { keyword: options.highlight } } : {}),
+  facets: options.facets || [],
+  priority: options.priority || 1,
+  total: options.total || 1
 })
 
-const createKeywordsResponse = (keywords: object[]) => ({
+const createKeywordsResponse = (keywords: SearchKeyword[]): SearchKeywords => ({
   hits: keywords,
   total: keywords.length
 })
