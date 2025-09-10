@@ -1,5 +1,5 @@
 import { getCurrentUrlState } from "./getCurrentUrlState"
-import { getUrlFromState } from "./updateUrl"
+import { getUrlFromState } from "./getUrlFromState"
 
 export function getPageUrl(page: number) {
   const currentState = getCurrentUrlState()
