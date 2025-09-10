@@ -1,2 +1,2 @@
 // Re-export everything from the modular url implementation
-export * from "../url/index"
+export * from "../url/url"
