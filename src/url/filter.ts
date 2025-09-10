@@ -29,7 +29,7 @@ export function serializeFilters(filters: SimpleFilter[], params: URLSearchParam
   }
 }
 
-export function deserializeFilters(searchParams: URLSearchParams): SimpleFilter[] | undefined {
+export function deserializeFilters(searchParams: URLSearchParams) {
   const filters: InputSearchTopLevelFilter[] = []
   const filterMap = new Map<string, string[]>()
   const rangeMap = new Map<string, InputSearchRangeFilter>()
