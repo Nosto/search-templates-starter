@@ -1,11 +1,10 @@
 import { SerpElement } from "@nosto/search-js/preact/serp"
 import styles from "./Product.module.css"
-import { DecoratedProduct } from "@nosto/search-js"
-import { hitDecorators } from "@/config"
+import type { Product } from "@/types"
 import DynamicCard from "../DynamicCard/DynamicCard"
 
 type Props = {
-  product: DecoratedProduct<typeof hitDecorators>
+  product: Product
   children?: preact.JSX.Element | preact.JSX.Element[]
 }
 

@@ -1,4 +1,21 @@
-export function generateMockProducts(count: number) {
+import { SearchProducts } from "@nosto/nosto-js/client"
+import type { Product } from "../src/types"
+
+function createProductsResponse(products: Product[]): SearchProducts {
+  return {
+    hits: products,
+    total: products.length
+  }
+}
+
+function createEmptyResponse() {
+  return {
+    hits: [],
+    total: 0
+  }
+}
+
+export function generateMockProducts(count: number): Product[] {
   const categories = ["Clothing", "Electronics", "Home & Garden", "Sports", "Books", "Beauty"]
   const brands = ["BrandA", "BrandB", "BrandC", "BrandD", "BrandE", "BrandF"]
   const adjectives = ["Premium", "Classic", "Modern", "Vintage", "Eco-Friendly", "Luxury"]
@@ -28,7 +45,7 @@ export function generateMockProducts(count: number) {
   })
 }
 
-export const mockProduct = {
+export const mockProduct: Product = {
   productId: "12345",
   name: "Running Shoes",
   brand: "Nike",
@@ -41,7 +58,7 @@ export const mockProduct = {
   handle: "running-shoes"
 }
 
-export const mockProductNoSale = {
+export const mockProductNoSale: Product = {
   productId: "67890",
   name: "Casual Sneakers",
   brand: "Adidas",
@@ -52,7 +69,7 @@ export const mockProductNoSale = {
   handle: "casual-sneakers"
 }
 
-export const mockProductNoBrand = {
+export const mockProductNoBrand: Product = {
   productId: "54321",
   name: "Generic Sports Shoes",
   price: 60.0,
@@ -62,22 +79,16 @@ export const mockProductNoBrand = {
   handle: "generic-sports-shoes"
 }
 
-export const mockSerpProduct = {
-  product_id: "1",
+export const mockSerpProduct: Product = {
+  productId: "1",
   name: "Sample Product",
   price: 30.0,
   listPrice: 40.0,
-  currency: "EUR",
+  priceCurrencyCode: "EUR",
   imageUrl: "https://picsum.photos/300/300",
   url: "#"
 }
 
-export const mockProducts = {
-  hits: generateMockProducts(5),
-  total: 5
-}
+export const mockProducts = createProductsResponse(generateMockProducts(5))
 
-export const mockEmptyProducts = {
-  hits: [],
-  total: 0
-}
+export const mockEmptyProducts = createEmptyResponse()

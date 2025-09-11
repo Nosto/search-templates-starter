@@ -1,54 +1,53 @@
-export const mockKeyword = {
-  keyword: "running shoes",
-  _highlight: {
-    keyword: "<b>running</b> shoes"
-  },
-  facets: [],
-  priority: 1,
-  total: 1
+import { SearchKeywords, SearchKeyword, SearchFacet } from "@nosto/nosto-js/client"
+
+function createEmptyResponse(): Pick<SearchKeywords, "hits" | "total"> {
+  return {
+    hits: [],
+    total: 0
+  }
 }
 
-export const mockKeywordNoHighlight = {
-  keyword: "sneakers",
-  facets: [],
-  priority: 1,
-  total: 1
+function createKeyword(
+  keyword: string,
+  options: { highlight?: string; facets?: SearchFacet[]; priority?: number; total?: number } = {}
+): SearchKeyword {
+  return {
+    keyword,
+    ...(options.highlight ? { _highlight: { keyword: options.highlight } } : {}),
+    facets: options.facets || [],
+    priority: options.priority || 1,
+    total: options.total || 1
+  }
 }
 
-export const mockKeywords = {
-  hits: [
-    {
-      keyword: "running shoes",
-      _highlight: {
-        keyword: "<b>running</b> shoes"
-      },
-      facets: [],
-      priority: 1,
-      total: 3
-    },
-    {
-      keyword: "running gear",
-      _highlight: {
-        keyword: "<b>running</b> gear"
-      },
-      facets: [],
-      priority: 2,
-      total: 3
-    },
-    {
-      keyword: "marathon training",
-      _highlight: {
-        keyword: "marathon training"
-      },
-      facets: [],
-      priority: 3,
-      total: 3
-    }
-  ],
-  total: 3
+function createKeywordsResponse(keywords: SearchKeyword[]): SearchKeywords {
+  return {
+    hits: keywords,
+    total: keywords.length
+  }
 }
 
-export const mockEmptyKeywords = {
-  hits: [],
-  total: 0
-}
+export const mockKeyword = createKeyword("running shoes", {
+  highlight: "<b>running</b> shoes"
+})
+
+export const mockKeywordNoHighlight = createKeyword("sneakers")
+
+export const mockKeywords = createKeywordsResponse([
+  createKeyword("running shoes", {
+    highlight: "<b>running</b> shoes",
+    total: 3
+  }),
+  createKeyword("running gear", {
+    highlight: "<b>running</b> gear",
+    priority: 2,
+    total: 3
+  }),
+  createKeyword("marathon training", {
+    highlight: "marathon training",
+    priority: 3,
+    total: 3
+  })
+])
+
+export const mockEmptyKeywords = createEmptyResponse()

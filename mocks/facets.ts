@@ -1,53 +1,51 @@
-export const mockCategoryFacet = {
-  id: "category",
-  name: "Category",
-  field: "categories",
-  type: "terms",
-  data: [
-    { value: "shoes", count: 42, selected: false },
-    { value: "clothing", count: 28, selected: true },
-    { value: "accessories", count: 15, selected: false }
-  ]
-} as const
+import { SearchTermsFacet, SearchStatsFacet, SearchFacetTerm } from "@nosto/nosto-js/client"
 
-export const mockBrandFacet = {
-  id: "brand",
-  name: "Brand",
-  field: "brand",
-  type: "terms",
-  data: [
-    { value: "nike", count: 125, selected: false },
-    { value: "adidas", count: 98, selected: true },
-    { value: "puma", count: 67, selected: false },
-    { value: "reebok", count: 45, selected: false },
-    { value: "new-balance", count: 34, selected: false },
-    { value: "under-armour", count: 23, selected: false }
-  ]
-} as const
+function createTermsFacet(id: string, name: string, field: string, data: SearchFacetTerm[]): SearchTermsFacet {
+  return {
+    id,
+    name,
+    field,
+    type: "terms",
+    data
+  }
+}
 
-export const mockPriceFacet = {
-  id: "price",
-  name: "Price",
-  field: "price",
-  type: "stats",
-  min: 10,
-  max: 500
-} as const
+function createStatsFacet(id: string, name: string, field: string, min: number, max: number): SearchStatsFacet {
+  return {
+    id,
+    name,
+    field,
+    type: "stats",
+    min,
+    max
+  }
+}
 
-export const mockRatingFacet = {
-  id: "rating",
-  name: "Customer Rating",
-  field: "rating",
-  type: "stats",
-  min: 1,
-  max: 5
-} as const
+function createFacetDataItem(value: string, count: number, selected = false): SearchFacetTerm {
+  return {
+    value,
+    count,
+    selected
+  }
+}
 
-export const mockWeightFacet = {
-  id: "weight",
-  name: "Weight (kg)",
-  field: "weight",
-  type: "stats",
-  min: 0.1,
-  max: 25.0
-} as const
+export const mockCategoryFacet = createTermsFacet("category", "Category", "categories", [
+  createFacetDataItem("shoes", 42),
+  createFacetDataItem("clothing", 28, true),
+  createFacetDataItem("accessories", 15)
+])
+
+export const mockBrandFacet = createTermsFacet("brand", "Brand", "brand", [
+  createFacetDataItem("nike", 125),
+  createFacetDataItem("adidas", 98, true),
+  createFacetDataItem("puma", 67),
+  createFacetDataItem("reebok", 45),
+  createFacetDataItem("new-balance", 34),
+  createFacetDataItem("under-armour", 23)
+])
+
+export const mockPriceFacet = createStatsFacet("price", "Price", "price", 10, 500)
+
+export const mockRatingFacet = createStatsFacet("rating", "Customer Rating", "rating", 1, 5)
+
+export const mockWeightFacet = createStatsFacet("weight", "Weight (kg)", "weight", 0.1, 25.0)
