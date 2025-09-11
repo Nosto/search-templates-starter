@@ -1,6 +1,5 @@
 import { useFacet } from "@nosto/search-js/preact/hooks"
-import Checkbox from "@/elements/Checkbox/Checkbox"
-import Icon from "@/elements/Icon/Icon"
+import Button from "@/elements/Button/Button"
 import { SearchTermsFacet } from "@nosto/nosto-js/client"
 import styles from "./Facet.module.css"
 
@@ -9,48 +8,28 @@ type Props = {
 }
 
 export default function Facet({ facet }: Props) {
-  const { active, selectedFiltersCount, toggleActive, toggleProductFilter } = useFacet(facet)
+  const { toggleProductFilter } = useFacet(facet)
 
   return (
-    <li className={`${styles.dropdown} ${active ? styles.active : ""}`}>
-      <button
-        className={styles.anchor}
-        data-nosto-element="facet"
-        onClick={toggleActive}
-        onKeyDown={e => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault()
-            toggleActive()
-          }
-        }}
-        aria-controls={`${facet.id}-sub-menu`}
-        aria-expanded={!!active}
-        aria-label={`${active ? "Collapse" : "Expand"} ${facet.name}`}
-        type="button"
-      >
-        <span className={styles.title}>{facet.name}</span>
-        {selectedFiltersCount > 0 && <span className={styles.count}>{selectedFiltersCount}</span>}
-        <span className={styles.icon}>
-          <Icon name={active ? "arrow-up" : "arrow-down"} />
-        </span>
-      </button>
-      <div className={styles.menu} id={`${facet.id}-sub-menu`}>
-        <ul className={styles.list} role="menu">
-          {facet.data?.map(value => (
-            <li key={value.value} data-nosto-element="facet-setting" role="menuitem">
-              <Checkbox
-                value={value.value}
-                selected={value.selected}
-                onChange={e => {
-                  e.preventDefault()
-                  toggleProductFilter(facet.field, value.value, !value.selected)
-                }}
-              />
-              <span className={styles.count}>{value.count}</span>
-            </li>
-          ))}
-        </ul>
+    <div className={styles.facet}>
+      <h3 className={styles.title}>{facet.name}</h3>
+      <div className={styles.options}>
+        {facet.data?.map(value => (
+          <Button
+            key={value.value}
+            className={`${styles.option} ${value.selected ? styles.selected : ""}`}
+            data-nosto-element="facet-setting"
+            onClick={e => {
+              e.preventDefault()
+              toggleProductFilter(facet.field, value.value, !value.selected)
+            }}
+            aria-pressed={value.selected}
+            type="button"
+          >
+            {value.value} ({value.count})
+          </Button>
+        ))}
       </div>
-    </li>
+    </div>
   )
 }

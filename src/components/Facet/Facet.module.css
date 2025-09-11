@@ -1,3 +1,48 @@
+.facet {
+  margin-bottom: var(--ns-space-4);
+}
+
+.title {
+  color: var(--ns-color-black);
+  font-size: var(--ns-font-size-4);
+  font-weight: var(--ns-weight-medium);
+  margin: 0 0 var(--ns-space-3) 0;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ns-space-2);
+}
+
+.option {
+  background-color: var(--ns-color-grey-light);
+  border: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
+  color: var(--ns-color-black);
+  padding: var(--ns-space-2) var(--ns-space-3);
+  border-radius: var(--ns-border-radius-4);
+  font-size: var(--ns-font-size-3);
+  font-weight: var(--ns-weight-regular);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.option:hover {
+  background-color: var(--ns-color-grey);
+}
+
+.option.selected {
+  background-color: var(--ns-color-black);
+  border-color: var(--ns-color-black);
+  color: var(--ns-color-white);
+}
+
+.option.selected:hover {
+  background-color: var(--ns-color-black);
+  opacity: 0.9;
+}
+
+/* Legacy styles for backward compatibility - can be removed if not needed */
 .dropdown {
   border-bottom: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
 }
@@ -51,11 +96,6 @@
   background: none;
   border: none;
   text-align: left;
-}
-
-.title {
-  color: var(--ns-color-black);
-  font-size: var(--ns-font-size-4);
 }
 
 .count {
