@@ -38,7 +38,7 @@ export function generateMockProducts(count: number): Product[] {
       category: categories[categoryIndex],
       brand: brands[brandIndex],
       availability: "InStock",
-      url: `/product-${productNum}`,
+      url: `https://example.com/product-${productNum}`,
       imageUrl: "https://picsum.photos/300/300",
       description: `High-quality ${adjectives[adjectiveIndex].toLowerCase()} ${productTypes[typeIndex].toLowerCase()} from ${brands[brandIndex]}`
     }
@@ -54,7 +54,7 @@ export const mockProduct: Product = {
   priceText: "€120.00",
   listPriceText: "€150.00",
   imageUrl: "https://picsum.photos/300/300",
-  url: "/products/running-shoes",
+  url: "https://example.com/products/running-shoes",
   handle: "running-shoes"
 }
 
@@ -65,7 +65,7 @@ export const mockProductNoSale: Product = {
   price: 80.0,
   priceText: "€80.00",
   imageUrl: "https://picsum.photos/300/300?random=2",
-  url: "/products/casual-sneakers",
+  url: "https://example.com/products/casual-sneakers",
   handle: "casual-sneakers"
 }
 
@@ -75,7 +75,7 @@ export const mockProductNoBrand: Product = {
   price: 60.0,
   priceText: "€60.00",
   imageUrl: "https://picsum.photos/300/300?random=3",
-  url: "/products/generic-sports-shoes",
+  url: "https://example.com/products/generic-sports-shoes",
   handle: "generic-sports-shoes"
 }
 
@@ -86,7 +86,7 @@ export const mockSerpProduct: Product = {
   listPrice: 40.0,
   priceCurrencyCode: "EUR",
   imageUrl: "https://picsum.photos/300/300",
-  url: "#"
+  url: "https://example.com/product"
 }
 
 export const mockProducts = createProductsResponse(generateMockProducts(5))

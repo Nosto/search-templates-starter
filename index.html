@@ -34,7 +34,7 @@
     <script type="module">
       function renderApp() {
         const mode = import.meta.env.MODE
-        if (mode === "injected") {
+        if (mode === "injected" || mode === "mocked") {
           import("/src/entries/injected.tsx")
           return
         }
@@ -44,16 +44,27 @@
       renderApp()
     </script>
     <script type="module">
+      import { mockNostojs } from "@nosto/nosto-js/testing"
+      import { mockSearch } from "@mocks/search"
       import { init } from "@nosto/nosto-js"
-      init({
-        merchantId: import.meta.env.VITE_MERCHANT_ID
-      })
-      setTimeout(() => {
-        nosto.reload({
-          site: location.href,
-          searchTemplatesEnabled: false
+      
+      async function setupNosto() {
+        const mode = import.meta.env.MODE
+        if (mode === "mocked") {
+          mockNostojs({ search: mockSearch })
+          return
+        }
+        init({
+          merchantId: import.meta.env.VITE_MERCHANT_ID
         })
-      }, 500)
+        setTimeout(() => {
+          nosto.reload({
+              site: location.href,
+              searchTemplatesEnabled: false
+            })
+          }, 500)
+      }
+      setupNosto()
     </script>
   </body>
 </html>
