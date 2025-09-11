@@ -9,15 +9,13 @@ import { SidebarProvider } from "@/contexts/SidebarContext"
 
 function App() {
   return (
-    <>
-      <SearchPageProvider config={serpConfig}>
-        <SidebarProvider>
-          <SearchQueryHandler />
-          <Search />
-          <Serp />
-        </SidebarProvider>
-      </SearchPageProvider>
-    </>
+    <SearchPageProvider config={serpConfig}>
+      <SidebarProvider>
+        <SearchQueryHandler />
+        <Search />
+        <Serp />
+      </SidebarProvider>
+    </SearchPageProvider>
   )
 }
 

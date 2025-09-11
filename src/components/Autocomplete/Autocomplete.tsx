@@ -1,8 +1,8 @@
 import Results from "@/components/Autocomplete/Results/Results"
-import { useEffect, useState, useCallback, useRef } from "preact/hooks"
-import { useActions } from "@nosto/search-js/preact/hooks"
+import { useState, useCallback, useRef } from "preact/hooks"
 import { SearchInput } from "@nosto/search-js/preact/autocomplete"
-import { useEventListener } from "@/hooks/useEventListener"
+import { useDomEvents } from "@/hooks/useDomEvents"
+import { useDebouncedSearch } from "@/hooks/useDebouncedSearch"
 
 type Props = {
   onSubmit: (input: string) => void
@@ -11,35 +11,23 @@ type Props = {
 export default function Autocomplete({ onSubmit }: Props) {
   const [input, setInput] = useState<string>("")
   const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false)
-  const { newSearch } = useActions()
   const autocompleteRef = useRef<HTMLFormElement>(null)
 
-  const debounceSearch = useCallback(() => {
-    const handler = setTimeout(() => {
-      if (input.length >= 3) {
-        newSearch({ query: input })
-      }
-    }, 300)
-    return () => clearTimeout(handler)
-  }, [input, newSearch])
+  useDebouncedSearch({ input })
 
-  useEffect(debounceSearch, [input, debounceSearch])
-
-  const handleClickOutside = useCallback((event: Event) => {
+  const onClickOutside = useCallback((event: Event) => {
     if (autocompleteRef.current && !autocompleteRef.current.contains(event.target as Node)) {
       setShowAutocomplete(false)
     }
   }, [])
 
-  useEventListener({
-    target: showAutocomplete ? document : null,
-    eventName: "click",
-    listener: handleClickOutside
+  useDomEvents(showAutocomplete ? document.body : null, {
+    onClick: onClickOutside
   })
 
-  const handleSearch = () => {
-    if (input.trim()) {
-      onSubmit?.(input)
+  const onSearchSubmit = (query: string) => {
+    if (query.trim()) {
+      onSubmit(query)
       setShowAutocomplete(false)
     }
   }
@@ -49,7 +37,7 @@ export default function Autocomplete({ onSubmit }: Props) {
       ref={autocompleteRef}
       onSubmit={e => {
         e.preventDefault()
-        handleSearch()
+        onSearchSubmit(input)
       }}
     >
       <SearchInput
@@ -59,11 +47,7 @@ export default function Autocomplete({ onSubmit }: Props) {
         }}
       />
       <button type="submit">Search</button>
-      {showAutocomplete && (
-        <div>
-          <Results onSubmit={onSubmit} />
-        </div>
-      )}
+      {showAutocomplete && <Results onSubmit={onSearchSubmit} />}
     </form>
   )
 }
