@@ -32,6 +32,6 @@
 
 .light {
   color: var(--ns-color-black);
-  background-color: var(--ns-color-white);
+  background-color: var(--ns-color-grey-light);
   border-color: var(--ns-color-grey-light);
 }
