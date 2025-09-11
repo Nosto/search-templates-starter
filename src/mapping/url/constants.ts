@@ -1,0 +1,5 @@
+export const QUERY_PARAM = "q"
+export const PAGE_PARAM = "p"
+export const SIZE_PARAM = "size"
+export const FILTER_PREFIX = "filter."
+export const SORT_PARAM = "sort"
