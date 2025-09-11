@@ -1,7 +1,6 @@
 import { useNostoAppState, useSelectedFiltersCount, useSort } from "@nosto/search-js/preact/hooks"
 import { pick } from "@nosto/search-js/utils"
 import { sortOptions } from "@/config"
-import Icon from "@/elements/Icon/Icon"
 import Select from "@/elements/Select/Select"
 import style from "./Toolbar.module.css"
 import Button from "@/elements/Button/Button"
@@ -19,7 +18,6 @@ function ToggleSidebarButton({ selectedFiltersCount, className }: Props) {
   return (
     <Button light className={cl(style.filter, className)} onClick={toggle}>
       <div className={style.label}>
-        <Icon name="filter" />
         <span>Filter</span>
       </div>
       {selectedFiltersCount > 0 && <span className={style.badge}>{selectedFiltersCount}</span>}
