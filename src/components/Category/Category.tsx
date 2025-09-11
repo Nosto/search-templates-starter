@@ -4,15 +4,13 @@ import BottomToolbar from "@/components/BottomToolbar/BottomToolbar"
 import SelectedFilters from "@/components/SelectedFilters/SelectedFilters"
 import { ContentChildrenProps, wrapContent } from "@/components/ContentWrapper/ContentWrapper"
 import { InfiniteScroll } from "@nosto/search-js/preact/common"
-import Loader from "@/elements/Loader/Loader"
 import NoResults from "@/components/NoResults/NoResults"
 
-export function CategoryBody({ loading, foundProducts, onToggleSidebar }: ContentChildrenProps) {
-  if (loading) return <Loader />
+export function CategoryBody({ foundProducts }: ContentChildrenProps) {
   return foundProducts ? (
     <>
       <SelectedFilters />
-      <Toolbar onToggleSidebar={onToggleSidebar} />
+      <Toolbar />
       <Products />
       <BottomToolbar />
     </>
@@ -21,12 +19,12 @@ export function CategoryBody({ loading, foundProducts, onToggleSidebar }: Conten
   )
 }
 
-export function CategoryBodyInfiniteScroll({ loading, foundProducts, onToggleSidebar }: ContentChildrenProps) {
-  if (!foundProducts) return loading ? <Loader /> : <NoResults />
+export function CategoryBodyInfiniteScroll({ loading, foundProducts }: ContentChildrenProps) {
+  if (!foundProducts && !loading) return <NoResults />
   return (
     <>
       <SelectedFilters />
-      <Toolbar onToggleSidebar={onToggleSidebar} />
+      <Toolbar />
       <InfiniteScroll>
         <Products />
       </InfiniteScroll>

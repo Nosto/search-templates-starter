@@ -1,0 +1,5 @@
+.heading {
+  font-weight: bold;
+  margin-bottom: var(--ns-space-2);
+  color: var(--ns-color-black);
+}

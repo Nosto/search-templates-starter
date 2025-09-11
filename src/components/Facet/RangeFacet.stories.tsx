@@ -1,14 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import RangeFacet from "./RangeFacet"
-
-const mockRangeFacet = {
-  id: "price",
-  name: "Price",
-  field: "price",
-  type: "stats" as const,
-  min: 10,
-  max: 500
-}
+import { mockPriceFacet, mockRatingFacet, mockWeightFacet } from "@mocks/facets"
 
 export default {
   title: "Components/Facet/RangeFacet",
@@ -22,22 +14,15 @@ export default {
 type Story = StoryObj<typeof RangeFacet>
 
 export const Default: Story = {
-  render: () => <RangeFacet facet={mockRangeFacet} />
+  args: {
+    facet: mockPriceFacet
+  }
 }
 
 export const LargeRange: Story = {
-  render: () => (
-    <RangeFacet
-      facet={{
-        id: "rating",
-        name: "Customer Rating",
-        field: "rating",
-        type: "stats" as const,
-        min: 1,
-        max: 5
-      }}
-    />
-  ),
+  args: {
+    facet: mockRatingFacet
+  },
   parameters: {
     docs: {
       description: {
@@ -48,16 +33,7 @@ export const LargeRange: Story = {
 }
 
 export const WeightRange: Story = {
-  render: () => (
-    <RangeFacet
-      facet={{
-        id: "weight",
-        name: "Weight (kg)",
-        field: "weight",
-        type: "stats" as const,
-        min: 0.1,
-        max: 25.0
-      }}
-    />
-  )
+  args: {
+    facet: mockWeightFacet
+  }
 }

@@ -20,6 +20,6 @@
 .input:focus {
   outline: 0;
   box-shadow:
-    inset 0 0 0 var(--ns-border-width-thin) var(--ns-color-blue-light),
+    inset 0 0 0 var(--ns-border-width-thin) var(--ns-color-primary-light),
     0 0 0 var(--ns-shadow-offset-medium) var(--ns-color-grey);
 }

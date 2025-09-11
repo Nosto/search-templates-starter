@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Product from "./Product"
+import { mockSerpProduct } from "@mocks/products"
 
 export default {
   title: "Components/Product",
@@ -12,16 +13,8 @@ export default {
 
 type Story = StoryObj<typeof Product>
 
-const mockProduct = {
-  product_id: "1",
-  name: "Sample Product",
-  price: 30.0,
-  listPrice: 40.0,
-  currency: "EUR",
-  imageUrl: "https://picsum.photos/300/300",
-  url: "#"
-}
-
 export const Default: Story = {
-  render: () => <Product product={mockProduct} />
+  args: {
+    product: mockSerpProduct
+  }
 }

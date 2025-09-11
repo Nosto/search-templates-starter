@@ -1,25 +1,27 @@
-import { sizes, defaultConfig } from "@/config"
-import { useActions, useSizeOptions, useNostoAppState } from "@nosto/search-js/preact/hooks"
-import { getCurrentUrlState, updateUrl } from "@/utils/url"
+import { defaultConfig } from "@/config"
+import { useActions, useNostoAppState } from "@nosto/search-js/preact/hooks"
+import { getCurrentUrlState } from "@/mapping/url/getCurrentUrlState"
+import { updateUrl } from "@/mapping/url/updateUrl"
 
 import { useEffect } from "preact/hooks"
 
 export default function SearchQueryHandler() {
   const { newSearch } = useActions()
-  const { size } = useSizeOptions(sizes, defaultConfig.serpSize)
 
   // Get current query, pagination, filter, and sort state from app
-  const { query, from, filter, sort } = useNostoAppState(state => ({
+  const { query, from, filter, size, sort } = useNostoAppState(state => ({
     query: state.query?.query,
     from: state.query?.products?.from,
     filter: state.query?.products?.filter,
+    size: state.query?.products?.size ?? defaultConfig.serpSize,
     sort: state.query?.products?.sort
   }))
 
   // Initialize search from URL on first load
   useEffect(() => {
-    const { query, page, filter, sort } = getCurrentUrlState()
-    if (query || page || filter || sort) {
+    const { query, page, size: urlSize, filter, sort } = getCurrentUrlState()
+    if (query) {
+      const size = urlSize ?? defaultConfig.serpSize
       const from = page ? (page - 1) * size : 0
 
       const searchConfig = {
@@ -34,7 +36,7 @@ export default function SearchQueryHandler() {
 
       newSearch(searchConfig)
     }
-  }, [newSearch, size])
+  }, [newSearch])
 
   // Update URL when app state changes
   useEffect(() => {
@@ -43,6 +45,7 @@ export default function SearchQueryHandler() {
     updateUrl({
       query,
       page,
+      size,
       filter,
       sort
     })

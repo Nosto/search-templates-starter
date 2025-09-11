@@ -6,16 +6,18 @@ import Select from "@/elements/Select/Select"
 import style from "./Toolbar.module.css"
 import Button from "@/elements/Button/Button"
 import { cl } from "@nosto/search-js/utils"
+import { useSidebar } from "@/contexts/SidebarContext"
 
 type Props = {
   selectedFiltersCount: number
   className?: string
-  onToggleSidebar: () => void
 }
 
-function ToggleSidebarButton({ selectedFiltersCount, className, onToggleSidebar }: Props) {
+function ToggleSidebarButton({ selectedFiltersCount, className }: Props) {
+  const { toggle } = useSidebar()
+
   return (
-    <Button light className={cl(style.filter, className)} onClick={onToggleSidebar}>
+    <Button light className={cl(style.filter, className)} onClick={toggle}>
       <div className={style.label}>
         <Icon name="filter" />
         <span>Filter</span>
@@ -25,11 +27,7 @@ function ToggleSidebarButton({ selectedFiltersCount, className, onToggleSidebar 
   )
 }
 
-type ToolbarProps = {
-  onToggleSidebar: () => void
-}
-
-export default function Toolbar({ onToggleSidebar }: ToolbarProps) {
+export default function Toolbar() {
   const { loading, response } = useNostoAppState(state => pick(state, "loading", "response"))
   const { activeSort, setSort } = useSort(sortOptions)
   const selectedFiltersCount = useSelectedFiltersCount()
@@ -41,7 +39,7 @@ export default function Toolbar({ onToggleSidebar }: ToolbarProps) {
   return (
     <div className={cl(style.container, loading && style.loading)}>
       <div className={style.leftSide}>
-        <ToggleSidebarButton selectedFiltersCount={selectedFiltersCount} onToggleSidebar={onToggleSidebar} />
+        <ToggleSidebarButton selectedFiltersCount={selectedFiltersCount} />
       </div>
       <div className={style.rightSide}>
         {!loading && (

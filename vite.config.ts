@@ -27,7 +27,8 @@ export default defineConfig(() => ({
   },
   resolve: {
     alias: {
-      "@": resolve(dirname, "src")
+      "@": resolve(dirname, "src"),
+      "@mocks": resolve(dirname, "mocks")
     }
   }
 }))

@@ -1,13 +1,11 @@
 import { describe, it, expect, beforeEach, vi } from "vitest"
 import type { InputSearchSort, InputSearchTopLevelFilter } from "@nosto/nosto-js/client"
-import {
-  serializeQueryState,
-  deserializeQueryState,
-  updateUrl,
-  getCurrentUrlState,
-  getPageUrl,
-  UrlQueryState
-} from "@/utils/url"
+import { serializeQueryState } from "@/mapping/url/serializeQueryState"
+import { deserializeQueryState } from "@/mapping/url/deserializeQueryState"
+import { updateUrl } from "@/mapping/url/updateUrl"
+import { getCurrentUrlState } from "@/mapping/url/getCurrentUrlState"
+import { getPageUrl } from "@/mapping/url/getPageUrl"
+import type { UrlQueryState } from "@/mapping/url/types"
 
 describe("URL utilities", () => {
   describe("serializeQueryState", () => {
@@ -40,6 +38,14 @@ describe("URL utilities", () => {
 
     it("omits page parameter when equal to 1", () => {
       expectParams({ query: "test", page: 1 }).toBe("q=test")
+    })
+
+    it("creates URLSearchParams with size parameter when not default", () => {
+      expectParams({ query: "test", size: 48 }).toBe("q=test&size=48")
+    })
+
+    it("omits size parameter when equal to default (24)", () => {
+      expectParams({ query: "test", size: 24 }).toBe("q=test")
     })
 
     it("handles empty state", () => {
@@ -101,9 +107,10 @@ describe("URL utilities", () => {
       expectParams({
         query: "shoes",
         page: 2,
+        size: 48,
         filter: [{ field: "brand", value: ["Nike"] }],
         sort: [{ field: "price", order: "asc" }]
-      }).toBe("q=shoes&p=2&filter.brand=Nike&sort=price%7Easc")
+      }).toBe("q=shoes&p=2&size=48&filter.brand=Nike&sort=price%7Easc")
     })
 
     it("creates URLSearchParams with range filter parameter", () => {
@@ -173,6 +180,19 @@ describe("URL utilities", () => {
 
     it("handles invalid page parameter", () => {
       expectQueryState("q=test&p=invalid").toEqual({ query: "test" })
+    })
+
+    it("parses size parameter", () => {
+      expectQueryState("q=test&size=48").toEqual({ query: "test", size: 48 })
+    })
+
+    it("handles invalid size parameter", () => {
+      expectQueryState("q=test&size=invalid").toEqual({ query: "test" })
+    })
+
+    it("handles zero or negative size parameter", () => {
+      expectQueryState("q=test&size=0").toEqual({ query: "test" })
+      expectQueryState("q=test&size=-5").toEqual({ query: "test" })
     })
 
     it("handles empty parameters", () => {
@@ -256,9 +276,10 @@ describe("URL utilities", () => {
     })
 
     it("handles all parameters together", () => {
-      expectQueryState("q=shoes&p=2&filter.brand=Nike&sort=price~asc").toEqual({
+      expectQueryState("q=shoes&p=2&size=48&filter.brand=Nike&sort=price~asc").toEqual({
         query: "shoes",
         page: 2,
+        size: 48,
         filter: [{ field: "brand", value: ["Nike"] }],
         sort: [{ field: "price", order: "asc" }]
       })
@@ -470,6 +491,15 @@ describe("URL utilities", () => {
       })
     })
 
+    it("parses size parameter from URL", () => {
+      window.location.search = "?q=shoes&size=48"
+      const state = getCurrentUrlState()
+      expect(state).toEqual({
+        query: "shoes",
+        size: 48
+      })
+    })
+
     it("parses array filter parameters from URL", () => {
       window.location.search = "?filter.brand=Nike&filter.brand=Adidas&filter.color=Red"
       const state = getCurrentUrlState()
@@ -491,11 +521,12 @@ describe("URL utilities", () => {
     })
 
     it("parses all parameters including sort from URL", () => {
-      window.location.search = "?q=shoes&p=2&filter.brand=Nike&sort=price~desc,_score~desc"
+      window.location.search = "?q=shoes&p=2&size=48&filter.brand=Nike&sort=price~desc,_score~desc"
       const state = getCurrentUrlState()
       expect(state).toEqual({
         query: "shoes",
         page: 2,
+        size: 48,
         filter: [{ field: "brand", value: ["Nike"] }],
         sort: [
           { field: "price", order: "desc" },
