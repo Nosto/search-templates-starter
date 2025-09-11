@@ -1,30 +1,30 @@
 import { SearchKeywords, SearchKeyword, SearchFacet } from "@nosto/nosto-js/client"
 
-function createEmptyResponse(): Pick<SearchKeywords, "hits" | "total"> {
+function createEmptyResponse() {
   return {
     hits: [],
     total: 0
-  }
+  } satisfies SearchKeywords
 }
 
 function createKeyword(
   keyword: string,
   options: { highlight?: string; facets?: SearchFacet[]; priority?: number; total?: number } = {}
-): SearchKeyword {
+) {
   return {
     keyword,
     ...(options.highlight ? { _highlight: { keyword: options.highlight } } : {}),
     facets: options.facets || [],
     priority: options.priority || 1,
     total: options.total || 1
-  }
+  } satisfies SearchKeyword
 }
 
-function createKeywordsResponse(keywords: SearchKeyword[]): SearchKeywords {
+function createKeywordsResponse(keywords: SearchKeyword[]) {
   return {
     hits: keywords,
     total: keywords.length
-  }
+  } satisfies SearchKeywords
 }
 
 export const mockKeyword = createKeyword("running shoes", {

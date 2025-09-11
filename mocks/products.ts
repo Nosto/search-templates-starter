@@ -1,18 +1,18 @@
 import { SearchProducts } from "@nosto/nosto-js/client"
 import type { Product } from "../src/types"
 
-function createProductsResponse(products: Product[]): SearchProducts {
+function createProductsResponse(products: Product[]) {
   return {
     hits: products,
     total: products.length
-  }
+  } satisfies SearchProducts
 }
 
 function createEmptyResponse() {
   return {
     hits: [],
     total: 0
-  }
+  } satisfies SearchProducts
 }
 
 export function generateMockProducts(count: number): Product[] {
@@ -45,7 +45,7 @@ export function generateMockProducts(count: number): Product[] {
   })
 }
 
-export const mockProduct: Product = {
+export const mockProduct = {
   productId: "12345",
   name: "Running Shoes",
   brand: "Nike",
@@ -56,9 +56,9 @@ export const mockProduct: Product = {
   imageUrl: "https://picsum.photos/300/300",
   url: "https://example.com/products/running-shoes",
   handle: "running-shoes"
-}
+} satisfies Product
 
-export const mockProductNoSale: Product = {
+export const mockProductNoSale = {
   productId: "67890",
   name: "Casual Sneakers",
   brand: "Adidas",
@@ -67,9 +67,9 @@ export const mockProductNoSale: Product = {
   imageUrl: "https://picsum.photos/300/300?random=2",
   url: "https://example.com/products/casual-sneakers",
   handle: "casual-sneakers"
-}
+} satisfies Product
 
-export const mockProductNoBrand: Product = {
+export const mockProductNoBrand = {
   productId: "54321",
   name: "Generic Sports Shoes",
   price: 60.0,
@@ -77,9 +77,9 @@ export const mockProductNoBrand: Product = {
   imageUrl: "https://picsum.photos/300/300?random=3",
   url: "https://example.com/products/generic-sports-shoes",
   handle: "generic-sports-shoes"
-}
+} satisfies Product
 
-export const mockSerpProduct: Product = {
+export const mockSerpProduct = {
   productId: "1",
   name: "Sample Product",
   price: 30.0,
@@ -87,7 +87,7 @@ export const mockSerpProduct: Product = {
   priceCurrencyCode: "EUR",
   imageUrl: "https://picsum.photos/300/300",
   url: "https://example.com/product"
-}
+} satisfies Product
 
 export const mockProducts = createProductsResponse(generateMockProducts(5))
 
