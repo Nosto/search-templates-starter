@@ -13,21 +13,37 @@
   padding: var(--ns-space-4);
 }
 
-.list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.list > li:not(:first-child) {
-  margin: var(--ns-space-2) 0;
-}
-
-.list > li {
+.optionsContainer {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--ns-space-2);
+}
+
+.optionButton {
+  display: inline-flex;
   align-items: center;
+  padding: var(--ns-space-2) var(--ns-space-3);
   font-size: var(--ns-font-size-3);
+  border: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
+  border-radius: var(--ns-border-radius-pill);
+  background-color: var(--ns-color-grey-light);
+  color: var(--ns-color-black);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.optionButton:hover {
+  background-color: var(--ns-color-grey);
+}
+
+.optionButton.selected {
+  background-color: var(--ns-color-black);
+  color: var(--ns-color-white);
+  border-color: var(--ns-color-black);
+}
+
+.optionButton.selected:hover {
+  background-color: var(--ns-color-grey-dark);
 }
 
 .dropdown > .anchor .icon {
@@ -74,13 +90,6 @@
   background-color: var(--ns-color-primary);
   padding: 0.1rem 0.35rem;
   margin-left: var(--ns-space-1);
-}
-
-.menu .count {
-  padding: var(--ns-space-1) var(--ns-space-1);
-  color: var(--ns-color-black);
-  background-color: var(--ns-color-grey-light);
-  border-radius: var(--ns-border-radius-3);
 }
 
 .range {
