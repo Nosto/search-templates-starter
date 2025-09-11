@@ -13,7 +13,7 @@
   list-style: none;
   cursor: pointer;
   border: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
-  border-radius: var(--ns-border-radius-4);
+  border-radius: var(--ns-border-radius-pill);
   width: var(--ns-width-select);
   padding: var(--ns-space-2) 8% var(--ns-space-2) 22%;
 }

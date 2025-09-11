@@ -13,7 +13,7 @@
   border: var(--ns-border-width-thin) solid transparent;
   padding: var(--ns-space-2) var(--ns-space-2);
   font-size: var(--ns-font-size-4);
-  border-radius: var(--ns-border-radius-4);
+  border-radius: var(--ns-border-radius-pill);
   transition:
     color 0.15s ease-in-out,
     background-color 0.15s ease-in-out,
