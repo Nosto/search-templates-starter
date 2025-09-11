@@ -9,30 +9,41 @@ import { SidebarProvider } from "@/contexts/SidebarContext"
 import { autocompleteConfig, serpConfig } from "@/config"
 import FormSubmitHandler from "./FormSubmitHandler"
 import InputEventHandler from "./InputEventHandler"
+import { useActions } from "@nosto/search-js/preact/hooks"
+
+function Autocomplete() {
+  const { newSearch } = useActions()
+  // TODO: wait for elements is missing
+  const dropdownElement = document.querySelector<HTMLElement>("#dropdown")!
+  const searchInput = document.querySelector<HTMLInputElement>("#search")!
+  const searchForm = document.querySelector<HTMLFormElement>("#search-form")!
+
+  function onSubmit(query: string) {
+    newSearch({ query })
+  }
+
+  return (
+    <>
+      <FormSubmitHandler inputElement={searchInput} formElement={searchForm} onSubmit={onSubmit} />
+      {createPortal(
+        <AutocompletePageProvider config={autocompleteConfig}>
+          <InputEventHandler inputElement={searchInput} />
+          <Results onSubmit={onSubmit} />
+        </AutocompletePageProvider>,
+        dropdownElement
+      )}
+    </>
+  )
+}
 
 function App() {
-  // TODO: wait for elements is missing
-  const dropdownElement = document.querySelector<HTMLElement>("#dropdown")
-  const searchInput = document.querySelector<HTMLInputElement>("#search")
-  const searchForm = document.querySelector<HTMLFormElement>("#search-form")
-
   return (
     <SearchPageProvider config={serpConfig}>
       <SidebarProvider>
         <SearchQueryHandler />
-        {searchInput && <FormSubmitHandler inputElement={searchInput} formElement={searchForm} />}
-
-        {dropdownElement &&
-          searchInput &&
-          createPortal(
-            <AutocompletePageProvider config={autocompleteConfig}>
-              <InputEventHandler inputElement={searchInput} />
-              <Products />
-            </AutocompletePageProvider>,
-            dropdownElement
-          )}
+        <Autocomplete />
         <Serp />
-      </SidebarProvider>  
+      </SidebarProvider>
     </SearchPageProvider>
   )
 }

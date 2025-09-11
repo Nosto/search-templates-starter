@@ -1,5 +1,6 @@
+import { useEventListener } from "@/hooks/useEventListener"
 import { useActions } from "@nosto/search-js/preact/hooks"
-import { useEffect } from "preact/hooks"
+import { useCallback } from "preact/hooks"
 
 type Props = {
   inputElement: HTMLInputElement
@@ -8,18 +9,15 @@ type Props = {
 export default function InputEventHandler({ inputElement }: Props) {
   const { newSearch } = useActions()
 
-  useEffect(() => {
-    const handleInputChange = () => {
-      const query = inputElement.value.trim()
-      newSearch({ query })
-    }
-
-    inputElement.addEventListener("input", handleInputChange)
-
-    return () => {
-      inputElement.removeEventListener("input", handleInputChange)
-    }
+  const onInput = useCallback(() => {
+    const query = inputElement.value.trim()
+    newSearch({ query })
   }, [newSearch, inputElement])
 
+  useEventListener({
+    target: inputElement,
+    eventName: "input",
+    listener: onInput
+  })
   return null
 }

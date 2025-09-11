@@ -1,39 +1,29 @@
-import { useActions } from "@nosto/search-js/preact/hooks"
-import { useEffect } from "preact/hooks"
+import { useEventListener } from "@/hooks/useEventListener"
+import { useCallback } from "preact/hooks"
 
 type Props = {
   inputElement: HTMLInputElement
   formElement?: HTMLFormElement | null
+  onSubmit: (query: string) => void
 }
 
-export default function FormSubmitHandler({ inputElement, formElement }: Props) {
-  const { newSearch } = useActions()
-
-  useEffect(() => {
-    if (inputElement) {
-      const handleFormSubmit = (e: SubmitEvent) => {
-        e.preventDefault()
-        const query = inputElement.value.trim()
-        if (query) {
-          newSearch({ query })
-        }
+export default function FormSubmitHandler({ inputElement, formElement, onSubmit }: Props) {
+  const onSubmitFn = useCallback(
+    (e: SubmitEvent) => {
+      e.preventDefault()
+      const query = inputElement.value.trim()
+      if (query) {
+        onSubmit(query)
       }
+    },
+    [onSubmit, inputElement]
+  )
 
-      if (formElement) {
-        formElement.addEventListener("submit", handleFormSubmit)
-      } else {
-        inputElement.addEventListener("submit", handleFormSubmit)
-      }
-
-      return () => {
-        if (formElement) {
-          formElement.removeEventListener("submit", handleFormSubmit)
-        } else {
-          inputElement.removeEventListener("submit", handleFormSubmit)
-        }
-      }
-    }
-  }, [newSearch, inputElement, formElement])
+  useEventListener({
+    target: formElement || inputElement,
+    eventName: "submit",
+    listener: onSubmitFn
+  })
 
   return null
 }
