@@ -68,27 +68,22 @@ function AutocompletePortal() {
   )
 }
 
-function SerpPortal() {
-  const serpElement = document.getElementById("serp")
-  if (!serpElement) return null
-
-  return createPortal(
-    <SearchPageProvider config={serpConfig}>
-      <SidebarProvider>
-        <SearchQueryHandler />
-        <Serp />
-      </SidebarProvider>
-    </SearchPageProvider>,
-    serpElement
-  )
-}
-
 function App() {
+  const serpElement = document.getElementById("serp")
+
+  if (!serpElement) return <AutocompletePortal />
+
   return (
-    <>
+    <SearchPageProvider config={serpConfig}>
       <AutocompletePortal />
-      <SerpPortal />
-    </>
+      {createPortal(
+        <SidebarProvider>
+          <SearchQueryHandler />
+          <Serp />
+        </SidebarProvider>,
+        serpElement
+      )}
+    </SearchPageProvider>
   )
 }
 
