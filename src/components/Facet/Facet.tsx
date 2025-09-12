@@ -47,8 +47,7 @@ export default function Facet({ facet }: Props) {
                 toggleProductFilter(facet.field, value.value, !value.selected)
               }}
             >
-              {isColorFacet && <ColorCircle color={value.value} />}
-              {value.value} ({value.count})
+              {value.value} ({value.count}){isColorFacet && <ColorCircle color={value.value} />}
             </Pill>
           ))}
         </div>
