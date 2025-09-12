@@ -19,7 +19,7 @@ export default function SelectedFilters() {
               }}
             >
               {filter?.value}
-              <Button className={styles.button} icon="close" />
+              <Button icon="close" />
             </Pill>
           ))}
         </div>

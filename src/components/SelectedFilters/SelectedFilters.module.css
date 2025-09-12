@@ -29,14 +29,6 @@
   color: var(--ns-color-black);
 }
 
-.button {
-  text-align: right;
-  align-items: center;
-  cursor: pointer;
-  padding: var(--ns-space-1);
-  color: var(--ns-color-black);
-}
-
 .clear {
   cursor: pointer;
   position: relative;
