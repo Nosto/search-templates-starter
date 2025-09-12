@@ -17,11 +17,14 @@
 }
 
 .link {
-  display: block;
+  display: flex;
   position: relative;
   text-decoration: none;
   color: var(--ns-color-black);
-  padding: var(--ns-space-2) var(--ns-space-4);
-  border-radius: var(--ns-border-radius-3);
+  width: var(--ns-space-5);
+  height: var(--ns-space-5);
+  border-radius: 50%;
   cursor: pointer;
+  align-items: center;
+  justify-content: center;
 }
