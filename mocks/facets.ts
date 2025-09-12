@@ -1,16 +1,16 @@
 import { SearchTermsFacet, SearchStatsFacet, SearchFacetTerm } from "@nosto/nosto-js/client"
 
-function createTermsFacet(id: string, name: string, field: string, data: SearchFacetTerm[]): SearchTermsFacet {
+function createTermsFacet(id: string, name: string, field: string, data: SearchFacetTerm[]) {
   return {
     id,
     name,
     field,
     type: "terms",
     data
-  }
+  } satisfies SearchTermsFacet
 }
 
-function createStatsFacet(id: string, name: string, field: string, min: number, max: number): SearchStatsFacet {
+function createStatsFacet(id: string, name: string, field: string, min: number, max: number) {
   return {
     id,
     name,
@@ -18,15 +18,15 @@ function createStatsFacet(id: string, name: string, field: string, min: number, 
     type: "stats",
     min,
     max
-  }
+  } satisfies SearchStatsFacet
 }
 
-function createFacetDataItem(value: string, count: number, selected = false): SearchFacetTerm {
+function createFacetDataItem(value: string, count: number, selected = false) {
   return {
     value,
     count,
     selected
-  }
+  } satisfies SearchFacetTerm
 }
 
 export const mockCategoryFacet = createTermsFacet("category", "Category", "categories", [
