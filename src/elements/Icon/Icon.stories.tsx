@@ -19,7 +19,7 @@ export const Default: Story = {
   }
 }
 
-export const Pill: Story = {
+export const Circle: Story = {
   args: {
     name: "search",
     circle: true
@@ -74,7 +74,7 @@ export const All: Story = {
   }
 }
 
-export const AllPill: Story = {
+export const AllCircle: Story = {
   render: () => {
     const iconNames: IconName[] = [
       "close",

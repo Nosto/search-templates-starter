@@ -36,7 +36,7 @@ export default function RangeFacet({ facet }: Props) {
         <span className={styles.title}>{facet.name}</span>
         {isSelected && <span className={styles.count}>{1}</span>}
         <span className={styles.icon}>
-          <Icon name={active ? "arrow-up" : "arrow-down"} />
+          <Icon name={active ? "arrow-up" : "arrow-down"} circle={true} />
         </span>
       </button>
       <div className={styles.menu} id={`${facet.id}-range-menu`} aria-expanded={active}>
