@@ -53,3 +53,10 @@ export const FilterStyle: Story = {
     onChange: () => {}
   }
 }
+
+export const DefaultUnselected: Story = {
+  args: {
+    children: "Optional Selected Prop",
+    onChange: () => {}
+  }
+}

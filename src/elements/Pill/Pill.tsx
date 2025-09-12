@@ -4,11 +4,11 @@ import { ComponentChildren } from "preact"
 
 type Props = {
   children: ComponentChildren
-  selected: boolean
+  selected?: boolean
   onChange: (e: Event) => void
 }
 
-export default function Pill({ children, selected, onChange }: Props) {
+export default function Pill({ children, selected = false, onChange }: Props) {
   return (
     <button className={cl(styles.pill, selected && styles.selected)} onClick={onChange} type="button">
       {children}

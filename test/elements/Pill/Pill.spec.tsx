@@ -64,4 +64,11 @@ describe("Pill", () => {
     const button = getByRole("button")
     expect(button.textContent).toBe("Brand: Nike")
   })
+
+  it("should default to unselected when selected prop is not provided", () => {
+    const { getByRole } = render(<Pill onChange={() => {}}>Default Pill</Pill>)
+
+    const button = getByRole("button")
+    expect(button.className).not.toMatch(/selected/)
+  })
 })
