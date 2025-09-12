@@ -11,16 +11,15 @@ export default function SelectedFilters() {
       <div className={styles.wrapper}>
         <div className={styles.container}>
           {filters.map(filter => (
-            <Pill key={`${filter?.name}: ${filter?.value}`}>
+            <Pill
+              key={`${filter?.name}: ${filter?.value}`}
+              onClick={e => {
+                e.preventDefault()
+                filter?.remove()
+              }}
+            >
               {filter?.value}
-              <Button
-                className={styles.button}
-                onClick={e => {
-                  e.preventDefault()
-                  filter?.remove()
-                }}
-                icon="close"
-              />
+              <Button className={styles.button} icon="close" />
             </Pill>
           ))}
         </div>
