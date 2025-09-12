@@ -7,6 +7,7 @@ import styles from "./Sidebar.module.css"
 import Button from "@/elements/Button/Button"
 import { cl } from "@nosto/search-js/utils"
 import { useSidebar } from "@/contexts/SidebarContext"
+import SelectedFilters from "../SelectedFilters/SelectedFilters"
 
 export const toggleButtonId = "toggle-mobile-sidebar"
 
@@ -24,7 +25,7 @@ function ToggleSidebarButton({ className, onClick }: ToggleProps = {}) {
 }
 
 export default function SideBar() {
-  const { loading, facets } = useFacets()
+  const { facets } = useFacets()
   const { isOpen, setOpen } = useSidebar()
 
   const handleBackdropClick = () => {
@@ -50,12 +51,13 @@ export default function SideBar() {
           aria-label="Close sidebar filters"
         />
       )}
-      <div className={cl(styles.wrapper, loading && styles.loading, isOpen && styles.open)}>
+      <div className={cl(styles.wrapper, isOpen && styles.open)}>
         <div className={styles.content}>
           <div className={styles.header}>
             <span className={styles.title}>Filters</span>
             <ToggleSidebarButton onClick={() => setOpen(false)} />
           </div>
+          <SelectedFilters />
           <div>
             <ul className={styles.facets}>
               {facets?.map(facet => {
