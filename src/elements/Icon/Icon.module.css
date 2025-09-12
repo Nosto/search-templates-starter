@@ -8,10 +8,13 @@
 }
 
 .pill {
-  display: inline-block;
-  padding: var(--ns-space-2) var(--ns-space-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--ns-width-icon) + var(--ns-space-4));
+  height: calc(var(--ns-height-icon) + var(--ns-space-4));
   background-color: var(--ns-color-grey-light);
-  border-radius: var(--ns-border-radius-pill);
+  border-radius: 50%;
 }
 
 .pill::after {
