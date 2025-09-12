@@ -13,7 +13,14 @@ export default function SelectedFilters() {
           {filters.map(filter => (
             <Pill key={`${filter?.name}: ${filter?.value}`}>
               {filter?.value}
-              <Button className={styles.button} onClick={() => filter?.remove()} icon="close" />
+              <Button
+                className={styles.button}
+                onClick={e => {
+                  e.preventDefault()
+                  filter?.remove()
+                }}
+                icon="close"
+              />
             </Pill>
           ))}
         </div>
