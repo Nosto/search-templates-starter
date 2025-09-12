@@ -7,7 +7,7 @@
   display: inline-block;
 }
 
-.pill {
+.circle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -17,7 +17,7 @@
   border-radius: 50%;
 }
 
-.pill::after {
+.circle::after {
   background-size: calc(var(--ns-width-icon) * 0.75) calc(var(--ns-height-icon) * 0.75);
   height: calc(var(--ns-height-icon) * 0.75);
   width: calc(var(--ns-width-icon) * 0.75);

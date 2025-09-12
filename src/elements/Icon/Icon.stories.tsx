@@ -22,7 +22,7 @@ export const Default: Story = {
 export const Pill: Story = {
   args: {
     name: "search",
-    pill: true
+    circle: true
   }
 }
 
@@ -112,7 +112,7 @@ export const AllPill: Story = {
               gap: "8px"
             }
           },
-          [h(Icon, { name, pill: true }), h("span", { style: { fontSize: "12px", textAlign: "center" } }, name)]
+          [h(Icon, { name, circle: true }), h("span", { style: { fontSize: "12px", textAlign: "center" } }, name)]
         )
       )
     )
