@@ -12,7 +12,7 @@ export default function SelectedFilters() {
         <div className={styles.container}>
           {filters.map(filter => (
             <Pill key={`${filter?.name}: ${filter?.value}`}>
-              <span className={styles.label}>{filter?.value}</span>
+              {filter?.value}
               <Button className={styles.button} onClick={() => filter?.remove()} icon="close" />
             </Pill>
           ))}
