@@ -1,0 +1,25 @@
+.pill {
+  display: inline-block;
+  padding: var(--ns-space-2) var(--ns-space-3);
+  background-color: var(--ns-color-grey-light);
+  color: var(--ns-color-black);
+  border: none;
+  border-radius: var(--ns-border-radius-pill);
+  cursor: pointer;
+  font-size: var(--ns-font-size-3);
+  margin: var(--ns-space-1) var(--ns-space-1) var(--ns-space-1) 0;
+  transition: background-color 0.2s ease;
+}
+
+.pill:hover {
+  background-color: var(--ns-color-grey);
+}
+
+.pill.selected {
+  background-color: var(--ns-color-black);
+  color: var(--ns-color-white);
+}
+
+.pill.selected:hover {
+  background-color: var(--ns-color-black);
+}

@@ -134,6 +134,7 @@ git commit --no-verify -m "your commit message"
 - Utilize memoization (useMemo, useCallback) to prevent unnecessary re-renders
 - Avoid inline functions in JSX props to maintain performance and readability
 - Ensure accessibility by using semantic HTML and proper aria attributes
+- **Always use the `cl` utility from `@nosto/search-js/utils` for className creation** instead of string concatenation or template literals
 
 ### Testing with Vitest
 - Write unit tests using Vitest (see `test/utils/url.spec.ts` as example)
