@@ -1,6 +1,6 @@
 import { useProductFilters } from "@nosto/search-js/preact/hooks"
 import styles from "./SelectedFilters.module.css"
-import Button from "@/elements/Button/Button"
+import Pill from "@/elements/Pill/Pill"
 
 export default function SelectedFilters() {
   const { filters, removeAll } = useProductFilters()
@@ -10,12 +10,9 @@ export default function SelectedFilters() {
       <div className={styles.wrapper}>
         <div className={styles.container}>
           {filters.map(filter => (
-            <div key={`${filter?.name}: ${filter?.value}`} className={styles.filter}>
-              <span className={styles.label}>
-                {filter?.name}: {filter?.value}
-              </span>
-              <Button className={styles.button} onClick={() => filter?.remove()} icon="close" />
-            </div>
+            <Pill key={`${filter?.name}: ${filter?.value}`} selected={true} onChange={() => filter?.remove()}>
+              {filter?.name}: {filter?.value}
+            </Pill>
           ))}
         </div>
         <button

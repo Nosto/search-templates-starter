@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/preact"
 import Pill from "./Pill"
 
 const meta: Meta<typeof Pill> = {
-  title: "Components/Facet/Pill",
+  title: "Elements/Pill",
   component: Pill,
   tags: ["autodocs"],
   argTypes: {
@@ -16,8 +16,7 @@ type Story = StoryObj<typeof Pill>
 
 export const Default: Story = {
   args: {
-    value: "Nike",
-    count: 42,
+    children: "Nike (42)",
     selected: false,
     onChange: () => {}
   }
@@ -25,8 +24,7 @@ export const Default: Story = {
 
 export const Selected: Story = {
   args: {
-    value: "Adidas",
-    count: 28,
+    children: "Adidas (28)",
     selected: true,
     onChange: () => {}
   }
@@ -34,8 +32,7 @@ export const Selected: Story = {
 
 export const LowCount: Story = {
   args: {
-    value: "Reebok",
-    count: 3,
+    children: "Reebok (3)",
     selected: false,
     onChange: () => {}
   }
@@ -43,9 +40,16 @@ export const LowCount: Story = {
 
 export const LongName: Story = {
   args: {
-    value: "New Balance Running Shoes",
-    count: 157,
+    children: "New Balance Running Shoes (157)",
     selected: false,
+    onChange: () => {}
+  }
+}
+
+export const FilterStyle: Story = {
+  args: {
+    children: "Brand: Nike",
+    selected: true,
     onChange: () => {}
   }
 }

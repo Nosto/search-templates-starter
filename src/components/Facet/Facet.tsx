@@ -1,7 +1,7 @@
 import { useFacet } from "@nosto/search-js/preact/hooks"
 import Icon from "@/elements/Icon/Icon"
 import { SearchTermsFacet } from "@nosto/nosto-js/client"
-import Pill from "./Pill"
+import Pill from "@/elements/Pill/Pill"
 import styles from "./Facet.module.css"
 
 type Props = {
@@ -39,14 +39,14 @@ export default function Facet({ facet }: Props) {
           {facet.data?.map(value => (
             <Pill
               key={value.value}
-              value={value.value}
-              count={value.count}
               selected={value.selected}
               onChange={e => {
                 e.preventDefault()
                 toggleProductFilter(facet.field, value.value, !value.selected)
               }}
-            />
+            >
+              {value.value} ({value.count})
+            </Pill>
           ))}
         </div>
       </div>
