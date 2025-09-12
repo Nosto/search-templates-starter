@@ -40,7 +40,7 @@ export default function Facet({ facet }: Props) {
             <Pill
               key={value.value}
               selected={value.selected}
-              onChange={e => {
+              onClick={e => {
                 e.preventDefault()
                 toggleProductFilter(facet.field, value.value, !value.selected)
               }}

@@ -7,7 +7,7 @@ const meta: Meta<typeof Pill> = {
   component: Pill,
   tags: ["autodocs"],
   argTypes: {
-    onChange: { action: "changed" }
+    onClick: { action: "clicked" }
   }
 }
 
@@ -18,7 +18,7 @@ export const Default: Story = {
   args: {
     children: "Nike (42)",
     selected: false,
-    onChange: () => {}
+    onClick: () => {}
   }
 }
 
@@ -26,7 +26,7 @@ export const Selected: Story = {
   args: {
     children: "Adidas (28)",
     selected: true,
-    onChange: () => {}
+    onClick: () => {}
   }
 }
 
@@ -34,7 +34,7 @@ export const LowCount: Story = {
   args: {
     children: "Reebok (3)",
     selected: false,
-    onChange: () => {}
+    onClick: () => {}
   }
 }
 
@@ -42,7 +42,7 @@ export const LongName: Story = {
   args: {
     children: "New Balance Running Shoes (157)",
     selected: false,
-    onChange: () => {}
+    onClick: () => {}
   }
 }
 
@@ -50,13 +50,19 @@ export const FilterStyle: Story = {
   args: {
     children: "Brand: Nike",
     selected: true,
-    onChange: () => {}
+    onClick: () => {}
   }
 }
 
 export const DefaultUnselected: Story = {
   args: {
-    children: "Optional Selected Prop",
-    onChange: () => {}
+    children: "Optional Selected Prop"
+  }
+}
+
+export const NoClickHandler: Story = {
+  args: {
+    children: "No Click Handler",
+    selected: false
   }
 }

@@ -9,7 +9,7 @@ afterEach(() => {
 describe("Pill", () => {
   it("should render children content", () => {
     const { getByRole } = render(
-      <Pill selected={false} onChange={() => {}}>
+      <Pill selected={false} onClick={() => {}}>
         Nike (42)
       </Pill>
     )
@@ -20,7 +20,7 @@ describe("Pill", () => {
 
   it("should apply selected class when selected is true", () => {
     const { getByRole } = render(
-      <Pill selected={true} onChange={() => {}}>
+      <Pill selected={true} onClick={() => {}}>
         Adidas (28)
       </Pill>
     )
@@ -31,7 +31,7 @@ describe("Pill", () => {
 
   it("should not apply selected class when selected is false", () => {
     const { getByRole } = render(
-      <Pill selected={false} onChange={() => {}}>
+      <Pill selected={false} onClick={() => {}}>
         Reebok (3)
       </Pill>
     )
@@ -40,10 +40,10 @@ describe("Pill", () => {
     expect(button.className).not.toMatch(/selected/)
   })
 
-  it("should call onChange when clicked", () => {
-    const mockOnChange = vi.fn()
+  it("should call onClick when clicked", () => {
+    const mockOnClick = vi.fn()
     const { getByRole } = render(
-      <Pill selected={false} onChange={mockOnChange}>
+      <Pill selected={false} onClick={mockOnClick}>
         Test Brand (10)
       </Pill>
     )
@@ -51,12 +51,12 @@ describe("Pill", () => {
     const button = getByRole("button")
     button.click()
 
-    expect(mockOnChange).toHaveBeenCalledTimes(1)
+    expect(mockOnClick).toHaveBeenCalledTimes(1)
   })
 
   it("should render complex children content", () => {
     const { getByRole } = render(
-      <Pill selected={true} onChange={() => {}}>
+      <Pill selected={true} onClick={() => {}}>
         Brand: Nike
       </Pill>
     )
@@ -66,9 +66,16 @@ describe("Pill", () => {
   })
 
   it("should default to unselected when selected prop is not provided", () => {
-    const { getByRole } = render(<Pill onChange={() => {}}>Default Pill</Pill>)
+    const { getByRole } = render(<Pill onClick={() => {}}>Default Pill</Pill>)
 
     const button = getByRole("button")
     expect(button.className).not.toMatch(/selected/)
+  })
+
+  it("should work without onClick prop", () => {
+    const { getByRole } = render(<Pill>No Click Handler</Pill>)
+
+    const button = getByRole("button")
+    expect(button.textContent).toBe("No Click Handler")
   })
 })
