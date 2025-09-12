@@ -1,0 +1,9 @@
+.colorCircle {
+  display: inline-block;
+  width: var(--ns-space-3);
+  height: var(--ns-space-3);
+  border-radius: var(--ns-border-radius-circle);
+  border: var(--ns-border-width-thin) solid var(--ns-color-grey);
+  margin-right: var(--ns-space-1);
+  flex-shrink: 0;
+}

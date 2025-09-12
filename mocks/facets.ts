@@ -49,3 +49,12 @@ export const mockPriceFacet = createStatsFacet("price", "Price", "price", 10, 50
 export const mockRatingFacet = createStatsFacet("rating", "Customer Rating", "rating", 1, 5)
 
 export const mockWeightFacet = createStatsFacet("weight", "Weight (kg)", "weight", 0.1, 25.0)
+
+export const mockColorFacet = createTermsFacet("color", "Color", "color", [
+  createFacetDataItem("red", 35),
+  createFacetDataItem("blue", 28, true),
+  createFacetDataItem("green", 22),
+  createFacetDataItem("black", 41),
+  createFacetDataItem("white", 33),
+  createFacetDataItem("yellow", 19)
+])

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Facet from "./Facet"
-import { mockCategoryFacet, mockBrandFacet } from "@mocks/facets"
+import { mockCategoryFacet, mockBrandFacet, mockColorFacet } from "@mocks/facets"
 
 export default {
   title: "Components/Facet/Facet",
@@ -42,5 +42,41 @@ export const WithSelectedFilters: Story = {
 export const LargeFacet: Story = {
   args: {
     facet: mockBrandFacet
+  }
+}
+
+export const ColorFacet: Story = {
+  args: {
+    facet: mockColorFacet
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Color facet showing color circles inside pills for each color option."
+      }
+    }
+  }
+}
+
+export const ColorFacetWithSelection: Story = {
+  args: {
+    facet: {
+      ...mockColorFacet,
+      data: [
+        { value: "red", count: 35, selected: false },
+        { value: "blue", count: 28, selected: true },
+        { value: "green", count: 22, selected: false },
+        { value: "black", count: 41, selected: true },
+        { value: "white", count: 33, selected: false },
+        { value: "yellow", count: 19, selected: false }
+      ]
+    }
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Color facet with selected colors showing both color circles and selection states."
+      }
+    }
   }
 }

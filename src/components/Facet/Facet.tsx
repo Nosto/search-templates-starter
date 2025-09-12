@@ -2,6 +2,7 @@ import { useFacet } from "@nosto/search-js/preact/hooks"
 import Icon from "@/elements/Icon/Icon"
 import { SearchTermsFacet } from "@nosto/nosto-js/client"
 import Pill from "@/elements/Pill/Pill"
+import ColorCircle from "@/elements/ColorCircle/ColorCircle"
 import styles from "./Facet.module.css"
 
 type Props = {
@@ -10,6 +11,7 @@ type Props = {
 
 export default function Facet({ facet }: Props) {
   const { active, selectedFiltersCount, toggleActive, toggleProductFilter } = useFacet(facet)
+  const isColorFacet = facet.field === "color" || facet.id === "color"
 
   return (
     <li className={`${styles.dropdown} ${active ? styles.active : ""}`}>
@@ -45,6 +47,7 @@ export default function Facet({ facet }: Props) {
                 toggleProductFilter(facet.field, value.value, !value.selected)
               }}
             >
+              {isColorFacet && <ColorCircle color={value.value} />}
               {value.value} ({value.count})
             </Pill>
           ))}
