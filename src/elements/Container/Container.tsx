@@ -8,11 +8,9 @@ type Props = {
   padding?: PaddingOption
 } & JSX.IntrinsicElements["div"]
 
-export default function Container({ className, padding, children, style, ...props }: Props) {
-  const inlineStyle: JSX.CSSProperties = {}
-
-  if (padding) {
-    inlineStyle.padding = `var(--ns-space-${padding})`
+export default function Container({ className, padding = "2", children, style, ...props }: Props) {
+  const inlineStyle: JSX.CSSProperties = {
+    padding: `var(--ns-space-${padding})`
   }
 
   if (style) {

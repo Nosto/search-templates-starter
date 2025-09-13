@@ -14,7 +14,7 @@ type Story = StoryObj<typeof Container>
 
 export const Default: Story = {
   args: {
-    children: "Default container with no padding",
+    children: "Default container with default padding (--ns-space-2)",
     style: { border: "1px solid #ccc", minWidth: "200px" }
   }
 }

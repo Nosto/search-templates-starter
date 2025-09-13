@@ -18,6 +18,12 @@ describe("Container", () => {
     expect(containerEl?.className).toMatch(/container/)
   })
 
+  it("applies default padding value of '2'", () => {
+    const { container } = render(<Container>Test</Container>)
+    const containerEl = container.querySelector("div")
+    expect(containerEl?.style.padding).toBe("var(--ns-space-2)")
+  })
+
   it("applies inline padding style when padding prop is provided", () => {
     const { container } = render(<Container padding="3">Test</Container>)
     const containerEl = container.querySelector("div")
@@ -58,11 +64,11 @@ describe("Container", () => {
     expect(containerEl?.getAttribute("data-testid")).toBe("container")
   })
 
-  it("works without padding prop", () => {
-    const { container } = render(<Container>No padding</Container>)
+  it("applies default padding when no padding prop is provided", () => {
+    const { container } = render(<Container>Default padding</Container>)
     const containerEl = container.querySelector("div")
     expect(containerEl?.className).toMatch(/container/)
-    expect(containerEl?.style.padding).toBe("")
+    expect(containerEl?.style.padding).toBe("var(--ns-space-2)")
   })
 
   it("renders nested elements correctly", () => {
