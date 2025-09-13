@@ -15,7 +15,7 @@ export function createProduct(overrides: Partial<Product> = {}): Product {
   const listPrice = Math.round((Math.random() * 200 + 20) * 100) / 100
   const price = Math.round(Math.random() * listPrice * 100) / 100
 
-  const defaults = {
+  return {
     productId: `product-${Math.floor(Math.random() * 10000)}`,
     name: `${adjectives[adjectiveIndex]} ${productTypes[typeIndex]}`,
     price,
@@ -28,13 +28,9 @@ export function createProduct(overrides: Partial<Product> = {}): Product {
     availability: "InStock",
     url: `https://example.com/product-${Math.floor(Math.random() * 10000)}`,
     imageUrl: "https://picsum.photos/300/300",
-    description: `High-quality ${adjectives[adjectiveIndex].toLowerCase()} ${productTypes[typeIndex].toLowerCase()} from ${brands[brandIndex]}`
-  } as Product
-
-  return {
-    ...defaults,
+    description: `High-quality ${adjectives[adjectiveIndex].toLowerCase()} ${productTypes[typeIndex].toLowerCase()} from ${brands[brandIndex]}`,
     ...overrides
-  }
+  } as Product
 }
 
 function createProductsResponse(products: Product[]) {
