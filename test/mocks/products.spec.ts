@@ -1,9 +1,9 @@
 import { describe, it, expect } from "vitest"
-import { createBaseProduct } from "@mocks/products"
+import { createProduct } from "@mocks/products"
 
-describe("createBaseProduct", () => {
+describe("createProduct", () => {
   it("should return a product with required properties", () => {
-    const product = createBaseProduct()
+    const product = createProduct()
 
     expect(product).toHaveProperty("productId")
     expect(product).toHaveProperty("name")
@@ -21,7 +21,7 @@ describe("createBaseProduct", () => {
   })
 
   it("should allow overriding default values", () => {
-    const product = createBaseProduct({
+    const product = createProduct({
       productId: "custom-id",
       name: "Custom Product",
       price: 150.0,
@@ -37,7 +37,7 @@ describe("createBaseProduct", () => {
   })
 
   it("should allow partial overrides", () => {
-    const product = createBaseProduct({
+    const product = createProduct({
       name: "Partially Custom Product"
     })
 

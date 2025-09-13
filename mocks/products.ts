@@ -1,7 +1,7 @@
 import { SearchProducts } from "@nosto/nosto-js/client"
 import type { Product } from "../src/types"
 
-export function createBaseProduct(overrides: Partial<Product> = {}): Product {
+export function createProduct(overrides: Partial<Product> = {}): Product {
   const categories = ["Clothing", "Electronics", "Home & Garden", "Sports", "Books", "Beauty"]
   const brands = ["BrandA", "BrandB", "BrandC", "BrandD", "BrandE", "BrandF"]
   const adjectives = ["Premium", "Classic", "Modern", "Vintage", "Eco-Friendly", "Luxury"]
@@ -53,30 +53,30 @@ function createEmptyResponse() {
 
 export function generateMockProducts(count: number): Product[] {
   return Array.from({ length: count }, (_, index) =>
-    createBaseProduct({
+    createProduct({
       productId: `product-${index + 1}`,
       url: `https://example.com/product-${index + 1}`
     })
   )
 }
 
-export const mockProduct = createBaseProduct({
+export const mockProduct = createProduct({
   productId: "12345",
   name: "Running Shoes"
 })
 
-export const mockProductNoSale = createBaseProduct({
+export const mockProductNoSale = createProduct({
   productId: "67890",
   name: "Casual Sneakers"
 })
 
-export const mockProductNoBrand = createBaseProduct({
+export const mockProductNoBrand = createProduct({
   productId: "54321",
   name: "Generic Sports Shoes",
   brand: undefined
 })
 
-export const mockSerpProduct = createBaseProduct({
+export const mockSerpProduct = createProduct({
   productId: "1",
   name: "Sample Product"
 })
