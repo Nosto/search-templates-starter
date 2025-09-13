@@ -202,4 +202,3 @@ git commit --no-verify -m "your commit message"
 ### Build Artifacts
 - Never commit `dist/` or `node_modules/` directories
 - `.gitignore` already excludes these appropriately
-- Storybook builds to `storybook-static/` (also excluded)
