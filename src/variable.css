@@ -78,13 +78,4 @@
   --ns-height-input-checkbox: 16px;
   --ns-height-input-checkbox-tick: 10px;
   --ns-min-height-content: 890px;
-
-  /* GRID */
-  --ns-grid-gap-small: var(--ns-space-1);
-  --ns-grid-gap-medium: var(--ns-space-2);
-  --ns-grid-gap-large: var(--ns-space-4);
-  --ns-grid-columns: initial;
-  --ns-grid-gap: initial;
-  --ns-grid-align-items: initial;
-  --ns-grid-justify-items: initial;
 }

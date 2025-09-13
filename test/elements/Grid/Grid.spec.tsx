@@ -21,7 +21,7 @@ describe("Grid component", () => {
     expect(getByText("Item 2")).toBeDefined()
   })
 
-  it("applies grid CSS class", () => {
+  it("applies display: grid style", () => {
     const { getByTestId } = render(
       <Grid data-testid="grid">
         <div>Content</div>
@@ -29,7 +29,7 @@ describe("Grid component", () => {
     )
 
     const grid = getByTestId("grid")
-    expect(grid.className).toMatch(/grid/)
+    expect((grid as HTMLElement).style.display).toBe("grid")
   })
 
   it("applies custom className", () => {
@@ -43,7 +43,7 @@ describe("Grid component", () => {
     expect(grid.className).toContain("custom-class")
   })
 
-  it("sets custom CSS properties for columns", () => {
+  it("sets direct CSS properties for columns", () => {
     const { getByTestId } = render(
       <Grid columns={3} data-testid="grid">
         <div>Content</div>
@@ -51,10 +51,10 @@ describe("Grid component", () => {
     )
 
     const grid = getByTestId("grid")
-    expect((grid as HTMLElement).style.getPropertyValue("--ns-grid-columns")).toBe("repeat(3, 1fr)")
+    expect((grid as HTMLElement).style.gridTemplateColumns).toBe("repeat(3, 1fr)")
   })
 
-  it("sets custom CSS properties for gap", () => {
+  it("sets direct CSS properties for gap", () => {
     const { getByTestId } = render(
       <Grid gap="large" data-testid="grid">
         <div>Content</div>
@@ -62,10 +62,10 @@ describe("Grid component", () => {
     )
 
     const grid = getByTestId("grid")
-    expect((grid as HTMLElement).style.getPropertyValue("--ns-grid-gap")).toBe("var(--ns-grid-gap-large)")
+    expect((grid as HTMLElement).style.gap).toBe("2rem")
   })
 
-  it("sets custom CSS properties for alignment", () => {
+  it("sets direct CSS properties for alignment", () => {
     const { getByTestId } = render(
       <Grid alignItems="center" justifyItems="end" data-testid="grid">
         <div>Content</div>
@@ -73,8 +73,8 @@ describe("Grid component", () => {
     )
 
     const grid = getByTestId("grid")
-    expect((grid as HTMLElement).style.getPropertyValue("--ns-grid-align-items")).toBe("center")
-    expect((grid as HTMLElement).style.getPropertyValue("--ns-grid-justify-items")).toBe("end")
+    expect((grid as HTMLElement).style.alignItems).toBe("center")
+    expect((grid as HTMLElement).style.justifyItems).toBe("end")
   })
 
   it("handles auto-fit columns", () => {
@@ -85,9 +85,7 @@ describe("Grid component", () => {
     )
 
     const grid = getByTestId("grid")
-    expect((grid as HTMLElement).style.getPropertyValue("--ns-grid-columns")).toBe(
-      "repeat(auto-fit, minmax(200px, 1fr))"
-    )
+    expect((grid as HTMLElement).style.gridTemplateColumns).toBe("repeat(auto-fit, minmax(200px, 1fr))")
   })
 
   it("handles custom gap value", () => {
@@ -98,6 +96,6 @@ describe("Grid component", () => {
     )
 
     const grid = getByTestId("grid")
-    expect((grid as HTMLElement).style.getPropertyValue("--ns-grid-gap")).toBe("2rem")
+    expect((grid as HTMLElement).style.gap).toBe("2rem")
   })
 })

@@ -1,5 +1,4 @@
 import { JSX } from "preact/jsx-runtime"
-import styles from "./Grid.module.css"
 import { cl } from "@nosto/search-js/utils"
 
 type GridProps = {
@@ -19,19 +18,28 @@ export default function Grid({
   style,
   ...props
 }: GridProps) {
+  const getGapValue = (gap: string): string => {
+    const gapMap = {
+      small: "0.5rem", // --ns-space-1 equivalent
+      medium: "1rem", // --ns-space-2 equivalent
+      large: "2rem" // --ns-space-4 equivalent
+    }
+    return gapMap[gap as keyof typeof gapMap] || gap
+  }
+
   const customStyles: Record<string, string | undefined> = {
-    "--ns-grid-columns":
+    display: "grid",
+    gridTemplateColumns:
       typeof columns === "number" ? `repeat(${columns}, 1fr)` : `repeat(${columns}, minmax(200px, 1fr))`,
-    "--ns-grid-gap":
-      typeof gap === "string" && ["small", "medium", "large"].includes(gap) ? `var(--ns-grid-gap-${gap})` : gap,
-    "--ns-grid-align-items": alignItems,
-    "--ns-grid-justify-items": justifyItems
+    gap: getGapValue(gap),
+    alignItems,
+    justifyItems
   }
 
   const gridStyle = Object.assign({}, style, customStyles)
 
   return (
-    <div className={cl(styles.grid, className)} style={gridStyle} {...props}>
+    <div className={cl(className)} style={gridStyle} {...props}>
       {children}
     </div>
   )

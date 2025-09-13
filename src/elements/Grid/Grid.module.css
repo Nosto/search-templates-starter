@@ -1,7 +1,0 @@
-.grid {
-  display: grid;
-  grid-template-columns: var(--ns-grid-columns);
-  gap: var(--ns-grid-gap);
-  align-items: var(--ns-grid-align-items);
-  justify-items: var(--ns-grid-justify-items);
-}
