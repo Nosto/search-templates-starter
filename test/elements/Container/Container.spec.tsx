@@ -18,24 +18,24 @@ describe("Container", () => {
     expect(containerEl?.className).toMatch(/container/)
   })
 
-  it("applies padding class when padding prop is provided", () => {
+  it("applies inline padding style when padding prop is provided", () => {
     const { container } = render(<Container padding="3">Test</Container>)
     const containerEl = container.querySelector("div")
-    expect(containerEl?.className).toMatch(/padding-3/)
+    expect(containerEl?.style.padding).toBe("var(--ns-space-3)")
   })
 
-  it("applies multiple padding options correctly", () => {
+  it("applies all padding options correctly as inline styles", () => {
     const paddingOptions = ["05", "1", "2", "3", "4", "5", "10", "16"] as const
 
     paddingOptions.forEach(padding => {
       const { container } = render(<Container padding={padding}>Test</Container>)
       const containerEl = container.querySelector("div")
-      expect(containerEl?.className).toMatch(new RegExp(`padding-${padding}`))
+      expect(containerEl?.style.padding).toBe(`var(--ns-space-${padding})`)
       cleanup()
     })
   })
 
-  it("applies custom className along with container classes", () => {
+  it("applies custom className along with container class", () => {
     const { container } = render(
       <Container className="custom-class" padding="2">
         Test
@@ -43,8 +43,8 @@ describe("Container", () => {
     )
     const containerEl = container.querySelector("div")
     expect(containerEl?.className).toMatch(/container/)
-    expect(containerEl?.className).toMatch(/padding-2/)
     expect(containerEl?.className).toMatch(/custom-class/)
+    expect(containerEl?.style.padding).toBe("var(--ns-space-2)")
   })
 
   it("passes through additional div props", () => {
@@ -62,7 +62,7 @@ describe("Container", () => {
     const { container } = render(<Container>No padding</Container>)
     const containerEl = container.querySelector("div")
     expect(containerEl?.className).toMatch(/container/)
-    expect(containerEl?.className).not.toMatch(/padding-/)
+    expect(containerEl?.style.padding).toBe("")
   })
 
   it("renders nested elements correctly", () => {
@@ -74,5 +74,17 @@ describe("Container", () => {
     )
     expect(container.querySelector("h1")?.textContent).toBe("Title")
     expect(container.querySelector("p")?.textContent).toBe("Paragraph")
+  })
+
+  it("merges custom style prop with padding styles", () => {
+    const { container } = render(
+      <Container padding="2" style={{ color: "red", margin: "10px" }}>
+        Test
+      </Container>
+    )
+    const containerEl = container.querySelector("div")
+    expect(containerEl?.style.padding).toBe("var(--ns-space-2)")
+    expect(containerEl?.style.color).toBe("red")
+    expect(containerEl?.style.margin).toBe("10px")
   })
 })
