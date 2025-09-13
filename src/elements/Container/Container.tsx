@@ -21,21 +21,17 @@ const paddingMap: Record<PaddingOption, string> = {
 
 export default function Container({ className, padding, children, style, ...props }: Props) {
   const inlineStyle: JSX.CSSProperties = {}
-  
+
   if (padding) {
     inlineStyle.padding = paddingMap[padding]
   }
-  
+
   if (style) {
     Object.assign(inlineStyle, style)
   }
-  
+
   return (
-    <div 
-      className={cl(styles.container, className)} 
-      style={inlineStyle} 
-      {...props}
-    >
+    <div className={cl(styles.container, className)} style={inlineStyle} {...props}>
       {children}
     </div>
   )
