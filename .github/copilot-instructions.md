@@ -93,7 +93,6 @@ Before committing, ALWAYS run these commands in sequence:
 ```bash
 npm ci
 npm run build
-npm run build:native
 npm run test
 npm run lint
 npm run style-lint
