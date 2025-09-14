@@ -6,6 +6,7 @@ import { SerpConfig } from "@nosto/search-js/preact/serp"
 import { handleDecorator } from "./decorators"
 import { CategoryConfig } from "@nosto/search-js/preact/category"
 import { SearchQuery } from "@nosto/nosto-js/client"
+import { tagging } from "./mapping/tagging"
 
 export const sizes = [24, 48, 72]
 
@@ -25,6 +26,21 @@ const autocompleteThumbnailSize = "7" // 400x400
 const thumbnailSize = "9" // 750x750
 const defaultCurrency = "EUR"
 
+function withAutocompleteDefaults(query: SearchQuery) {
+  return {
+    ...query,
+    products: {
+      ...query.products,
+      size: 5
+    },
+    keywords: {
+      fields: ["keyword", "_highlight.keyword"],
+      size: 5,
+      facets: ["*"]
+    }
+  } satisfies SearchQuery
+}
+
 function withBaseSize(query: SearchQuery) {
   return {
     ...query,
@@ -32,7 +48,19 @@ function withBaseSize(query: SearchQuery) {
       size: defaultConfig.serpSize,
       ...query.products
     }
-  }
+  } satisfies SearchQuery
+}
+
+function withCategoryMetadata(query: SearchQuery) {
+  const augmented = withBaseSize(query)
+  return {
+    ...augmented,
+    products: {
+      categoryId: tagging.categoryId(),
+      categoryPath: tagging.categoryPath(),
+      ...augmented.products
+    }
+  } satisfies SearchQuery
 }
 
 export const hitDecorators = [
@@ -69,22 +97,12 @@ export const autocompleteConfig = {
   search: {
     hitDecorators: autocompleteDecorators
   },
-  queryModifications: query => ({
-    ...query,
-    products: {
-      ...query.products,
-      size: 5
-    },
-    keywords: {
-      fields: ["keyword", "_highlight.keyword"],
-      size: 5,
-      facets: ["*"]
-    }
-  })
+  queryModifications: withAutocompleteDefaults
 } satisfies AutocompleteConfig
 
 export const categoryConfig = {
   ...baseConfig,
   persistentSearchCache: false,
-  preservePageScroll: false
+  preservePageScroll: false,
+  queryModifications: withCategoryMetadata
 } satisfies CategoryConfig
