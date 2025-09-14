@@ -1,7 +1,7 @@
 import { nostojs } from "@nosto/nosto-js"
 
 function notImplemented(): string | undefined {
-  throw new Error("Not implemented")
+  throw new Error("Nosto tagging API not yet initialized")
 }
 
 export const tagging = {
