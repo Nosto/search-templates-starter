@@ -32,6 +32,10 @@
       <main id="serp"></main>
     </div>
     <script type="module">
+      import { mockNostojs } from "@nosto/nosto-js/testing"
+      import { mockSearch } from "@mocks/search"
+      import { init } from "@nosto/nosto-js"
+
       function renderApp() {
         const mode = import.meta.env.MODE
         if (mode === "injected" || mode === "mocked") {
@@ -41,28 +45,24 @@
         document.querySelector("#app").innerHTML = ""
         import("/src/entries/native.tsx")
       }
-      renderApp()
-    </script>
-    <script type="module">
-      import { mockNostojs } from "@nosto/nosto-js/testing"
-      import { mockSearch } from "@mocks/search"
-      import { init } from "@nosto/nosto-js"
       
-      async function setupNosto() {
+      function setupNosto() {
         const mode = import.meta.env.MODE
         if (mode === "mocked") {
           mockNostojs({ search: mockSearch })
+          renderApp()
           return
+        }
+        window.nostoab = {
+          settings: {
+            site: location.href,
+            searchTemplatesEnabled: false
+          }
         }
         init({
           merchantId: import.meta.env.VITE_MERCHANT_ID
         })
-        setTimeout(() => {
-          nosto.reload({
-              site: location.href,
-              searchTemplatesEnabled: false
-            })
-          }, 500)
+        renderApp()
       }
       setupNosto()
     </script>
