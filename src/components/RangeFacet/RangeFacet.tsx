@@ -42,12 +42,10 @@ export default function RangeFacet({ facet }: Props) {
       <div className={styles.menu} id={`${facet.id}-range-menu`} aria-expanded={active}>
         <div className={styles.range}>
           <DualSlider
-            id={`ns-${facet.id}-range`}
             min={min}
             max={max}
             values={[range[0], range[1]] as [number | undefined, number | undefined]}
             onChange={updateRange}
-            label={`${facet.name} range`}
           />
         </div>
       </div>

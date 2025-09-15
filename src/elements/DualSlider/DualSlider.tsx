@@ -11,15 +11,13 @@ type Props = {
   values: Range
   onChange: (values: Range) => void
   className?: string
-  label?: string
-  id?: string
 }
 
 function getPercentage(value: number, min: number, max: number): number {
   return ((value - min) / (max - min)) * 100
 }
 
-export default function DualSlider({ min, max, values, onChange, className, label, id }: Props) {
+export default function DualSlider({ min, max, values, onChange, className }: Props) {
   // Convert undefined values to min/max bounds
   const normalizedValues = [values[0] !== undefined ? values[0] : min, values[1] !== undefined ? values[1] : max]
 
@@ -66,14 +64,19 @@ export default function DualSlider({ min, max, values, onChange, className, labe
       }
 
       setInternalValues(newValues)
-      onChange([newValues[0] === min ? undefined : newValues[0], newValues[1] === max ? undefined : newValues[1]])
     },
-    [isDragging, internalValues, min, max, onChange, getValueFromPosition]
+    [isDragging, internalValues, getValueFromPosition]
   )
 
   const handleMouseUp = useCallback(() => {
+    if (isDragging !== null) {
+      onChange([
+        internalValues[0] === min ? undefined : internalValues[0],
+        internalValues[1] === max ? undefined : internalValues[1]
+      ])
+    }
     setIsDragging(null)
-  }, [])
+  }, [isDragging, internalValues, min, max, onChange])
 
   // Attach global mouse events for dragging
   useEffect(() => {
@@ -128,19 +131,8 @@ export default function DualSlider({ min, max, values, onChange, className, labe
 
   return (
     <div className={cl(styles.container, className)}>
-      {label && (
-        <div className={styles.label} id={`${id}-label`}>
-          {label}
-        </div>
-      )}
       <div className={styles.sliderWrapper}>
-        <div
-          ref={trackRef}
-          className={styles.track}
-          aria-labelledby={id ? `${id}-label` : undefined}
-          aria-valuemin={min}
-          aria-valuemax={max}
-        >
+        <div ref={trackRef} className={styles.track} aria-valuemin={min} aria-valuemax={max}>
           <div
             className={styles.trackHighlight}
             style={{
@@ -153,7 +145,7 @@ export default function DualSlider({ min, max, values, onChange, className, labe
             style={{ left: `${leftPercentage}%` }}
             onMouseDown={handleMouseDown(0)}
             onKeyDown={handleKeyDown(0)}
-            aria-label={`${label || "Range"} minimum value`}
+            aria-label="Range minimum value"
             role="slider"
             aria-valuemin={min}
             aria-valuemax={max}
@@ -165,7 +157,7 @@ export default function DualSlider({ min, max, values, onChange, className, labe
             style={{ left: `${rightPercentage}%` }}
             onMouseDown={handleMouseDown(1)}
             onKeyDown={handleKeyDown(1)}
-            aria-label={`${label || "Range"} maximum value`}
+            aria-label="Range maximum value"
             role="slider"
             aria-valuemin={min}
             aria-valuemax={max}

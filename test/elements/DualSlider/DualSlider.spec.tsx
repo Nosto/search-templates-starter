@@ -22,12 +22,6 @@ describe("DualSlider", () => {
     expect(getByText("-")).toBeDefined()
   })
 
-  it("renders with label when provided", () => {
-    const { getByText } = render(<DualSlider {...defaultProps} label="Price Range" />)
-
-    expect(getByText("Price Range")).toBeDefined()
-  })
-
   it("handles undefined values by using min/max bounds", () => {
     const { getByText } = render(<DualSlider {...defaultProps} values={[undefined, undefined]} />)
 
@@ -51,11 +45,11 @@ describe("DualSlider", () => {
   })
 
   it("maintains accessibility attributes", () => {
-    const { getAllByRole } = render(<DualSlider {...defaultProps} label="Price Range" id="price" />)
+    const { getAllByRole } = render(<DualSlider {...defaultProps} />)
 
     const thumbs = getAllByRole("slider")
-    expect(thumbs[0].getAttribute("aria-label")).toBe("Price Range minimum value")
-    expect(thumbs[1].getAttribute("aria-label")).toBe("Price Range maximum value")
+    expect(thumbs[0].getAttribute("aria-label")).toBe("Range minimum value")
+    expect(thumbs[1].getAttribute("aria-label")).toBe("Range maximum value")
     expect(thumbs[0].getAttribute("aria-valuemin")).toBe("0")
     expect(thumbs[0].getAttribute("aria-valuemax")).toBe("100")
     expect(thumbs[0].getAttribute("tabIndex")).toBe("0")
