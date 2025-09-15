@@ -18,8 +18,7 @@ export const sortOptions = [
 
 export const defaultConfig = {
   sort: sortOptions[0],
-  serpSize: sizes[0],
-  historySize: 5
+  serpSize: sizes[0]
 }
 
 const autocompleteThumbnailSize = "7" // 400x400

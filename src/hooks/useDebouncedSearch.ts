@@ -1,4 +1,5 @@
 import { useActions } from "@nosto/search-js/preact/hooks"
+import { useAutocompleteConfig } from "@nosto/search-js/preact/common"
 import { useCallback, useEffect } from "preact/hooks"
 
 type Props = {
@@ -8,16 +9,16 @@ type Props = {
 export function useDebouncedSearch({ input }: Props) {
   // autocomplete level search action
   const { newSearch } = useActions()
+  const config = useAutocompleteConfig()
 
   const debounceSearch = useCallback(() => {
     const handler = setTimeout(() => {
-      // TODO take from config
-      if (input.length >= 3) {
+      if (input.length >= config.minQueryLength) {
         newSearch({ query: input })
       }
-    }, 300) // TODO take from config
+    }, config.debounceDelay)
     return () => clearTimeout(handler)
-  }, [input, newSearch])
+  }, [input, newSearch, config.minQueryLength, config.debounceDelay])
 
   useEffect(debounceSearch, [input, debounceSearch])
 }
