@@ -3,7 +3,7 @@ import RangeFacet from "./RangeFacet"
 import { mockPriceFacet, mockRatingFacet, mockWeightFacet } from "@mocks/facets"
 
 export default {
-  title: "Components/RangeFacet/RangeFacet",
+  title: "Components/RangeFacet",
   component: RangeFacet,
   parameters: {
     layout: "centered"

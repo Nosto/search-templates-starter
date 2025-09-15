@@ -3,7 +3,7 @@ import TermsFacet from "./TermsFacet"
 import { mockCategoryFacet, mockBrandFacet } from "@mocks/facets"
 
 export default {
-  title: "Components/TermsFacet/TermsFacet",
+  title: "Components/TermsFacet",
   component: TermsFacet,
   parameters: {
     layout: "centered"
