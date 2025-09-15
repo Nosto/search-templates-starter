@@ -1,0 +1,94 @@
+.container {
+  width: 100%;
+  padding: var(--ns-space-2) 0;
+}
+
+.label {
+  font-size: var(--ns-font-size-4);
+  font-weight: var(--ns-weight-regular);
+  color: var(--ns-color-black);
+  margin-bottom: var(--ns-space-2);
+}
+
+.sliderWrapper {
+  padding: var(--ns-space-2) var(--ns-space-1);
+  margin: var(--ns-space-1) 0;
+}
+
+.track {
+  height: 4px;
+  width: 100%;
+  background-color: var(--ns-color-grey-light);
+  border-radius: var(--ns-border-radius-3);
+  position: relative;
+  outline: none;
+  cursor: pointer;
+}
+
+.track:focus-within {
+  box-shadow: 0 0 0 var(--ns-shadow-offset-medium) var(--ns-color-primary-light);
+}
+
+.trackHighlight {
+  position: absolute;
+  height: 100%;
+  background-color: var(--ns-color-primary);
+  border-radius: var(--ns-border-radius-3);
+  top: 0;
+}
+
+.thumb {
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  background-color: var(--ns-color-primary);
+  border: 2px solid var(--ns-color-white);
+  border-radius: var(--ns-border-radius-circle);
+  cursor: grab;
+  box-shadow: var(--ns-box-shadow-slider-handle);
+  transition: all 0.15s ease-in-out;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.thumb:hover {
+  background-color: var(--ns-color-primary-dark);
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.thumb:focus {
+  outline: 2px solid var(--ns-color-primary-light);
+  outline-offset: 2px;
+  z-index: 2;
+}
+
+.thumb:active,
+.thumbActive {
+  cursor: grabbing;
+  transform: translate(-50%, -50%) scale(0.95);
+  z-index: 3;
+}
+
+.values {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--ns-space-2);
+  font-size: var(--ns-font-size-3);
+  color: var(--ns-color-black);
+}
+
+.value {
+  font-weight: var(--ns-weight-regular);
+  padding: var(--ns-space-1) var(--ns-space-2);
+  background-color: var(--ns-color-grey-light);
+  border-radius: var(--ns-border-radius-3);
+  min-width: 40px;
+  text-align: center;
+}
+
+.valueSeparator {
+  font-weight: var(--ns-weight-bold);
+  margin: 0 var(--ns-space-1);
+}

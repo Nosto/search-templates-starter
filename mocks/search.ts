@@ -1,6 +1,7 @@
 import { SearchQuery } from "@nosto/nosto-js/client"
 import { mockKeywords } from "./keywords"
 import { generateMockProducts } from "./products"
+import { mockCategoryFacet, mockBrandFacet, mockPriceFacet, mockRatingFacet, mockWeightFacet } from "./facets"
 
 /**
  * Mock search function that returns mock data for testing purposes
@@ -14,7 +15,8 @@ export async function mockSearch(query: SearchQuery) {
       from,
       size,
       total: 10 * size,
-      hits: generateMockProducts(size)
+      hits: generateMockProducts(size),
+      facets: [mockCategoryFacet, mockBrandFacet, mockPriceFacet, mockRatingFacet, mockWeightFacet]
     },
     keywords: {
       hits: mockKeywords.hits,
