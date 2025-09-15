@@ -4,12 +4,14 @@ import { autocompleteConfig } from "@/config"
 import style from "./Search.module.css"
 import { useActions } from "@nosto/search-js/preact/hooks"
 import { useCallback } from "preact/hooks"
+import { nostojs } from "@nosto/nosto-js"
 
 export function Search() {
   const { newSearch } = useActions()
 
   const onSubmit = useCallback(
     (query: string) => {
+      nostojs(api => api.recordSearchSubmit(query))
       newSearch({ query })
     },
     [newSearch]
