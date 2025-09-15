@@ -3,15 +3,18 @@ import Serp from "@/components/Serp/Serp"
 import SearchQueryHandler from "@/components/SearchQueryHandler/SearchQueryHandler"
 import { Search } from "@/components/Search/Search"
 import "@/variable.css"
-import { serpConfig } from "@/config"
+import { categoryConfig, serpConfig } from "@/config"
 import { render } from "preact"
 import { SidebarProvider } from "@/contexts/SidebarContext"
+import { CategoryPageProvider } from "@nosto/search-js/preact/category"
+import Category from "@/components/Category/Category"
+import { tagging } from "@/mapping/tagging"
 
-function App() {
+function SerpApp() {
   return (
     <SearchPageProvider config={serpConfig}>
+      <SearchQueryHandler />
       <SidebarProvider>
-        <SearchQueryHandler />
         <Search />
         <Serp />
       </SidebarProvider>
@@ -19,4 +22,16 @@ function App() {
   )
 }
 
+function CategoryApp() {
+  return (
+    <CategoryPageProvider config={categoryConfig}>
+      <SearchQueryHandler />
+      <SidebarProvider>
+        <Category />
+      </SidebarProvider>
+    </CategoryPageProvider>
+  )
+}
+
+const App = tagging.pageType() === "category" ? CategoryApp : SerpApp
 render(<App />, document.getElementById("app")!)
