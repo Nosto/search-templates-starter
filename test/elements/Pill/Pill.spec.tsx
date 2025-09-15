@@ -1,10 +1,6 @@
-import { cleanup, render } from "@testing-library/preact"
-import { afterEach, describe, it, expect, vi } from "vitest"
+import { render } from "@testing-library/preact"
+import { describe, it, expect, vi } from "vitest"
 import Pill from "@/elements/Pill/Pill"
-
-afterEach(() => {
-  cleanup()
-})
 
 describe("Pill", () => {
   it("should render children content", () => {

@@ -1,10 +1,6 @@
-import { cleanup, render } from "@testing-library/preact"
-import { afterEach, describe, expect, it } from "vitest"
+import { render } from "@testing-library/preact"
+import { describe, expect, it } from "vitest"
 import Campaign from "@/components/Campaign/Campaign"
-
-afterEach(() => {
-  cleanup()
-})
 
 describe("Campaign", () => {
   it("renders custom element with required props", () => {
