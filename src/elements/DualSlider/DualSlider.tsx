@@ -44,13 +44,15 @@ export default function DualSlider({ min, max, values, onChange, className }: Pr
     [min, max]
   )
 
-  const handleMouseDown = (thumbIndex: number) => (e: JSX.TargetedMouseEvent<HTMLDivElement>) => {
+  const handlePointerDown = (thumbIndex: number) => (e: JSX.TargetedPointerEvent<HTMLDivElement>) => {
     e.preventDefault()
     setIsDragging(thumbIndex)
+    // Use pointer capture for better encapsulation than document events
+    e.currentTarget.setPointerCapture(e.pointerId)
   }
 
-  const handleMouseMove = useCallback(
-    (e: MouseEvent) => {
+  const handlePointerMove = useCallback(
+    (e: JSX.TargetedPointerEvent<HTMLDivElement>) => {
       if (isDragging === null) return
       const newValue = getValueFromPosition(e.clientX)
       const newValues: [number, number] = [...internalValues]
@@ -68,27 +70,19 @@ export default function DualSlider({ min, max, values, onChange, className }: Pr
     [isDragging, internalValues, getValueFromPosition]
   )
 
-  const handleMouseUp = useCallback(() => {
-    if (isDragging !== null) {
-      onChange([
-        internalValues[0] === min ? undefined : internalValues[0],
-        internalValues[1] === max ? undefined : internalValues[1]
-      ])
-    }
-    setIsDragging(null)
-  }, [isDragging, internalValues, min, max, onChange])
-
-  // Attach global mouse events for dragging
-  useEffect(() => {
-    if (isDragging !== null) {
-      document.addEventListener("mousemove", handleMouseMove)
-      document.addEventListener("mouseup", handleMouseUp)
-      return () => {
-        document.removeEventListener("mousemove", handleMouseMove)
-        document.removeEventListener("mouseup", handleMouseUp)
+  const handlePointerUp = useCallback(
+    (e: JSX.TargetedPointerEvent<HTMLDivElement>) => {
+      if (isDragging !== null) {
+        onChange([
+          internalValues[0] === min ? undefined : internalValues[0],
+          internalValues[1] === max ? undefined : internalValues[1]
+        ])
+        e.currentTarget.releasePointerCapture(e.pointerId)
       }
-    }
-  }, [isDragging, handleMouseMove, handleMouseUp])
+      setIsDragging(null)
+    },
+    [isDragging, internalValues, min, max, onChange]
+  )
 
   const handleKeyDown = (thumbIndex: number) => (e: JSX.TargetedKeyboardEvent<HTMLDivElement>) => {
     let newValue = internalValues[thumbIndex]
@@ -143,7 +137,9 @@ export default function DualSlider({ min, max, values, onChange, className }: Pr
           <div
             className={cl(styles.thumb, isDragging === 0 && styles.thumbActive)}
             style={{ left: `${leftPercentage}%` }}
-            onMouseDown={handleMouseDown(0)}
+            onPointerDown={handlePointerDown(0)}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
             onKeyDown={handleKeyDown(0)}
             aria-label="Range minimum value"
             role="slider"
@@ -155,7 +151,9 @@ export default function DualSlider({ min, max, values, onChange, className }: Pr
           <div
             className={cl(styles.thumb, isDragging === 1 && styles.thumbActive)}
             style={{ left: `${rightPercentage}%` }}
-            onMouseDown={handleMouseDown(1)}
+            onPointerDown={handlePointerDown(1)}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
             onKeyDown={handleKeyDown(1)}
             aria-label="Range maximum value"
             role="slider"
