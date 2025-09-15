@@ -2,13 +2,13 @@ import { useFacet } from "@nosto/search-js/preact/hooks"
 import Icon from "@/elements/Icon/Icon"
 import { SearchTermsFacet } from "@nosto/nosto-js/client"
 import Pill from "@/elements/Pill/Pill"
-import styles from "./Facet.module.css"
+import styles from "./TermsFacet.module.css"
 
 type Props = {
   facet: SearchTermsFacet
 }
 
-export default function Facet({ facet }: Props) {
+export default function TermsFacet({ facet }: Props) {
   const { active, selectedFiltersCount, toggleActive, toggleProductFilter } = useFacet(facet)
 
   return (

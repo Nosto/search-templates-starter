@@ -1,6 +1,6 @@
 import { useFacets } from "@nosto/search-js/preact/hooks"
-import Facet from "@/components/Facet/Facet"
-import RangeFacet from "@/components/Facet/RangeFacet"
+import TermsFacet from "@/components/TermsFacet/TermsFacet"
+import RangeFacet from "@/components/RangeFacet/RangeFacet"
 import Icon from "@/elements/Icon/Icon"
 import { SearchStatsFacet, SearchTermsFacet } from "@nosto/nosto-js/client"
 import styles from "./Sidebar.module.css"
@@ -64,7 +64,7 @@ export default function SideBar() {
               {facets?.map(facet => {
                 switch (facet.type) {
                   case "terms":
-                    return <Facet key={facet.id} facet={facet as SearchTermsFacet} />
+                    return <TermsFacet key={facet.id} facet={facet as SearchTermsFacet} />
                   case "stats":
                     return <RangeFacet key={facet.id} facet={facet as SearchStatsFacet} />
                   default:
