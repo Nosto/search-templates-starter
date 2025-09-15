@@ -43,7 +43,8 @@ export default function Autocomplete({ onSubmit }: Props) {
       <SearchInput
         onSearchInput={target => setInput(target.value)}
         componentProps={{
-          onFocus: () => setShowAutocomplete(true)
+          onFocus: () => setShowAutocomplete(true),
+          autocomplete: "off"
         }}
       />
       <button type="submit">Search</button>
