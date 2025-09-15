@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/preact"
-import Facet from "./Facet"
+import TermsFacet from "./TermsFacet"
 import { mockCategoryFacet, mockBrandFacet } from "@mocks/facets"
 
 export default {
-  title: "Components/Facet/Facet",
-  component: Facet,
+  title: "Components/TermsFacet/TermsFacet",
+  component: TermsFacet,
   parameters: {
     layout: "centered"
   },
   tags: ["autodocs"]
-} as Meta<typeof Facet>
+} as Meta<typeof TermsFacet>
 
-type Story = StoryObj<typeof Facet>
+type Story = StoryObj<typeof TermsFacet>
 
 export const Default: Story = {
   args: {

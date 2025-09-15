@@ -3,7 +3,7 @@ import { useState } from "preact/hooks"
 import RangeInput from "@/elements/RangeInput/RangeInput"
 import Icon from "@/elements/Icon/Icon"
 import { SearchStatsFacet } from "@nosto/nosto-js/client"
-import styles from "./Facet.module.css"
+import styles from "./RangeFacet.module.css"
 import { cl } from "@nosto/search-js/utils"
 
 type Props = {
