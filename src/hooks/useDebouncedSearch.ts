@@ -9,16 +9,16 @@ type Props = {
 export function useDebouncedSearch({ input }: Props) {
   // autocomplete level search action
   const { newSearch } = useActions()
-  const config = useAutocompleteConfig()
+  const { minQueryLength, debounceDelay } = useAutocompleteConfig()
 
   const debounceSearch = useCallback(() => {
     const handler = setTimeout(() => {
-      if (input.length >= config.minQueryLength) {
+      if (input.length >= minQueryLength) {
         newSearch({ query: input })
       }
-    }, config.debounceDelay)
+    }, debounceDelay)
     return () => clearTimeout(handler)
-  }, [input, newSearch, config.minQueryLength, config.debounceDelay])
+  }, [input, newSearch, minQueryLength, debounceDelay])
 
   useEffect(debounceSearch, [input, debounceSearch])
 }
