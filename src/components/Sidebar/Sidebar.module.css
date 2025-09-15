@@ -16,17 +16,20 @@
   left: 0;
   z-index: var(--ns-z-index-sidebar-wrapper);
   max-width: var(--ns-width-mobile-sidebar);
-  transition: all 0.3s ease;
-  display: none;
+  min-width: var(--ns-width-mobile-sidebar);
+  width: var(--ns-width-mobile-sidebar);
   height: 100%;
   flex: 0 0 25%;
-  max-width: 25%;
+  position: fixed;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  visibility: hidden;
 }
 
 /* Mobile view */
 .wrapper.open {
-  display: block !important;
-  position: fixed !important;
+  transform: translateX(0);
+  visibility: visible;
   max-height: 100%;
 }
 
@@ -37,7 +40,17 @@
 
 @media screen and (min-width: 768px) {
   .wrapper {
-    display: none;
+    position: relative;
+    transform: translateX(0);
+    visibility: visible;
+    flex: 0 0 25%;
+    max-width: 25%;
+    width: auto;
+    min-width: auto;
+  }
+  
+  .wrapper.open {
+    transform: translateX(0);
   }
 }
 
@@ -45,6 +58,8 @@
   .wrapper {
     flex: 0 0 16.666667%;
     max-width: 16.666667%;
+    width: auto;
+    min-width: auto;
   }
 }
 
@@ -52,13 +67,20 @@
   top: 0;
   left: 0;
   z-index: var(--ns-z-index-sidebar-backdrop);
-  opacity: 0.5;
+  opacity: 0;
   position: fixed;
   width: 100%;
   height: 100%;
   background-color: var(--ns-color-black);
   border: none;
   cursor: pointer;
+  transition: opacity 0.3s ease;
+  visibility: hidden;
+}
+
+.backdrop.show {
+  opacity: 0.5;
+  visibility: visible;
 }
 
 .backdrop:focus {
