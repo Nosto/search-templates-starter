@@ -72,22 +72,15 @@
   background-color: var(--ns-color-white);
   height: 100%;
   margin-right: 0;
-  padding: var(--ns-space-5);
+  padding: var(--ns-space-1);
   min-width: var(--ns-width-mobile-sidebar);
 }
-
-
 
 .header {
   display: flex;
   align-items: baseline;
   padding: var(--ns-space-4);
   border-bottom: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
-}
-
-.title {
-  font-weight: var(--ns-weight-medium);
-  color: var(--ns-color-black);
 }
 
 .facets {

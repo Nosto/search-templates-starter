@@ -12,8 +12,9 @@ export type IconName =
 type Props = {
   name: IconName
   className?: string
+  circle?: boolean
 }
 
-export default function Icon({ name, className }: Props) {
-  return <i className={cl(styles.icon, styles[name], className)}></i>
+export default function Icon({ name, className, circle = false }: Props) {
+  return <i className={cl(styles.icon, styles[name], circle && styles.circle, className)}></i>
 }

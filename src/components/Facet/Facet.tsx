@@ -31,7 +31,7 @@ export default function Facet({ facet }: Props) {
         <span className={styles.title}>{facet.name}</span>
         {selectedFiltersCount > 0 && <span className={styles.count}>{selectedFiltersCount}</span>}
         <span className={styles.icon}>
-          <Icon name={active ? "arrow-up" : "arrow-down"} />
+          <Icon name={active ? "arrow-up" : "arrow-down"} circle={true} />
         </span>
       </button>
       <div className={styles.menu} id={`${facet.id}-sub-menu`}>

@@ -13,7 +13,6 @@
   width: 100%;
   flex: 0 0 83.333333%;
   max-width: 83.333333%;
-  gap: var(--ns-space-2);
 }
 
 .filter {

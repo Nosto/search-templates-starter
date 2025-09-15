@@ -8,6 +8,7 @@ import Button from "@/elements/Button/Button"
 import { cl } from "@nosto/search-js/utils"
 import { useSidebar } from "@/contexts/SidebarContext"
 import SelectedFilters from "../SelectedFilters/SelectedFilters"
+import Heading from "@/elements/Heading/Heading"
 
 export const toggleButtonId = "toggle-mobile-sidebar"
 
@@ -19,7 +20,7 @@ type ToggleProps = {
 function ToggleSidebarButton({ className, onClick }: ToggleProps = {}) {
   return (
     <Button className={cl(styles.close, className)} onClick={onClick}>
-      <Icon name="close" />
+      <Icon name="close" circle={true} />
     </Button>
   )
 }
@@ -54,7 +55,7 @@ export default function SideBar() {
       <div className={cl(styles.wrapper, isOpen && styles.open)}>
         <div className={styles.content}>
           <div className={styles.header}>
-            <span className={styles.title}>Filters</span>
+            <Heading>Filters</Heading>
             <ToggleSidebarButton onClick={() => setOpen(false)} />
           </div>
           <SelectedFilters />

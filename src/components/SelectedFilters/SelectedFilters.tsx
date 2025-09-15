@@ -1,7 +1,6 @@
 import { useProductFilters } from "@nosto/search-js/preact/hooks"
 import styles from "./SelectedFilters.module.css"
 import Pill from "@/elements/Pill/Pill"
-import Button from "@/elements/Button/Button"
 
 export default function SelectedFilters() {
   const { filters, removeAll } = useProductFilters()
@@ -19,7 +18,6 @@ export default function SelectedFilters() {
               }}
             >
               {filter?.value}
-              <Button icon="close" />
             </Pill>
           ))}
         </div>
