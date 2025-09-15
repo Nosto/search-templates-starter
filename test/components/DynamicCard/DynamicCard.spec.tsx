@@ -1,10 +1,6 @@
-import { cleanup, render } from "@testing-library/preact"
-import { afterEach, describe, expect, it } from "vitest"
+import { render } from "@testing-library/preact"
+import { describe, expect, it } from "vitest"
 import DynamicCard from "@/components/DynamicCard/DynamicCard"
-
-afterEach(() => {
-  cleanup()
-})
 
 describe("DynamicCard", () => {
   it("renders custom element with required props", () => {

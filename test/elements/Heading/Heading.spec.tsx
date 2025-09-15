@@ -1,10 +1,6 @@
-import { cleanup, render } from "@testing-library/preact"
-import { afterEach, describe, expect, it } from "vitest"
+import { render } from "@testing-library/preact"
+import { describe, expect, it } from "vitest"
 import Heading from "@/elements/Heading/Heading"
-
-afterEach(() => {
-  cleanup()
-})
 
 describe("Heading", () => {
   it("renders as h3 by default", () => {
