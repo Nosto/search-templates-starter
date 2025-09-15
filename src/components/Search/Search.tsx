@@ -1,25 +1,25 @@
 import { AutocompletePageProvider } from "@nosto/search-js/preact/autocomplete"
-import { useActions } from "@nosto/search-js/preact/hooks"
-import AutocompleteWrapper from "@/components/Autocomplete/Autocomplete"
+import Autocomplete from "@/components/Autocomplete/Autocomplete"
 import { autocompleteConfig } from "@/config"
 import style from "./Search.module.css"
+import { useActions } from "@nosto/search-js/preact/hooks"
+import { useCallback } from "preact/hooks"
 
 export function Search() {
   const { newSearch } = useActions()
 
-  const onSearch = (query: string) => {
-    newSearch({
-      query
-    })
-  }
+  const onSubmit = useCallback(
+    (query: string) => {
+      newSearch({ query })
+    },
+    [newSearch]
+  )
 
   return (
-    <div>
-      <div className={style.wrapper}>
-        <AutocompletePageProvider config={autocompleteConfig}>
-          <AutocompleteWrapper onSubmit={onSearch} />
-        </AutocompletePageProvider>
-      </div>
+    <div className={style.wrapper}>
+      <AutocompletePageProvider config={autocompleteConfig}>
+        <Autocomplete onSubmit={onSubmit} />
+      </AutocompletePageProvider>
     </div>
   )
 }
