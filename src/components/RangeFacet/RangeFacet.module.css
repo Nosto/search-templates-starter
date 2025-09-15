@@ -90,15 +90,7 @@
 
 .range {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   font-size: var(--ns-font-size-4);
-}
-
-.input {
-  position: relative;
-  width: 100%;
-  flex: 0 0 50%;
-  max-width: 50%;
-  margin-right: var(--ns-space-2);
-  flex-shrink: 1;
+  padding: var(--ns-space-2);
 }

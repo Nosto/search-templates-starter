@@ -1,0 +1,119 @@
+.dualRange {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ns-space-2);
+  width: 100%;
+}
+
+.sliderContainer {
+  position: relative;
+  height: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.track {
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background-color: var(--ns-color-grey-light);
+  border-radius: var(--ns-border-radius-4);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.range {
+  position: absolute;
+  height: 4px;
+  background-color: var(--ns-color-primary);
+  border-radius: var(--ns-border-radius-4);
+  top: 0;
+}
+
+.slider {
+  position: absolute;
+  width: 100%;
+  height: 20px;
+  background: transparent;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--ns-border-radius-circle);
+  background: var(--ns-color-white);
+  border: var(--ns-border-width-medium) solid var(--ns-color-primary);
+  cursor: pointer;
+  box-shadow: var(--ns-box-shadow-slider-handle);
+  transition: transform 0.15s ease-in-out;
+}
+
+.slider::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+}
+
+.slider::-webkit-slider-thumb:active {
+  transform: scale(1.2);
+}
+
+.slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--ns-border-radius-circle);
+  background: var(--ns-color-white);
+  border: var(--ns-border-width-medium) solid var(--ns-color-primary);
+  cursor: pointer;
+  box-shadow: var(--ns-box-shadow-slider-handle);
+  transition: transform 0.15s ease-in-out;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.slider::-moz-range-thumb:hover {
+  transform: scale(1.1);
+}
+
+.slider::-moz-range-thumb:active {
+  transform: scale(1.2);
+}
+
+.slider::-moz-range-track {
+  background: transparent;
+  border: none;
+}
+
+.sliderMin {
+  z-index: 1;
+}
+
+.sliderMax {
+  z-index: 2;
+}
+
+.values {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--ns-font-size-3);
+  color: var(--ns-color-grey-dark);
+}
+
+.value {
+  font-weight: var(--ns-weight-medium);
+  min-width: 30px;
+  text-align: center;
+}
+
+.separator {
+  flex: 1;
+  text-align: center;
+  font-weight: var(--ns-weight-regular);
+}
