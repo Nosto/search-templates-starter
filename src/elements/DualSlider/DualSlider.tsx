@@ -3,14 +3,20 @@ import { JSX } from "preact"
 import styles from "./DualSlider.module.css"
 import { cl } from "@nosto/search-js/utils"
 
+type Range = [number | undefined, number | undefined]
+
 type Props = {
   min: number
   max: number
-  values: [number | undefined, number | undefined]
-  onChange: (values: [number | undefined, number | undefined]) => void
+  values: Range
+  onChange: (values: Range) => void
   className?: string
   label?: string
   id?: string
+}
+
+function getPercentage(value: number, min: number, max: number): number {
+  return ((value - min) / (max - min)) * 100
 }
 
 export default function DualSlider({ min, max, values, onChange, className, label, id }: Props) {
@@ -28,9 +34,7 @@ export default function DualSlider({ min, max, values, onChange, className, labe
       values[1] !== undefined ? values[1] : max
     ]
     setInternalValues(newNormalizedValues)
-  }, [values[0], values[1], min, max])
-
-  const getPercentage = (value: number) => ((value - min) / (max - min)) * 100
+  }, [values, min, max])
 
   const getValueFromPosition = useCallback(
     (clientX: number) => {
@@ -119,8 +123,8 @@ export default function DualSlider({ min, max, values, onChange, className, labe
     onChange([newValues[0] === min ? undefined : newValues[0], newValues[1] === max ? undefined : newValues[1]])
   }
 
-  const leftPercentage = getPercentage(internalValues[0])
-  const rightPercentage = getPercentage(internalValues[1])
+  const leftPercentage = getPercentage(internalValues[0], min, max)
+  const rightPercentage = getPercentage(internalValues[1], min, max)
 
   return (
     <div className={cl(styles.container, className)}>

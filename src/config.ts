@@ -46,7 +46,6 @@ function withBaseSize(query: SearchQuery) {
     ...query,
     products: {
       size: defaultConfig.serpSize,
-      facets: ["*"],
       ...query.products
     }
   } satisfies SearchQuery

@@ -49,3 +49,8 @@ export const mockPriceFacet = createStatsFacet("price", "Price", "price", 10, 50
 export const mockRatingFacet = createStatsFacet("rating", "Customer Rating", "rating", 1, 5)
 
 export const mockWeightFacet = createStatsFacet("weight", "Weight (kg)", "weight", 0.1, 25.0)
+
+export function generateMockFacets(amount: number) {
+  const allFacets = [mockCategoryFacet, mockBrandFacet, mockPriceFacet, mockRatingFacet, mockWeightFacet]
+  return allFacets.slice(0, amount)
+}
