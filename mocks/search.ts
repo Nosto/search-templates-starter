@@ -1,7 +1,6 @@
 import { SearchQuery } from "@nosto/nosto-js/client"
 import { mockKeywords } from "./keywords"
 import { generateMockProducts } from "./products"
-import { mockCategoryFacet, mockBrandFacet, mockPriceFacet, mockRatingFacet } from "./facets"
 
 /**
  * Mock search function that returns mock data for testing purposes
