@@ -6,11 +6,14 @@ import "@/variable.css"
 import Results from "@/components/Autocomplete/Results/Results"
 import SearchQueryHandler from "@/components/SearchQueryHandler/SearchQueryHandler"
 import { SidebarProvider } from "@/contexts/SidebarContext"
-import { autocompleteConfig, serpConfig } from "@/config"
+import { autocompleteConfig, categoryConfig, serpConfig } from "@/config"
 import { disableNativeAutocomplete } from "@nosto/search-js/utils"
 import { useDomEvents } from "@/hooks/useDomEvents"
 import { useDebouncedSearch } from "@/hooks/useDebouncedSearch"
 import { useActions } from "@nosto/search-js/preact/hooks"
+import Category from "@/components/Category/Category"
+import { CategoryPageProvider } from "@nosto/search-js/preact/category"
+import { tagging } from "@/mapping/tagging"
 
 type Props = {
   onSubmit: (input: string) => void
@@ -68,7 +71,7 @@ function Autocomplete({ onSubmit }: Props) {
   return createPortal(<>{showAutocomplete && <Results onSubmit={onSearchSubmit} />}</>, dropdownElement)
 }
 
-function App() {
+function SerpApp() {
   const { newSearch } = useActions()
 
   const onSubmit = useCallback(
@@ -79,22 +82,42 @@ function App() {
   )
 
   return (
-    <SidebarProvider>
+    <>
       <SearchQueryHandler />
-      <AutocompletePageProvider config={autocompleteConfig}>
-        <Autocomplete onSubmit={onSubmit} />
-      </AutocompletePageProvider>
-      <Serp />
-    </SidebarProvider>
+      <SidebarProvider>
+        <AutocompletePageProvider config={autocompleteConfig}>
+          <Autocomplete onSubmit={onSubmit} />
+        </AutocompletePageProvider>
+        <Serp />
+      </SidebarProvider>
+    </>
+  )
+}
+
+function CategoryApp() {
+  return (
+    <CategoryPageProvider config={categoryConfig}>
+      <SearchQueryHandler />
+      <SidebarProvider>
+        <Category />
+      </SidebarProvider>
+    </CategoryPageProvider>
   )
 }
 
 const serpElement = document.querySelector<HTMLElement>("#serp")
 if (serpElement) {
-  render(
-    <SearchPageProvider config={serpConfig}>
-      <App />
-    </SearchPageProvider>,
-    serpElement
-  )
+  switch (tagging.pageType()) {
+    case "category":
+      render(<CategoryApp />, serpElement)
+      break
+    case "search":
+    default:
+      render(
+        <SearchPageProvider config={serpConfig}>
+          <SerpApp />
+        </SearchPageProvider>,
+        serpElement
+      )
+  }
 }
