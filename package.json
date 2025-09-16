@@ -37,7 +37,7 @@
     "@nosto/search-js": "^3.13.1",
     "@nosto/web-components": "^8.22.0",
     "@preact/preset-vite": "^2.10.2",
-    "@storybook/addon-docs": "^9.1.5",
+    "@storybook/addon-docs": "^9.1.6",
     "@storybook/preact-vite": "^9.1.6",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/preact": "^3.2.3",
