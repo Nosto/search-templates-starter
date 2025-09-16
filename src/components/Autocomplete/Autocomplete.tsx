@@ -1,8 +1,9 @@
 import Results from "@/components/Autocomplete/Results/Results"
-import { useState, useCallback, useRef } from "preact/hooks"
+import { useState, useCallback, useRef, useEffect } from "preact/hooks"
 import { SearchInput } from "@nosto/search-js/preact/autocomplete"
 import { useDomEvents } from "@/hooks/useDomEvents"
 import { useDebouncedSearch } from "@/hooks/useDebouncedSearch"
+import { disableNativeAutocomplete } from "@nosto/search-js/utils"
 
 type Props = {
   onSubmit: (input: string) => void
@@ -12,8 +13,15 @@ export default function Autocomplete({ onSubmit }: Props) {
   const [input, setInput] = useState<string>("")
   const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false)
   const autocompleteRef = useRef<HTMLFormElement>(null)
+  const searchInputRef = useRef<HTMLInputElement>(null)
 
   useDebouncedSearch({ input })
+
+  useEffect(() => {
+    if (searchInputRef.current) {
+      disableNativeAutocomplete(searchInputRef.current)
+    }
+  }, [])
 
   const onClickOutside = useCallback((event: Event) => {
     if (autocompleteRef.current && !autocompleteRef.current.contains(event.target as Node)) {
@@ -43,7 +51,8 @@ export default function Autocomplete({ onSubmit }: Props) {
       <SearchInput
         onSearchInput={target => setInput(target.value)}
         componentProps={{
-          onFocus: () => setShowAutocomplete(true)
+          onFocus: () => setShowAutocomplete(true),
+          ref: searchInputRef
         }}
       />
       <button type="submit">Search</button>
