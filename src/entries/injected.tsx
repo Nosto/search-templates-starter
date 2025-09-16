@@ -14,6 +14,7 @@ import { useActions } from "@nosto/search-js/preact/hooks"
 import Category from "@/components/Category/Category"
 import { CategoryPageProvider } from "@nosto/search-js/preact/category"
 import { tagging } from "@/mapping/tagging"
+import { nostojs } from "@nosto/nosto-js"
 
 type Props = {
   onSubmit: (input: string) => void
@@ -55,8 +56,9 @@ function Autocomplete({ onSubmit }: Props) {
 
   const onSearchSubmit = (query: string) => {
     if (query.trim()) {
-      onSubmit(query)
+      searchInput.value = query
       searchInput.blur()
+      onSubmit(query)
       setShowAutocomplete(false)
     }
   }
@@ -76,6 +78,7 @@ function SerpApp() {
 
   const onSubmit = useCallback(
     (query: string) => {
+      nostojs(api => api.recordSearchSubmit(query))
       newSearch({ query })
     },
     [newSearch]
