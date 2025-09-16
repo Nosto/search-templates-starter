@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/preact"
+import { render, screen, fireEvent } from "@testing-library/preact"
 import { describe, it, expect, vi } from "vitest"
 import DualRange from "@/elements/DualRange/DualRange"
 
@@ -43,5 +43,63 @@ describe("DualRange", () => {
     )
 
     expect((container.firstChild as HTMLElement)?.className).toMatch(/custom-class/)
+  })
+
+  it("differentiates between dragging and submitting changes", () => {
+    const onChange = vi.fn()
+    render(<DualRange min={0} max={100} value={[25, 75]} onChange={onChange} id="test-range" />)
+
+    const minSlider = screen.getByLabelText("Minimum value")
+
+    // Start dragging
+    fireEvent.mouseDown(minSlider)
+
+    // Simulate input change during drag
+    Object.defineProperty(minSlider, "value", { value: "30", writable: true })
+    fireEvent.input(minSlider)
+
+    // onChange should NOT be called during drag
+    expect(onChange).not.toHaveBeenCalled()
+
+    // End dragging
+    fireEvent.mouseUp(minSlider)
+
+    // onChange should be called after drag ends
+    expect(onChange).toHaveBeenCalledWith([30, 75])
+  })
+
+  it("calls onChange immediately for non-drag interactions", () => {
+    const onChange = vi.fn()
+    render(<DualRange min={0} max={100} value={[25, 75]} onChange={onChange} id="test-range" />)
+
+    const minSlider = screen.getByLabelText("Minimum value")
+
+    // Simulate input change without drag (e.g., keyboard input)
+    Object.defineProperty(minSlider, "value", { value: "30", writable: true })
+    fireEvent.input(minSlider)
+
+    // onChange should be called immediately when not dragging
+    expect(onChange).toHaveBeenCalledWith([30, 75])
+  })
+
+  it("updates visual display during drag without calling onChange", () => {
+    const onChange = vi.fn()
+    render(<DualRange min={0} max={100} value={[25, 75]} onChange={onChange} id="test-range" />)
+
+    const minSlider = screen.getByLabelText("Minimum value")
+
+    // Start dragging
+    fireEvent.mouseDown(minSlider)
+
+    // Simulate input change during drag
+    Object.defineProperty(minSlider, "value", { value: "35", writable: true })
+    fireEvent.input(minSlider)
+
+    // Visual display should update to show the new value
+    expect(screen.getByText("35")).toBeTruthy()
+    expect(screen.getByText("75")).toBeTruthy()
+
+    // But onChange should not be called yet
+    expect(onChange).not.toHaveBeenCalled()
   })
 })
