@@ -37,43 +37,31 @@ export default function DualRange({ min, max, value, onChange, id, className }: 
     }
   }, [currentMin, currentMax, min, max])
 
-  const handleMinChange = (e: Event) => {
+  const handleRangeChange = (e: Event, isMin: boolean) => {
     const target = e.currentTarget as HTMLInputElement
-    const newMin = parseFloat(target.value)
-    if (newMin <= currentMax) {
-      const newValue: [number | undefined, number | undefined] = [
-        newMin === min ? undefined : newMin,
-        isDragging ? dragValues[1] : maxValue
-      ]
+    const newValue = parseFloat(target.value)
+
+    // Validate bounds
+    const isValidMin = isMin && newValue <= currentMax
+    const isValidMax = !isMin && newValue >= currentMin
+
+    if (isValidMin || isValidMax) {
+      const rangeValue: [number | undefined, number | undefined] = isMin
+        ? [newValue === min ? undefined : newValue, isDragging ? dragValues[1] : maxValue]
+        : [isDragging ? dragValues[0] : minValue, newValue === max ? undefined : newValue]
 
       if (isDragging) {
         // Update visual representation during drag
-        setDragValues(newValue)
+        setDragValues(rangeValue)
       } else {
         // Immediate change when not dragging (e.g., keyboard input)
-        onChange(newValue)
+        onChange(rangeValue)
       }
     }
   }
 
-  const handleMaxChange = (e: Event) => {
-    const target = e.currentTarget as HTMLInputElement
-    const newMax = parseFloat(target.value)
-    if (newMax >= currentMin) {
-      const newValue: [number | undefined, number | undefined] = [
-        isDragging ? dragValues[0] : minValue,
-        newMax === max ? undefined : newMax
-      ]
-
-      if (isDragging) {
-        // Update visual representation during drag
-        setDragValues(newValue)
-      } else {
-        // Immediate change when not dragging (e.g., keyboard input)
-        onChange(newValue)
-      }
-    }
-  }
+  const handleMinChange = (e: Event) => handleRangeChange(e, true)
+  const handleMaxChange = (e: Event) => handleRangeChange(e, false)
 
   const handleDragStart = () => {
     setIsDragging(true)
