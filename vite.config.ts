@@ -24,7 +24,8 @@ export default defineConfig(() => ({
   test: {
     globals: true,
     environment: "jsdom",
-    setupFiles: ["./test/vitest.setup.ts"]
+    setupFiles: ["./test/vitest.setup.ts"],
+    include: ["test/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"]
   },
   resolve: {
     alias: {
