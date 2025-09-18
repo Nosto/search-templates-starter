@@ -21,13 +21,13 @@ type Props = {
 }
 
 function Autocomplete({ onSubmit }: Props) {
-  const [input, setInput] = useState<string>("")
-  const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false)
-
   // Get the current query from the app state
   const { appQuery } = useNostoAppState(state => ({
     appQuery: state.query?.query || ""
   }))
+
+  const [input, setInput] = useState<string>(appQuery)
+  const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false)
 
   // TODO: wait for elements is missing
   const dropdownElement = document.querySelector<HTMLElement>("#dropdown")!
@@ -36,15 +36,10 @@ function Autocomplete({ onSubmit }: Props) {
 
   useEffect(() => {
     disableNativeAutocomplete(searchInput)
-  }, [searchInput])
-
-  // Sync the input state and DOM with the app query state
-  useEffect(() => {
-    if (appQuery && appQuery !== input) {
-      setInput(appQuery)
-      searchInput.value = appQuery
+    if (input) {
+      searchInput.value = input
     }
-  }, [appQuery, input, searchInput])
+  }, [searchInput, input])
 
   useDebouncedSearch({ input })
 

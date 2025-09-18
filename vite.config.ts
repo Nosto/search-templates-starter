@@ -25,7 +25,7 @@ export default defineConfig(() => ({
     globals: true,
     environment: "jsdom",
     setupFiles: ["./test/vitest.setup.ts"],
-    exclude: ["**/node_modules/**", "**/dist/**", "**/e2e/**"]
+    include: ["test/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"]
   },
   resolve: {
     alias: {

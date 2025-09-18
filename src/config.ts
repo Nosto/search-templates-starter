@@ -93,8 +93,8 @@ export const autocompleteConfig = {
   memoryCache: true,
   historyEnabled: true,
   historySize: 10,
-  debounceDelay: 300, // 300ms debounce delay
-  minQueryLength: 3, // Show autocomplete after 3 characters
+  debounceDelay: 300,
+  minQueryLength: 3,
   search: {
     hitDecorators: autocompleteDecorators
   },
