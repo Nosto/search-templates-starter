@@ -1,5 +1,4 @@
 import { useCallback, useRef, useState, useEffect } from "preact/hooks"
-import { JSX } from "preact"
 import styles from "./DualRange.module.css"
 import { cl } from "@nosto/search-js/utils"
 
@@ -82,43 +81,6 @@ export default function DualRange({ min, max, value, onChange, className, id }: 
   const minPercentage = getPercentage(minValue)
   const maxPercentage = getPercentage(maxValue)
 
-  const handleKeyDown = useCallback(
-    (e: JSX.TargetedKeyboardEvent<HTMLDivElement>, handle: "min" | "max") => {
-      const step = (max - min) / 100
-      let newValue: number
-
-      switch (e.key) {
-        case "ArrowLeft":
-        case "ArrowDown":
-          e.preventDefault()
-          newValue = handle === "min" ? Math.max(min, minValue - step) : Math.max(minValue, maxValue - step)
-          break
-        case "ArrowRight":
-        case "ArrowUp":
-          e.preventDefault()
-          newValue = handle === "min" ? Math.min(maxValue, minValue + step) : Math.min(max, maxValue + step)
-          break
-        case "Home":
-          e.preventDefault()
-          newValue = handle === "min" ? min : minValue
-          break
-        case "End":
-          e.preventDefault()
-          newValue = handle === "min" ? maxValue : max
-          break
-        default:
-          return
-      }
-
-      if (handle === "min") {
-        onChange([newValue === min ? undefined : newValue, value[1]])
-      } else {
-        onChange([value[0], newValue === max ? undefined : newValue])
-      }
-    },
-    [min, max, minValue, maxValue, value, onChange]
-  )
-
   return (
     <div className={cl(styles.container, className)} id={id}>
       <div className={styles.track} ref={trackRef}>
@@ -133,8 +95,6 @@ export default function DualRange({ min, max, value, onChange, className, id }: 
           className={cl(styles.handle, styles.minHandle, isDragging === "min" && styles.dragging)}
           style={{ left: `${minPercentage}%` }}
           onMouseDown={() => handleMouseDown("min")}
-          onKeyDown={e => handleKeyDown(e, "min")}
-          tabIndex={0}
           role="slider"
           aria-valuemin={min}
           aria-valuemax={max}
@@ -145,8 +105,6 @@ export default function DualRange({ min, max, value, onChange, className, id }: 
           className={cl(styles.handle, styles.maxHandle, isDragging === "max" && styles.dragging)}
           style={{ left: `${maxPercentage}%` }}
           onMouseDown={() => handleMouseDown("max")}
-          onKeyDown={e => handleKeyDown(e, "max")}
-          tabIndex={0}
           role="slider"
           aria-valuemin={min}
           aria-valuemax={max}
