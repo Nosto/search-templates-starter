@@ -1,0 +1,60 @@
+.container {
+  padding: var(--ns-space-2) 0;
+  width: 100%;
+}
+
+.track {
+  position: relative;
+  height: 6px;
+  background-color: var(--ns-color-grey-light);
+  border-radius: var(--ns-border-radius-3);
+  margin: var(--ns-space-4) 0;
+  cursor: pointer;
+}
+
+.range {
+  position: absolute;
+  height: 100%;
+  background-color: var(--ns-color-primary);
+  border-radius: var(--ns-border-radius-3);
+  pointer-events: none;
+}
+
+.handle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: var(--ns-color-white);
+  border: var(--ns-border-width-medium) solid var(--ns-color-primary);
+  border-radius: var(--ns-border-radius-circle);
+  cursor: grab;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  outline: none;
+  transition: box-shadow 0.15s ease-in-out;
+}
+
+.handle:focus {
+  box-shadow: var(--ns-box-shadow-slider-handle);
+}
+
+.handle:hover {
+  box-shadow: var(--ns-box-shadow-slider-handle);
+}
+
+.handle.dragging {
+  cursor: grabbing;
+  box-shadow: var(--ns-box-shadow-slider-handle);
+}
+
+.labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--ns-space-2);
+  font-size: var(--ns-font-size-3);
+  color: var(--ns-color-grey-dark);
+}
+
+.label {
+  font-weight: var(--ns-weight-medium);
+}
