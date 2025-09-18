@@ -22,11 +22,9 @@ type Props = {
 
 function Autocomplete({ onSubmit }: Props) {
   // Get the current query from the app state
-  const { appQuery } = useNostoAppState(state => ({
-    appQuery: state.query?.query || ""
-  }))
+  const query = useNostoAppState(state => state.query?.query || "")
 
-  const [input, setInput] = useState<string>(appQuery)
+  const [input, setInput] = useState<string>(query)
   const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false)
 
   // TODO: wait for elements is missing
