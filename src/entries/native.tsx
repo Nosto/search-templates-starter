@@ -9,6 +9,7 @@ import { SidebarProvider } from "@/contexts/SidebarContext"
 import { CategoryPageProvider } from "@nosto/search-js/preact/category"
 import Category from "@/components/Category/Category"
 import { tagging } from "@/mapping/tagging"
+import { ErrorBoundary } from "@nosto/search-js/preact/common"
 
 function SerpApp() {
   return (
@@ -34,4 +35,9 @@ function CategoryApp() {
 }
 
 const App = tagging.pageType() === "category" ? CategoryApp : SerpApp
-render(<App />, document.getElementById("app")!)
+render(
+  <ErrorBoundary>
+    <App />
+  </ErrorBoundary>,
+  document.getElementById("app")!
+)
