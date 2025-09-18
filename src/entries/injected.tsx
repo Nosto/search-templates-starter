@@ -10,7 +10,7 @@ import { autocompleteConfig, categoryConfig, serpConfig } from "@/config"
 import { disableNativeAutocomplete } from "@nosto/search-js/utils"
 import { useDomEvents } from "@/hooks/useDomEvents"
 import { useDebouncedSearch } from "@/hooks/useDebouncedSearch"
-import { useActions } from "@nosto/search-js/preact/hooks"
+import { useActions, useNostoAppState } from "@nosto/search-js/preact/hooks"
 import Category from "@/components/Category/Category"
 import { CategoryPageProvider } from "@nosto/search-js/preact/category"
 import { tagging } from "@/mapping/tagging"
@@ -24,6 +24,11 @@ function Autocomplete({ onSubmit }: Props) {
   const [input, setInput] = useState<string>("")
   const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false)
 
+  // Get the current query from the app state
+  const { appQuery } = useNostoAppState(state => ({
+    appQuery: state.query?.query || ""
+  }))
+
   // TODO: wait for elements is missing
   const dropdownElement = document.querySelector<HTMLElement>("#dropdown")!
   const searchInput = document.querySelector<HTMLInputElement>("#search")!
@@ -32,6 +37,14 @@ function Autocomplete({ onSubmit }: Props) {
   useEffect(() => {
     disableNativeAutocomplete(searchInput)
   }, [searchInput])
+
+  // Sync the input state and DOM with the app query state
+  useEffect(() => {
+    if (appQuery && appQuery !== input) {
+      setInput(appQuery)
+      searchInput.value = appQuery
+    }
+  }, [appQuery, input, searchInput])
 
   useDebouncedSearch({ input })
 
