@@ -32,14 +32,28 @@ function Autocomplete({ onSubmit }: Props) {
   const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false)
 
   // TODO: wait for elements is missing
-  const dropdownElement = document.querySelector<HTMLElement>("#dropdown")!
-  const searchInput = document.querySelector<HTMLInputElement>("#search")!
-  const searchForm = document.querySelector<HTMLFormElement>("#search-form")!
+  const dropdownElement = document.querySelector<HTMLElement>("#dropdown")
+  const searchInput = document.querySelector<HTMLInputElement>("#search")
+  const searchForm = document.querySelector<HTMLFormElement>("#search-form")
+
+  if (!dropdownElement || !searchInput || !searchForm) {
+    console.error('Required DOM elements not found!')
+    return null
+  }
 
   useEffect(() => {
     disableNativeAutocomplete(searchInput)
     searchInput.value = input
   }, [searchInput, input])
+
+  // Show autocomplete when input has sufficient length
+  useEffect(() => {
+    if (input.length >= 3) {
+      setShowAutocomplete(true)
+    } else {
+      setShowAutocomplete(false)
+    }
+  }, [input])
 
   // Sync input state with query from app state when it changes
   useEffect(() => {
@@ -47,6 +61,30 @@ function Autocomplete({ onSubmit }: Props) {
       setInput(query)
     }
   }, [query, input])
+
+  // Monitor DOM input changes and sync with React state
+  useEffect(() => {
+    const handleInput = () => {
+      const newValue = searchInput.value
+      if (newValue !== input) {
+        setInput(newValue)
+      }
+    }
+    
+    const handleFocus = () => {
+      if (searchInput.value.length >= 3) {
+        setShowAutocomplete(true)
+      }
+    }
+    
+    searchInput.addEventListener('input', handleInput)
+    searchInput.addEventListener('focus', handleFocus)
+    
+    return () => {
+      searchInput.removeEventListener('input', handleInput)
+      searchInput.removeEventListener('focus', handleFocus)
+    }
+  }, [searchInput, input])
 
   useDebouncedSearch({ input })
 
@@ -62,16 +100,6 @@ function Autocomplete({ onSubmit }: Props) {
 
   useDomEvents(showAutocomplete ? document.body : null, {
     onClick: onClickOutside
-  })
-
-  useDomEvents(searchInput, {
-    onInput: () => {
-      const newValue = searchInput.value
-      if (newValue !== input) {
-        setInput(newValue)
-      }
-    },
-    onFocus: () => setShowAutocomplete(true)
   })
 
   const onSearchSubmit = (query: string) => {
@@ -90,7 +118,10 @@ function Autocomplete({ onSubmit }: Props) {
     }
   })
 
-  return createPortal(<>{showAutocomplete && <Results onSubmit={onSearchSubmit} />}</>, dropdownElement)
+  return createPortal(
+    <>{showAutocomplete && <Results onSubmit={onSearchSubmit} />}</>, 
+    dropdownElement
+  )
 }
 
 function SerpApp() {
