@@ -34,9 +34,7 @@ function Autocomplete({ onSubmit }: Props) {
 
   useEffect(() => {
     disableNativeAutocomplete(searchInput)
-    if (input) {
-      searchInput.value = input
-    }
+    searchInput.value = input
   }, [searchInput, input])
 
   useDebouncedSearch({ input })
