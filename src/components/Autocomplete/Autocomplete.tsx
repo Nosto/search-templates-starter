@@ -36,7 +36,7 @@ export default function Autocomplete({ onSubmit }: Props) {
 
   const onSearchSubmit = (query: string) => {
     if (query.trim()) {
-      setInput(query)
+      setInput(query.trim())
       searchInputRef.current!.blur()
       onSubmit(query)
       setShowAutocomplete(false)
