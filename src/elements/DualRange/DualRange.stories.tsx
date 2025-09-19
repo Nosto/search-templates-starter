@@ -17,7 +17,11 @@ const DualRangeWithState = (props: {
     props.onChange?.(newValue)
   }
 
-  return <DualRange {...props} value={internalValue} onChange={handleChange} />
+  return (
+    <div style={{ width: "400px", padding: "20px" }}>
+      <DualRange {...props} value={internalValue} onChange={handleChange} />
+    </div>
+  )
 }
 
 export default {
