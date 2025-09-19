@@ -4,13 +4,16 @@ import { SearchInput } from "@nosto/search-js/preact/autocomplete"
 import { useDomEvents } from "@/hooks/useDomEvents"
 import { useDebouncedSearch } from "@/hooks/useDebouncedSearch"
 import { disableNativeAutocomplete } from "@nosto/search-js/utils"
+import { getCurrentUrlState } from "@/mapping/url/getCurrentUrlState"
 
 type Props = {
   onSubmit: (input: string) => void
 }
 
+const initialQuery = getCurrentUrlState().query || ""
+
 export default function Autocomplete({ onSubmit }: Props) {
-  const [input, setInput] = useState<string>("")
+  const [input, setInput] = useState<string>(initialQuery)
   const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false)
   const autocompleteRef = useRef<HTMLFormElement>(null)
   const searchInputRef = useRef<HTMLInputElement>(null)
@@ -35,6 +38,8 @@ export default function Autocomplete({ onSubmit }: Props) {
 
   const onSearchSubmit = (query: string) => {
     if (query.trim()) {
+      setInput(query)
+      searchInputRef.current!.blur()
       onSubmit(query)
       setShowAutocomplete(false)
     }
@@ -51,6 +56,7 @@ export default function Autocomplete({ onSubmit }: Props) {
       <SearchInput
         onSearchInput={target => setInput(target.value)}
         componentProps={{
+          value: input,
           onFocus: () => setShowAutocomplete(true),
           ref: searchInputRef
         }}
