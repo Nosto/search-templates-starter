@@ -2,11 +2,13 @@ import { useCallback, useRef, useState, useEffect } from "preact/hooks"
 import styles from "./DualRange.module.css"
 import { cl } from "@nosto/search-js/utils"
 
+type Range = [number | undefined, number | undefined]
+
 type Props = {
   min: number
   max: number
-  value: [number | undefined, number | undefined]
-  onChange: (value: [number | undefined, number | undefined]) => void
+  value: Range
+  onChange: (value: Range) => void
   className?: string
   id?: string
 }
@@ -14,7 +16,7 @@ type Props = {
 export default function DualRange({ min, max, value, onChange, className, id }: Props) {
   const trackRef = useRef<HTMLDivElement>(null)
   const [isDragging, setIsDragging] = useState<"min" | "max" | null>(null)
-  const [dragValues, setDragValues] = useState<[number | undefined, number | undefined]>(value)
+  const [dragValues, setDragValues] = useState<Range>(value)
 
   // Use drag values during dragging, otherwise use the prop values
   const currentValues = isDragging ? dragValues : value
