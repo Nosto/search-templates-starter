@@ -54,15 +54,17 @@ test.describe("Search results functionality", () => {
   // field is not being populated with the query value. This would require additional implementation
   // in the Autocomplete component to sync with the app state.
 
-  test.skip("search input is populated from URL parameter (SKIPPED - needs implementation)", async ({ page }) => {
+  test("search input is populated from URL parameter", async ({ page }) => {
     await page.goto("/?q=shoes")
-    await expect(page.locator("#search")).toHaveValue("shoes")
+    
+    // Wait for the search input to be populated
+    await expect(page.locator("#search")).toHaveValue("shoes", { timeout: 5000 })
   })
 
   // Note: Pagination is not appearing with the current setup
   // The mock returns 24 products with total: 240 (10x size) which should trigger pagination,
   // but the pagination component may not be rendering correctly
-  test.skip("pagination navigation (SKIPPED - pagination not appearing)", async ({ page }) => {
+  test("pagination navigation works", async ({ page }) => {
     await page.goto("/?q=shoes")
     await expect(page.locator('[data-nosto-element="product"]').first()).toBeVisible({ timeout: 10000 })
 

@@ -24,7 +24,11 @@ function Autocomplete({ onSubmit }: Props) {
   // Get the current query from the app state
   const query = useNostoAppState(state => state.query?.query || "")
 
-  const [input, setInput] = useState<string>(query)
+  // Initialize input from URL parameters or app state
+  const [input, setInput] = useState<string>(() => {
+    const urlParams = new URLSearchParams(window.location.search)
+    return urlParams.get('q') || query || ""
+  })
   const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false)
 
   // TODO: wait for elements is missing
@@ -36,6 +40,13 @@ function Autocomplete({ onSubmit }: Props) {
     disableNativeAutocomplete(searchInput)
     searchInput.value = input
   }, [searchInput, input])
+
+  // Sync input state with query from app state when it changes
+  useEffect(() => {
+    if (query && query !== input) {
+      setInput(query)
+    }
+  }, [query, input])
 
   useDebouncedSearch({ input })
 
@@ -54,7 +65,12 @@ function Autocomplete({ onSubmit }: Props) {
   })
 
   useDomEvents(searchInput, {
-    onInput: () => setInput(searchInput.value),
+    onInput: () => {
+      const newValue = searchInput.value
+      if (newValue !== input) {
+        setInput(newValue)
+      }
+    },
     onFocus: () => setShowAutocomplete(true)
   })
 

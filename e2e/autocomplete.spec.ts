@@ -30,6 +30,9 @@ test.describe("Autocomplete functionality", () => {
     // Submit the form - should navigate to results page
     await searchForm.press("Enter")
 
+    // Wait a moment for navigation to complete
+    await page.waitForTimeout(1000)
+
     // Should navigate to search results with query parameter
     await expect(page).toHaveURL(/[?&]q=shoes/)
 
@@ -48,6 +51,7 @@ test.describe("Autocomplete functionality", () => {
 
     // Submit and verify URL encoding
     await searchInput.press("Enter")
+    await page.waitForTimeout(1000)
     await expect(page).toHaveURL(/[?&]q=test.*search/)
   })
 
@@ -57,7 +61,10 @@ test.describe("Autocomplete functionality", () => {
   // The useDebouncedSearch hook should trigger a search when minQueryLength is met,
   // but the Results component is not being rendered despite having valid mock data.
 
-  test.skip("autocomplete dropdown appears after typing (SKIPPED - implementation issue)", async ({ page }) => {
+  // Note: Autocomplete dropdown functionality requires deeper investigation
+  // The issue appears to be in the integration between useDebouncedSearch, 
+  // useResponse hooks, and the AutocompletePageProvider context
+  test.skip("autocomplete dropdown appears after typing (SKIPPED - complex integration issue)", async ({ page }) => {
     const searchInput = page.locator("#search")
     const dropdown = page.locator("#dropdown")
 
@@ -67,7 +74,7 @@ test.describe("Autocomplete functionality", () => {
     await page.waitForTimeout(2000)
 
     // Should show autocomplete dropdown with search results
-    await expect(dropdown.locator('[data-nosto-element="autocomplete"]')).toBeVisible()
+    await expect(dropdown.locator('[data-nosto-element="autocomplete"]')).toBeVisible({ timeout: 5000 })
   })
 
   test.skip("autocomplete dropdown closes on form submit (SKIPPED - implementation issue)", async ({ page }) => {
