@@ -14,9 +14,12 @@ type Props = {
 export default function DualRange({ min, max, value, onChange, className, id }: Props) {
   const trackRef = useRef<HTMLDivElement>(null)
   const [isDragging, setIsDragging] = useState<"min" | "max" | null>(null)
+  const [dragValues, setDragValues] = useState<[number | undefined, number | undefined]>(value)
 
-  const minValue = value[0] ?? min
-  const maxValue = value[1] ?? max
+  // Use drag values during dragging, otherwise use the prop values
+  const currentValues = isDragging ? dragValues : value
+  const minValue = currentValues[0] ?? min
+  const maxValue = currentValues[1] ?? max
 
   const getPercentage = useCallback(
     (val: number) => {
@@ -34,7 +37,8 @@ export default function DualRange({ min, max, value, onChange, className, id }: 
 
   const handleMouseDown = useCallback((handle: "min" | "max") => {
     setIsDragging(handle)
-  }, [])
+    setDragValues(value) // Initialize drag values with current prop values
+  }, [value])
 
   const handleMouseMove = useCallback(
     (e: MouseEvent) => {
@@ -44,20 +48,32 @@ export default function DualRange({ min, max, value, onChange, className, id }: 
       const percentage = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100))
       const newValue = getValueFromPercentage(percentage)
 
+      // Update local drag state for visual feedback, but don't call onChange yet
       if (isDragging === "min") {
         const newMin = Math.min(newValue, maxValue)
-        onChange([newMin === min ? undefined : newMin, value[1]])
+        setDragValues([newMin === min ? undefined : newMin, dragValues[1]])
       } else {
         const newMax = Math.max(newValue, minValue)
-        onChange([value[0], newMax === max ? undefined : newMax])
+        setDragValues([dragValues[0], newMax === max ? undefined : newMax])
       }
     },
-    [isDragging, getValueFromPercentage, minValue, maxValue, min, max, value, onChange]
+    [isDragging, getValueFromPercentage, minValue, maxValue, min, max, dragValues]
   )
 
   const handleMouseUp = useCallback(() => {
+    if (isDragging) {
+      // Commit the drag values to the parent component via onChange
+      onChange(dragValues)
+    }
     setIsDragging(null)
-  }, [])
+  }, [isDragging, dragValues, onChange])
+
+  // Sync drag values with prop values when not dragging
+  useEffect(() => {
+    if (!isDragging) {
+      setDragValues(value)
+    }
+  }, [value, isDragging])
 
   // Add global event listeners for drag operations
   useEffect(() => {
