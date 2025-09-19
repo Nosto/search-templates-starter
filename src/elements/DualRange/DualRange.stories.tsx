@@ -2,30 +2,67 @@ import type { Meta, StoryObj } from "@storybook/preact"
 import { useState } from "preact/hooks"
 import DualRange from "./DualRange"
 
-export default {
-  title: "Elements/DualRange",
-  component: DualRange,
-  parameters: {
-    layout: "centered"
-  },
-  tags: ["autodocs"]
-} as Meta<typeof DualRange>
-
-type Story = StoryObj<typeof DualRange>
-
 const DualRangeWithState = (props: {
   min: number
   max: number
-  initialValue?: [number | undefined, number | undefined]
+  value: [number | undefined, number | undefined]
+  onChange?: (value: [number | undefined, number | undefined]) => void
+  className?: string
+  id?: string
 }) => {
-  const [value, setValue] = useState<[number | undefined, number | undefined]>(
-    props.initialValue || [undefined, undefined]
-  )
-  return <DualRange min={props.min} max={props.max} value={value} onChange={setValue} />
+  const [internalValue, setInternalValue] = useState<[number | undefined, number | undefined]>(props.value)
+  
+  const handleChange = (newValue: [number | undefined, number | undefined]) => {
+    setInternalValue(newValue)
+    props.onChange?.(newValue)
+  }
+  
+  return <DualRange {...props} value={internalValue} onChange={handleChange} />
 }
 
+export default {
+  title: "Elements/DualRange",
+  component: DualRangeWithState,
+  parameters: {
+    layout: "centered"
+  },
+  tags: ["autodocs"],
+  argTypes: {
+    min: {
+      control: { type: "number" },
+      description: "Minimum value of the range"
+    },
+    max: {
+      control: { type: "number" },
+      description: "Maximum value of the range"
+    },
+    value: {
+      control: { type: "object" },
+      description: "Current [min, max] values (use undefined for default min/max)"
+    },
+    className: {
+      control: { type: "text" },
+      description: "Additional CSS class name"
+    },
+    id: {
+      control: { type: "text" },
+      description: "HTML id attribute"
+    },
+    onChange: {
+      action: "changed",
+      description: "Callback function when range values change"
+    }
+  }
+} as Meta<typeof DualRangeWithState>
+
+type Story = StoryObj<typeof DualRangeWithState>
+
 export const Default: Story = {
-  render: () => <DualRangeWithState min={0} max={100} />,
+  args: {
+    min: 0,
+    max: 100,
+    value: [undefined, undefined]
+  },
   parameters: {
     docs: {
       description: {
@@ -36,7 +73,11 @@ export const Default: Story = {
 }
 
 export const PriceRange: Story = {
-  render: () => <DualRangeWithState min={10} max={500} initialValue={[25, 75]} />,
+  args: {
+    min: 10,
+    max: 500,
+    value: [25, 75]
+  },
   parameters: {
     docs: {
       description: {
@@ -47,7 +88,11 @@ export const PriceRange: Story = {
 }
 
 export const RatingRange: Story = {
-  render: () => <DualRangeWithState min={1} max={5} />,
+  args: {
+    min: 1,
+    max: 5,
+    value: [undefined, undefined]
+  },
   parameters: {
     docs: {
       description: {
@@ -58,7 +103,11 @@ export const RatingRange: Story = {
 }
 
 export const WeightRange: Story = {
-  render: () => <DualRangeWithState min={0.1} max={25.0} />,
+  args: {
+    min: 0.1,
+    max: 25.0,
+    value: [undefined, undefined]
+  },
   parameters: {
     docs: {
       description: {
