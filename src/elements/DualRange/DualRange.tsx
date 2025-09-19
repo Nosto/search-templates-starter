@@ -37,10 +37,13 @@ export default function DualRange({ min, max, value, onChange, className, id }: 
     [min, max]
   )
 
-  const handleMouseDown = useCallback((handle: "min" | "max") => {
-    setIsDragging(handle)
-    setDragValues(value) // Initialize drag values with current prop values
-  }, [value])
+  const handleMouseDown = useCallback(
+    (handle: "min" | "max") => {
+      setIsDragging(handle)
+      setDragValues(value) // Initialize drag values with current prop values
+    },
+    [value]
+  )
 
   const handleMouseMove = useCallback(
     (e: MouseEvent) => {
@@ -114,6 +117,7 @@ export default function DualRange({ min, max, value, onChange, className, id }: 
           style={{ left: `${minPercentage}%` }}
           onMouseDown={() => handleMouseDown("min")}
           role="slider"
+          tabIndex={-1}
           aria-valuemin={min}
           aria-valuemax={max}
           aria-valuenow={minValue}
@@ -124,6 +128,7 @@ export default function DualRange({ min, max, value, onChange, className, id }: 
           style={{ left: `${maxPercentage}%` }}
           onMouseDown={() => handleMouseDown("max")}
           role="slider"
+          tabIndex={-1}
           aria-valuemin={min}
           aria-valuemax={max}
           aria-valuenow={maxValue}

@@ -47,7 +47,7 @@ describe("DualRange", () => {
 
       const minHandle = container.querySelector('[aria-label="Minimum value"]')
       const track = container.querySelector('[class*="track"]')
-      
+
       expect(minHandle).toBeTruthy()
       expect(track).toBeTruthy()
 
@@ -56,7 +56,7 @@ describe("DualRange", () => {
       expect(onChange).not.toHaveBeenCalled()
 
       // Mock getBoundingClientRect for the track
-      Object.defineProperty(track!, 'getBoundingClientRect', {
+      Object.defineProperty(track!, "getBoundingClientRect", {
         value: () => ({ left: 0, width: 100 }),
         configurable: true
       })
@@ -76,19 +76,19 @@ describe("DualRange", () => {
 
       const maxHandle = container.querySelector('[aria-label="Maximum value"]')
       const track = container.querySelector('[class*="track"]')
-      
+
       expect(maxHandle).toBeTruthy()
       expect(track).toBeTruthy()
 
       // Mock getBoundingClientRect for the track
-      Object.defineProperty(track!, 'getBoundingClientRect', {
+      Object.defineProperty(track!, "getBoundingClientRect", {
         value: () => ({ left: 0, width: 100 }),
         configurable: true
       })
 
       // Start dragging max handle
       fireEvent.mouseDown(maxHandle!)
-      
+
       // Mouse up should call onChange
       fireEvent.mouseUp(document)
       expect(onChange).toHaveBeenCalledTimes(1)
@@ -100,26 +100,26 @@ describe("DualRange", () => {
 
       const minHandle = container.querySelector('[aria-label="Minimum value"]')
       const track = container.querySelector('[class*="track"]')
-      
+
       expect(minHandle).toBeTruthy()
       expect(track).toBeTruthy()
 
       // Mock getBoundingClientRect for the track
-      Object.defineProperty(track!, 'getBoundingClientRect', {
+      Object.defineProperty(track!, "getBoundingClientRect", {
         value: () => ({ left: 0, width: 100 }),
         configurable: true
       })
 
       // Start dragging min handle
       fireEvent.mouseDown(minHandle!)
-      
+
       // Try to drag beyond max value (clientX = 80 should be around value 80, which is > 75)
       fireEvent.mouseMove(document, { clientX: 80 })
-      
+
       // Mouse up - the onChange should be called but value should be constrained
       fireEvent.mouseUp(document)
       expect(onChange).toHaveBeenCalledTimes(1)
-      
+
       // The min value should not exceed the max value (75)
       const [minVal] = onChange.mock.calls[0][0]
       expect(minVal).toBeLessThanOrEqual(75)
@@ -131,26 +131,26 @@ describe("DualRange", () => {
 
       const maxHandle = container.querySelector('[aria-label="Maximum value"]')
       const track = container.querySelector('[class*="track"]')
-      
+
       expect(maxHandle).toBeTruthy()
       expect(track).toBeTruthy()
 
       // Mock getBoundingClientRect for the track
-      Object.defineProperty(track!, 'getBoundingClientRect', {
+      Object.defineProperty(track!, "getBoundingClientRect", {
         value: () => ({ left: 0, width: 100 }),
         configurable: true
       })
 
       // Start dragging max handle
       fireEvent.mouseDown(maxHandle!)
-      
+
       // Try to drag below min value (clientX = 20 should be around value 20, which is < 25)
       fireEvent.mouseMove(document, { clientX: 20 })
-      
+
       // Mouse up
       fireEvent.mouseUp(document)
       expect(onChange).toHaveBeenCalledTimes(1)
-      
+
       // The max value should not go below the min value (25)
       const [, maxVal] = onChange.mock.calls[0][0]
       expect(maxVal).toBeGreaterThanOrEqual(25)
@@ -165,13 +165,13 @@ describe("DualRange", () => {
 
       // Start dragging
       fireEvent.mouseDown(minHandle!)
-      
+
       // Should set user-select to none during drag
       expect(document.body.style.userSelect).toBe("none")
 
       // End dragging
       fireEvent.mouseUp(document)
-      
+
       // Should reset user-select after drag
       expect(document.body.style.userSelect).toBe("")
     })

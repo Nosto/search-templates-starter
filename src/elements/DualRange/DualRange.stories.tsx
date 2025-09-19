@@ -11,12 +11,12 @@ const DualRangeWithState = (props: {
   id?: string
 }) => {
   const [internalValue, setInternalValue] = useState<[number | undefined, number | undefined]>(props.value)
-  
+
   const handleChange = (newValue: [number | undefined, number | undefined]) => {
     setInternalValue(newValue)
     props.onChange?.(newValue)
   }
-  
+
   return <DualRange {...props} value={internalValue} onChange={handleChange} />
 }
 
