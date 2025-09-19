@@ -15,16 +15,14 @@ import Category from "@/components/Category/Category"
 import { CategoryPageProvider } from "@nosto/search-js/preact/category"
 import { tagging } from "@/mapping/tagging"
 import { nostojs } from "@nosto/nosto-js"
-import { getCurrentUrlState } from "@/mapping/url/getCurrentUrlState"
+import { getInitialQuery } from "@/mapping/url/getInitialQuery"
 
 type Props = {
   onSubmit: (input: string) => void
 }
 
-const initialQuery = getCurrentUrlState().query || ""
-
 function Autocomplete({ onSubmit }: Props) {
-  const [input, setInput] = useState<string>(initialQuery)
+  const [input, setInput] = useState<string>(getInitialQuery())
   const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false)
 
   // TODO: wait for elements is missing
@@ -33,7 +31,7 @@ function Autocomplete({ onSubmit }: Props) {
   const searchForm = document.querySelector<HTMLFormElement>("#search-form")!
 
   useEffect(() => {
-    searchInput.value = initialQuery
+    searchInput.value = getInitialQuery()
     disableNativeAutocomplete(searchInput)
   }, [searchInput])
 
