@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Product from "./Product"
 import { mockSerpProduct } from "@mocks/products"
+import { withSearchContext } from ".storybook/decorators"
 
 export default {
   title: "Components/Product",
@@ -8,6 +9,7 @@ export default {
   parameters: {
     layout: "centered"
   },
+  decorators: [withSearchContext],
   tags: ["autodocs"]
 } as Meta<typeof Product>
 

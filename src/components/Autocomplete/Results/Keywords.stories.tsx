@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Keywords from "./Keywords"
 import { mockKeywords, mockEmptyKeywords } from "@mocks/keywords"
+import { withAutocompleteContext } from ".storybook/decorators"
 
 export default {
   title: "Autocomplete/Keywords",
@@ -8,6 +9,7 @@ export default {
   parameters: {
     layout: "centered"
   },
+  decorators: [withAutocompleteContext],
   tags: ["autodocs"]
 } as Meta<typeof Keywords>
 

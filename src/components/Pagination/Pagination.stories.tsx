@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Pagination from "./Pagination"
+import { withSearchContext } from ".storybook/decorators"
 
 export default {
   title: "Components/Pagination",
@@ -7,6 +8,7 @@ export default {
   parameters: {
     layout: "centered"
   },
+  decorators: [withSearchContext],
   tags: ["autodocs"]
 } as Meta<typeof Pagination>
 

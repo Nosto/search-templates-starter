@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Product from "./Product"
 import { mockProduct, mockProductNoSale, mockProductNoBrand } from "@mocks/products"
+import { withAutocompleteContext } from ".storybook/decorators"
 
 export default {
   title: "Autocomplete/Product",
@@ -8,6 +9,7 @@ export default {
   parameters: {
     layout: "centered"
   },
+  decorators: [withAutocompleteContext],
   tags: ["autodocs"]
 } as Meta<typeof Product>
 
