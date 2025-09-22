@@ -1,6 +1,6 @@
 import { render } from "@testing-library/preact"
 import { describe, expect, it } from "vitest"
-import Campaign from "@/components/Campaign/Campaign"
+import Campaign from "@/elements/Campaign/Campaign"
 
 describe("Campaign", () => {
   it("renders custom element with required props", () => {

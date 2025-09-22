@@ -1,6 +1,6 @@
 import { render } from "@testing-library/preact"
 import { describe, expect, it } from "vitest"
-import DynamicCard from "@/components/DynamicCard/DynamicCard"
+import DynamicCard from "@/elements/DynamicCard/DynamicCard"
 
 describe("DynamicCard", () => {
   it("renders custom element with required props", () => {
