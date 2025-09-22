@@ -78,4 +78,16 @@
   --ns-height-input-checkbox: 16px;
   --ns-height-input-checkbox-tick: 10px;
   --ns-min-height-content: 890px;
+
+  /* BREAKPOINTS (for reference - use directly in media queries) */
+  --ns-breakpoint-xs: 375px;
+  --ns-breakpoint-sm: 768px;
+  --ns-breakpoint-md: 1024px;
+
+  /* GRID COLUMNS */
+  --ns-grid-cols-1: 1fr;
+  --ns-grid-cols-2: repeat(2, 1fr);
+  --ns-grid-cols-3: repeat(3, 1fr);
+  --ns-grid-cols-4: repeat(4, 1fr);
+  --ns-grid-cols-5: repeat(5, 1fr);
 }

@@ -59,7 +59,7 @@
 
 .products {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: var(--ns-grid-cols-5);
   gap: var(--ns-space-2);
   margin-bottom: var(--ns-space-2);
 }
