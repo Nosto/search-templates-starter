@@ -94,3 +94,24 @@
   vertical-align: baseline;
   line-height: var(--ns-line-height-tiny);
 }
+
+.clearFiltersContainer {
+  padding: var(--ns-space-4);
+  border-top: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
+  margin-top: auto;
+}
+
+.clearFilters {
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  color: var(--ns-color-link);
+  font-size: var(--ns-font-size-4);
+  background: none;
+  border: none;
+  padding: var(--ns-space-2);
+}
+
+.clearFilters:hover {
+  text-decoration: underline;
+}

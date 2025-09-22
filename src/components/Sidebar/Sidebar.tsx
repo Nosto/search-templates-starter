@@ -1,4 +1,4 @@
-import { useFacets } from "@nosto/search-js/preact/hooks"
+import { useFacets, useProductFilters } from "@nosto/search-js/preact/hooks"
 import TermsFacet from "@/components/TermsFacet/TermsFacet"
 import RangeFacet from "@/components/RangeFacet/RangeFacet"
 import Icon from "@/elements/Icon/Icon"
@@ -28,6 +28,7 @@ function ToggleSidebarButton({ className, onClick }: ToggleProps = {}) {
 export default function SideBar() {
   const { facets } = useFacets()
   const { isOpen, setOpen } = useSidebar()
+  const { filters, removeAll } = useProductFilters()
 
   const handleBackdropClick = () => {
     setOpen(false)
@@ -73,6 +74,26 @@ export default function SideBar() {
               })}
             </ul>
           </div>
+          {filters.length > 0 && (
+            <div className={styles.clearFiltersContainer}>
+              <button
+                className={styles.clearFilters}
+                onClick={() => {
+                  removeAll()
+                }}
+                onKeyDown={e => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault()
+                    removeAll()
+                  }
+                }}
+                aria-label="Clear all filters"
+                type="button"
+              >
+                Clear Filters
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </>

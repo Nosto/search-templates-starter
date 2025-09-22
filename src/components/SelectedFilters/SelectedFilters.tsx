@@ -3,7 +3,20 @@ import styles from "./SelectedFilters.module.css"
 import Pill from "@/elements/Pill/Pill"
 
 export default function SelectedFilters() {
-  const { filters, removeAll } = useProductFilters()
+  const { filters } = useProductFilters()
+
+  const formatFilterValue = (filter: { name?: string; value?: string } | undefined) => {
+    if (!filter) return ""
+
+    // Check if this is a range filter by looking for a pattern like "10-50" or "1-5"
+    const isRangeFilter = filter?.value && /^\d+(\.\d+)?[-–]\d+(\.\d+)?$/.test(filter.value)
+
+    if (isRangeFilter && filter?.name) {
+      return `${filter.name}: ${filter.value}`
+    }
+
+    return filter?.value
+  }
 
   return (
     filters.length > 0 && (
@@ -17,26 +30,10 @@ export default function SelectedFilters() {
                 filter?.remove()
               }}
             >
-              {filter?.value}
+              {formatFilterValue(filter)}
             </Pill>
           ))}
         </div>
-        <button
-          className={styles.clear}
-          onClick={() => {
-            removeAll()
-          }}
-          onKeyDown={e => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault()
-              removeAll()
-            }
-          }}
-          aria-label="Clear all filters"
-          type="button"
-        >
-          Clear Filters
-        </button>
       </div>
     )
   )
