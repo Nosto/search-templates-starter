@@ -28,19 +28,6 @@ describe("DualRange", () => {
   })
 
   describe("drag interactions", () => {
-    it("starts dragging on mouse down", () => {
-      const onChange = vi.fn()
-      const { container } = render(<DualRange min={0} max={100} value={[25, 75]} onChange={onChange} />)
-
-      const minHandle = container.querySelector('[aria-label="Minimum value"]')
-      expect(minHandle).toBeTruthy()
-
-      fireEvent.mouseDown(minHandle!)
-
-      // Should have dragging state (we can't directly test this, but subsequent mouse events should work)
-      expect(minHandle).toBeTruthy()
-    })
-
     it("calls onChange only on mouse up, not during mouse move", () => {
       const onChange = vi.fn()
       const { container } = render(<DualRange min={0} max={100} value={[25, 75]} onChange={onChange} />)
@@ -70,68 +57,15 @@ describe("DualRange", () => {
       expect(onChange).toHaveBeenCalledTimes(1)
     })
 
-    it("handles max handle dragging", () => {
-      const onChange = vi.fn()
-      const { container } = render(<DualRange min={0} max={100} value={[25, 75]} onChange={onChange} />)
-
-      const maxHandle = container.querySelector('[aria-label="Maximum value"]')
-      const track = container.querySelector('[class*="track"]')
-
-      expect(maxHandle).toBeTruthy()
-      expect(track).toBeTruthy()
-
-      // Mock getBoundingClientRect for the track
-      Object.defineProperty(track!, "getBoundingClientRect", {
-        value: () => ({ left: 0, width: 100 }),
-        configurable: true
-      })
-
-      // Start dragging max handle
-      fireEvent.mouseDown(maxHandle!)
-
-      // Mouse up should call onChange
-      fireEvent.mouseUp(document)
-      expect(onChange).toHaveBeenCalledTimes(1)
-    })
-
-    it("prevents dragging min handle beyond max value", () => {
+    it("prevents handle constraint violations during drag operations", () => {
       const onChange = vi.fn()
       const { container } = render(<DualRange min={0} max={100} value={[25, 75]} onChange={onChange} />)
 
       const minHandle = container.querySelector('[aria-label="Minimum value"]')
-      const track = container.querySelector('[class*="track"]')
-
-      expect(minHandle).toBeTruthy()
-      expect(track).toBeTruthy()
-
-      // Mock getBoundingClientRect for the track
-      Object.defineProperty(track!, "getBoundingClientRect", {
-        value: () => ({ left: 0, width: 100 }),
-        configurable: true
-      })
-
-      // Start dragging min handle
-      fireEvent.mouseDown(minHandle!)
-
-      // Try to drag beyond max value (clientX = 80 should be around value 80, which is > 75)
-      fireEvent.mouseMove(document, { clientX: 80 })
-
-      // Mouse up - the onChange should be called but value should be constrained
-      fireEvent.mouseUp(document)
-      expect(onChange).toHaveBeenCalledTimes(1)
-
-      // The min value should not exceed the max value (75)
-      const [minVal] = onChange.mock.calls[0][0]
-      expect(minVal).toBeLessThanOrEqual(75)
-    })
-
-    it("prevents dragging max handle below min value", () => {
-      const onChange = vi.fn()
-      const { container } = render(<DualRange min={0} max={100} value={[25, 75]} onChange={onChange} />)
-
       const maxHandle = container.querySelector('[aria-label="Maximum value"]')
       const track = container.querySelector('[class*="track"]')
 
+      expect(minHandle).toBeTruthy()
       expect(maxHandle).toBeTruthy()
       expect(track).toBeTruthy()
 
@@ -141,16 +75,25 @@ describe("DualRange", () => {
         configurable: true
       })
 
-      // Start dragging max handle
-      fireEvent.mouseDown(maxHandle!)
-
-      // Try to drag below min value (clientX = 20 should be around value 20, which is < 25)
-      fireEvent.mouseMove(document, { clientX: 20 })
-
-      // Mouse up
+      // Test min handle cannot exceed max value
+      fireEvent.mouseDown(minHandle!)
+      // Try to drag beyond max value (clientX = 80 should be around value 80, which is > 75)
+      fireEvent.mouseMove(document, { clientX: 80 })
       fireEvent.mouseUp(document)
       expect(onChange).toHaveBeenCalledTimes(1)
+      // The min value should not exceed the max value (75)
+      const [minVal] = onChange.mock.calls[0][0]
+      expect(minVal).toBeLessThanOrEqual(75)
 
+      // Reset mock for next test
+      onChange.mockClear()
+
+      // Test max handle cannot go below min value
+      fireEvent.mouseDown(maxHandle!)
+      // Try to drag below min value (clientX = 20 should be around value 20, which is < 25)
+      fireEvent.mouseMove(document, { clientX: 20 })
+      fireEvent.mouseUp(document)
+      expect(onChange).toHaveBeenCalledTimes(1)
       // The max value should not go below the min value (25)
       const [, maxVal] = onChange.mock.calls[0][0]
       expect(maxVal).toBeGreaterThanOrEqual(25)
