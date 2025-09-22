@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Sidebar from "./Sidebar"
 import { SidebarProvider } from "@/contexts/SidebarContext"
+import { withSearchContext } from ".storybook/decorators"
 
 export default {
   title: "Components/Sidebar",
@@ -8,6 +9,7 @@ export default {
   parameters: {
     layout: "centered"
   },
+  decorators: [withSearchContext],
   tags: ["autodocs"]
 } as Meta<typeof Sidebar>
 

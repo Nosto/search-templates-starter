@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import TermsFacet from "./TermsFacet"
 import { mockCategoryFacet, mockBrandFacet } from "@mocks/facets"
+import { withContainer, withSearchContext } from ".storybook/decorators"
 
 export default {
   title: "Components/TermsFacet",
@@ -8,6 +9,7 @@ export default {
   parameters: {
     layout: "centered"
   },
+  decorators: [withSearchContext, withContainer],
   tags: ["autodocs"]
 } as Meta<typeof TermsFacet>
 

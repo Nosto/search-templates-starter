@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import SelectedFilters from "./SelectedFilters"
+import { withContainer, withSearchContext } from ".storybook/decorators"
 
 export default {
   title: "Components/SelectedFilters",
@@ -7,15 +8,10 @@ export default {
   parameters: {
     layout: "centered"
   },
+  decorators: [withSearchContext, withContainer],
   tags: ["autodocs"]
 } as Meta<typeof SelectedFilters>
 
 type Story = StoryObj<typeof SelectedFilters>
 
-export const Default: Story = {
-  render: () => (
-    <div style="width: 600px">
-      <SelectedFilters />
-    </div>
-  )
-}
+export const Default: Story = {}
