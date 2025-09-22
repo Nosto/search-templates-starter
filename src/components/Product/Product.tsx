@@ -1,4 +1,5 @@
 import { SerpElement } from "@nosto/search-js/preact/serp"
+import { cl } from "@nosto/search-js/utils"
 import styles from "./Product.module.css"
 import type { Product } from "@/types"
 import DynamicCard from "../DynamicCard/DynamicCard"
@@ -11,7 +12,6 @@ type Props = {
 
 export default function Product({ product, children, showAltOnHover = false }: Props) {
   const hasAlternateImage = showAltOnHover && product.alternateImageUrls && product.alternateImageUrls.length > 0
-  const containerClass = hasAlternateImage ? `${styles.container} ${styles.altContainer}` : styles.container
 
   return (
     <SerpElement
@@ -22,7 +22,7 @@ export default function Product({ product, children, showAltOnHover = false }: P
       }}
       componentProps={{
         "aria-label": `Product ${product.name}`,
-        className: containerClass,
+        className: cl(styles.container, hasAlternateImage && styles.altContainer),
         href: product.url
       }}
     >
