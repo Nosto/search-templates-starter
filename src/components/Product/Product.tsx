@@ -52,7 +52,7 @@ export default function Product({ product, children }: Props) {
             <span className={styles.specialPrice}>{product.listPriceText}</span>
           )}
         </div>
-        {product.ratingValue && product.reviewCount && (
+        {product.ratingValue !== undefined && product.reviewCount && (
           <div aria-label={`${product.ratingValue} out of 5 stars, ${product.reviewCount} reviews`}>
             {renderRatingStars(product.ratingValue)} ({product.reviewCount})
           </div>
