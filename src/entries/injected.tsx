@@ -15,6 +15,7 @@ import Category from "@/components/Category/Category"
 import { CategoryPageProvider } from "@nosto/search-js/preact/category"
 import { tagging } from "@/mapping/tagging"
 import { nostojs } from "@nosto/nosto-js"
+import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import { getInitialQuery } from "@/mapping/url/getInitialQuery"
 
 type Props = {
@@ -87,7 +88,7 @@ function SerpApp() {
   )
 
   return (
-    <>
+    <ErrorBoundary>
       <SearchQueryHandler />
       <SidebarProvider>
         <AutocompletePageProvider config={autocompleteConfig}>
@@ -95,18 +96,20 @@ function SerpApp() {
         </AutocompletePageProvider>
         <Serp />
       </SidebarProvider>
-    </>
+    </ErrorBoundary>
   )
 }
 
 function CategoryApp() {
   return (
-    <CategoryPageProvider config={categoryConfig}>
-      <SearchQueryHandler />
-      <SidebarProvider>
-        <Category />
-      </SidebarProvider>
-    </CategoryPageProvider>
+    <ErrorBoundary>
+      <CategoryPageProvider config={categoryConfig}>
+        <SearchQueryHandler />
+        <SidebarProvider>
+          <Category />
+        </SidebarProvider>
+      </CategoryPageProvider>
+    </ErrorBoundary>
   )
 }
 
