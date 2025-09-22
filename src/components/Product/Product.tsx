@@ -12,25 +12,18 @@ function renderRatingStars(ratingValue: number): string {
   const maxStars = 5
   const fullStars = Math.floor(ratingValue)
   const hasHalfStar = ratingValue % 1 !== 0
-  let stars = ""
 
-  // Add full stars
-  for (let i = 0; i < fullStars; i++) {
-    stars += "★"
-  }
+  // Create filled stars using repeat
+  const filledStars = "★".repeat(fullStars)
 
   // Add half star if needed
-  if (hasHalfStar && fullStars < maxStars) {
-    stars += "☆"
-  }
+  const halfStar = hasHalfStar && fullStars < maxStars ? "☆" : ""
 
-  // Fill remaining with empty stars
+  // Fill remaining with empty stars using repeat
   const remainingStars = maxStars - fullStars - (hasHalfStar ? 1 : 0)
-  for (let i = 0; i < remainingStars; i++) {
-    stars += "☆"
-  }
+  const emptyStars = "☆".repeat(remainingStars)
 
-  return stars
+  return filledStars + halfStar + emptyStars
 }
 
 export default function Product({ product, children }: Props) {
