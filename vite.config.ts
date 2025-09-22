@@ -4,16 +4,18 @@ import preact from "@preact/preset-vite"
 
 const dirname = import.meta.dirname
 
-export default defineConfig(() => ({
+export default defineConfig(({ mode = "injected" }) => ({
   build: {
     outDir: "dist",
     minify: true,
     sourcemap: true,
     rollupOptions: {
-      input: resolve(dirname, `index.html`),
+      input: resolve(dirname, `src/entries/${mode}.tsx`),
       output: {
-        entryFileNames: "[name].js",
-        assetFileNames: "[name][extname]"
+        entryFileNames: "index.js",
+        assetFileNames: "index[extname]",
+        banner: "(function(){",
+        footer: "})();"
       }
     }
   },
