@@ -2,6 +2,9 @@ import { SerpElement } from "@nosto/search-js/preact/serp"
 import styles from "./Product.module.css"
 import type { Product } from "@/types"
 import DynamicCard from "../DynamicCard/DynamicCard"
+import { useState } from "preact/hooks"
+import { nostojs } from "@nosto/nosto-js"
+import Pill from "@/elements/Pill/Pill"
 
 type Props = {
   product: Product
@@ -9,6 +12,20 @@ type Props = {
 }
 
 export default function Product({ product, children }: Props) {
+  const [isHovered, setIsHovered] = useState(false)
+
+  const handleAddToCart = (e: Event) => {
+    e.preventDefault()
+    e.stopPropagation()
+
+    nostojs(api =>
+      api.recordSearchAddToCart("serp", {
+        productId: product.productId!,
+        url: product.url
+      })
+    )
+  }
+
   return (
     <SerpElement
       as="a"
@@ -19,7 +36,9 @@ export default function Product({ product, children }: Props) {
       componentProps={{
         "aria-label": `Product ${product.name}`,
         className: styles.container,
-        href: product.url
+        href: product.url,
+        onMouseEnter: () => setIsHovered(true),
+        onMouseLeave: () => setIsHovered(false)
       }}
     >
       <div className={styles.image}>
@@ -35,6 +54,11 @@ export default function Product({ product, children }: Props) {
           )}
         </div>
       </div>
+      {isHovered && (
+        <div className={styles.addToCartPill}>
+          <Pill onClick={handleAddToCart}>Add to cart</Pill>
+        </div>
+      )}
       {children}
     </SerpElement>
   )

@@ -30,3 +30,10 @@
   text-decoration: line-through;
   margin-left: var(--ns-space-2);
 }
+
+.addToCartPill {
+  position: absolute;
+  bottom: var(--ns-space-2);
+  left: var(--ns-space-2);
+  z-index: 10;
+}
