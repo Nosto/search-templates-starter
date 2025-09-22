@@ -74,7 +74,8 @@ export const mockProductNoBrand = createProduct({
 
 export const mockSerpProduct = createProduct({
   productId: "1",
-  name: "Sample Product"
+  name: "Sample Product",
+  alternateImageUrls: ["https://picsum.photos/500/750?random=100"]
 })
 
 export const mockProducts = createProductsResponse(generateMockProducts(5))

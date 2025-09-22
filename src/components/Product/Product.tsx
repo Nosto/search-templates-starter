@@ -1,4 +1,5 @@
 import { SerpElement } from "@nosto/search-js/preact/serp"
+import { useState } from "preact/hooks"
 import styles from "./Product.module.css"
 import type { Product } from "@/types"
 import DynamicCard from "../DynamicCard/DynamicCard"
@@ -6,9 +7,15 @@ import DynamicCard from "../DynamicCard/DynamicCard"
 type Props = {
   product: Product
   children?: preact.JSX.Element | preact.JSX.Element[]
+  showAltOnHover?: boolean
 }
 
-export default function Product({ product, children }: Props) {
+export default function Product({ product, children, showAltOnHover = false }: Props) {
+  const [isHovered, setIsHovered] = useState(false)
+
+  const hasAlternateImage = showAltOnHover && product.alternateImageUrls && product.alternateImageUrls.length > 0
+  const displayImageUrl = hasAlternateImage && isHovered ? product.alternateImageUrls![0] : product.imageUrl
+
   return (
     <SerpElement
       as="a"
@@ -19,11 +26,13 @@ export default function Product({ product, children }: Props) {
       componentProps={{
         "aria-label": `Product ${product.name}`,
         className: styles.container,
-        href: product.url
+        href: product.url,
+        onMouseEnter: hasAlternateImage ? () => setIsHovered(true) : undefined,
+        onMouseLeave: hasAlternateImage ? () => setIsHovered(false) : undefined
       }}
     >
       <div className={styles.image}>
-        <img src={product.imageUrl} alt={product.name} />
+        <img src={displayImageUrl} alt={product.name} />
       </div>
       <div className={styles.info} data-nosto-element="product">
         {product.brand && <div>{product.brand}</div>}
