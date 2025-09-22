@@ -25,6 +25,29 @@ function ToggleSidebarButton({ className, onClick }: ToggleProps = {}) {
   )
 }
 
+function ClearFiltersButton({ removeAll }: { removeAll: () => void }) {
+  return (
+    <div className={styles.clearFiltersContainer}>
+      <button
+        className={styles.clearFilters}
+        onClick={() => {
+          removeAll()
+        }}
+        onKeyDown={e => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault()
+            removeAll()
+          }
+        }}
+        aria-label="Clear all filters"
+        type="button"
+      >
+        Clear Filters
+      </button>
+    </div>
+  )
+}
+
 export default function SideBar() {
   const { facets } = useFacets()
   const { isOpen, setOpen } = useSidebar()
@@ -74,26 +97,7 @@ export default function SideBar() {
               })}
             </ul>
           </div>
-          {filters.length > 0 && (
-            <div className={styles.clearFiltersContainer}>
-              <button
-                className={styles.clearFilters}
-                onClick={() => {
-                  removeAll()
-                }}
-                onKeyDown={e => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault()
-                    removeAll()
-                  }
-                }}
-                aria-label="Clear all filters"
-                type="button"
-              >
-                Clear Filters
-              </button>
-            </div>
-          )}
+          {filters.length > 0 && <ClearFiltersButton removeAll={removeAll} />}
         </div>
       </div>
     </>
