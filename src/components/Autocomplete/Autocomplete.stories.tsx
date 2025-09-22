@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Autocomplete from "./Autocomplete"
+import { withAutocompleteContext } from ".storybook/decorators"
 
 export default {
   title: "Autocomplete/Autocomplete",
@@ -7,6 +8,7 @@ export default {
   parameters: {
     layout: "centered"
   },
+  decorators: [withAutocompleteContext],
   tags: ["autodocs"]
 } as Meta<typeof Autocomplete>
 

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import BottomToolbar from "./BottomToolbar"
+import { withSearchContext } from ".storybook/decorators"
 
 export default {
   title: "Components/BottomToolbar",
@@ -12,6 +13,7 @@ export default {
       }
     }
   },
+  decorators: [withSearchContext],
   tags: ["autodocs"]
 } as Meta<typeof BottomToolbar>
 

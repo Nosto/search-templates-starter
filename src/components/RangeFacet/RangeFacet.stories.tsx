@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import RangeFacet from "./RangeFacet"
 import { mockPriceFacet, mockRatingFacet, mockWeightFacet } from "@mocks/facets"
+import { withContainer, withSearchContext } from ".storybook/decorators"
 
 export default {
   title: "Components/RangeFacet",
@@ -8,6 +9,7 @@ export default {
   parameters: {
     layout: "centered"
   },
+  decorators: [withSearchContext, withContainer],
   tags: ["autodocs"]
 } as Meta<typeof RangeFacet>
 
