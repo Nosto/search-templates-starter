@@ -2,6 +2,7 @@ import { SerpElement } from "@nosto/search-js/preact/serp"
 import styles from "./Product.module.css"
 import type { Product } from "@/types"
 import DynamicCard from "../DynamicCard/DynamicCard"
+import Rating from "@/elements/Rating/Rating"
 
 type Props = {
   product: Product
@@ -34,6 +35,9 @@ export default function Product({ product, children }: Props) {
             <span className={styles.specialPrice}>{product.listPriceText}</span>
           )}
         </div>
+        {product.ratingValue && product.reviewCount && product.ratingValue > 0 && product.reviewCount > 0 && (
+          <Rating ratingValue={product.ratingValue} reviewCount={product.reviewCount} />
+        )}
       </div>
       {children}
     </SerpElement>

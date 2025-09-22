@@ -65,3 +65,7 @@
 .arrow-left::after {
   transform: rotate(90deg);
 }
+
+.star::after {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTUiIHZpZXdCb3g9IjAgMCAxNiAxNSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTggMC41TDEwLjA5IDUuMjZMMTUuNjE4IDZMMTEuODA5IDkuNzRMMTIuNzI3IDE1LjI2TDggMTIuNUwzLjI3MyAxNS4yNkw0LjE5MSA5Ljc0TDAuMzgyIDZMNS45MSA1LjI2TDggMC41WiIgZmlsbD0iIzEzMUQyOCIvPgo8L3N2Zz4K");
+}

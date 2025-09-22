@@ -15,6 +15,10 @@ export function createProduct(overrides: Partial<Product> = {}): Product {
   const listPrice = Math.round((Math.random() * 200 + 20) * 100) / 100
   const price = Math.round(Math.random() * listPrice * 100) / 100
 
+  // Generate random rating and review count
+  const ratingValue = Math.round((Math.random() * 4 + 1) * 10) / 10 // 1.0 to 5.0
+  const reviewCount = Math.floor(Math.random() * 500) + 1 // 1 to 500
+
   return {
     productId: `product-${Math.floor(Math.random() * 10000)}`,
     name: `${adjectives[adjectiveIndex]} ${productTypes[typeIndex]}`,
@@ -29,6 +33,8 @@ export function createProduct(overrides: Partial<Product> = {}): Product {
     url: `https://example.com/product-${Math.floor(Math.random() * 10000)}`,
     imageUrl: `https://picsum.photos/500/750?random=${Math.floor(Math.random() * 10000)}`,
     description: `High-quality ${adjectives[adjectiveIndex].toLowerCase()} ${productTypes[typeIndex].toLowerCase()} from ${brands[brandIndex]}`,
+    ratingValue,
+    reviewCount,
     ...overrides
   } as Product
 }
@@ -58,23 +64,38 @@ export function generateMockProducts(count: number): Product[] {
 
 export const mockProduct = createProduct({
   productId: "12345",
-  name: "Running Shoes"
+  name: "Running Shoes",
+  ratingValue: 4.5,
+  reviewCount: 127
 })
 
 export const mockProductNoSale = createProduct({
   productId: "67890",
-  name: "Casual Sneakers"
+  name: "Casual Sneakers",
+  ratingValue: 3.8,
+  reviewCount: 89
 })
 
 export const mockProductNoBrand = createProduct({
   productId: "54321",
   name: "Generic Sports Shoes",
-  brand: undefined
+  brand: undefined,
+  ratingValue: 2.5,
+  reviewCount: 15
 })
 
 export const mockSerpProduct = createProduct({
   productId: "1",
-  name: "Sample Product"
+  name: "Sample Product",
+  ratingValue: 4.2,
+  reviewCount: 58
+})
+
+export const mockProductNoRating = createProduct({
+  productId: "no-rating",
+  name: "Product Without Rating",
+  ratingValue: undefined,
+  reviewCount: undefined
 })
 
 export const mockProducts = createProductsResponse(generateMockProducts(5))

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Product from "./Product"
-import { mockSerpProduct } from "@mocks/products"
+import { mockSerpProduct, mockProductNoRating } from "@mocks/products"
 import { withSearchContext } from ".storybook/decorators"
 
 export default {
@@ -18,5 +18,11 @@ type Story = StoryObj<typeof Product>
 export const Default: Story = {
   args: {
     product: mockSerpProduct
+  }
+}
+
+export const WithoutRating: Story = {
+  args: {
+    product: mockProductNoRating
   }
 }
