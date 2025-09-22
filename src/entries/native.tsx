@@ -10,6 +10,7 @@ import { CategoryPageProvider } from "@nosto/search-js/preact/category"
 import Category from "@/components/Category/Category"
 import { tagging } from "@/mapping/tagging"
 import { ErrorBoundary } from "@nosto/search-js/preact/common"
+import { nostojs } from "@nosto/nosto-js"
 
 function SerpApp() {
   return (
@@ -34,10 +35,14 @@ function CategoryApp() {
   )
 }
 
-const App = tagging.pageType() === "category" ? CategoryApp : SerpApp
-render(
-  <ErrorBoundary>
-    <App />
-  </ErrorBoundary>,
-  document.getElementById("app")!
-)
+async function init() {
+  await new Promise(nostojs)
+  const App = tagging.pageType() === "category" ? CategoryApp : SerpApp
+  render(
+    <ErrorBoundary>
+      <App />
+    </ErrorBoundary>,
+    document.getElementById("app")!
+  )
+}
+init()

@@ -113,19 +113,23 @@ function CategoryApp() {
   )
 }
 
-const serpElement = document.querySelector<HTMLElement>("#serp")
-if (serpElement) {
-  switch (tagging.pageType()) {
-    case "category":
-      render(<CategoryApp />, serpElement)
-      break
-    case "search":
-    default:
-      render(
-        <SearchPageProvider config={serpConfig}>
-          <SerpApp />
-        </SearchPageProvider>,
-        serpElement
-      )
+async function init() {
+  await new Promise(nostojs)
+  const serpElement = document.querySelector<HTMLElement>("#serp")
+  if (serpElement) {
+    switch (tagging.pageType()) {
+      case "category":
+        render(<CategoryApp />, serpElement)
+        break
+      case "search":
+      default:
+        render(
+          <SearchPageProvider config={serpConfig}>
+            <SerpApp />
+          </SearchPageProvider>,
+          serpElement
+        )
+    }
   }
 }
+init()
