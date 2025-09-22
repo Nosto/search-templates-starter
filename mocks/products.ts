@@ -78,6 +78,20 @@ export const mockSerpProduct = createProduct({
   alternateImageUrls: ["https://picsum.photos/500/750?random=100"]
 })
 
+export const mockProductWithAlt = createProduct({
+  productId: "2",
+  name: "Hover-enabled Product",
+  imageUrl: "https://picsum.photos/500/750?random=1",
+  alternateImageUrls: ["https://picsum.photos/500/750?random=2"]
+})
+
+export const mockProductMultipleAlts = createProduct({
+  productId: "3",
+  name: "Multiple Alt Images",
+  imageUrl: "https://picsum.photos/500/750?random=3",
+  alternateImageUrls: ["https://picsum.photos/500/750?random=4", "https://picsum.photos/500/750?random=5"]
+})
+
 export const mockProducts = createProductsResponse(generateMockProducts(5))
 
 export const mockEmptyProducts = createEmptyResponse()
