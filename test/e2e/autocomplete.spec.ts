@@ -14,7 +14,6 @@ test.describe("Autocomplete", () => {
 
     // Type 1-2 characters - dropdown should not show results yet
     await searchInput.fill("ru")
-    await page.waitForTimeout(50) // Minimal wait for any potential updates
     await expect(dropdown).not.toContainText("running shoes")
 
     // Type 3rd character - autocomplete should trigger
