@@ -39,7 +39,7 @@ test.describe("Results", () => {
       await nextPageLink.click()
 
       // Verify URL changed to include page parameter
-      await expect(page).toHaveURL(/[?&]p=[^&]*/, { timeout: 1000 })
+      await expect(page).toHaveURL(/[?&]p=\d+/, { timeout: 1000 })
 
       // Verify results are still showing
       await expect(page.locator("#serp")).toContainText("Product", { timeout: 1000 })
