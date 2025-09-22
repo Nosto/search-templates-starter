@@ -25,7 +25,13 @@ function ToggleSidebarButton({ className, onClick }: ToggleProps = {}) {
   )
 }
 
-function ClearFiltersButton({ removeAll }: { removeAll: () => void }) {
+function ClearFiltersButton() {
+  const { filters, removeAll } = useProductFilters()
+
+  if (filters.length === 0) {
+    return null
+  }
+
   return (
     <div className={styles.clearFiltersContainer}>
       <button
@@ -51,7 +57,6 @@ function ClearFiltersButton({ removeAll }: { removeAll: () => void }) {
 export default function SideBar() {
   const { facets } = useFacets()
   const { isOpen, setOpen } = useSidebar()
-  const { filters, removeAll } = useProductFilters()
 
   const handleBackdropClick = () => {
     setOpen(false)
@@ -97,7 +102,7 @@ export default function SideBar() {
               })}
             </ul>
           </div>
-          {filters.length > 0 && <ClearFiltersButton removeAll={removeAll} />}
+          <ClearFiltersButton />
         </div>
       </div>
     </>
