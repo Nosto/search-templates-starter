@@ -11,6 +11,7 @@ type Props = {
 
 export default function Product({ product, children, showAltOnHover = false }: Props) {
   const hasAlternateImage = showAltOnHover && product.alternateImageUrls && product.alternateImageUrls.length > 0
+  const containerClass = hasAlternateImage ? `${styles.container} ${styles.altContainer}` : styles.container
 
   return (
     <SerpElement
@@ -21,7 +22,7 @@ export default function Product({ product, children, showAltOnHover = false }: P
       }}
       componentProps={{
         "aria-label": `Product ${product.name}`,
-        className: styles.container,
+        className: containerClass,
         href: product.url
       }}
     >

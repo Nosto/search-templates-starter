@@ -27,11 +27,11 @@
   opacity: 0;
 }
 
-.container:hover .image img:nth-child(1) {
+.altContainer:hover .image img:nth-child(1) {
   opacity: 0;
 }
 
-.container:hover .image img:nth-child(2) {
+.altContainer:hover .image img:nth-child(2) {
   opacity: 1;
 }
 
