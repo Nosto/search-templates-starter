@@ -4,12 +4,13 @@ test.describe("Results", () => {
   test("page renders result when opening with a q parameter that has at least 3 characters", async ({ page }) => {
     // Navigate with query parameter
     await page.goto("/?q=shoes")
+    await page.waitForSelector("#search")
 
     // Wait for results to load
     await expect(page.locator("#serp")).toBeVisible()
 
     // Check that products are displayed - look for product links
-    await expect(page.locator("#serp")).toContainText("Product", { timeout: 1000 })
+    await expect(page.locator("#serp")).toContainText("BrandAPremium", { timeout: 1000 })
 
     // Verify search query is reflected in the input
     const searchInput = page.locator("#search")
@@ -22,10 +23,11 @@ test.describe("Results", () => {
   test("pagination works", async ({ page }) => {
     // Navigate with query to get results
     await page.goto("/?q=test")
+    await page.waitForSelector("#search")
 
     // Wait for results to load
     await expect(page.locator("#serp")).toBeVisible()
-    await expect(page.locator("#serp")).toContainText("Product", { timeout: 1000 })
+    await expect(page.locator("#serp")).toContainText("BrandAPremium", { timeout: 1000 })
 
     // Look for pagination elements - check page numbers
     const pageNumbers = page.locator('a[aria-label*="page"]')
@@ -42,7 +44,7 @@ test.describe("Results", () => {
       await expect(page).toHaveURL(/[?&]p=\d+/, { timeout: 1000 })
 
       // Verify results are still showing
-      await expect(page.locator("#serp")).toContainText("Product", { timeout: 1000 })
+      await expect(page.locator("#serp")).toContainText("BrandCModern", { timeout: 1000 })
 
       // Check pagination status changed
       const paginationInfo = page.locator("text=/\\d+ - \\d+ of \\d+ items/")
