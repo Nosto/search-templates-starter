@@ -2,11 +2,35 @@ import { SerpElement } from "@nosto/search-js/preact/serp"
 import styles from "./Product.module.css"
 import type { Product } from "@/types"
 import DynamicCard from "../DynamicCard/DynamicCard"
-import Rating from "@/elements/Rating/Rating"
 
 type Props = {
   product: Product
   children?: preact.JSX.Element | preact.JSX.Element[]
+}
+
+function renderRatingStars(ratingValue: number): string {
+  const maxStars = 5
+  const fullStars = Math.floor(ratingValue)
+  const hasHalfStar = ratingValue % 1 !== 0
+  let stars = ""
+
+  // Add full stars
+  for (let i = 0; i < fullStars; i++) {
+    stars += "★"
+  }
+
+  // Add half star if needed
+  if (hasHalfStar && fullStars < maxStars) {
+    stars += "☆"
+  }
+
+  // Fill remaining with empty stars
+  const remainingStars = maxStars - fullStars - (hasHalfStar ? 1 : 0)
+  for (let i = 0; i < remainingStars; i++) {
+    stars += "☆"
+  }
+
+  return stars
 }
 
 export default function Product({ product, children }: Props) {
@@ -35,8 +59,10 @@ export default function Product({ product, children }: Props) {
             <span className={styles.specialPrice}>{product.listPriceText}</span>
           )}
         </div>
-        {product.ratingValue && product.reviewCount && product.ratingValue > 0 && product.reviewCount > 0 && (
-          <Rating ratingValue={product.ratingValue} reviewCount={product.reviewCount} />
+        {product.ratingValue && product.reviewCount && (
+          <div aria-label={`${product.ratingValue} out of 5 stars, ${product.reviewCount} reviews`}>
+            {renderRatingStars(product.ratingValue)} ({product.reviewCount})
+          </div>
         )}
       </div>
       {children}

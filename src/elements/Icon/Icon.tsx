@@ -8,7 +8,6 @@ export type IconName =
   | "search"
   | `page-${"prev" | "next"}`
   | "filter"
-  | "star"
 
 type Props = {
   name: IconName

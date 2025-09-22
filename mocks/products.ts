@@ -64,38 +64,23 @@ export function generateMockProducts(count: number): Product[] {
 
 export const mockProduct = createProduct({
   productId: "12345",
-  name: "Running Shoes",
-  ratingValue: 4.5,
-  reviewCount: 127
+  name: "Running Shoes"
 })
 
 export const mockProductNoSale = createProduct({
   productId: "67890",
-  name: "Casual Sneakers",
-  ratingValue: 3.8,
-  reviewCount: 89
+  name: "Casual Sneakers"
 })
 
 export const mockProductNoBrand = createProduct({
   productId: "54321",
   name: "Generic Sports Shoes",
-  brand: undefined,
-  ratingValue: 2.5,
-  reviewCount: 15
+  brand: undefined
 })
 
 export const mockSerpProduct = createProduct({
   productId: "1",
-  name: "Sample Product",
-  ratingValue: 4.2,
-  reviewCount: 58
-})
-
-export const mockProductNoRating = createProduct({
-  productId: "no-rating",
-  name: "Product Without Rating",
-  ratingValue: undefined,
-  reviewCount: undefined
+  name: "Sample Product"
 })
 
 export const mockProducts = createProductsResponse(generateMockProducts(5))
