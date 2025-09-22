@@ -1,6 +1,6 @@
 import { useRange } from "@nosto/search-js/preact/hooks"
 import { useState } from "preact/hooks"
-import RangeInput from "@/elements/RangeInput/RangeInput"
+import DualRange from "@/elements/DualRange/DualRange"
 import Icon from "@/elements/Icon/Icon"
 import { SearchStatsFacet } from "@nosto/nosto-js/client"
 import styles from "./RangeFacet.module.css"
@@ -40,34 +40,13 @@ export default function RangeFacet({ facet }: Props) {
         </span>
       </button>
       <div className={styles.menu} id={`${facet.id}-range-menu`} aria-expanded={active}>
-        <div className={styles.range}>
-          <div className={styles.input}>
-            <label htmlFor={`ns-${facet.id}-min`}>Min.</label>
-            <RangeInput
-              id={`ns-${facet.id}-min`}
-              min={min}
-              max={max}
-              value={range[0]}
-              onChange={e => {
-                const value = parseFloat(e.currentTarget.value) || undefined
-                updateRange([value, range[1]])
-              }}
-            />
-          </div>
-          <div className={styles.input}>
-            <label htmlFor={`ns-${facet.id}-max`}>Max.</label>
-            <RangeInput
-              id={`ns-${facet.id}-max`}
-              min={min}
-              max={max}
-              value={range[1]}
-              onChange={e => {
-                const value = parseFloat(e.currentTarget.value) || undefined
-                updateRange([range[0], value])
-              }}
-            />
-          </div>
-        </div>
+        <DualRange
+          min={min}
+          max={max}
+          value={[range[0], range[1]]}
+          onChange={updateRange}
+          id={`ns-${facet.id}-range`}
+        />
       </div>
     </li>
   )
