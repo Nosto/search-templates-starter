@@ -25,12 +25,9 @@ export default defineConfig(() => ({
     globals: true,
     environment: "jsdom",
     setupFiles: ["./test/vitest.setup.ts"],
-    exclude: [
-      "**/node_modules/**",
-      "**/dist/**",
-      "**/.{idea,git,cache,output,temp}/**",
-      "**/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build}.config.*",
-      "**/test/e2e/**" // Exclude Playwright tests from Vitest
+    include: [
+      "test/{components,contexts,decorators,elements,utils}/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}",
+      "test/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"
     ]
   },
   resolve: {
