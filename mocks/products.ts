@@ -28,6 +28,7 @@ export function createProduct(overrides: Partial<Product> = {}): Product {
     availability: "InStock",
     url: `https://example.com/product-${Math.floor(Math.random() * 10000)}`,
     imageUrl: `https://picsum.photos/500/750?random=${Math.floor(Math.random() * 10000)}`,
+    alternateImageUrls: [`https://picsum.photos/500/750?random=${Math.floor(Math.random() * 10000)}`],
     description: `High-quality ${adjectives[adjectiveIndex].toLowerCase()} ${productTypes[typeIndex].toLowerCase()} from ${brands[brandIndex]}`,
     ...overrides
   } as Product

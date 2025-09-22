@@ -10,7 +10,7 @@ type Props = {
   showAltOnHover?: boolean
 }
 
-export default function Product({ product, children, showAltOnHover = false }: Props) {
+export default function Product({ product, children, showAltOnHover = true }: Props) {
   const hasAlternateImage = showAltOnHover && product.alternateImageUrls && product.alternateImageUrls.length > 0
 
   return (
