@@ -13,6 +13,36 @@ vi.mock("@nosto/search-js/preact/common", () => ({
   useAutocompleteConfig: vi.fn()
 }))
 
+// Helper function to create mock actions
+function createMockActions(newSearch = vi.fn()) {
+  return {
+    newSearch,
+    updateSearch: vi.fn(),
+    toggleProductFilter: vi.fn(),
+    replaceFilter: vi.fn(),
+    clearFilters: vi.fn(),
+    resetPagination: vi.fn(),
+    setPagination: vi.fn(),
+    setPageSize: vi.fn(),
+    setSorting: vi.fn()
+  }
+}
+
+// Helper function to create mock autocomplete config
+function createMockAutocompleteConfig(overrides: Partial<{ minQueryLength: number; debounceDelay: number }> = {}) {
+  return {
+    minQueryLength: 3,
+    debounceDelay: 300,
+    pageType: "search" as const,
+    memoryCache: true,
+    historyEnabled: true,
+    historySize: 10,
+    hitDecorators: [],
+    queryModifications: vi.fn(),
+    ...overrides
+  }
+}
+
 describe("useDebouncedSearch", () => {
   let mockNewSearch: ReturnType<typeof vi.fn>
 
@@ -21,28 +51,8 @@ describe("useDebouncedSearch", () => {
     mockNewSearch = vi.fn()
 
     // Mock the hook functions with complete return objects
-    vi.mocked(useActions).mockReturnValue({
-      newSearch: mockNewSearch,
-      updateSearch: vi.fn(),
-      toggleProductFilter: vi.fn(),
-      replaceFilter: vi.fn(),
-      clearFilters: vi.fn(),
-      resetPagination: vi.fn(),
-      setPagination: vi.fn(),
-      setPageSize: vi.fn(),
-      setSorting: vi.fn()
-    } as any)
-
-    vi.mocked(useAutocompleteConfig).mockReturnValue({
-      minQueryLength: 3,
-      debounceDelay: 300,
-      pageType: "search",
-      memoryCache: true,
-      historyEnabled: true,
-      historySize: 10,
-      hitDecorators: [],
-      queryModifications: vi.fn()
-    } as any)
+    vi.mocked(useActions).mockReturnValue(createMockActions(mockNewSearch))
+    vi.mocked(useAutocompleteConfig).mockReturnValue(createMockAutocompleteConfig())
 
     // Clear all mocks and timers
     vi.clearAllMocks()
@@ -131,16 +141,7 @@ describe("useDebouncedSearch", () => {
     })
 
     it("should respect custom minQueryLength configuration", () => {
-      vi.mocked(useAutocompleteConfig).mockReturnValue({
-        minQueryLength: 5,
-        debounceDelay: 300,
-        pageType: "search",
-        memoryCache: true,
-        historyEnabled: true,
-        historySize: 10,
-        hitDecorators: [],
-        queryModifications: vi.fn()
-      } as any)
+      vi.mocked(useAutocompleteConfig).mockReturnValue(createMockAutocompleteConfig({ minQueryLength: 5 }))
 
       const { rerender } = renderHook(
         ({ input }) => useDebouncedSearch({ input }),
@@ -159,16 +160,7 @@ describe("useDebouncedSearch", () => {
     })
 
     it("should respect custom debounceDelay configuration", () => {
-      vi.mocked(useAutocompleteConfig).mockReturnValue({
-        minQueryLength: 3,
-        debounceDelay: 500, // Custom delay
-        pageType: "search",
-        memoryCache: true,
-        historyEnabled: true,
-        historySize: 10,
-        hitDecorators: [],
-        queryModifications: vi.fn()
-      } as any)
+      vi.mocked(useAutocompleteConfig).mockReturnValue(createMockAutocompleteConfig({ debounceDelay: 500 }))
 
       renderHook(() => useDebouncedSearch({ input: "test query" }))
 
@@ -235,17 +227,7 @@ describe("useDebouncedSearch", () => {
 
       // Change the newSearch function reference by updating the mock
       // This simulates what happens when the hook dependency array changes
-      vi.mocked(useActions).mockReturnValue({
-        newSearch: newMockNewSearch,
-        updateSearch: vi.fn(),
-        toggleProductFilter: vi.fn(),
-        replaceFilter: vi.fn(),
-        clearFilters: vi.fn(),
-        resetPagination: vi.fn(),
-        setPagination: vi.fn(),
-        setPageSize: vi.fn(),
-        setSorting: vi.fn()
-      } as any)
+      vi.mocked(useActions).mockReturnValue(createMockActions(newMockNewSearch))
 
       // Trigger a rerender that will cause useEffect to re-run due to dependency change
       rerender({ input: "test query updated" })
@@ -264,16 +246,7 @@ describe("useDebouncedSearch", () => {
 
   describe("edge cases", () => {
     it("should handle minQueryLength of 0", () => {
-      vi.mocked(useAutocompleteConfig).mockReturnValue({
-        minQueryLength: 0,
-        debounceDelay: 300,
-        pageType: "search",
-        memoryCache: true,
-        historyEnabled: true,
-        historySize: 10,
-        hitDecorators: [],
-        queryModifications: vi.fn()
-      } as any)
+      vi.mocked(useAutocompleteConfig).mockReturnValue(createMockAutocompleteConfig({ minQueryLength: 0 }))
 
       renderHook(() => useDebouncedSearch({ input: "" }))
 
@@ -284,16 +257,7 @@ describe("useDebouncedSearch", () => {
     })
 
     it("should handle debounceDelay of 0", () => {
-      vi.mocked(useAutocompleteConfig).mockReturnValue({
-        minQueryLength: 3,
-        debounceDelay: 0,
-        pageType: "search",
-        memoryCache: true,
-        historyEnabled: true,
-        historySize: 10,
-        hitDecorators: [],
-        queryModifications: vi.fn()
-      } as any)
+      vi.mocked(useAutocompleteConfig).mockReturnValue(createMockAutocompleteConfig({ debounceDelay: 0 }))
 
       renderHook(() => useDebouncedSearch({ input: "test query" }))
 
@@ -305,16 +269,7 @@ describe("useDebouncedSearch", () => {
     })
 
     it("should handle very long debounce delays", () => {
-      vi.mocked(useAutocompleteConfig).mockReturnValue({
-        minQueryLength: 3,
-        debounceDelay: 5000,
-        pageType: "search",
-        memoryCache: true,
-        historyEnabled: true,
-        historySize: 10,
-        hitDecorators: [],
-        queryModifications: vi.fn()
-      } as any)
+      vi.mocked(useAutocompleteConfig).mockReturnValue(createMockAutocompleteConfig({ debounceDelay: 5000 }))
 
       renderHook(() => useDebouncedSearch({ input: "test query" }))
 

@@ -272,7 +272,7 @@ describe("useDomEvents", () => {
 
       removeEventListenerSpy.mockClear()
 
-      rerender({ el: null as any })
+      rerender({ el: null as HTMLElement | null })
 
       expect(removeEventListenerSpy).toHaveBeenCalledWith("click", mockOnClick)
     })
@@ -283,7 +283,7 @@ describe("useDomEvents", () => {
       })
 
       expect(() => {
-        rerender({ el: null as any })
+        rerender({ el: null as HTMLElement | null })
       }).not.toThrow()
     })
   })
