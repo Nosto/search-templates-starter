@@ -32,6 +32,7 @@ export function createProduct(overrides: Partial<Product> = {}): Product {
     availability: "InStock",
     url: `https://example.com/product-${Math.floor(Math.random() * 10000)}`,
     imageUrl: `https://picsum.photos/500/750?random=${Math.floor(Math.random() * 10000)}`,
+    alternateImageUrls: [`https://picsum.photos/500/750?random=${Math.floor(Math.random() * 10000)}`],
     description: `High-quality ${adjectives[adjectiveIndex].toLowerCase()} ${productTypes[typeIndex].toLowerCase()} from ${brands[brandIndex]}`,
     ratingValue,
     reviewCount,
@@ -80,7 +81,22 @@ export const mockProductNoBrand = createProduct({
 
 export const mockSerpProduct = createProduct({
   productId: "1",
-  name: "Sample Product"
+  name: "Sample Product",
+  alternateImageUrls: ["https://picsum.photos/500/750?random=100"]
+})
+
+export const mockProductWithAlt = createProduct({
+  productId: "2",
+  name: "Hover-enabled Product",
+  imageUrl: "https://picsum.photos/500/750?random=1",
+  alternateImageUrls: ["https://picsum.photos/500/750?random=2"]
+})
+
+export const mockProductMultipleAlts = createProduct({
+  productId: "3",
+  name: "Multiple Alt Images",
+  imageUrl: "https://picsum.photos/500/750?random=3",
+  alternateImageUrls: ["https://picsum.photos/500/750?random=4", "https://picsum.photos/500/750?random=5"]
 })
 
 export const mockProducts = createProductsResponse(generateMockProducts(5))
