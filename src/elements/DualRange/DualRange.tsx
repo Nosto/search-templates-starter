@@ -85,42 +85,30 @@ export default function DualRange({ min, max, value, onChange, className, id }: 
           e.preventDefault()
           if (handle === "min") {
             newValue = Math.max(min, minValue - step)
-            shouldUpdate = true
           } else {
             newValue = Math.max(minValue, maxValue - step)
-            shouldUpdate = true
           }
+          shouldUpdate = true
           break
         case "ArrowRight":
         case "ArrowUp":
           e.preventDefault()
           if (handle === "min") {
             newValue = Math.min(maxValue, minValue + step)
-            shouldUpdate = true
           } else {
             newValue = Math.min(max, maxValue + step)
-            shouldUpdate = true
           }
+          shouldUpdate = true
           break
         case "Home":
           e.preventDefault()
-          if (handle === "min") {
-            newValue = min
-            shouldUpdate = true
-          } else {
-            newValue = minValue
-            shouldUpdate = true
-          }
+          newValue = handle === "min" ? min : minValue
+          shouldUpdate = true
           break
         case "End":
           e.preventDefault()
-          if (handle === "min") {
-            newValue = maxValue
-            shouldUpdate = true
-          } else {
-            newValue = max
-            shouldUpdate = true
-          }
+          newValue = handle === "min" ? maxValue : max
+          shouldUpdate = true
           break
       }
 
