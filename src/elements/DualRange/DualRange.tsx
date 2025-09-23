@@ -73,6 +73,68 @@ export default function DualRange({ min, max, value, onChange, className, id }: 
     setIsDragging(null)
   }, [isDragging, dragValues, onChange])
 
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent, handle: "min" | "max") => {
+      const step = (max - min) / 100 // 1% of range as default step
+      let newValue: number | null = null
+      let shouldUpdate = false
+
+      switch (e.key) {
+        case "ArrowLeft":
+        case "ArrowDown":
+          e.preventDefault()
+          if (handle === "min") {
+            newValue = Math.max(min, minValue - step)
+            shouldUpdate = true
+          } else {
+            newValue = Math.max(minValue, maxValue - step)
+            shouldUpdate = true
+          }
+          break
+        case "ArrowRight":
+        case "ArrowUp":
+          e.preventDefault()
+          if (handle === "min") {
+            newValue = Math.min(maxValue, minValue + step)
+            shouldUpdate = true
+          } else {
+            newValue = Math.min(max, maxValue + step)
+            shouldUpdate = true
+          }
+          break
+        case "Home":
+          e.preventDefault()
+          if (handle === "min") {
+            newValue = min
+            shouldUpdate = true
+          } else {
+            newValue = minValue
+            shouldUpdate = true
+          }
+          break
+        case "End":
+          e.preventDefault()
+          if (handle === "min") {
+            newValue = maxValue
+            shouldUpdate = true
+          } else {
+            newValue = max
+            shouldUpdate = true
+          }
+          break
+      }
+
+      if (shouldUpdate && newValue !== null) {
+        const newRange: Range =
+          handle === "min"
+            ? [newValue === min ? undefined : newValue, value[1]]
+            : [value[0], newValue === max ? undefined : newValue]
+        onChange(newRange)
+      }
+    },
+    [min, max, minValue, maxValue, value, onChange]
+  )
+
   // Sync drag values with prop values when not dragging
   useEffect(() => {
     if (!isDragging) {
@@ -116,8 +178,9 @@ export default function DualRange({ min, max, value, onChange, className, id }: 
           className={cl(styles.handle, styles.minHandle, isDragging === "min" && styles.dragging)}
           style={{ left: `${minPercentage}%` }}
           onMouseDown={() => handleMouseDown("min")}
+          onKeyDown={e => handleKeyDown(e, "min")}
           role="slider"
-          tabIndex={-1}
+          tabIndex={0}
           aria-valuemin={min}
           aria-valuemax={max}
           aria-valuenow={minValue}
@@ -127,8 +190,9 @@ export default function DualRange({ min, max, value, onChange, className, id }: 
           className={cl(styles.handle, styles.maxHandle, isDragging === "max" && styles.dragging)}
           style={{ left: `${maxPercentage}%` }}
           onMouseDown={() => handleMouseDown("max")}
+          onKeyDown={e => handleKeyDown(e, "max")}
           role="slider"
-          tabIndex={-1}
+          tabIndex={0}
           aria-valuemin={min}
           aria-valuemax={max}
           aria-valuenow={maxValue}
