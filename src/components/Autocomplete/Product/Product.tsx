@@ -1,7 +1,7 @@
 import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
 import style from "./Product.module.css"
 import type { Product } from "@/types"
-import DynamicCard from "@/components/DynamicCard/DynamicCard"
+import DynamicCard from "@/elements/DynamicCard/DynamicCard"
 
 type Props = {
   hit: Product
