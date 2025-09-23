@@ -11,8 +11,17 @@ export default {
 
 type Story = StoryObj<typeof Results>
 
-export const Default: Story = {
-  args: {
-    onSubmit: (query: string) => console.log("Search submitted:", query)
+const styles = `
+  *[data-nosto-element="autocomplete"] {
+    position: unset !important;
   }
+`
+
+export const Default: Story = {
+  render: () => (
+    <>
+      <style>{styles}</style>
+      <Results onSubmit={() => {}} />
+    </>
+  )
 }
