@@ -3,29 +3,12 @@ import { cl } from "@nosto/search-js/utils"
 import styles from "./Product.module.css"
 import type { Product } from "@/types"
 import DynamicCard from "@/elements/DynamicCard/DynamicCard"
+import { renderRatingStars } from "./renderRatingStars"
 
 type Props = {
   product: Product
   children?: preact.JSX.Element | preact.JSX.Element[]
   showAltOnHover?: boolean
-}
-
-function renderRatingStars(ratingValue: number): string {
-  const maxStars = 5
-  const fullStars = Math.floor(ratingValue)
-  const hasHalfStar = ratingValue % 1 !== 0
-
-  // Create filled stars using repeat
-  const filledStars = "★".repeat(fullStars)
-
-  // Add half star if needed
-  const halfStar = hasHalfStar && fullStars < maxStars ? "☆" : ""
-
-  // Fill remaining with empty stars using repeat
-  const remainingStars = maxStars - fullStars - (hasHalfStar ? 1 : 0)
-  const emptyStars = "☆".repeat(remainingStars)
-
-  return filledStars + halfStar + emptyStars
 }
 
 export default function Product({ product, children, showAltOnHover = true }: Props) {
