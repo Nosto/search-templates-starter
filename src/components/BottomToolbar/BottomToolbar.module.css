@@ -5,18 +5,18 @@
 .container {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
   box-sizing: border-box;
   color: var(--ns-color-black);
   width: 100%;
   padding: var(--ns-space-2);
   margin: var(--ns-space-2) 0;
+  gap: var(--ns-space-3);
 }
 
 @media (min-width: 375px) {
   .container {
-    -ms-flex-pack: justify;
     justify-content: space-between;
   }
 }

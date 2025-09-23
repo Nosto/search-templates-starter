@@ -22,8 +22,8 @@ export default function BottomToolbar() {
             label={"Items per page"}
           />
         )}
+        <Pagination />
       </div>
-      <Pagination />
     </div>
   )
 }
