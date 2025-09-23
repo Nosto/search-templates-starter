@@ -3,7 +3,7 @@ import styles from "./SelectedFilters.module.css"
 import Pill from "@/elements/Pill/Pill"
 
 export default function SelectedFilters() {
-  const { filters, removeAll } = useProductFilters()
+  const { filters } = useProductFilters()
 
   return (
     filters.length > 0 && (
@@ -21,22 +21,6 @@ export default function SelectedFilters() {
             </Pill>
           ))}
         </div>
-        <button
-          className={styles.clear}
-          onClick={() => {
-            removeAll()
-          }}
-          onKeyDown={e => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault()
-              removeAll()
-            }
-          }}
-          aria-label="Clear all filters"
-          type="button"
-        >
-          Clear Filters
-        </button>
       </div>
     )
   )
