@@ -113,7 +113,7 @@ export default function DualRange({ min, max, value, onChange, className, id }: 
           }}
         />
         <div
-          className={cl(styles.handle, styles.minHandle, isDragging === "min" && styles.dragging)}
+          className={cl(styles.handle, isDragging === "min" && styles.dragging)}
           style={{ left: `${minPercentage}%` }}
           onMouseDown={() => handleMouseDown("min")}
           role="slider"
@@ -124,7 +124,7 @@ export default function DualRange({ min, max, value, onChange, className, id }: 
           aria-label="Minimum value"
         />
         <div
-          className={cl(styles.handle, styles.maxHandle, isDragging === "max" && styles.dragging)}
+          className={cl(styles.handle, isDragging === "max" && styles.dragging)}
           style={{ left: `${maxPercentage}%` }}
           onMouseDown={() => handleMouseDown("max")}
           role="slider"
