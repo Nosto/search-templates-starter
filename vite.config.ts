@@ -27,10 +27,7 @@ export default defineConfig(({ mode = "injected" }) => ({
     globals: true,
     environment: "jsdom",
     setupFiles: ["./test/vitest.setup.ts"],
-    include: [
-      "test/{components,contexts,decorators,elements,utils}/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}",
-      "test/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"
-    ]
+    exclude: ["node_modules/**", "test/e2e/**"]
   },
   resolve: {
     alias: {

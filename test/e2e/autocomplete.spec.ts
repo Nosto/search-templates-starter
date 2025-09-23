@@ -1,14 +1,17 @@
 import { test, expect } from "@playwright/test"
 
 test.describe("Autocomplete", () => {
+  const searchSelector = "input[name='q']"
+  const dropdownSelector = "#dropdown"
+
   test.beforeEach(async ({ page }) => {
     await page.goto("/")
-    await page.waitForSelector("#search")
+    await page.waitForSelector(searchSelector)
   })
 
   test("autocomplete dropdown opens after having typed three characters in the input", async ({ page }) => {
-    const searchInput = page.locator("#search")
-    const dropdown = page.locator("#dropdown")
+    const searchInput = page.locator(searchSelector)
+    const dropdown = page.locator(dropdownSelector)
 
     // Initially, dropdown should not contain autocomplete suggestions
     await expect(dropdown).not.toContainText("running shoes")
@@ -17,8 +20,8 @@ test.describe("Autocomplete", () => {
     await searchInput.fill("ru")
     await expect(dropdown).not.toContainText("running shoes")
 
-    // Type 3rd character - autocomplete should trigger
-    await searchInput.fill("run")
+    // add fourth character to make sure debounce delay is over
+    await searchInput.fill("runn")
 
     // Wait for autocomplete to appear with mock data
     await expect(dropdown).toContainText("running shoes", { timeout: 1000 })
@@ -26,8 +29,8 @@ test.describe("Autocomplete", () => {
   })
 
   test("autocomplete dropdown closes on search submit", async ({ page }) => {
-    const searchInput = page.locator("#search")
-    const dropdown = page.locator("#dropdown")
+    const searchInput = page.locator(searchSelector)
+    const dropdown = page.locator(dropdownSelector)
 
     // Type to trigger autocomplete
     await searchInput.fill("running")
@@ -44,8 +47,8 @@ test.describe("Autocomplete", () => {
   })
 
   test.skip("autocomplete dropdown closes when clicked outside input and autocomplete dropdown", async ({ page }) => {
-    const searchInput = page.locator("#search")
-    const dropdown = page.locator("#dropdown")
+    const searchInput = page.locator(searchSelector)
+    const dropdown = page.locator(dropdownSelector)
 
     // Type to trigger autocomplete
     await searchInput.fill("running")
