@@ -6,6 +6,7 @@ import "@/variable.css"
 import { categoryConfig, serpConfig } from "@/config"
 import { render } from "preact"
 import { SidebarProvider } from "@/contexts/SidebarContext"
+import { FacetCollapseProvider } from "@/contexts/FacetCollapseContext"
 import { CategoryPageProvider } from "@nosto/search-js/preact/category"
 import Category from "@/components/Category/Category"
 import { tagging } from "@/mapping/tagging"
@@ -17,8 +18,10 @@ function SerpApp() {
     <SearchPageProvider config={serpConfig}>
       <SearchQueryHandler />
       <SidebarProvider>
-        <Search />
-        <Serp />
+        <FacetCollapseProvider>
+          <Search />
+          <Serp />
+        </FacetCollapseProvider>
       </SidebarProvider>
     </SearchPageProvider>
   )
@@ -29,7 +32,9 @@ function CategoryApp() {
     <CategoryPageProvider config={categoryConfig}>
       <SearchQueryHandler />
       <SidebarProvider>
-        <Category />
+        <FacetCollapseProvider>
+          <Category />
+        </FacetCollapseProvider>
       </SidebarProvider>
     </CategoryPageProvider>
   )

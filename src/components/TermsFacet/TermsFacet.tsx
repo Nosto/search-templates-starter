@@ -1,8 +1,10 @@
 import { useFacet } from "@nosto/search-js/preact/hooks"
+import { useEffect } from "preact/hooks"
 import Icon from "@/elements/Icon/Icon"
 import { SearchTermsFacet } from "@nosto/nosto-js/client"
 import Pill from "@/elements/Pill/Pill"
 import styles from "./TermsFacet.module.css"
+import { useFacetCollapse } from "@/contexts/FacetCollapseContext"
 
 type Props = {
   facet: SearchTermsFacet
@@ -10,6 +12,15 @@ type Props = {
 
 export default function TermsFacet({ facet }: Props) {
   const { active, selectedFiltersCount, toggleActive, toggleProductFilter } = useFacet(facet)
+  const { shouldCollapse, resetCollapseFlag } = useFacetCollapse()
+
+  // Handle collapse event from context
+  useEffect(() => {
+    if (shouldCollapse && active) {
+      toggleActive()
+      resetCollapseFlag()
+    }
+  }, [shouldCollapse, active, toggleActive, resetCollapseFlag])
 
   return (
     <li className={`${styles.dropdown} ${active ? styles.active : ""}`}>

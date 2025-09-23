@@ -1,10 +1,11 @@
 import { useRange } from "@nosto/search-js/preact/hooks"
-import { useState } from "preact/hooks"
+import { useState, useEffect } from "preact/hooks"
 import DualRange from "@/elements/DualRange/DualRange"
 import Icon from "@/elements/Icon/Icon"
 import { SearchStatsFacet } from "@nosto/nosto-js/client"
 import styles from "./RangeFacet.module.css"
 import { cl } from "@nosto/search-js/utils"
+import { useFacetCollapse } from "@/contexts/FacetCollapseContext"
 
 type Props = {
   facet: SearchStatsFacet
@@ -14,6 +15,15 @@ export default function RangeFacet({ facet }: Props) {
   const { min, max, range, updateRange } = useRange(facet.id)
   const isSelected = min !== range[0] || max !== range[1]
   const [active, setActive] = useState(isSelected)
+  const { shouldCollapse, resetCollapseFlag } = useFacetCollapse()
+
+  // Handle collapse event from context
+  useEffect(() => {
+    if (shouldCollapse) {
+      setActive(false)
+      resetCollapseFlag()
+    }
+  }, [shouldCollapse, resetCollapseFlag])
 
   return (
     <li className={cl(styles.dropdown, active && styles.active)}>
