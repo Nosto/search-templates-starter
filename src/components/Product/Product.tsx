@@ -2,7 +2,7 @@ import { SerpElement } from "@nosto/search-js/preact/serp"
 import { cl } from "@nosto/search-js/utils"
 import styles from "./Product.module.css"
 import type { Product } from "@/types"
-import DynamicCard from "../DynamicCard/DynamicCard"
+import DynamicCard from "@/elements/DynamicCard/DynamicCard"
 
 type Props = {
   product: Product
