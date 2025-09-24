@@ -17,8 +17,8 @@ type Story = StoryObj<typeof Sidebar>
 
 export const MockedView: Story = {
   render: () => (
-    <SidebarProvider>
-      <div style={{ position: "relative", width: "300px", height: "400px" }}>
+    <SidebarProvider initialOpen={true}>
+      <div style={{ position: "relative", width: "300px", height: "800px" }}>
         <Sidebar />
       </div>
     </SidebarProvider>
