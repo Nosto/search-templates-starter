@@ -201,22 +201,6 @@ describe("DualRange", () => {
         expect(onChange).toHaveBeenCalledWith([25, 74])
       })
 
-      it("handles Home and End keys for min handle", () => {
-        const onChange = vi.fn()
-        const { container } = render(<DualRange min={0} max={100} value={[25, 75]} onChange={onChange} />)
-
-        const minHandle = container.querySelector('[aria-label="Minimum value"]') as HTMLElement
-
-        // Home should set min value to minimum
-        fireEvent.keyDown(minHandle, { key: "Home" })
-        expect(onChange).toHaveBeenCalledWith([undefined, 75])
-
-        // End should set min value to max value
-        onChange.mockClear()
-        fireEvent.keyDown(minHandle, { key: "End" })
-        expect(onChange).toHaveBeenCalledWith([75, 75])
-      })
-
       it("handles Home and End keys for max handle", () => {
         const onChange = vi.fn()
         const { container } = render(<DualRange min={0} max={100} value={[25, 75]} onChange={onChange} />)
@@ -240,7 +224,11 @@ describe("DualRange", () => {
         const minHandle = container.querySelector('[aria-label="Minimum value"]') as HTMLElement
         const maxHandle = container.querySelector('[aria-label="Maximum value"]') as HTMLElement
 
-        // Min handle should not exceed max value
+        // Test min handle Home/End keys functionality
+        fireEvent.keyDown(minHandle, { key: "Home" })
+        expect(onChange).toHaveBeenCalledWith([undefined, 75])
+
+        onChange.mockClear()
         fireEvent.keyDown(minHandle, { key: "End" }) // Sets to max value (75)
         expect(onChange).toHaveBeenCalledWith([75, 75])
 
