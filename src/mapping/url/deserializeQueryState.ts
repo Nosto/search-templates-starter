@@ -1,5 +1,5 @@
 import type { InputSearchTopLevelFilter, InputSearchRangeFilter, InputSearchSort } from "@nosto/nosto-js/client"
-import { ensureMapValue } from "@/utils/ensureMap"
+import { ensureMapValue } from "@/utils/ensureMapValue"
 import { UrlQueryState } from "./types"
 import { QUERY_PARAM, PAGE_PARAM, SIZE_PARAM, FILTER_PREFIX, SORT_PARAM } from "./constants"
 
