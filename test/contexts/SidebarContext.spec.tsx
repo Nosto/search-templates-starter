@@ -32,6 +32,16 @@ describe("SidebarContext", () => {
     expect(screen.getByTestId("sidebar-status").textContent).toBe("closed")
   })
 
+  it("should accept initialOpen prop to start with open state", () => {
+    render(
+      <SidebarProvider initialOpen={true}>
+        <TestSidebarComponent />
+      </SidebarProvider>
+    )
+
+    expect(screen.getByTestId("sidebar-status").textContent).toBe("open")
+  })
+
   it("should toggle sidebar state", () => {
     render(
       <SidebarProvider>
