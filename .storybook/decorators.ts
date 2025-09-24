@@ -1,5 +1,5 @@
 import { h } from "preact"
-import { mockConfig, mockInitialState } from "@mocks/mocks"
+import { mockAutocompleteState, mockConfig, mockInitialState } from "@mocks/mocks"
 import { createStore } from "@nosto/search-js/preact/common"
 import { SearchPageProvider } from "@nosto/search-js/preact/serp"
 import { StoryFn } from "@storybook/preact-vite"
@@ -22,7 +22,7 @@ export function withSearchContext(story: StoryFn) {
 export function withAutocompleteContext(story: StoryFn) {
   return h(AutocompletePageProvider, {
     config: mockConfig,
-    store: createStore(mockInitialState),
+    store: createStore(mockAutocompleteState),
     children: h(story, {})
   })
 }

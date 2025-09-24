@@ -50,4 +50,42 @@ export const mockKeywords = createKeywordsResponse([
   })
 ])
 
+const sampleKeywords = [
+  "running shoes",
+  "sneakers",
+  "marathon training",
+  "trail gear",
+  "fitness tracker",
+  "yoga mat",
+  "cycling jersey",
+  "sports watch",
+  "compression socks",
+  "hydration pack",
+  "gym bag",
+  "tennis racket",
+  "swim goggles",
+  "basketball",
+  "soccer cleats"
+]
+
+function getRandomKeyword(index: number) {
+  // Cycle through sampleKeywords, fallback to "keyword N" if count exceeds samples
+  return sampleKeywords[index % sampleKeywords.length] || `keyword ${index + 1}`
+}
+
+export function generateMockKeywords(count: number) {
+  const keywords: SearchKeyword[] = []
+  for (let i = 0; i < count; i++) {
+    const keyword = getRandomKeyword(i)
+    keywords.push(
+      createKeyword(keyword, {
+        highlight: keyword.replace(/(\w+)/, "<b>$1</b>"),
+        priority: i + 1,
+        total: count
+      })
+    )
+  }
+  return keywords
+}
+
 export const mockEmptyKeywords = createEmptyResponse()

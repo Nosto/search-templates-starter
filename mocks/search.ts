@@ -1,4 +1,4 @@
-import { SearchQuery } from "@nosto/nosto-js/client"
+import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 import { mockKeywords } from "./keywords"
 import { generateMockProducts } from "./products"
 
@@ -17,8 +17,10 @@ export async function mockSearch(query: SearchQuery) {
       hits: generateMockProducts(size)
     },
     keywords: {
-      hits: mockKeywords.hits,
-      total: mockKeywords.hits.length
+      from: 0,
+      size: mockKeywords.hits.length,
+      total: mockKeywords.hits.length,
+      hits: mockKeywords.hits
     }
-  }
+  } satisfies SearchResult
 }
