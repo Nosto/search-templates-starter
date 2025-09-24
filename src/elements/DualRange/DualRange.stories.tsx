@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import { useState } from "preact/hooks"
 import DualRange from "./DualRange"
+import { withContainer } from ".storybook/decorators"
 
 const DualRangeWithState = (props: {
   min: number
@@ -27,6 +28,7 @@ export default {
     layout: "centered"
   },
   tags: ["autodocs"],
+  decorators: [withContainer],
   argTypes: {
     min: {
       control: { type: "number" },
