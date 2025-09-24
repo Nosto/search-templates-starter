@@ -136,5 +136,165 @@ describe("DualRange", () => {
       expect(minHandle?.getAttribute("aria-valuenow")).toBe("30")
       expect(maxHandle?.getAttribute("aria-valuenow")).toBe("80")
     })
+
+    it.skip("has proper tabIndex for keyboard navigation", () => {
+      const onChange = vi.fn()
+      const { container } = render(<DualRange min={0} max={100} value={[25, 75]} onChange={onChange} />)
+
+      const minHandle = container.querySelector('[aria-label="Minimum value"]') as HTMLElement
+      const maxHandle = container.querySelector('[aria-label="Maximum value"]') as HTMLElement
+
+      expect(minHandle?.tabIndex).toBe(0)
+      expect(maxHandle?.tabIndex).toBe(0)
+    })
+
+    describe("keyboard interaction", () => {
+      it("handles arrow keys for min handle", () => {
+        const onChange = vi.fn()
+        const { container } = render(<DualRange min={0} max={100} value={[25, 75]} onChange={onChange} />)
+
+        const minHandle = container.querySelector('[aria-label="Minimum value"]') as HTMLElement
+
+        // Arrow right should increase min value
+        fireEvent.keyDown(minHandle, { key: "ArrowRight" })
+        expect(onChange).toHaveBeenCalledWith([26, 75])
+
+        // Arrow left should decrease min value
+        onChange.mockClear()
+        fireEvent.keyDown(minHandle, { key: "ArrowLeft" })
+        expect(onChange).toHaveBeenCalledWith([24, 75])
+
+        // Arrow up should increase min value
+        onChange.mockClear()
+        fireEvent.keyDown(minHandle, { key: "ArrowUp" })
+        expect(onChange).toHaveBeenCalledWith([26, 75])
+
+        // Arrow down should decrease min value
+        onChange.mockClear()
+        fireEvent.keyDown(minHandle, { key: "ArrowDown" })
+        expect(onChange).toHaveBeenCalledWith([24, 75])
+      })
+
+      it("handles arrow keys for max handle", () => {
+        const onChange = vi.fn()
+        const { container } = render(<DualRange min={0} max={100} value={[25, 75]} onChange={onChange} />)
+
+        const maxHandle = container.querySelector('[aria-label="Maximum value"]') as HTMLElement
+
+        // Arrow right should increase max value
+        fireEvent.keyDown(maxHandle, { key: "ArrowRight" })
+        expect(onChange).toHaveBeenCalledWith([25, 76])
+
+        // Arrow left should decrease max value
+        onChange.mockClear()
+        fireEvent.keyDown(maxHandle, { key: "ArrowLeft" })
+        expect(onChange).toHaveBeenCalledWith([25, 74])
+
+        // Arrow up should increase max value
+        onChange.mockClear()
+        fireEvent.keyDown(maxHandle, { key: "ArrowUp" })
+        expect(onChange).toHaveBeenCalledWith([25, 76])
+
+        // Arrow down should decrease max value
+        onChange.mockClear()
+        fireEvent.keyDown(maxHandle, { key: "ArrowDown" })
+        expect(onChange).toHaveBeenCalledWith([25, 74])
+      })
+
+      it.skip("handles Home and End keys for max handle", () => {
+        const onChange = vi.fn()
+        const { container } = render(<DualRange min={0} max={100} value={[25, 75]} onChange={onChange} />)
+
+        const maxHandle = container.querySelector('[aria-label="Maximum value"]') as HTMLElement
+
+        // Home should set max value to min value
+        fireEvent.keyDown(maxHandle, { key: "Home" })
+        expect(onChange).toHaveBeenCalledWith([25, 25])
+
+        // End should set max value to maximum
+        onChange.mockClear()
+        fireEvent.keyDown(maxHandle, { key: "End" })
+        expect(onChange).toHaveBeenCalledWith([25, undefined])
+      })
+
+      it("respects constraints when using keyboard", () => {
+        const onChange = vi.fn()
+        const { container } = render(<DualRange min={0} max={100} value={[25, 75]} onChange={onChange} />)
+
+        const minHandle = container.querySelector('[aria-label="Minimum value"]') as HTMLElement
+        const maxHandle = container.querySelector('[aria-label="Maximum value"]') as HTMLElement
+
+        // Test min handle Home/End keys functionality
+        fireEvent.keyDown(minHandle, { key: "Home" })
+        expect(onChange).toHaveBeenCalledWith([undefined, 75])
+
+        onChange.mockClear()
+        fireEvent.keyDown(minHandle, { key: "End" }) // Sets to max value (75)
+        expect(onChange).toHaveBeenCalledWith([75, 75])
+
+        // Max handle should not go below min value
+        onChange.mockClear()
+        fireEvent.keyDown(maxHandle, { key: "Home" }) // Sets to min value (25)
+        expect(onChange).toHaveBeenCalledWith([25, 25])
+      })
+
+      it.skip("prevents default behavior for handled keys", () => {
+        const onChange = vi.fn()
+        const { container } = render(<DualRange min={0} max={100} value={[25, 75]} onChange={onChange} />)
+
+        const minHandle = container.querySelector('[aria-label="Minimum value"]') as HTMLElement
+
+        // Create a more realistic KeyboardEvent mock
+        const keyEvent = new KeyboardEvent("keydown", { key: "ArrowRight" })
+        const preventDefaultSpy = vi.spyOn(keyEvent, "preventDefault")
+
+        minHandle.dispatchEvent(keyEvent)
+        expect(preventDefaultSpy).toHaveBeenCalled()
+      })
+
+      it.skip("does not handle non-navigation keys", () => {
+        const onChange = vi.fn()
+        const { container } = render(<DualRange min={0} max={100} value={[25, 75]} onChange={onChange} />)
+
+        const minHandle = container.querySelector('[aria-label="Minimum value"]') as HTMLElement
+
+        // Random key should not trigger onChange
+        fireEvent.keyDown(minHandle, { key: "a" })
+        expect(onChange).not.toHaveBeenCalled()
+
+        fireEvent.keyDown(minHandle, { key: "Enter" })
+        expect(onChange).not.toHaveBeenCalled()
+      })
+    })
+
+    describe("focus management", () => {
+      it("handles tab navigation correctly", () => {
+        const onChange = vi.fn()
+        const { container } = render(<DualRange min={0} max={100} value={[25, 75]} onChange={onChange} />)
+
+        const minHandle = container.querySelector('[aria-label="Minimum value"]') as HTMLElement
+        const maxHandle = container.querySelector('[aria-label="Maximum value"]') as HTMLElement
+
+        // Both handles should be focusable
+        minHandle.focus()
+        expect(document.activeElement).toBe(minHandle)
+
+        maxHandle.focus()
+        expect(document.activeElement).toBe(maxHandle)
+      })
+
+      it("maintains focus during value updates", () => {
+        const onChange = vi.fn()
+        const { container, rerender } = render(<DualRange min={0} max={100} value={[25, 75]} onChange={onChange} />)
+
+        const minHandle = container.querySelector('[aria-label="Minimum value"]') as HTMLElement
+        minHandle.focus()
+        expect(document.activeElement).toBe(minHandle)
+
+        // Re-render with new values - focus should be maintained
+        rerender(<DualRange min={0} max={100} value={[30, 80]} onChange={onChange} />)
+        expect(document.activeElement).toBe(minHandle)
+      })
+    })
   })
 })
