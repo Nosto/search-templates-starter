@@ -1,6 +1,8 @@
 import type { Image as CustomElement } from "@nosto/web-components"
+import { JSX } from "preact/jsx-runtime"
 
-type ImageProps = Pick<CustomElement, "src" | "width" | "height" | "aspectRatio" | "layout" | "crop">
+type ImageProps = Pick<CustomElement, "src" | "width" | "height" | "aspectRatio" | "layout" | "crop"> &
+  JSX.IntrinsicElements["img"]
 
 /**
  * A custom element wrapper that renders an optimized image using Nosto's image transformation service.

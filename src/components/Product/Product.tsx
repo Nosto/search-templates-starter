@@ -4,6 +4,7 @@ import styles from "./Product.module.css"
 import type { Product } from "@/types"
 import DynamicCard from "@/elements/DynamicCard/DynamicCard"
 import { renderRatingStars } from "./renderRatingStars"
+import ProductImage from "./ProductImage"
 
 type Props = {
   product: Product
@@ -28,8 +29,8 @@ export default function Product({ product, children, showAltOnHover = true }: Pr
       }}
     >
       <div className={styles.image}>
-        <img src={product.imageUrl} alt={product.name} />
-        {hasAlternateImage && <img src={product.alternateImageUrls![0]} alt={product.name} />}
+        <ProductImage src={product.imageUrl!} alt={product.name} />
+        {hasAlternateImage && <ProductImage src={product.alternateImageUrls![0]} alt={product.name} />}
       </div>
       <div className={styles.info} data-nosto-element="product">
         {product.brand && <div>{product.brand}</div>}
