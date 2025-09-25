@@ -31,10 +31,8 @@ Ensure you have the following installed:
     ```sh
     npm install
     ```
-3. If using VSCode, ensure you're using the workspace TS version:
+3. If using VSCode, ensure you're using the workspace TS version. This helps prevent issues with CSS module type definitions:
 
-    This helps prevent issues with CSS module type definitions.
-    
     [Using the workspace version of TypeScript](https://code.visualstudio.com/docs/typescript/typescript-compiling#_using-the-workspace-version-of-typescript)
 
 ### Development
