@@ -11,7 +11,7 @@ const imageProps = {
 }
 
 export default function ProductImage({ src, alt }: { src: string; alt?: string }) {
-  if (src.includes("cdn.shopify.com")) {
+  if (src.includes("shopify") || src.includes("bigcommerce")) {
     return <Image src={src} alt={alt} {...imageProps} />
   }
   return <img src={src} alt={alt} />
