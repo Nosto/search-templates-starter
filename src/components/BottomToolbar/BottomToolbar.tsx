@@ -14,6 +14,7 @@ export default function BottomToolbar() {
         <div>
           {from} - {total < to ? total : to} of {total} items
         </div>
+        <Pagination />
         {sizeOptions.length > 0 && (
           <Select
             value={size}
@@ -23,7 +24,6 @@ export default function BottomToolbar() {
           />
         )}
       </div>
-      <Pagination />
     </div>
   )
 }
