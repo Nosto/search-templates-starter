@@ -2,13 +2,6 @@
 
 This project is a starter template for building search interfaces using [`@nosto/search-js`](https://www.npmjs.com/package/@nosto/search-js) and [`preact`](https://preactjs.com/). It provides a foundation to kickstart development with pre-configured components, styles, and utilities for creating search experiences.
 
-## Features
-
-- **Preact Integration**: Lightweight and fast rendering with Preact.
-- **Search-js**: Leverage `@nosto/search-js` for search functionality and hooks
-- **Modular Components**: Prebuilt components like `Search`, `Serp`, `Autocomplete`, and more.
-- **CSS Modules**: Scoped and maintainable styles.
-
 ## Getting Started
 
 ### Prerequisites
@@ -34,14 +27,27 @@ Ensure you have the following installed:
 
 ### Development
 
-Start the development server:
+If you would like to see the entire app in action in a mostly representative environment, you can use the Vite dev server:
 ```sh
-npm run dev
+VITE_MERCHANT_ID=shopify-99999999 npm run dev
 ```
+
+Alternatively, you may supply the merchant ID with a .env file.
 
 This will launch the application at http://localhost:8000.
 
+### Storybook
+
+If you are working on a scoped component, would like to test something or want to see the list of components available,
+you can use Storybook:
+```sh
+npm run storybook
+```
+
+No merchant ID is required as the components in Storybook are sandboxed.
+
 ### Build
+
 To build the project for production:
 ```sh
 npm run build

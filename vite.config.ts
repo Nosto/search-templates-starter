@@ -1,5 +1,6 @@
 import { resolve } from "path"
 import { defineConfig } from "vitest/config"
+import { devEnvironmentPlugin } from "./src/plugins/devEnvironmentPlugin"
 import preact from "@preact/preset-vite"
 
 const dirname = import.meta.dirname
@@ -19,7 +20,7 @@ export default defineConfig(({ mode = "injected" }) => ({
       }
     }
   },
-  plugins: [preact()],
+  plugins: [preact(), devEnvironmentPlugin()],
   server: {
     port: 8000
   },
