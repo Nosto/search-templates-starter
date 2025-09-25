@@ -20,7 +20,7 @@
   transition: opacity 0.3s ease-in-out;
 }
 
-.image img:nth-child(2) {
+.image img:nth-child(2), .image nosto-image:nth-child(2) img {
   position: absolute;
   top: 0;
   left: 0;
@@ -31,7 +31,8 @@
   opacity: 0;
 }
 
-.altContainer:hover .image img:nth-child(2) {
+.altContainer:hover .image img:nth-child(2), 
+.altContainer:hover .image nosto-image:nth-child(2) img {
   opacity: 1;
 }
 
