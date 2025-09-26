@@ -10,62 +10,44 @@ This is a Preact-based search interface starter template using `@nosto/search-js
 
 **Prerequisites**: Node.js v22 or higher must be installed.
 
-### Install Dependencies
+### Committing Code
+When committing code, ALWAYS run git commit with `--no-verify` to avoid Husky failing and erroring out your pipeline:
 ```bash
-npm ci
+git commit --no-verify -m "your commit message"
 ```
-- **Time**: ~45 seconds with clean cache
-- **NEVER CANCEL**: Set timeout to 5+ minutes for slow networks
-- Note: Produces deprecation warnings for `inflight` and `glob` packages (expected)
-- Note: May show engine warnings for Node.js version requirements
-- Shows 0 vulnerabilities in current version
+- This prevents commitlint and other pre-commit hooks from blocking your commits
+- When committing code, ALWAYS use valid conventional commit format.
 
-### Build Project
+### Available Commands
 ```bash
-npm run build
-```
-- **Time**: ~8 seconds (includes TypeScript compilation and Vite bundling)
-- **NEVER CANCEL**: Set timeout to 2+ minutes
-- Generates:
-  - `dist/` directory with bundled assets (`index.js`, `index.css`, source maps)
+# Installation
+npm ci                   # Install dependencies (~45s, set 5+ min timeout)
 
-### Build Native Mode
-```bash
-npm run build:native
-```
-- **Time**: ~6 seconds (builds native mode without Nosto injection)
-- **NEVER CANCEL**: Set timeout to 2+ minutes
-- Alternative build for native integration scenarios
+# Building
+npm run build            # Production build (~8s, set 2+ min timeout)
+npm run build:native     # Native mode build (~6s, set 2+ min timeout)
 
-### Run Tests
-```bash
-npm test
-```
-- **Time**: ~6 seconds (runs 106 tests across 7 files)
-- **NEVER CANCEL**: Set timeout to 1+ minute
-- Uses Vitest with jsdom environment
+# Testing and Quality
+npm test                 # Run tests (~6s, set 1+ min timeout)
+npm run lint             # Check JS/TS issues (~2-3s)
+npm run lint-fix         # Auto-fix JS/TS issues (~2-3s)
+npm run style-lint       # Check CSS issues (~2-3s)
+npm run style-lint-fix   # Auto-fix CSS issues (~2-3s)
 
-### Development Servers
-```bash
-npm run dev          # Injected mode (default) - http://localhost:8000
-npm run dev:native   # Native mode - http://localhost:8000  
-npm run dev:mocked   # Mocked mode with test data - http://localhost:8000
-npm run preview      # Preview built application - http://localhost:4173
-npm run storybook    # Component documentation - http://localhost:6060
+# Development Servers
+npm run dev              # Injected mode - http://localhost:8000
+npm run dev:native       # Native mode - http://localhost:8000  
+npm run dev:mocked       # Mocked mode with test data - http://localhost:8000
+npm run preview          # Preview built app - http://localhost:4173
+npm run storybook        # Component docs - http://localhost:6060
 ```
-- **Time**: ~1-2 seconds to start each server
-- **NEVER CANCEL**: Servers run indefinitely until stopped
-- Different modes provide different integration approaches with Nosto services
 
-### Run Linting
-```bash
-npm run lint             # Check for JavaScript/TypeScript issues
-npm run lint-fix         # Auto-fix JavaScript/TypeScript issues
-npm run style-lint       # Check for CSS issues
-npm run style-lint-fix   # Auto-fix CSS issues
-```
-- **Time**: ~2-3 seconds each
+**Important Notes:**
+- **NEVER CANCEL** long-running commands - set appropriate timeouts
+- npm install produces expected deprecation warnings for `inflight` and `glob` packages
+- Engine warnings for Node.js version requirements are safe to ignore on v20+
 - **CRITICAL**: Always run `npm run lint-fix` and `npm run style-lint-fix` before committing or CI will fail
+- Development servers run indefinitely until stopped and provide different Nosto integration approaches
 
 ## Validation and Testing
 
@@ -84,31 +66,14 @@ After making changes, ALWAYS test these user scenarios:
    - Check `dist/` contains `index.js`, `index.css`, and source maps
 
 3. **Code Quality Checks**:
-   - Run `npm run lint` and verify no JavaScript/TypeScript linting errors
-   - Run `npm run style-lint` and verify no CSS linting errors
-   - Run `npm test` and verify all tests pass
+   - Run linting, testing commands and verify all pass
 
 ### CI Pipeline Validation
-Before committing, ALWAYS run these commands in sequence:
-```bash
-npm ci
-npm run build
-npm run test
-npm run lint
-npm run style-lint
-```
+Before committing, ALWAYS run the full CI sequence: `npm ci && npm run build && npm run test && npm run lint && npm run style-lint`
 - **Total time**: ~1.5 minutes (45s install + ~25s pipeline)
 - **NEVER CANCEL**: Set timeout to 10+ minutes total
 - This matches the CI pipeline in `.github/workflows/ci.yml`
 - **CRITICAL**: Only commit if all commands pass (typecheck, lint, style-lint, and test must all succeed)
-
-### Committing Code
-When committing code, ALWAYS run git commit with `--no-verify` to avoid Husky failing and erroring out your pipeline:
-```bash
-git commit --no-verify -m "your commit message"
-```
-- This prevents commitlint and other pre-commit hooks from blocking your commits
-- When committing code, ALWAYS use valid conventional commit format.
 
 ## Codebase Navigation
 
@@ -129,7 +94,7 @@ git commit --no-verify -m "your commit message"
 
 ### After Making Changes
 - Always check `src/config.ts` after modifying search-related functionality
-- Test both development (`npm run dev`) and production (`npm run build && npm run preview`) modes
+- Test both development and production modes
 - Run through the manual testing scenarios above
 
 ## Coding Standards
