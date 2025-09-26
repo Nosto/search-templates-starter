@@ -2,8 +2,7 @@ import Image from "@/elements/Image/Image"
 
 // to be customized as needed
 const imageProps = {
-  width: 800,
-  aspectRatio: 2 / 3,
+  width: 750,
   sizes: `(min-width: 1024px) 25vw,
     (min-width: 768px) 33.33vw,
     (min-width: 375px) 50vw,
