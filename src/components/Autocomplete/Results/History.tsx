@@ -8,6 +8,7 @@ export type KeywordsProps = {
 
 export function History({ onSubmit }: KeywordsProps) {
   const historyItems = useNostoAppState(state => state.historyItems)
+  // TODO: Keyboard navigation
   //   const { highlightedElementIndex } = useContext(AutocompleteContext)
   const highlightedElementIndex = -1
 
