@@ -21,8 +21,6 @@ export const defaultConfig = {
   serpSize: sizes[0]
 }
 
-const autocompleteThumbnailSize = "7" // 400x400
-const thumbnailSize = "9" // 750x750
 const defaultCurrency = "EUR"
 
 function withAutocompleteDefaults(query: SearchQuery) {
@@ -64,13 +62,14 @@ function withCategoryMetadata(query: SearchQuery) {
 
 export const hitDecorators = [
   handleDecorator,
-  thumbnailDecorator({ size: thumbnailSize }),
+  // commented out, since thumbnails are handled via Image component
+  //thumbnailDecorator({ size: "9" }), // 750x750
   priceDecorator({ defaultCurrency })
 ] as const
 
 const autocompleteDecorators = [
   handleDecorator,
-  thumbnailDecorator({ size: autocompleteThumbnailSize }),
+  thumbnailDecorator({ size: "7" }), // 400x400
   priceDecorator({ defaultCurrency })
 ]
 
