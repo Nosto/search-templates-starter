@@ -67,20 +67,21 @@ function checkClassUsageInTsx(tsxContent: string, className: string) {
 function extractReferencedClassNames(tsxContent: string) {
   const classes: Set<string> = new Set()
 
-  // Match styles.className patterns
-  const staticRegex = /styles\.([a-zA-Z_][a-zA-Z0-9_-]*)/g
+  // Match both styles.className and style.className patterns
+  // Ensure styles/style is not preceded by a dot to avoid matching "document.body.style.userSelect"
+  const staticRegex = /(?<!\.)(\bstyles?\.([a-zA-Z_][a-zA-Z0-9_-]*))/g
   let match
   while ((match = staticRegex.exec(tsxContent)) !== null) {
-    classes.add(match[1])
+    classes.add(match[2])
   }
 
-  // Match styles[variable] patterns - extract from JSX
-  const dynamicRegex = /styles\[([^\]]+)\]/g
+  // Match both styles[variable] and style[variable] patterns - extract from JSX
+  const dynamicRegex = /(?<!\.)(\bstyles?\[([^\]]+)\])/g
   while ((match = dynamicRegex.exec(tsxContent)) !== null) {
-    const variable = match[1].replace(/['"]/g, "")
+    const variable = match[2].replace(/['"]/g, "")
 
     // If it's a string literal, add it directly
-    if (/^['"]/.test(match[1])) {
+    if (/^['"]/.test(match[2])) {
       classes.add(variable)
     } else {
       // For variables like `name` in styles[name], try to find their possible values
