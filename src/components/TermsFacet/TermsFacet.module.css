@@ -70,3 +70,7 @@
   background-color: var(--ns-color-grey-light);
   border-radius: var(--ns-border-radius-3);
 }
+
+.pillContainer {
+  padding: var(--ns-space-2);
+}

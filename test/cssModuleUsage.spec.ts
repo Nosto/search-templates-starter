@@ -64,6 +64,38 @@ function checkClassUsageInTsx(tsxContent: string, className: string) {
   return tsxContent.includes(`styles.${className}`) || tsxContent.includes(`style.${className}`)
 }
 
+function extractReferencedClassNames(tsxContent: string) {
+  const classes: Set<string> = new Set()
+
+  // Match styles.className patterns
+  const staticRegex = /styles\.([a-zA-Z_][a-zA-Z0-9_-]*)/g
+  let match
+  while ((match = staticRegex.exec(tsxContent)) !== null) {
+    classes.add(match[1])
+  }
+
+  // Match styles[variable] patterns - extract from JSX
+  const dynamicRegex = /styles\[([^\]]+)\]/g
+  while ((match = dynamicRegex.exec(tsxContent)) !== null) {
+    const variable = match[1].replace(/['"]/g, "")
+
+    // If it's a string literal, add it directly
+    if (/^['"]/.test(match[1])) {
+      classes.add(variable)
+    } else {
+      // For variables like `name` in styles[name], try to find their possible values
+      // Look for type definitions or string literals that might be the values
+      const variablePattern = new RegExp(`${variable}.*?[=:].*?["']([^"']+)["']`, "g")
+      let valueMatch
+      while ((valueMatch = variablePattern.exec(tsxContent)) !== null) {
+        classes.add(valueMatch[1])
+      }
+    }
+  }
+
+  return Array.from(classes)
+}
+
 const srcPath = join(process.cwd(), "src")
 const cssModuleFiles = findAllCssModuleFiles(srcPath, process.cwd())
 
@@ -87,6 +119,15 @@ describe("CSS Module Class Usage", () => {
       if (unusedClasses.length > 0) {
         const message = `Unused CSS classes in ${cssModulePath}: ${unusedClasses.join(", ")}`
         expect(unusedClasses, message).toEqual([])
+      }
+
+      // Also check that all referenced classes exist in CSS module
+      const referencedClasses = extractReferencedClassNames(combinedTsxContent)
+      const missingClasses = referencedClasses.filter(className => !classNames.includes(className))
+
+      if (missingClasses.length > 0) {
+        const message = `Referenced CSS classes not found in ${cssModulePath}: ${missingClasses.join(", ")}`
+        expect(missingClasses, message).toEqual([])
       }
     })
   })
