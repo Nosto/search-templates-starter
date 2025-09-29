@@ -63,13 +63,13 @@ export default function SideBar() {
           </div>
           <SelectedFilters />
           <div>
-            <ul className={styles.facets} key={facetResetKey}>
+            <ul className={styles.facets}>
               {facets?.map(facet => {
                 switch (facet.type) {
                   case "terms":
-                    return <TermsFacet key={facet.id} facet={facet as SearchTermsFacet} />
+                    return <TermsFacet key={facet.id} facet={facet as SearchTermsFacet} resetToken={facetResetKey} />
                   case "stats":
-                    return <RangeFacet key={facet.id} facet={facet as SearchStatsFacet} />
+                    return <RangeFacet key={facet.id} facet={facet as SearchStatsFacet} resetToken={facetResetKey} />
                   default:
                     return null
                 }

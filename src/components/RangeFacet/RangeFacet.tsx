@@ -1,5 +1,5 @@
 import { useRange } from "@nosto/search-js/preact/hooks"
-import { useState } from "preact/hooks"
+import { useState, useEffect, useRef } from "preact/hooks"
 import DualRange from "@/elements/DualRange/DualRange"
 import Icon from "@/elements/Icon/Icon"
 import { SearchStatsFacet } from "@nosto/nosto-js/client"
@@ -8,12 +8,24 @@ import { cl } from "@nosto/search-js/utils"
 
 type Props = {
   facet: SearchStatsFacet
+  /** Changes to this token collapse the facet */
+  resetToken?: number
 }
 
-export default function RangeFacet({ facet }: Props) {
+export default function RangeFacet({ facet, resetToken }: Props) {
   const { min, max, range, updateRange } = useRange(facet.id)
   const isSelected = min !== range[0] || max !== range[1]
   const [active, setActive] = useState(isSelected)
+  const prevToken = useRef<number | undefined>(resetToken)
+
+  useEffect(() => {
+    if (prevToken.current !== resetToken) {
+      prevToken.current = resetToken
+      if (active) {
+        setActive(false)
+      }
+    }
+  }, [resetToken, active])
 
   return (
     <li className={cl(styles.dropdown, active && styles.active)}>

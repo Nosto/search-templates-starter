@@ -1,4 +1,5 @@
 import { useFacet } from "@nosto/search-js/preact/hooks"
+import { useEffect, useRef } from "preact/hooks"
 import Icon from "@/elements/Icon/Icon"
 import { SearchTermsFacet } from "@nosto/nosto-js/client"
 import Pill from "@/elements/Pill/Pill"
@@ -6,10 +7,23 @@ import styles from "./TermsFacet.module.css"
 
 type Props = {
   facet: SearchTermsFacet
+  /** Changes to this token collapse the facet */
+  resetToken?: number
 }
 
-export default function TermsFacet({ facet }: Props) {
+export default function TermsFacet({ facet, resetToken }: Props) {
   const { active, selectedFiltersCount, toggleActive, toggleProductFilter } = useFacet(facet)
+  const prevToken = useRef<number | undefined>(resetToken)
+
+  useEffect(() => {
+    if (prevToken.current !== resetToken) {
+      prevToken.current = resetToken
+      if (active) {
+        // Toggle to collapse if currently open
+        toggleActive()
+      }
+    }
+  }, [resetToken, active, toggleActive])
 
   return (
     <li className={`${styles.dropdown} ${active ? styles.active : ""}`}>
