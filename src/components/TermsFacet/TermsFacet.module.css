@@ -14,7 +14,6 @@
   transition:
     max-height var(--ns-transition-duration) var(--ns-transition-easing),
     opacity var(--ns-transition-duration) var(--ns-transition-easing);
-  will-change: max-height, opacity;
   opacity: 0;
 }
 
