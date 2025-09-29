@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest"
 import { readFileSync, readdirSync, statSync } from "fs"
 import { join, dirname } from "path"
 
-function findAllCssModuleFiles(dir: string, basePath: string): string[] {
+function findAllCssModuleFiles(dir: string, basePath: string) {
   const files: string[] = []
   const items = readdirSync(dir)
 
@@ -20,7 +20,7 @@ function findAllCssModuleFiles(dir: string, basePath: string): string[] {
   return files
 }
 
-function extractClassNames(cssContent: string): string[] {
+function extractClassNames(cssContent: string) {
   const classRegex = /\.([a-zA-Z_][a-zA-Z0-9_-]*)\s*{/g
   const classes: string[] = []
   let match
@@ -32,7 +32,7 @@ function extractClassNames(cssContent: string): string[] {
   return classes
 }
 
-function findTsxFilesImportingCssModule(cssModulePath: string, srcPath: string): string[] {
+function findTsxFilesImportingCssModule(cssModulePath: string, srcPath: string) {
   const cssDir = dirname(join(srcPath, cssModulePath))
   const cssFileName = cssModulePath.split("/").pop()
   const tsxFiles: string[] = []
@@ -59,7 +59,7 @@ function findTsxFilesImportingCssModule(cssModulePath: string, srcPath: string):
   return tsxFiles
 }
 
-function checkClassUsageInTsx(tsxContent: string, className: string): boolean {
+function checkClassUsageInTsx(tsxContent: string, className: string) {
   return tsxContent.includes(`styles.${className}`) || tsxContent.includes(`style.${className}`)
 }
 
@@ -81,13 +81,7 @@ describe("CSS Module Class Usage", () => {
         combinedTsxContent += readFileSync(tsxPath, "utf-8") + "\n"
       }
 
-      const unusedClasses: string[] = []
-
-      for (const className of classNames) {
-        if (!checkClassUsageInTsx(combinedTsxContent, className)) {
-          unusedClasses.push(className)
-        }
-      }
+      const unusedClasses = classNames.filter(className => !checkClassUsageInTsx(combinedTsxContent, className))
 
       if (unusedClasses.length > 0) {
         const message = `Unused CSS classes in ${cssModulePath}: ${unusedClasses.join(", ")}`
