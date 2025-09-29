@@ -13,10 +13,10 @@ type Props = {
 export default function RangeFacet({ facet }: Props) {
   const { min, max, range, updateRange } = useRange(facet.id)
   const isSelected = min !== range[0] || max !== range[1]
-  const { activeFacets, setFacetActive } = useSidebar()
+  const { setFacetActive, isFacetActive } = useSidebar()
 
   // Use centralized facet state management
-  const active = activeFacets.has(facet.id)
+  const active = isFacetActive(facet.id)
 
   const setActive = (newActive: boolean) => {
     setFacetActive(facet.id, newActive)

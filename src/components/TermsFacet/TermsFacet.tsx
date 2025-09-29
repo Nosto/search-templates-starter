@@ -11,10 +11,10 @@ type Props = {
 
 export default function TermsFacet({ facet }: Props) {
   const { selectedFiltersCount, toggleProductFilter } = useFacet(facet)
-  const { activeFacets, setFacetActive } = useSidebar()
+  const { setFacetActive, isFacetActive } = useSidebar()
 
   // Use centralized facet state management
-  const active = activeFacets.has(facet.id)
+  const active = isFacetActive(facet.id)
 
   const toggleActive = () => {
     setFacetActive(facet.id, !active)

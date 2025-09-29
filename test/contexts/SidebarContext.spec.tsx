@@ -3,7 +3,7 @@ import { describe, it, expect } from "vitest"
 import { SidebarProvider, useSidebar } from "@/contexts/SidebarContext"
 
 function TestSidebarComponent() {
-  const { isOpen, toggle, setOpen, activeFacets, setFacetActive, collapseAllFacets } = useSidebar()
+  const { isOpen, toggle, setOpen, activeFacets, setFacetActive, isFacetActive, collapseAllFacets } = useSidebar()
 
   return (
     <>
@@ -30,6 +30,7 @@ function TestSidebarComponent() {
       <button data-testid="close-all-facets" onClick={collapseAllFacets}>
         Close All Facets
       </button>
+      <div data-testid="facet-1-active">{isFacetActive("facet-1") ? "active" : "inactive"}</div>
     </>
   )
 }
@@ -185,6 +186,29 @@ describe("SidebarContext", () => {
       // Close all facets
       fireEvent.click(collapseAllFacets)
       expect(activeFacets.textContent).toBe("")
+    })
+
+    it("should correctly report facet active status with isFacetActive", () => {
+      render(
+        <SidebarProvider>
+          <TestSidebarComponent />
+        </SidebarProvider>
+      )
+
+      const facet1Status = screen.getByTestId("facet-1-active")
+      const openFacet1 = screen.getByTestId("open-facet-1")
+      const closeFacet1 = screen.getByTestId("close-facet-1")
+
+      // Initially inactive
+      expect(facet1Status.textContent).toBe("inactive")
+
+      // Open facet 1
+      fireEvent.click(openFacet1)
+      expect(facet1Status.textContent).toBe("active")
+
+      // Close facet 1
+      fireEvent.click(closeFacet1)
+      expect(facet1Status.textContent).toBe("inactive")
     })
   })
 })

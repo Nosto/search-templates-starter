@@ -8,6 +8,7 @@ type SidebarContextType = {
   toggle: () => void
   activeFacets: Set<string>
   setFacetActive: (facetId: string, isActive: boolean) => void
+  isFacetActive: (facetId: string) => boolean
   collapseAllFacets: () => void
 }
 
@@ -42,12 +43,20 @@ export function SidebarProvider({ children, initialOpen = false }: SidebarProvid
     setActiveFacets(new Set())
   }, [])
 
+  const isFacetActive = useCallback(
+    (facetId: string) => {
+      return activeFacets.has(facetId)
+    },
+    [activeFacets]
+  )
+
   const contextValue = {
     isOpen,
     setOpen,
     toggle,
     activeFacets,
     setFacetActive,
+    isFacetActive,
     collapseAllFacets
   }
 
