@@ -61,6 +61,12 @@
   --ns-shadow-offset-small: 2px;
   --ns-shadow-offset-medium: 3px;
 
+  /* TRANSITIONS */
+  --ns-transition-duration-fast: 0.15s;
+  --ns-transition-duration-normal: 0.3s;
+  --ns-transition-easing: ease-in-out;
+  --ns-transition-facet-expand: max-height var(--ns-transition-duration-normal) var(--ns-transition-easing);
+
   /* WIDTH */
   --ns-max-width-search-template: 1500px;
   --ns-max-width-autocomplete: 900px;

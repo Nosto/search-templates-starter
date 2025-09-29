@@ -9,8 +9,10 @@
 }
 
 .menu {
-  display: none;
-  padding: var(--ns-space-4);
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 var(--ns-space-4);
+  transition: var(--ns-transition-facet-expand), padding var(--ns-transition-duration-normal) var(--ns-transition-easing);
 }
 
 .pillContainer {
@@ -43,7 +45,8 @@
 }
 
 .dropdown.active .menu {
-  display: block;
+  max-height: 200px; /* Generous max-height for range controls */
+  padding: var(--ns-space-4);
 }
 
 .anchor {
