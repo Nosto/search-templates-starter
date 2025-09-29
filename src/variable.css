@@ -61,6 +61,10 @@
   --ns-shadow-offset-small: 2px;
   --ns-shadow-offset-medium: 3px;
 
+  /* TRANSITIONS */
+  --ns-transition-duration: 0.3s;
+  --ns-transition-easing: ease-in-out;
+
   /* WIDTH */
   --ns-max-width-search-template: 1500px;
   --ns-max-width-autocomplete: 900px;
@@ -78,4 +82,5 @@
   --ns-height-input-checkbox: 16px;
   --ns-height-input-checkbox-tick: 10px;
   --ns-min-height-content: 890px;
+  --ns-facet-max-height: 500px;
 }
