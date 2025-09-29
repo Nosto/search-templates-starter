@@ -1,3 +1,4 @@
+/* RangeFacet component styles - only contains used CSS classes */
 .dropdown {
   border-bottom: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
 }
