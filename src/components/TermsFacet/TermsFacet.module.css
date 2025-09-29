@@ -45,7 +45,7 @@
 }
 
 .dropdown.active .menu {
-  max-height: 500px; /* Generous max-height to accommodate various content sizes */
+  max-height: var(--ns-facet-max-height);
   padding: var(--ns-space-4);
 }
 
