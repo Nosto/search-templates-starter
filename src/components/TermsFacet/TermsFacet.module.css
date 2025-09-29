@@ -12,7 +12,10 @@
   max-height: 0;
   overflow: hidden;
   padding: 0 var(--ns-space-4);
-  transition: max-height 300ms ease-in-out, opacity 200ms linear, padding 200ms ease-in-out;
+  transition:
+    max-height var(--ns-transition-duration) var(--ns-transition-easing),
+    opacity var(--ns-transition-duration) var(--ns-transition-easing),
+    padding var(--ns-transition-duration) var(--ns-transition-easing);
   opacity: 0;
 }
 
