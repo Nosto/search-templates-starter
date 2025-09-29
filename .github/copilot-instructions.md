@@ -11,8 +11,6 @@ This is a Preact-based search interface starter template using `@nosto/search-js
 - Always use Node 22+ for Copilot PR creation and development work
 - Components and build system are optimized for Node 22+ environments
 
-## Working Effectively
-
 ## Initial Setup
 
 ```bash
