@@ -6,9 +6,9 @@ type SidebarContextType = {
   isOpen: boolean
   setOpen: (open: boolean) => void
   toggle: () => void
-  openedFacets: Set<string>
-  setFacetOpen: (facetId: string, isOpen: boolean) => void
-  closeAllFacets: () => void
+  activeFacets: Set<string>
+  setFacetActive: (facetId: string, isActive: boolean) => void
+  collapseAllFacets: () => void
 }
 
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined)
@@ -20,16 +20,16 @@ type SidebarProviderProps = {
 
 export function SidebarProvider({ children, initialOpen = false }: SidebarProviderProps) {
   const [isOpen, setOpen] = useState(initialOpen)
-  const [openedFacets, setOpenedFacets] = useState<Set<string>>(new Set())
+  const [activeFacets, setActiveFacets] = useState<Set<string>>(new Set())
 
   const toggle = () => {
     setOpen(!isOpen)
   }
 
-  const setFacetOpen = useCallback((facetId: string, isOpen: boolean) => {
-    setOpenedFacets(prev => {
+  const setFacetActive = useCallback((facetId: string, isActive: boolean) => {
+    setActiveFacets(prev => {
       const newSet = new Set(prev)
-      if (isOpen) {
+      if (isActive) {
         newSet.add(facetId)
       } else {
         newSet.delete(facetId)
@@ -38,17 +38,17 @@ export function SidebarProvider({ children, initialOpen = false }: SidebarProvid
     })
   }, [])
 
-  const closeAllFacets = useCallback(() => {
-    setOpenedFacets(new Set())
+  const collapseAllFacets = useCallback(() => {
+    setActiveFacets(new Set())
   }, [])
 
   const contextValue = {
     isOpen,
     setOpen,
     toggle,
-    openedFacets,
-    setFacetOpen,
-    closeAllFacets
+    activeFacets,
+    setFacetActive,
+    collapseAllFacets
   }
 
   return <SidebarContext.Provider value={contextValue}>{children}</SidebarContext.Provider>

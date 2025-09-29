@@ -13,13 +13,13 @@ vi.mock("@nosto/search-js/preact/hooks", () => ({
 
 // Test component to demonstrate integration
 function TestFacetComponent({ facetId }: { facetId: string }) {
-  const { openedFacets, setFacetOpen } = useSidebar()
-  const isOpen = openedFacets.has(facetId)
+  const { activeFacets, setFacetActive } = useSidebar()
+  const isOpen = activeFacets.has(facetId)
 
   return (
     <div>
       <div data-testid={`facet-${facetId}-status`}>{isOpen ? "expanded" : "collapsed"}</div>
-      <button data-testid={`expand-${facetId}`} onClick={() => setFacetOpen(facetId, true)}>
+      <button data-testid={`expand-${facetId}`} onClick={() => setFacetActive(facetId, true)}>
         Expand {facetId}
       </button>
     </div>

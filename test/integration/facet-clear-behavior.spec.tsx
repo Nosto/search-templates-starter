@@ -22,12 +22,12 @@ vi.mock("@nosto/search-js/preact/hooks", () => ({
  */
 describe("Complete Facet Clear Behavior", () => {
   function MockFacetComponent({ id, name }: { id: string; name: string }) {
-    const { openedFacets, setFacetOpen } = useSidebar()
-    const isActive = openedFacets.has(id)
+    const { activeFacets, setFacetActive } = useSidebar()
+    const isActive = activeFacets.has(id)
 
     return (
       <div data-testid={`facet-${id}`}>
-        <button data-testid={`toggle-${id}`} onClick={() => setFacetOpen(id, !isActive)} aria-expanded={isActive}>
+        <button data-testid={`toggle-${id}`} onClick={() => setFacetActive(id, !isActive)} aria-expanded={isActive}>
           {isActive ? "Collapse" : "Expand"} {name}
         </button>
         <div data-testid={`status-${id}`}>{isActive ? "active" : "inactive"}</div>
@@ -41,12 +41,12 @@ describe("Complete Facet Clear Behavior", () => {
   }
 
   function TestApp() {
-    const { isOpen, setOpen, openedFacets } = useSidebar()
+    const { isOpen, setOpen, activeFacets } = useSidebar()
 
     return (
       <div>
         <div data-testid="sidebar-status">{isOpen ? "open" : "closed"}</div>
-        <div data-testid="opened-facets-count">{openedFacets.size}</div>
+        <div data-testid="opened-facets-count">{activeFacets.size}</div>
         <button data-testid="open-sidebar" onClick={() => setOpen(true)}>
           Open Sidebar
         </button>

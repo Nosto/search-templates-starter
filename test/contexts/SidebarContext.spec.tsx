@@ -3,12 +3,12 @@ import { describe, it, expect } from "vitest"
 import { SidebarProvider, useSidebar } from "@/contexts/SidebarContext"
 
 function TestSidebarComponent() {
-  const { isOpen, toggle, setOpen, openedFacets, setFacetOpen, closeAllFacets } = useSidebar()
+  const { isOpen, toggle, setOpen, activeFacets, setFacetActive, collapseAllFacets } = useSidebar()
 
   return (
     <>
       <div data-testid="sidebar-status">{isOpen ? "open" : "closed"}</div>
-      <div data-testid="opened-facets">{Array.from(openedFacets).join(",")}</div>
+      <div data-testid="opened-facets">{Array.from(activeFacets).join(",")}</div>
       <button data-testid="toggle-button" onClick={toggle}>
         Toggle
       </button>
@@ -18,16 +18,16 @@ function TestSidebarComponent() {
       <button data-testid="close-button" onClick={() => setOpen(false)}>
         Close
       </button>
-      <button data-testid="open-facet-1" onClick={() => setFacetOpen("facet-1", true)}>
+      <button data-testid="open-facet-1" onClick={() => setFacetActive("facet-1", true)}>
         Open Facet 1
       </button>
-      <button data-testid="close-facet-1" onClick={() => setFacetOpen("facet-1", false)}>
+      <button data-testid="close-facet-1" onClick={() => setFacetActive("facet-1", false)}>
         Close Facet 1
       </button>
-      <button data-testid="open-facet-2" onClick={() => setFacetOpen("facet-2", true)}>
+      <button data-testid="open-facet-2" onClick={() => setFacetActive("facet-2", true)}>
         Open Facet 2
       </button>
-      <button data-testid="close-all-facets" onClick={closeAllFacets}>
+      <button data-testid="close-all-facets" onClick={collapseAllFacets}>
         Close All Facets
       </button>
     </>
@@ -122,17 +122,17 @@ describe("SidebarContext", () => {
         </SidebarProvider>
       )
 
-      const openedFacets = screen.getByTestId("opened-facets")
+      const activeFacets = screen.getByTestId("opened-facets")
       const openFacet1 = screen.getByTestId("open-facet-1")
       const closeFacet1 = screen.getByTestId("close-facet-1")
 
       // Open facet 1
       fireEvent.click(openFacet1)
-      expect(openedFacets.textContent).toBe("facet-1")
+      expect(activeFacets.textContent).toBe("facet-1")
 
       // Close facet 1
       fireEvent.click(closeFacet1)
-      expect(openedFacets.textContent).toBe("")
+      expect(activeFacets.textContent).toBe("")
     })
 
     it("should manage multiple facets independently", () => {
@@ -142,7 +142,7 @@ describe("SidebarContext", () => {
         </SidebarProvider>
       )
 
-      const openedFacets = screen.getByTestId("opened-facets")
+      const activeFacets = screen.getByTestId("opened-facets")
       const openFacet1 = screen.getByTestId("open-facet-1")
       const openFacet2 = screen.getByTestId("open-facet-2")
       const closeFacet1 = screen.getByTestId("close-facet-1")
@@ -152,39 +152,39 @@ describe("SidebarContext", () => {
       fireEvent.click(openFacet2)
 
       // Should contain both facets (order may vary)
-      const facetsList = openedFacets.textContent?.split(",") || []
+      const facetsList = activeFacets.textContent?.split(",") || []
       expect(facetsList).toContain("facet-1")
       expect(facetsList).toContain("facet-2")
       expect(facetsList.length).toBe(2)
 
       // Close facet 1
       fireEvent.click(closeFacet1)
-      expect(openedFacets.textContent).toBe("facet-2")
+      expect(activeFacets.textContent).toBe("facet-2")
     })
 
-    it("should close all facets when closeAllFacets is called", () => {
+    it("should close all facets when collapseAllFacets is called", () => {
       render(
         <SidebarProvider>
           <TestSidebarComponent />
         </SidebarProvider>
       )
 
-      const openedFacets = screen.getByTestId("opened-facets")
+      const activeFacets = screen.getByTestId("opened-facets")
       const openFacet1 = screen.getByTestId("open-facet-1")
       const openFacet2 = screen.getByTestId("open-facet-2")
-      const closeAllFacets = screen.getByTestId("close-all-facets")
+      const collapseAllFacets = screen.getByTestId("close-all-facets")
 
       // Open both facets
       fireEvent.click(openFacet1)
       fireEvent.click(openFacet2)
 
       // Verify both are open
-      const facetsList = openedFacets.textContent?.split(",") || []
+      const facetsList = activeFacets.textContent?.split(",") || []
       expect(facetsList.length).toBe(2)
 
       // Close all facets
-      fireEvent.click(closeAllFacets)
-      expect(openedFacets.textContent).toBe("")
+      fireEvent.click(collapseAllFacets)
+      expect(activeFacets.textContent).toBe("")
     })
   })
 })
