@@ -12,7 +12,8 @@
   max-height: 0;
   overflow: hidden;
   padding: 0 var(--ns-space-4);
-  transition: var(--ns-transition-facet-expand), padding var(--ns-transition-duration-normal) var(--ns-transition-easing);
+  transition: max-height 300ms ease-in-out, opacity 200ms linear;
+  opacity: 0;
 }
 
 .pillContainer {
@@ -47,6 +48,7 @@
 .dropdown.active .menu {
   max-height: var(--ns-facet-max-height);
   padding: var(--ns-space-4);
+  opacity: 1;
 }
 
 .anchor {
