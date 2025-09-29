@@ -3,13 +3,22 @@ import Icon from "@/elements/Icon/Icon"
 import { SearchTermsFacet } from "@nosto/nosto-js/client"
 import Pill from "@/elements/Pill/Pill"
 import styles from "./TermsFacet.module.css"
+import { useSidebar } from "@/contexts/SidebarContext"
 
 type Props = {
   facet: SearchTermsFacet
 }
 
 export default function TermsFacet({ facet }: Props) {
-  const { active, selectedFiltersCount, toggleActive, toggleProductFilter } = useFacet(facet)
+  const { selectedFiltersCount, toggleProductFilter } = useFacet(facet)
+  const { openedFacets, setFacetOpen } = useSidebar()
+
+  // Use centralized facet state management
+  const active = openedFacets.has(facet.id)
+
+  const toggleActive = () => {
+    setFacetOpen(facet.id, !active)
+  }
 
   return (
     <li className={`${styles.dropdown} ${active ? styles.active : ""}`}>

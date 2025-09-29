@@ -4,6 +4,7 @@ import { createStore } from "@nosto/search-js/preact/common"
 import { SearchPageProvider } from "@nosto/search-js/preact/serp"
 import { StoryFn } from "@storybook/preact-vite"
 import { AutocompletePageProvider } from "@nosto/search-js/preact/autocomplete"
+import { SidebarProvider } from "@/contexts/SidebarContext"
 
 /**
  * A decorator that wraps a story in a SearchPageProvider with mock data.
@@ -23,6 +24,15 @@ export function withAutocompleteContext(story: StoryFn) {
   return h(AutocompletePageProvider, {
     config: mockConfig,
     store: createStore(mockAutocompleteState),
+    children: h(story, {})
+  })
+}
+
+/**
+ * A decorator that wraps a story in a SidebarProvider.
+ */
+export function withSidebarContext(story: StoryFn) {
+  return h(SidebarProvider, {
     children: h(story, {})
   })
 }

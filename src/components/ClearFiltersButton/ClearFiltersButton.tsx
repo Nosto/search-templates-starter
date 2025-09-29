@@ -5,12 +5,13 @@ import Button from "@/elements/Button/Button"
 
 export default function ClearFiltersButton() {
   const { filters, removeAll } = useProductFilters()
-  const { setOpen } = useSidebar()
+  const { setOpen, closeAllFacets } = useSidebar()
 
   const handleClearFilters = useCallback(() => {
     removeAll()
+    closeAllFacets()
     setOpen(false)
-  }, [removeAll, setOpen])
+  }, [removeAll, closeAllFacets, setOpen])
 
   if (filters.length === 0) {
     return null
