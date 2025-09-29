@@ -21,15 +21,16 @@ function findAllCssModuleFiles(dir: string, basePath: string) {
 }
 
 function extractClassNames(cssContent: string) {
-  const classRegex = /\.([a-zA-Z_][a-zA-Z0-9_-]*)\s*{/g
-  const classes: string[] = []
+  // Match all .className occurrences in selectors, including compound, pseudo, etc.
+  const classRegex = /\.([a-zA-Z_][a-zA-Z0-9_-]*)/g
+  const classes: Set<string> = new Set()
   let match
 
   while ((match = classRegex.exec(cssContent)) !== null) {
-    classes.push(match[1])
+    classes.add(match[1])
   }
 
-  return classes
+  return Array.from(classes)
 }
 
 function findTsxFilesImportingCssModule(cssModulePath: string, srcPath: string) {
