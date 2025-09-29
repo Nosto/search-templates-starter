@@ -18,21 +18,17 @@ export default function RangeFacet({ facet }: Props) {
   // Use centralized facet state management
   const active = isFacetActive(facet.id)
 
-  const setActive = (newActive: boolean) => {
-    setFacetActive(facet.id, newActive)
-  }
-
   return (
     <li className={cl(styles.dropdown, active && styles.active)}>
       <button
         className={styles.anchor}
         onClick={() => {
-          setActive(!active)
+          setFacetActive(facet.id, !active)
         }}
         onKeyDown={e => {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault()
-            setActive(!active)
+            setFacetActive(facet.id, !active)
           }
         }}
         aria-controls={`${facet.id}-range-menu`}
