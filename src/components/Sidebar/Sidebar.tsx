@@ -1,3 +1,4 @@
+import { useState } from "preact/hooks"
 import { useFacets } from "@nosto/search-js/preact/hooks"
 import TermsFacet from "@/components/TermsFacet/TermsFacet"
 import RangeFacet from "@/components/RangeFacet/RangeFacet"
@@ -29,6 +30,7 @@ function ToggleSidebarButton({ className, onClick }: ToggleProps = {}) {
 export default function SideBar() {
   const { facets } = useFacets()
   const { isOpen, setOpen } = useSidebar()
+  const [facetResetKey, setFacetResetKey] = useState(0)
 
   const handleBackdropClick = () => {
     setOpen(false)
@@ -61,7 +63,7 @@ export default function SideBar() {
           </div>
           <SelectedFilters />
           <div>
-            <ul className={styles.facets}>
+            <ul className={styles.facets} key={facetResetKey}>
               {facets?.map(facet => {
                 switch (facet.type) {
                   case "terms":
@@ -75,7 +77,7 @@ export default function SideBar() {
             </ul>
           </div>
           <div className={styles.clearFilters}>
-            <ClearFiltersButton />
+            <ClearFiltersButton onCleared={() => setFacetResetKey(k => k + 1)} />
           </div>
         </div>
       </div>
