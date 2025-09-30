@@ -50,7 +50,10 @@
       function setupNosto() {
         const mode = import.meta.env.MODE
         if (mode === "mocked") {
-          mockNostojs({ search: mockSearch })
+          mockNostojs({ 
+            search: mockSearch,
+            recordSearchSubmit: () => Promise.resolve()
+          })
           renderApp()
           return
         }
