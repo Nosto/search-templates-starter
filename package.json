@@ -33,7 +33,7 @@
     "storybook": "storybook dev -p 6060"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.8.1",
+    "@commitlint/cli": "^20.0.0",
     "@commitlint/config-conventional": "^20.0.0",
     "@nosto/nosto-js": "^2.7.0",
     "@nosto/search-js": "^3.14.0",
