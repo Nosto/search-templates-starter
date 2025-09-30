@@ -1,0 +1,114 @@
+import { describe, it, expect } from "vitest"
+import { readFileSync, readdirSync, statSync } from "fs"
+import { join, dirname } from "path"
+
+function findAllCssModuleFiles(dir: string, basePath: string) {
+  const files: string[] = []
+  const items = readdirSync(dir)
+
+  for (const item of items) {
+    const fullPath = join(dir, item)
+    const stat = statSync(fullPath)
+
+    if (stat.isDirectory()) {
+      files.push(...findAllCssModuleFiles(fullPath, basePath))
+    } else if (item.endsWith(".module.css")) {
+      files.push(fullPath.replace(basePath + "/", ""))
+    }
+  }
+
+  return files
+}
+
+function extractClassNames(cssContent: string) {
+  // Match all .className occurrences in selectors, including compound, pseudo, etc.
+  const classRegex = /\.([a-zA-Z_][a-zA-Z0-9_-]*)/g
+  const classes: Set<string> = new Set()
+  let match
+
+  while ((match = classRegex.exec(cssContent)) !== null) {
+    classes.add(match[1])
+  }
+
+  return Array.from(classes)
+}
+
+function findTsxFilesImportingCssModule(cssModulePath: string, srcPath: string) {
+  const cssDir = dirname(join(srcPath, cssModulePath))
+  const cssFileName = cssModulePath.split("/").pop()
+  const tsxFiles: string[] = []
+
+  try {
+    const items = readdirSync(cssDir)
+    for (const item of items) {
+      if (item.endsWith(".tsx")) {
+        const tsxPath = join(cssDir, item)
+        try {
+          const tsxContent = readFileSync(tsxPath, "utf-8")
+          if (tsxContent.includes(`from "./${cssFileName}"`)) {
+            tsxFiles.push(tsxPath)
+          }
+        } catch {
+          // Skip files that can't be read
+        }
+      }
+    }
+  } catch {
+    // Directory doesn't exist or can't be read
+  }
+
+  return tsxFiles
+}
+
+function checkClassUsageInTsx(tsxContent: string, className: string) {
+  return tsxContent.includes(`styles.${className}`) || tsxContent.includes(`style.${className}`)
+}
+
+function extractReferencedClassNames(tsxContent: string) {
+  const classes: Set<string> = new Set()
+
+  // Match both styles.className and style.className patterns
+  // Ensure styles/style is not preceded by a dot to avoid matching "document.body.style.userSelect"
+  const staticRegex = /(?<!\.)(\bstyles?\.([a-zA-Z_][a-zA-Z0-9_-]*))/g
+  let match
+  while ((match = staticRegex.exec(tsxContent)) !== null) {
+    classes.add(match[2])
+  }
+
+  return Array.from(classes)
+}
+
+const srcPath = join(process.cwd(), "src")
+
+describe("CSS Module Class Usage", () => {
+  const cssModuleFiles = findAllCssModuleFiles(srcPath, process.cwd()).filter(file => !file.includes("Icon.module.css"))
+
+  cssModuleFiles.forEach(cssModulePath => {
+    it(`should use all classes from ${cssModulePath}`, () => {
+      const fullCssPath = join(process.cwd(), cssModulePath)
+      const cssContent = readFileSync(fullCssPath, "utf-8")
+      const classNames = extractClassNames(cssContent)
+
+      const tsxFiles = findTsxFilesImportingCssModule(cssModulePath, process.cwd())
+      expect(tsxFiles.length).toBeGreaterThan(0)
+
+      const combinedTsxContent = tsxFiles.map(tsxPath => readFileSync(tsxPath, "utf-8")).join("\n")
+
+      const unusedClasses = classNames.filter(className => !checkClassUsageInTsx(combinedTsxContent, className))
+
+      if (unusedClasses.length > 0) {
+        const message = `Unused CSS classes in ${cssModulePath}: ${unusedClasses.join(", ")}`
+        expect(unusedClasses, message).toEqual([])
+      }
+
+      // Also check that all referenced classes exist in CSS module
+      const referencedClasses = extractReferencedClassNames(combinedTsxContent)
+      const missingClasses = referencedClasses.filter(className => !classNames.includes(className))
+
+      if (missingClasses.length > 0) {
+        const message = `Referenced CSS classes not found in ${cssModulePath}: ${missingClasses.join(", ")}`
+        expect(missingClasses, message).toEqual([])
+      }
+    })
+  })
+})

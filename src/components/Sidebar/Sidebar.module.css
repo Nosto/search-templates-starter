@@ -87,12 +87,6 @@
   margin: 0;
 }
 
-.count {
-  white-space: nowrap;
-  vertical-align: baseline;
-  line-height: var(--ns-line-height-tiny);
-}
-
 .clearFilters {
   margin-top: auto;
   padding: var(--ns-space-4);

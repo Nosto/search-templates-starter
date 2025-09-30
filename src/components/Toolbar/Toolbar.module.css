@@ -57,3 +57,7 @@
   opacity: 0.3;
   justify-content: end !important;
 }
+
+.sortMenu {
+  min-width: auto;
+}
