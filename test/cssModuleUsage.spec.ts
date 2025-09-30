@@ -75,32 +75,14 @@ function extractReferencedClassNames(tsxContent: string) {
     classes.add(match[2])
   }
 
-  // Match both styles[variable] and style[variable] patterns - extract from JSX
-  const dynamicRegex = /(?<!\.)(\bstyles?\[([^\]]+)\])/g
-  while ((match = dynamicRegex.exec(tsxContent)) !== null) {
-    const variable = match[2].replace(/['"]/g, "")
-
-    // If it's a string literal, add it directly
-    if (/^['"]/.test(match[2])) {
-      classes.add(variable)
-    } else {
-      // For variables like `name` in styles[name], try to find their possible values
-      // Look for type definitions or string literals that might be the values
-      const variablePattern = new RegExp(`${variable}.*?[=:].*?["']([^"']+)["']`, "g")
-      let valueMatch
-      while ((valueMatch = variablePattern.exec(tsxContent)) !== null) {
-        classes.add(valueMatch[1])
-      }
-    }
-  }
-
   return Array.from(classes)
 }
 
 const srcPath = join(process.cwd(), "src")
-const cssModuleFiles = findAllCssModuleFiles(srcPath, process.cwd()).filter(file => !file.includes("Icon.module.css"))
 
 describe("CSS Module Class Usage", () => {
+  const cssModuleFiles = findAllCssModuleFiles(srcPath, process.cwd()).filter(file => !file.includes("Icon.module.css"))
+
   cssModuleFiles.forEach(cssModulePath => {
     it(`should use all classes from ${cssModulePath}`, () => {
       const fullCssPath = join(process.cwd(), cssModulePath)
