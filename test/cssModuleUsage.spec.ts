@@ -110,10 +110,7 @@ describe("CSS Module Class Usage", () => {
       const tsxFiles = findTsxFilesImportingCssModule(cssModulePath, process.cwd())
       expect(tsxFiles.length).toBeGreaterThan(0)
 
-      let combinedTsxContent = ""
-      for (const tsxPath of tsxFiles) {
-        combinedTsxContent += readFileSync(tsxPath, "utf-8") + "\n"
-      }
+      const combinedTsxContent = tsxFiles.map(tsxPath => readFileSync(tsxPath, "utf-8")).join("\n")
 
       const unusedClasses = classNames.filter(className => !checkClassUsageInTsx(combinedTsxContent, className))
 
