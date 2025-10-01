@@ -9,17 +9,19 @@ export default function SelectedFilters() {
     filters.length > 0 && (
       <div className={styles.wrapper}>
         <div className={styles.container}>
-          {filters.map(filter => (
-            <Pill
-              key={`${filter?.name}: ${filter?.value}`}
-              onClick={e => {
-                e.preventDefault()
-                filter?.remove()
-              }}
-            >
-              {filter?.value}
-            </Pill>
-          ))}
+          {filters.map(filter =>
+            filter ? (
+              <Pill
+                key={`${filter.name}: ${filter.value}`}
+                onClick={e => {
+                  e.preventDefault()
+                  filter.remove()
+                }}
+              >
+                {filter.name}: {filter.value}
+              </Pill>
+            ) : null
+          )}
         </div>
       </div>
     )
