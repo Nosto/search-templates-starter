@@ -3,33 +3,36 @@
   flex-wrap: wrap;
   align-items: center;
   padding: var(--ns-space-2);
+  border-bottom: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
 }
 
 .container {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  position: relative;
-  width: 100%;
-  flex: 0 0 83.333333%;
-  max-width: 83.333333%;
+  flex-direction: column;
   gap: var(--ns-space-3);
+  padding: var(--ns-space-2);
 }
 
-.filterGroup {
+.group {
   display: flex;
   flex-direction: column;
   gap: var(--ns-space-1);
   align-items: flex-start;
 }
 
-.filterName {
-  font-weight: 600;
-  color: var(--ns-color-text-primary);
-  font-size: var(--ns-font-size-sm);
+.name {
+  color: var(--ns-color-black);
+  font-size: var(--ns-font-size-4);
+}
+.header {
+  color: var(--ns-color-black);
+  font-size: var(--ns-font-size-5);
+  padding: var(--ns-space-2);
 }
 
-.filterValues {
+.values {
   display: flex;
   flex-wrap: wrap;
   gap: var(--ns-space-1);
