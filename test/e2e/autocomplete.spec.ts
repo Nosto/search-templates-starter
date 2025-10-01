@@ -20,6 +20,8 @@ test.describe("Autocomplete", () => {
     await searchInput.fill("ru")
     await expect(dropdown).not.toContainText("running shoes")
 
+    await searchInput.fill("run")
+
     // add fourth character to make sure debounce delay is over
     await searchInput.fill("runn")
 
