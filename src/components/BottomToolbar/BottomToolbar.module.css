@@ -17,6 +17,12 @@
 
 @media (min-width: 375px) {
   .container {
-    justify-content: space-between;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .container > :last-child {
+    position: absolute;
+    right: 0;
   }
 }
