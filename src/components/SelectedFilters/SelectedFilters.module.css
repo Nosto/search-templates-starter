@@ -25,6 +25,7 @@
 .name {
   color: var(--ns-color-black);
   font-size: var(--ns-font-size-4);
+  text-transform: capitalize;
 }
 .header {
   color: var(--ns-color-black);
