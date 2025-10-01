@@ -1,5 +1,4 @@
 import { useRange } from "@nosto/search-js/preact/hooks"
-import { useState } from "preact/hooks"
 import DualRange from "@/elements/DualRange/DualRange"
 import Icon from "@/elements/Icon/Icon"
 import { SearchStatsFacet } from "@nosto/nosto-js/client"
@@ -11,21 +10,20 @@ type Props = {
 }
 
 export default function RangeFacet({ facet }: Props) {
-  const { min, max, range, updateRange } = useRange(facet.id)
+  const { min, max, range, updateRange, active, toggleActive } = useRange(facet.id)
   const isSelected = min !== range[0] || max !== range[1]
-  const [active, setActive] = useState(isSelected)
 
   return (
     <li className={cl(styles.dropdown, active && styles.active)}>
       <button
         className={styles.anchor}
         onClick={() => {
-          setActive(!active)
+          toggleActive()
         }}
         onKeyDown={e => {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault()
-            setActive(!active)
+            toggleActive()
           }
         }}
         aria-controls={`${facet.id}-range-menu`}
