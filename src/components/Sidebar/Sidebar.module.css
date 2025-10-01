@@ -1,8 +1,8 @@
 .close {
   border: var(--ns-border-width-none);
   max-width: var(--ns-width-mobile-close-sidebar);
-  top: var(--ns-space-10);
-  right: var(--ns-space-10);
+  top: var(--ns-space-4);
+  right: var(--ns-space-4);
   position: absolute;
   display: block;
   text-align: right;
