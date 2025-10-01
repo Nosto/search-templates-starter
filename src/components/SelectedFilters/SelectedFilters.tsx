@@ -17,7 +17,7 @@ export default function SelectedFilters() {
                 filter?.remove()
               }}
             >
-              {filter?.value}
+              {filter?.name}: {filter?.value}
             </Pill>
           ))}
         </div>
