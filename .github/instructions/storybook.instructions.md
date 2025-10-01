@@ -1,5 +1,5 @@
 ---
-applyTo: "**/*.stories.ts"
+applyTo: "**/*.stories.tsx"
 ---
 
 # Storybook Stories
