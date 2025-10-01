@@ -45,7 +45,7 @@ export default function TermsFacet({ facet }: Props) {
                 toggleProductFilter(facet.field, value.value, !value.selected)
               }}
             >
-              {value.value} ({value.count})
+              {value.value} <span className={styles.pillCount}>({value.count})</span>
             </Pill>
           ))}
         </div>

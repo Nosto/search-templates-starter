@@ -13,6 +13,7 @@
 
 .pill:hover {
   background-color: var(--ns-color-grey);
+  color: var(--ns-color-white);
 }
 
 .pill.selected {
