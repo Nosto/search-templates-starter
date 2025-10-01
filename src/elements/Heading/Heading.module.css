@@ -1,5 +1,5 @@
 .heading {
   font-weight: bold;
-  margin: var(--ns-space-2) var(--ns-space-1);
+  margin: var(--ns-space-2) var(--ns-space-1) var(--ns-space-2) 0;
   color: var(--ns-color-black);
 }
