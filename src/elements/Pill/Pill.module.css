@@ -1,5 +1,7 @@
 .pill {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: var(--ns-space-2) var(--ns-space-3);
   background-color: var(--ns-color-grey-light);
   color: var(--ns-color-black);
@@ -12,7 +14,7 @@
 }
 
 .pill:hover {
-  background-color: var(--ns-color-grey);
+  background-color: var(--ns-color-black);
   color: var(--ns-color-white);
 }
 
