@@ -12,4 +12,5 @@ applyTo: "**/*.ts,**/*.tsx"
 - Favor named exports over default exports
 - Avoid using `any` in TypeScript; prefer specific types or `unknown`
 - Use ES2020 level features and syntax conventions
+- Favor functional programming style with array methods like map, filter, reduce, etc.
 - **Avoid adding unnecessary comments** - only add comments when explicitly instructed or when complex logic needs explanation
