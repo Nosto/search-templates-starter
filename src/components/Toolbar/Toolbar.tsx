@@ -1,6 +1,6 @@
-import { useNostoAppState, useSelectedFiltersCount, useSort } from "@nosto/search-js/preact/hooks"
+import { useNostoAppState, useSelectedFiltersCount, useSort, useSizeOptions } from "@nosto/search-js/preact/hooks"
 import { pick } from "@nosto/search-js/utils"
-import { sortOptions } from "@/config"
+import { sortOptions, defaultConfig, sizes } from "@/config"
 import Icon from "@/elements/Icon/Icon"
 import Select from "@/elements/Select/Select"
 import style from "./Toolbar.module.css"
@@ -28,11 +28,10 @@ function ToggleSidebarButton({ selectedFiltersCount, className }: Props) {
 }
 
 export default function Toolbar() {
-  const { loading, response } = useNostoAppState(state => pick(state, "loading", "response"))
+  const { loading } = useNostoAppState(state => pick(state, "loading"))
   const { activeSort, setSort } = useSort(sortOptions)
   const selectedFiltersCount = useSelectedFiltersCount()
-
-  const docCount = response.products?.total ?? 0
+  const { from, to, total } = useSizeOptions(sizes, defaultConfig.serpSize)
 
   const options = sortOptions.map(o => ({ value: o.id, label: o.value.name }))
 
@@ -44,7 +43,7 @@ export default function Toolbar() {
       <div className={style.rightSide}>
         {!loading && (
           <span className={style.total} data-nosto-element="totalResults">
-            {docCount} products
+            {from} - {total < to ? total : to} of {total} items
           </span>
         )}
         <Select
