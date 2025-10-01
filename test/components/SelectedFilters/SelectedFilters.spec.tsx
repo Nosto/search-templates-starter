@@ -39,10 +39,13 @@ describe("SelectedFilters", () => {
       removeAll: vi.fn()
     })
 
-    const { getByRole } = render(<SelectedFilters />)
+    const { getByRole, getByText } = render(<SelectedFilters />)
+
+    const filterName = getByText("Color:")
+    expect(filterName).toBeTruthy()
 
     const button = getByRole("button")
-    expect(button.textContent).toBe("Color: red")
+    expect(button.textContent).toBe("red")
   })
 
   it("displays multiple filters with their names and values", () => {
@@ -79,12 +82,18 @@ describe("SelectedFilters", () => {
       removeAll: vi.fn()
     })
 
-    const { getAllByRole } = render(<SelectedFilters />)
+    const { getAllByRole, getByText } = render(<SelectedFilters />)
+
+    // Check filter group names
+    const colorName = getByText("Color:")
+    const priceName = getByText("Price Range:")
+    expect(colorName).toBeTruthy()
+    expect(priceName).toBeTruthy()
 
     const buttons = getAllByRole("button")
     expect(buttons).toHaveLength(2)
-    expect(buttons[0].textContent).toBe("Color: red")
-    expect(buttons[1].textContent).toBe("Price Range: 50 - 150")
+    expect(buttons[0].textContent).toBe("red")
+    expect(buttons[1].textContent).toBe("50 - 150")
   })
 
   it("calls remove function when filter pill is clicked", () => {
@@ -129,11 +138,54 @@ describe("SelectedFilters", () => {
       removeAll: vi.fn()
     })
 
-    const { getAllByRole, container } = render(<SelectedFilters />)
+    const { getAllByRole, container, getByText } = render(<SelectedFilters />)
+
+    const sizeName = getByText("Size:")
+    expect(sizeName).toBeTruthy()
 
     const buttons = getAllByRole("button")
     expect(buttons).toHaveLength(1)
-    expect(buttons[0].textContent).toBe("Size: Large")
+    expect(buttons[0].textContent).toBe("Large")
     expect(container.textContent).not.toContain("undefined")
+  })
+
+  it("groups multiple values under the same filter name", () => {
+    const mockRemove1 = vi.fn()
+    const mockRemove2 = vi.fn()
+    mockUseProductFilters.mockReturnValue({
+      filters: [
+        {
+          name: "Color",
+          value: "red",
+          field: "color",
+          filter: {
+            range: undefined
+          },
+          remove: mockRemove1
+        },
+        {
+          name: "Color",
+          value: "blue",
+          field: "color",
+          filter: {
+            range: undefined
+          },
+          remove: mockRemove2
+        }
+      ],
+      removeAll: vi.fn()
+    })
+
+    const { getAllByRole, getByText } = render(<SelectedFilters />)
+
+    // Should only have one "Color:" header
+    const colorName = getByText("Color:")
+    expect(colorName).toBeTruthy()
+
+    // Should have two buttons for the values
+    const buttons = getAllByRole("button")
+    expect(buttons).toHaveLength(2)
+    expect(buttons[0].textContent).toBe("red")
+    expect(buttons[1].textContent).toBe("blue")
   })
 })

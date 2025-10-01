@@ -5,23 +5,45 @@ import Pill from "@/elements/Pill/Pill"
 export default function SelectedFilters() {
   const { filters } = useProductFilters()
 
+  // Group filters by name
+  const groupedFilters = filters.reduce(
+    (groups, filter) => {
+      if (!filter) return groups
+
+      const name = filter.name
+      if (!groups[name]) {
+        groups[name] = []
+      }
+      groups[name].push(filter)
+      return groups
+    },
+    {} as Record<string, typeof filters>
+  )
+
+  const hasFilters = Object.keys(groupedFilters).length > 0
+
   return (
-    filters.length > 0 && (
+    hasFilters && (
       <div className={styles.wrapper}>
         <div className={styles.container}>
-          {filters.map(filter =>
-            filter ? (
-              <Pill
-                key={`${filter.name}: ${filter.value}`}
-                onClick={e => {
-                  e.preventDefault()
-                  filter.remove()
-                }}
-              >
-                {filter.name}: {filter.value}
-              </Pill>
-            ) : null
-          )}
+          {Object.entries(groupedFilters).map(([name, filtersInGroup]) => (
+            <div key={name} className={styles.filterGroup}>
+              <div className={styles.filterName}>{name}:</div>
+              <div className={styles.filterValues}>
+                {filtersInGroup.map(filter => (
+                  <Pill
+                    key={`${filter!.name}: ${filter!.value}`}
+                    onClick={e => {
+                      e.preventDefault()
+                      filter!.remove()
+                    }}
+                  >
+                    {filter!.value}
+                  </Pill>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     )
