@@ -89,8 +89,7 @@ export default function RangeFilterDropdown({ facet }: Props) {
   return (
     <div className={styles.dropdown} ref={dropdownRef}>
       <FilterTrigger
-        label={facet.name}
-        value={formatDisplayValue()}
+        value={formatDisplayValue() || facet.name}
         isOpen={isOpen}
         onClick={toggleDropdown}
         onKeyDown={handleKeyDown}
