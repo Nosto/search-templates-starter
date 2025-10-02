@@ -40,12 +40,13 @@ export default function TermsFacet({ facet }: Props) {
             <Pill
               key={value.value}
               selected={value.selected}
+              secondary={`(${value.count})`}
               onClick={e => {
                 e.preventDefault()
                 toggleProductFilter(facet.field, value.value, !value.selected)
               }}
             >
-              {value.value} ({value.count})
+              {value.value}
             </Pill>
           ))}
         </div>

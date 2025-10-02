@@ -1,5 +1,7 @@
 .pill {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: var(--ns-space-2) var(--ns-space-3);
   background-color: var(--ns-color-grey-light);
   color: var(--ns-color-black);
@@ -11,15 +13,18 @@
   transition: background-color 0.2s ease;
 }
 
-.pill:hover {
-  background-color: var(--ns-color-grey);
-}
-
-.pill.selected {
+.pill.selected, .pill:hover {
   background-color: var(--ns-color-black);
   color: var(--ns-color-white);
 }
 
-.pill.selected:hover {
-  background-color: var(--ns-color-black);
+.secondary {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: var(--ns-font-size-2);
+  color: var(--ns-color-grey-dark);
+}
+
+.pill.selected .secondary, .pill:hover .secondary {
+  color: var(--ns-color-grey);
 }
