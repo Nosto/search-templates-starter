@@ -14,7 +14,6 @@
   cursor: pointer;
   border: none;
   border-radius: var(--ns-border-radius-pill);
-  width: var(--ns-width-select);
   background-color: var(--ns-color-grey-light);
   transition: background-color 0.2s ease;
 }
