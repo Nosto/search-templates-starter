@@ -48,7 +48,6 @@ export default function TermsFilterDropdown({ facet }: Props) {
     <div className={styles.dropdown} ref={dropdownRef}>
       <FilterTrigger
         label={facet.name}
-        badge={selectedFiltersCount}
         isOpen={isOpen}
         onClick={toggleDropdown}
         onKeyDown={handleKeyDown}

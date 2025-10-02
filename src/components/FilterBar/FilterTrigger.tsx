@@ -4,14 +4,13 @@ import styles from "./FilterTrigger.module.css"
 interface FilterTriggerProps {
   label: string
   value?: string
-  badge?: number
   isOpen: boolean
   onClick: () => void
-  onKeyDown: (e: any) => void
+  onKeyDown: (e: KeyboardEvent) => void
   ariaLabel: string
 }
 
-function FilterTrigger({ label, value, badge, isOpen, onClick, onKeyDown, ariaLabel }: FilterTriggerProps) {
+function FilterTrigger({ label, value, isOpen, onClick, onKeyDown, ariaLabel }: FilterTriggerProps) {
   return (
     <button
       className={styles.trigger}
@@ -24,7 +23,6 @@ function FilterTrigger({ label, value, badge, isOpen, onClick, onKeyDown, ariaLa
     >
       <span className={styles.label}>{label}</span>
       {value && <span className={styles.value}>{value}</span>}
-      {badge !== undefined && badge > 0 && <span className={styles.badge}>{badge}</span>}
       <Icon name={isOpen ? "arrow-up" : "arrow-down"} />
     </button>
   )
