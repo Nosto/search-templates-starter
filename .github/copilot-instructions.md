@@ -8,10 +8,8 @@ This is a Preact-based search interface starter template using `@nosto/search-js
 
 ## Storybook Validation
 
-- Start Storybook locally: `npm run storybook`
+- Start Storybook: `npm run storybook`
 - Navigate to http://localhost:6060
-- Build Storybook: `npm run storybook:build`
-- **Published Storybook**: Available at https://nosto.github.io/search-templates-starter/storybook/ (automatically deployed on main branch pushes)
 - Verify component props, stories, and documentation render correctly
 - **When taking Storybook screenshots, always close the controls section first** using the "Hide addons [alt A]" button for cleaner screenshots and **wait for `#storybook-root .storybook-wrapper` to be available** before capturing the screenshot
 
