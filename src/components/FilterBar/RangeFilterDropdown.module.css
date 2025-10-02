@@ -21,7 +21,7 @@
 
 .trigger:hover {
   border-color: var(--ns-color-primary);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
 }
 
 .trigger:focus {
@@ -47,7 +47,7 @@
   background: var(--ns-color-white);
   border: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
   border-radius: var(--ns-border-radius-3);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
   margin-top: var(--ns-space-1);
   overflow: hidden;
 }
@@ -65,7 +65,7 @@
   align-items: center;
   padding: var(--ns-space-3) var(--ns-space-4);
   border-bottom: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
-  background: var(--ns-color-grey-lightest);
+  background: var(--ns-color-grey-light);
 }
 
 .rangeLabel {
@@ -120,5 +120,5 @@
 .actions {
   padding: var(--ns-space-3) var(--ns-space-4);
   border-top: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
-  background: var(--ns-color-grey-lightest);
+  background: var(--ns-color-grey-light);
 }
