@@ -91,4 +91,5 @@
   margin-top: auto;
   padding: var(--ns-space-4);
   border-top: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
+  text-align: center;
 }
