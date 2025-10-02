@@ -8,8 +8,6 @@
   border-radius: var(--ns-border-radius-3);
   cursor: pointer;
   font-size: var(--ns-font-size-4);
-  color: var(--ns-color-black);
-  min-width: 120px;
   justify-content: space-between;
 }
 
@@ -18,8 +16,5 @@
   outline-offset: 2px;
 }
 
-.value {
-  color: var(--ns-color-grey-dark);
-  font-size: var(--ns-font-size-3);
-}
+
 

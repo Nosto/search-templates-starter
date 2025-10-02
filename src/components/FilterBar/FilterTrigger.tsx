@@ -20,7 +20,7 @@ function FilterTrigger({ value, isOpen, onClick, onKeyDown, ariaLabel }: FilterT
       aria-label={ariaLabel}
       type="button"
     >
-      {value && <span className={styles.value}>{value}</span>}
+      {value && <span>{value}</span>}
       <Icon name={isOpen ? "arrow-up" : "arrow-down"} />
     </button>
   )
