@@ -2,6 +2,7 @@ import { defaultConfig } from "@/config"
 import { useActions, useNostoAppState } from "@nosto/search-js/preact/hooks"
 import { getCurrentUrlState } from "@/mapping/url/getCurrentUrlState"
 import { updateUrl } from "@/mapping/url/updateUrl"
+import { isEarlySearchExecuted } from "@/search/earlySearch"
 
 import { useEffect } from "preact/hooks"
 
@@ -19,6 +20,12 @@ export default function SearchQueryHandler() {
 
   // Initialize search from URL on first load
   useEffect(() => {
+    // Skip initialization if early search was already executed
+    if (isEarlySearchExecuted()) {
+      console.debug("Skipping SearchQueryHandler initialization - early search already executed")
+      return
+    }
+
     const { query, page, size: urlSize, filter, sort } = getCurrentUrlState()
     if (query) {
       const size = urlSize ?? defaultConfig.serpSize

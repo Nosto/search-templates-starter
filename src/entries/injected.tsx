@@ -17,6 +17,7 @@ import { tagging } from "@/mapping/tagging"
 import { nostojs } from "@nosto/nosto-js"
 import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import { getInitialQuery } from "@/mapping/url/getInitialQuery"
+import { initEarlySearch } from "@/search/earlySearch"
 
 type Props = {
   onSubmit: (input: string) => void
@@ -115,6 +116,11 @@ function CategoryApp() {
 
 async function init() {
   await new Promise(nostojs)
+
+  // Execute early search immediately after Nosto SDK is ready
+  // This happens before component mounting for faster search execution
+  initEarlySearch()
+
   const serpElement = document.querySelector<HTMLElement>("#serp")
   if (serpElement) {
     switch (tagging.pageType()) {
