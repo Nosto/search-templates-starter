@@ -17,6 +17,7 @@ import { tagging } from "@/mapping/tagging"
 import { nostojs } from "@nosto/nosto-js"
 import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import { getInitialQuery } from "@/mapping/url/getInitialQuery"
+import { waitForElement, waitForElements } from "@/utils/waitForElement"
 
 type Props = {
   onSubmit: (input: string) => void
@@ -25,55 +26,88 @@ type Props = {
 function Autocomplete({ onSubmit }: Props) {
   const [input, setInput] = useState<string>(getInitialQuery())
   const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false)
-
-  // TODO: wait for elements is missing
-  const dropdownElement = document.querySelector<HTMLElement>("#dropdown")!
-  const searchInput = document.querySelector<HTMLInputElement>("#search")!
-  const searchForm = document.querySelector<HTMLFormElement>("#search-form")!
+  const [elements, setElements] = useState<{
+    dropdownElement: HTMLElement | null
+    searchInput: HTMLInputElement | null
+    searchForm: HTMLFormElement | null
+  }>({
+    dropdownElement: null,
+    searchInput: null,
+    searchForm: null
+  })
 
   useEffect(() => {
-    searchInput.value = getInitialQuery()
-    disableNativeAutocomplete(searchInput)
-  }, [searchInput])
+    const loadElements = async () => {
+      try {
+        const [dropdownElement, searchInput, searchForm] = await waitForElements<HTMLElement>([
+          "#dropdown",
+          "#search",
+          "#search-form"
+        ])
+        setElements({
+          dropdownElement,
+          searchInput: searchInput as HTMLInputElement,
+          searchForm: searchForm as HTMLFormElement
+        })
+      } catch (error) {
+        console.error("Failed to load required elements:", error)
+      }
+    }
+    loadElements()
+  }, [])
+
+  useEffect(() => {
+    if (elements.searchInput) {
+      elements.searchInput.value = getInitialQuery()
+      disableNativeAutocomplete(elements.searchInput)
+    }
+  }, [elements.searchInput])
 
   useDebouncedSearch({ input })
 
   // TODO convert to custom hook
   const onClickOutside = useCallback(
     (event: Event) => {
-      if (event.target !== searchInput && !dropdownElement.contains(event.target as Node)) {
+      if (
+        elements.searchInput &&
+        elements.dropdownElement &&
+        event.target !== elements.searchInput &&
+        !elements.dropdownElement.contains(event.target as Node)
+      ) {
         setShowAutocomplete(false)
       }
     },
-    [searchInput, dropdownElement]
+    [elements.searchInput, elements.dropdownElement]
   )
 
   useDomEvents(showAutocomplete ? document.body : null, {
     onClick: onClickOutside
   })
 
-  useDomEvents(searchInput, {
-    onInput: () => setInput(searchInput.value),
+  useDomEvents(elements.searchInput, {
+    onInput: () => elements.searchInput && setInput(elements.searchInput.value),
     onFocus: () => setShowAutocomplete(true)
   })
 
   const onSearchSubmit = (query: string) => {
-    if (query.trim()) {
-      searchInput.value = query
-      searchInput.blur()
+    if (query.trim() && elements.searchInput) {
+      elements.searchInput.value = query
+      elements.searchInput.blur()
       onSubmit(query)
       setShowAutocomplete(false)
     }
   }
 
-  useDomEvents(searchForm, {
+  useDomEvents(elements.searchForm, {
     onSubmit: e => {
       e.preventDefault()
       onSearchSubmit(input)
     }
   })
 
-  return createPortal(<>{showAutocomplete && <Results onSubmit={onSearchSubmit} />}</>, dropdownElement)
+  return elements.dropdownElement
+    ? createPortal(<>{showAutocomplete && <Results onSubmit={onSearchSubmit} />}</>, elements.dropdownElement)
+    : null
 }
 
 function SerpApp() {
@@ -115,8 +149,8 @@ function CategoryApp() {
 
 async function init() {
   await new Promise(nostojs)
-  const serpElement = document.querySelector<HTMLElement>("#serp")
-  if (serpElement) {
+  try {
+    const serpElement = await waitForElement<HTMLElement>("#serp")
     switch (tagging.pageType()) {
       case "category":
         render(<CategoryApp />, serpElement)
@@ -130,6 +164,8 @@ async function init() {
           serpElement
         )
     }
+  } catch (error) {
+    console.error("Failed to find #serp element:", error)
   }
 }
 init()

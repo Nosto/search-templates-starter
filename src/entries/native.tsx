@@ -11,6 +11,7 @@ import Category from "@/components/Category/Category"
 import { tagging } from "@/mapping/tagging"
 import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import { nostojs } from "@nosto/nosto-js"
+import { waitForElement } from "@/utils/waitForElement"
 
 function SerpApp() {
   return (
@@ -37,12 +38,17 @@ function CategoryApp() {
 
 async function init() {
   await new Promise(nostojs)
-  const App = tagging.pageType() === "category" ? CategoryApp : SerpApp
-  render(
-    <ErrorBoundary>
-      <App />
-    </ErrorBoundary>,
-    document.getElementById("app")!
-  )
+  try {
+    const appElement = await waitForElement<HTMLElement>("#app")
+    const App = tagging.pageType() === "category" ? CategoryApp : SerpApp
+    render(
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>,
+      appElement
+    )
+  } catch (error) {
+    console.error("Failed to find #app element:", error)
+  }
 }
 init()
