@@ -100,6 +100,15 @@ describe("URL utilities", () => {
       expectSort([]).toBeNull()
     })
 
+    it("omits sort parameter when state.sort matches defaultConfig.sort", () => {
+      // Default sort is { field: "_score", order: "desc" }
+      expectSort([{ field: "_score", order: "desc" }]).toBeNull()
+    })
+
+    it("includes sort parameter when state.sort differs from defaultConfig.sort", () => {
+      expectSort([{ field: "price", order: "asc" }]).toBe("price~asc")
+    })
+
     it("encodes field names with tildes and commas", () => {
       expectSort([{ field: "my~field,test", order: "asc" }]).toBe("my%7Efield%2Ctest~asc")
     })
