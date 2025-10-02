@@ -11,6 +11,7 @@ import Category from "@/components/Category/Category"
 import { tagging } from "@/mapping/tagging"
 import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import { nostojs } from "@nosto/nosto-js"
+import { initializeEarlySearch } from "@/utils/earlySearchManager"
 
 function SerpApp() {
   return (
@@ -37,6 +38,10 @@ function CategoryApp() {
 
 async function init() {
   await new Promise(nostojs)
+
+  // Initialize early search system after Nosto SDK is ready
+  initializeEarlySearch()
+
   const App = tagging.pageType() === "category" ? CategoryApp : SerpApp
   render(
     <ErrorBoundary>

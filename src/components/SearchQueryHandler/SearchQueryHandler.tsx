@@ -1,7 +1,8 @@
 import { defaultConfig } from "@/config"
 import { useActions, useNostoAppState } from "@nosto/search-js/preact/hooks"
-import { getCurrentUrlState } from "@/mapping/url/getCurrentUrlState"
 import { updateUrl } from "@/mapping/url/updateUrl"
+import { getSearchConfigFromCurrentUrl } from "@/mapping/url/urlToSearchConfig"
+import { hasTriggeredInitialSearch, onEarlySearchTriggered, markSearchCompleted } from "@/utils/earlySearchManager"
 
 import { useEffect } from "preact/hooks"
 
@@ -17,24 +18,22 @@ export default function SearchQueryHandler() {
     sort: state.query?.products?.sort
   }))
 
-  // Initialize search from URL on first load
+  // Initialize search from URL on first load or hydrate from early search
   useEffect(() => {
-    const { query, page, size: urlSize, filter, sort } = getCurrentUrlState()
-    if (query) {
-      const size = urlSize ?? defaultConfig.serpSize
-      const from = page ? (page - 1) * size : 0
-
-      const searchConfig = {
-        query,
-        products: {
-          size,
-          from,
-          filter,
-          sort
-        }
+    // Check if early search system already triggered the initial search
+    if (hasTriggeredInitialSearch()) {
+      // Early search was triggered, listen for it to complete the hydration
+      const unsubscribe = onEarlySearchTriggered(searchConfig => {
+        newSearch(searchConfig)
+        markSearchCompleted()
+      })
+      return unsubscribe
+    } else {
+      // Fallback: trigger search manually if early search didn't happen
+      const searchConfig = getSearchConfigFromCurrentUrl()
+      if (searchConfig) {
+        newSearch(searchConfig)
       }
-
-      newSearch(searchConfig)
     }
   }, [newSearch])
 

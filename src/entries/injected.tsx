@@ -11,12 +11,14 @@ import { disableNativeAutocomplete } from "@nosto/search-js/utils"
 import { useDomEvents } from "@/hooks/useDomEvents"
 import { useDebouncedSearch } from "@/hooks/useDebouncedSearch"
 import { useActions } from "@nosto/search-js/preact/hooks"
+import { useAutocompleteDOMElements } from "@/hooks/useDOMElements"
 import Category from "@/components/Category/Category"
 import { CategoryPageProvider } from "@nosto/search-js/preact/category"
 import { tagging } from "@/mapping/tagging"
 import { nostojs } from "@nosto/nosto-js"
 import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import { getInitialQuery } from "@/mapping/url/getInitialQuery"
+import { initializeEarlySearch } from "@/utils/earlySearchManager"
 
 type Props = {
   onSubmit: (input: string) => void
@@ -25,55 +27,78 @@ type Props = {
 function Autocomplete({ onSubmit }: Props) {
   const [input, setInput] = useState<string>(getInitialQuery())
   const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false)
-
-  // TODO: wait for elements is missing
-  const dropdownElement = document.querySelector<HTMLElement>("#dropdown")!
-  const searchInput = document.querySelector<HTMLInputElement>("#search")!
-  const searchForm = document.querySelector<HTMLFormElement>("#search-form")!
+  const { getElements } = useAutocompleteDOMElements()
 
   useEffect(() => {
-    searchInput.value = getInitialQuery()
-    disableNativeAutocomplete(searchInput)
-  }, [searchInput])
+    const elements = getElements()
+    if (elements?.searchInput) {
+      elements.searchInput.value = getInitialQuery()
+      disableNativeAutocomplete(elements.searchInput)
+    }
+  }, [getElements])
 
   useDebouncedSearch({ input })
 
   // TODO convert to custom hook
   const onClickOutside = useCallback(
     (event: Event) => {
-      if (event.target !== searchInput && !dropdownElement.contains(event.target as Node)) {
+      const elements = getElements()
+      if (!elements?.searchInput || !elements?.dropdownElement) return
+
+      if (event.target !== elements.searchInput && !elements.dropdownElement.contains(event.target as Node)) {
         setShowAutocomplete(false)
       }
     },
-    [searchInput, dropdownElement]
+    [getElements]
   )
 
   useDomEvents(showAutocomplete ? document.body : null, {
     onClick: onClickOutside
   })
 
-  useDomEvents(searchInput, {
-    onInput: () => setInput(searchInput.value),
-    onFocus: () => setShowAutocomplete(true)
-  })
+  const onSearchSubmit = useCallback(
+    (query: string) => {
+      if (query.trim()) {
+        const elements = getElements()
+        if (elements?.searchInput) {
+          elements.searchInput.value = query
+          elements.searchInput.blur()
+        }
+        onSubmit(query)
+        setShowAutocomplete(false)
+      }
+    },
+    [getElements, onSubmit]
+  )
 
-  const onSearchSubmit = (query: string) => {
-    if (query.trim()) {
-      searchInput.value = query
-      searchInput.blur()
-      onSubmit(query)
-      setShowAutocomplete(false)
-    }
-  }
+  // Use effect to set up DOM event listeners after elements are available
+  useEffect(() => {
+    const elements = getElements()
+    if (!elements?.searchInput || !elements?.searchForm) return
 
-  useDomEvents(searchForm, {
-    onSubmit: e => {
+    const handleInput = () => setInput(elements.searchInput!.value)
+    const handleFocus = () => setShowAutocomplete(true)
+    const handleFormSubmit = (e: Event) => {
       e.preventDefault()
       onSearchSubmit(input)
     }
-  })
 
-  return createPortal(<>{showAutocomplete && <Results onSubmit={onSearchSubmit} />}</>, dropdownElement)
+    elements.searchInput.addEventListener("input", handleInput)
+    elements.searchInput.addEventListener("focus", handleFocus)
+    elements.searchForm.addEventListener("submit", handleFormSubmit)
+
+    return () => {
+      elements.searchInput!.removeEventListener("input", handleInput)
+      elements.searchInput!.removeEventListener("focus", handleFocus)
+      elements.searchForm!.removeEventListener("submit", handleFormSubmit)
+    }
+  }, [getElements, input, onSearchSubmit])
+
+  // Only render portal if dropdown element is available
+  const elements = getElements()
+  if (!elements?.dropdownElement) return null
+
+  return createPortal(<>{showAutocomplete && <Results onSubmit={onSearchSubmit} />}</>, elements.dropdownElement)
 }
 
 function SerpApp() {
@@ -115,6 +140,10 @@ function CategoryApp() {
 
 async function init() {
   await new Promise(nostojs)
+
+  // Initialize early search system after Nosto SDK is ready
+  initializeEarlySearch()
+
   const serpElement = document.querySelector<HTMLElement>("#serp")
   if (serpElement) {
     switch (tagging.pageType()) {

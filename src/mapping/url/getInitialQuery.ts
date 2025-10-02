@@ -1,7 +1,6 @@
-import { getCurrentUrlState } from "./getCurrentUrlState"
-
-const initialUrlState = getCurrentUrlState()
+import { getEarlyUrlState } from "./earlyUrlState"
 
 export function getInitialQuery() {
-  return initialUrlState.query || ""
+  const urlState = getEarlyUrlState()
+  return urlState.query || ""
 }
