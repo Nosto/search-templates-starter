@@ -1,0 +1,16 @@
+.filterBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ns-space-2);
+  align-items: center;
+  padding: var(--ns-space-4) 0;
+  border-bottom: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
+}
+
+@media only screen and (max-width: 767px) {
+  .filterBar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--ns-space-1);
+  }
+}
