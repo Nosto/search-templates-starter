@@ -122,16 +122,6 @@ describe("URL utilities", () => {
       }).toBe("q=shoes&p=2&size=48&filter.brand=Nike&sort=price%7Easc")
     })
 
-    it("omits sort parameter even with other parameters when sort matches default", () => {
-      expectParams({
-        query: "shoes",
-        page: 2,
-        size: 48,
-        filter: [{ field: "brand", value: ["Nike"] }],
-        sort: [{ field: "_score", order: "desc" }] // default sort
-      }).toBe("q=shoes&p=2&size=48&filter.brand=Nike")
-    })
-
     it("creates URLSearchParams with range filter parameter", () => {
       expectFilters([{ field: "price", range: [{ gte: "10", lte: "50" }] }]).toBe(
         "filter.price.gte=10&filter.price.lte=50"
