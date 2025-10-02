@@ -30,6 +30,7 @@
 }
 
 .anchor {
+  font-family: inherit;
   cursor: pointer;
   display: inline-block;
   position: relative;

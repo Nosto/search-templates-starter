@@ -5,6 +5,10 @@ import { SearchPageProvider } from "@nosto/search-js/preact/serp"
 import { StoryFn } from "@storybook/preact-vite"
 import { AutocompletePageProvider } from "@nosto/search-js/preact/autocomplete"
 
+export function withWrapperStyles(story: StoryFn) {
+  return h("div", { style: "font-family: var(--ns-font-family);", children: h(story, {}) })
+}
+
 /**
  * A decorator that wraps a story in a SearchPageProvider with mock data.
  */

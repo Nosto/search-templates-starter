@@ -22,7 +22,7 @@
   color: var(--ns-color-black);
   font-family: inherit;
   font-weight: var(--ns-weight-regular);
-  font-size: var(--ns-font-size-5);
+  font-size: var(--ns-font-size-4);
   text-overflow: ellipsis;
   white-space: nowrap;
   text-align: left;

@@ -15,6 +15,8 @@
   border-radius: var(--ns-border-radius-3);
   box-shadow: var(--ns-box-shadow-autocomplete);
   width: calc(100% - var(--ns-width-autocomplete-offset));
+  font-family: var(--ns-font-family);
+  font-size: var(--ns-font-size-4);
 }
 
 @media only screen and (min-width: 768px) {

@@ -1,5 +1,6 @@
 import type { Preview } from "@storybook/preact-vite"
 import "../src/variable.css"
+import { withWrapperStyles } from "./decorators"
 
 export default {
   parameters: {
@@ -9,5 +10,6 @@ export default {
         date: /Date$/i
       }
     }
-  }
+  },
+  decorators: [withWrapperStyles]
 } as Preview
