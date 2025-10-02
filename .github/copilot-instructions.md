@@ -6,17 +6,6 @@
 
 This is a Preact-based search interface starter template using `@nosto/search-js` for building ecommerce search experiences. The project uses Vite for building, TypeScript for type safety, and Vitest for testing.
 
-## Environment Requirements
-
-- Always use Node 22+ for Copilot PR creation and development work
-- Components and build system are optimized for Node 22+ environments
-
-## Initial Setup
-
-```bash
-npm ci
-```
-
 ## Storybook Validation
 
 - Start Storybook: `npm run storybook`
@@ -34,6 +23,6 @@ npm run typecheck # TypeScript - must pass without errors
 
 ## Commits
 
-Use conventional commits format: `<type>(<scope>): <subject>`
+**Use conventional commits format: `<type>(<scope>): <subject>`**
 
-When committing code, ALWAYS run git commit with --no-verify to avoid Husky failing and erroring out your pipeline.
+When committing code, **ALWAYS** run git commit with --no-verify to avoid Husky failing and erroring out your pipeline.
