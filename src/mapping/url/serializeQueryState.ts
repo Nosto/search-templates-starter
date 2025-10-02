@@ -2,6 +2,7 @@ import type { InputSearchSort } from "@nosto/nosto-js/client"
 import { defaultConfig } from "@/config"
 import { UrlQueryState } from "./types"
 import { QUERY_PARAM, PAGE_PARAM, SIZE_PARAM, FILTER_PREFIX, SORT_PARAM } from "./constants"
+import { isMatchingSort } from "@/utils/sorting"
 
 function encodeSortField(field: string) {
   return field.replace(/~/g, "%7E").replace(/,/g, "%2C")
@@ -59,7 +60,7 @@ export function serializeQueryState(state: UrlQueryState, params: URLSearchParam
     })
   }
 
-  if (state.sort && state.sort.length > 0) {
+  if (state.sort && state.sort.length > 0 && !isMatchingSort(state.sort, defaultConfig.sort.value.sort)) {
     params.set(SORT_PARAM, serializeSortToUrl(state.sort))
   }
 
