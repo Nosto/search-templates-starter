@@ -32,6 +32,11 @@
 
 .light {
   color: var(--ns-color-black);
-  background-color: var(--ns-color-white);
-  border-color: var(--ns-color-grey-light);
+  background-color: var(--ns-color-grey-light);
+  border: none;
+  border-radius: var(--ns-border-radius-pill);
+}
+
+.light:hover {
+  background-color: var(--ns-color-grey);
 }
