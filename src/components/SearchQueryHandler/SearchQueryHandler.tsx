@@ -47,6 +47,13 @@ export default function SearchQueryHandler() {
 
   // Update URL when app state changes
   useEffect(() => {
+    // If early search was executed, only update URL if we have meaningful state
+    // This prevents clearing the URL parameters before the search results populate the state
+    if (isEarlySearchExecuted() && !query && !filter && !from && !sort) {
+      console.debug("Skipping URL update - early search executed but app state not yet populated")
+      return
+    }
+
     const page = from ? Math.floor(from / size) + 1 : 1
 
     updateUrl({
