@@ -11,7 +11,7 @@ import { disableNativeAutocomplete } from "@nosto/search-js/utils"
 import { useDomEvents } from "@/hooks/useDomEvents"
 import { useDebouncedSearch } from "@/hooks/useDebouncedSearch"
 import { useActions } from "@nosto/search-js/preact/hooks"
-import { useAutocompleteDOMElements } from "@/hooks/useDOMElements"
+import { useDomElements } from "@/hooks/useDOMElements"
 import Category from "@/components/Category/Category"
 import { CategoryPageProvider } from "@nosto/search-js/preact/category"
 import { tagging } from "@/mapping/tagging"
@@ -27,7 +27,18 @@ type Props = {
 function Autocomplete({ onSubmit }: Props) {
   const [input, setInput] = useState<string>(getInitialQuery())
   const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false)
-  const { getElements } = useAutocompleteDOMElements()
+
+  type AutocompleteElements = {
+    dropdownElement: HTMLElement | null
+    searchInput: HTMLInputElement | null
+    searchForm: HTMLFormElement | null
+  }
+
+  const { getElements } = useDomElements<AutocompleteElements>({
+    dropdownElement: "#dropdown",
+    searchInput: "#search",
+    searchForm: "#search-form"
+  })
 
   useEffect(() => {
     const elements = getElements()

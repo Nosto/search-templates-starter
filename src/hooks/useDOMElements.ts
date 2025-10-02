@@ -4,21 +4,14 @@ type DOMElementsMap = Record<string, HTMLElement | null>
 type ElementSelectors = Record<string, string>
 
 /**
- * Generic hook for lazily accessing DOM elements by selectors
+ * Generic hook for lazily accessing DOM elements by selectors with timeout retry
  *
  * @example
  * ```typescript
- * // For required elements that must all be present
- * const { getElements } = useDOMElements({
+ * const { getElements } = useDomElements({
  *   button: "#submit-btn",
  *   input: "#user-input"
  * })
- *
- * // For optional elements
- * const { getElements } = useDOMElements({
- *   modal: "#optional-modal",
- *   tooltip: ".tooltip"
- * }, { required: false })
  *
  * // Usage
  * const elements = getElements()
@@ -27,16 +20,10 @@ type ElementSelectors = Record<string, string>
  * }
  * ```
  */
-export function useDOMElements<T extends DOMElementsMap>(
-  selectors: ElementSelectors,
-  options?: {
-    warningMessage?: string
-    required?: boolean
-  }
-) {
+export function useDomElements<T extends DOMElementsMap>(selectors: ElementSelectors) {
   const elementsRef = useRef<T | null>(null)
   const warningShownRef = useRef(false)
-  const { warningMessage = "Required DOM elements not found", required = true } = options || {}
+  const timeoutRef = useRef<number | null>(null)
 
   const getElements = useCallback((): T | null => {
     if (elementsRef.current) {
@@ -51,52 +38,41 @@ export function useDOMElements<T extends DOMElementsMap>(
       const element = document.querySelector(selector) as HTMLElement | null
       elements[key as keyof T] = element as T[keyof T]
 
-      if (!element && required) {
+      if (!element) {
         allFound = false
       }
     }
 
-    // If required elements are missing, show warning and return null
-    if (!allFound && required) {
+    // If elements are missing, show warning and try again after timeout
+    if (!allFound) {
       if (!warningShownRef.current) {
-        console.warn(warningMessage)
+        console.warn("DOM elements not found, retrying...")
         warningShownRef.current = true
+
+        // Retry after a short timeout
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current)
+        }
+        timeoutRef.current = window.setTimeout(() => {
+          elementsRef.current = null
+          warningShownRef.current = false
+        }, 100)
       }
       return null
     }
 
     elementsRef.current = elements
     return elementsRef.current
-  }, [selectors, warningMessage, required])
+  }, [selectors])
 
   const clearCache = useCallback(() => {
     elementsRef.current = null
     warningShownRef.current = false
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+      timeoutRef.current = null
+    }
   }, [])
 
   return { getElements, clearCache }
-}
-
-// Specific autocomplete implementation using the generic hook
-type AutocompleteDOMElements = {
-  dropdownElement: HTMLElement | null
-  searchInput: HTMLInputElement | null
-  searchForm: HTMLFormElement | null
-}
-
-/**
- * Hook for lazily accessing autocomplete DOM elements
- * @deprecated Use useDOMElements directly for better flexibility
- */
-export function useAutocompleteDOMElements() {
-  const autocompleteSelectors = {
-    dropdownElement: "#dropdown",
-    searchInput: "#search",
-    searchForm: "#search-form"
-  }
-
-  return useDOMElements<AutocompleteDOMElements>(autocompleteSelectors, {
-    warningMessage: "Required DOM elements not found for autocomplete",
-    required: true
-  })
 }
