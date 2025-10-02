@@ -24,7 +24,7 @@ describe("FilterBar", () => {
   it("renders nothing when facets is null", () => {
     vi.mocked(hooks.useFacets).mockReturnValue({
       loading: false,
-      facets: null
+      facets: [] as any
     })
 
     const { container } = render(<FilterBar />)
