@@ -30,7 +30,8 @@
     "style-lint-fix": "stylelint 'src/**/*.css' --fix",
     "preview": "vite preview",
     "prepare": "husky",
-    "storybook": "storybook dev -p 6060"
+    "storybook": "storybook dev -p 6060",
+    "storybook:build": "storybook build"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.0.0",

@@ -43,8 +43,18 @@ This will launch the application at http://localhost:8000.
 
 If you are working on a scoped component, would like to test something or want to see the list of components available,
 you can use Storybook:
+
+**Local Development:**
 ```sh
 npm run storybook
+```
+
+**Published Documentation:**
+The Storybook is automatically published to GitHub Pages at: https://nosto.github.io/search-templates-starter/storybook/
+
+**Build Storybook:**
+```sh
+npm run storybook:build
 ```
 
 No merchant ID is required as the components in Storybook are sandboxed.
