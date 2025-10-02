@@ -3,45 +3,7 @@
   display: inline-block;
 }
 
-.trigger {
-  display: flex;
-  align-items: center;
-  gap: var(--ns-space-2);
-  padding: var(--ns-space-3) var(--ns-space-4);
-  background: var(--ns-color-white);
-  border: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
-  border-radius: var(--ns-border-radius-3);
-  cursor: pointer;
-  font-size: var(--ns-font-size-4);
-  color: var(--ns-color-black);
-  transition: all var(--ns-transition-duration) var(--ns-transition-easing);
-  min-width: 120px;
-  justify-content: space-between;
-}
 
-.trigger:hover {
-  border-color: var(--ns-color-primary);
-  box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
-}
-
-.trigger:focus {
-  outline: 2px solid var(--ns-color-primary);
-  outline-offset: 2px;
-}
-
-.label {
-  font-weight: var(--ns-weight-medium);
-}
-
-.badge {
-  background: var(--ns-color-primary);
-  color: var(--ns-color-white);
-  border-radius: var(--ns-border-radius-pill);
-  padding: 0.2rem 0.4rem;
-  font-size: var(--ns-font-size-3);
-  font-weight: var(--ns-weight-bold);
-  line-height: 1;
-}
 
 .menu {
   position: absolute;
@@ -51,7 +13,7 @@
   min-width: 280px;
   max-width: 400px;
   background: var(--ns-color-white);
-  border: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
+  border: none;
   border-radius: var(--ns-border-radius-3);
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
   margin-top: var(--ns-space-1);
@@ -70,7 +32,7 @@
   justify-content: space-between;
   align-items: center;
   padding: var(--ns-space-3) var(--ns-space-4);
-  border-bottom: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
+  border-bottom: none;
   background: var(--ns-color-grey-light);
 }
 
@@ -91,9 +53,7 @@
   padding: 0;
 }
 
-.resetButton:hover {
-  color: var(--ns-color-primary-dark);
-}
+
 
 .options {
   max-height: 300px;
@@ -104,9 +64,5 @@
 .option {
   padding: var(--ns-space-1) var(--ns-space-4);
   cursor: pointer;
-  transition: background-color var(--ns-transition-duration) var(--ns-transition-easing);
 }
 
-.option:hover {
-  background: var(--ns-color-grey-light);
-}

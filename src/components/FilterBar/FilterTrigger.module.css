@@ -1,0 +1,38 @@
+.trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--ns-space-2);
+  padding: var(--ns-space-3) var(--ns-space-4);
+  background: var(--ns-color-white);
+  border: none;
+  border-radius: var(--ns-border-radius-3);
+  cursor: pointer;
+  font-size: var(--ns-font-size-4);
+  color: var(--ns-color-black);
+  min-width: 120px;
+  justify-content: space-between;
+}
+
+.trigger:focus {
+  outline: 2px solid var(--ns-color-primary);
+  outline-offset: 2px;
+}
+
+.label {
+  font-weight: var(--ns-weight-medium);
+}
+
+.value {
+  color: var(--ns-color-grey-dark);
+  font-size: var(--ns-font-size-3);
+}
+
+.badge {
+  background: var(--ns-color-primary);
+  color: var(--ns-color-white);
+  border-radius: var(--ns-border-radius-pill);
+  padding: 0.2rem 0.4rem;
+  font-size: var(--ns-font-size-3);
+  font-weight: var(--ns-weight-bold);
+  line-height: 1;
+}

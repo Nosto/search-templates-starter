@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "preact/hooks"
 import { useRange } from "@nosto/search-js/preact/hooks"
 import { SearchStatsFacet } from "@nosto/nosto-js/client"
-import Icon from "@/elements/Icon/Icon"
+import FilterTrigger from "./FilterTrigger"
 import RangeInput from "@/elements/RangeInput/RangeInput"
 import Button from "@/elements/Button/Button"
 import styles from "./RangeFilterDropdown.module.css"
@@ -88,19 +88,14 @@ export default function RangeFilterDropdown({ facet }: Props) {
 
   return (
     <div className={styles.dropdown} ref={dropdownRef}>
-      <button
-        className={styles.trigger}
+      <FilterTrigger
+        label={facet.name}
+        value={formatDisplayValue()}
+        isOpen={isOpen}
         onClick={toggleDropdown}
         onKeyDown={handleKeyDown}
-        aria-expanded={isOpen}
-        aria-haspopup="true"
-        aria-label={`Filter by ${facet.name}`}
-        type="button"
-      >
-        <span className={styles.label}>{facet.name}</span>
-        <span className={styles.value}>{formatDisplayValue()}</span>
-        <Icon name={isOpen ? "arrow-up" : "arrow-down"} />
-      </button>
+        ariaLabel={`Filter by ${facet.name}`}
+      />
 
       {isOpen && (
         <div className={styles.menu} role="menu">

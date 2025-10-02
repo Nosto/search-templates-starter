@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "preact/hooks"
 import { useFacet } from "@nosto/search-js/preact/hooks"
 import { SearchTermsFacet } from "@nosto/nosto-js/client"
-import Icon from "@/elements/Icon/Icon"
+import FilterTrigger from "./FilterTrigger"
 import Checkbox from "@/elements/Checkbox/Checkbox"
 import styles from "./TermsFilterDropdown.module.css"
 
@@ -46,19 +46,14 @@ export default function TermsFilterDropdown({ facet }: Props) {
 
   return (
     <div className={styles.dropdown} ref={dropdownRef}>
-      <button
-        className={styles.trigger}
+      <FilterTrigger
+        label={facet.name}
+        badge={selectedFiltersCount}
+        isOpen={isOpen}
         onClick={toggleDropdown}
         onKeyDown={handleKeyDown}
-        aria-expanded={isOpen}
-        aria-haspopup="true"
-        aria-label={`Filter by ${facet.name}`}
-        type="button"
-      >
-        <span className={styles.label}>{facet.name}</span>
-        {selectedFiltersCount > 0 && <span className={styles.badge}>{selectedFiltersCount}</span>}
-        <Icon name={isOpen ? "arrow-up" : "arrow-down"} />
-      </button>
+        ariaLabel={`Filter by ${facet.name}`}
+      />
 
       {isOpen && (
         <div className={styles.menu} role="menu">
