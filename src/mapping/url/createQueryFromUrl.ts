@@ -2,7 +2,7 @@ import { defaultConfig } from "@/config"
 import { getCurrentUrlState } from "@/mapping/url/getCurrentUrlState"
 
 export function createQueryFromUrl() {
-  const { filter, page, query, size, sort} = getCurrentUrlState()
+  const { filter, page, query, size, sort } = getCurrentUrlState()
 
   return {
     query,
