@@ -17,7 +17,7 @@ import { tagging } from "@/mapping/tagging"
 import { nostojs } from "@nosto/nosto-js"
 import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import { getInitialQuery } from "@/mapping/url/getInitialQuery"
-import { initStore } from "@/utils/initStore"
+import { initContext } from "./initContext"
 
 type Props = {
   onSubmit: (input: string) => void
@@ -119,8 +119,12 @@ async function init() {
   if (serpElement) {
     switch (tagging.pageType()) {
       case "category":
+        const categoryContext = initContext({
+          ...categoryConfig,
+          pageType: "category"
+        })
         render(
-          <CategoryPageProvider config={categoryConfig} store={initStore("category")}>
+          <CategoryPageProvider config={categoryContext.config} store={categoryContext.store}>
             <CategoryApp />
           </CategoryPageProvider>,
           serpElement
@@ -128,8 +132,12 @@ async function init() {
         break
       case "search":
       default:
+        const searchContext = initContext({
+          ...serpConfig,
+          pageType: "search"
+        })
         render(
-          <SearchPageProvider config={serpConfig} store={initStore("search")}>
+          <SearchPageProvider config={searchContext.config} store={searchContext.store}>
             <SerpApp />
           </SearchPageProvider>,
           serpElement

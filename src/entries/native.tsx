@@ -3,7 +3,6 @@ import Serp from "@/components/Serp/Serp"
 import SearchQueryHandler from "@/components/SearchQueryHandler/SearchQueryHandler"
 import { Search } from "@/components/Search/Search"
 import "@/variable.css"
-import { categoryConfig, serpConfig } from "@/config"
 import { render } from "preact"
 import { SidebarProvider } from "@/contexts/SidebarContext"
 import { CategoryPageProvider } from "@nosto/search-js/preact/category"
@@ -11,12 +10,16 @@ import Category from "@/components/Category/Category"
 import { tagging } from "@/mapping/tagging"
 import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import { nostojs } from "@nosto/nosto-js"
-import { initStore } from "@/utils/initStore"
+import { initContext } from "./initContext"
+import { categoryConfig, serpConfig } from "@/config"
 
 function SerpApp() {
-  const store = initStore("search")
+  const context = initContext({
+    ...serpConfig,
+    pageType: "search"
+  })
   return (
-    <SearchPageProvider config={serpConfig} store={store}>
+    <SearchPageProvider config={context.config} store={context.store}>
       <SearchQueryHandler />
       <SidebarProvider>
         <Search />
@@ -27,9 +30,12 @@ function SerpApp() {
 }
 
 function CategoryApp() {
-  const store = initStore("category")
+  const context = initContext({
+    ...categoryConfig,
+    pageType: "category"
+  })
   return (
-    <CategoryPageProvider config={categoryConfig} store={store}>
+    <CategoryPageProvider config={context.config} store={context.store}>
       <SearchQueryHandler />
       <SidebarProvider>
         <Category />
