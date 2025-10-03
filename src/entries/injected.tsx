@@ -2,6 +2,8 @@ import { SearchPageProvider } from "@nosto/search-js/preact/serp"
 import { AutocompletePageProvider } from "@nosto/search-js/preact/autocomplete"
 import { render, createPortal, useState, useEffect, useCallback } from "preact/compat"
 import Serp from "@/components/Serp/Serp"
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import "@/variable.css"
 import Results from "@/components/Autocomplete/Results/Results"
 import SearchQueryHandler from "@/components/SearchQueryHandler/SearchQueryHandler"
@@ -17,6 +19,7 @@ import { tagging } from "@/mapping/tagging"
 import { nostojs } from "@nosto/nosto-js"
 import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import { getInitialQuery } from "@/mapping/url/getInitialQuery"
+import { getInitialStore } from "@/utils/initialStore"
 
 type Props = {
   onSubmit: (input: string) => void
@@ -115,6 +118,9 @@ function CategoryApp() {
 
 async function init() {
   await new Promise(nostojs)
+
+  const store = await getInitialStore()
+
   const serpElement = document.querySelector<HTMLElement>("#serp")
   if (serpElement) {
     switch (tagging.pageType()) {
@@ -124,7 +130,7 @@ async function init() {
       case "search":
       default:
         render(
-          <SearchPageProvider config={serpConfig}>
+          <SearchPageProvider config={serpConfig} store={store}>
             <SerpApp />
           </SearchPageProvider>,
           serpElement
@@ -132,4 +138,5 @@ async function init() {
     }
   }
 }
+
 init()
