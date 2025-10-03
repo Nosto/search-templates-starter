@@ -18,12 +18,13 @@ import { nostojs } from "@nosto/nosto-js"
 import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import { getInitialQuery } from "@/mapping/url/getInitialQuery"
 import Portal from "@/elements/Portal/Portal"
+import { getInitialStore } from "@/utils/initialStore"
 
-type Props = {
+type AutocompleteProps = {
   onSubmit: (input: string) => void
 }
 
-function Autocomplete({ onSubmit }: Props) {
+function Autocomplete({ onSubmit }: AutocompleteProps) {
   const [input, setInput] = useState<string>(getInitialQuery())
   const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false)
 
@@ -77,7 +78,7 @@ function Autocomplete({ onSubmit }: Props) {
   return showAutocomplete ? <Results onSubmit={onSearchSubmit} /> : null
 }
 
-function SerpApp() {
+function SerpContent() {
   const { newSearch } = useActions()
 
   const onSubmit = useCallback(
@@ -105,37 +106,41 @@ function SerpApp() {
   )
 }
 
-function CategoryApp() {
+function CategoryContent() {
   return (
     <ErrorBoundary>
-      <CategoryPageProvider config={categoryConfig}>
-        <SearchQueryHandler />
-        <SidebarProvider>
-          <Portal target="#serp">
-            <Category />
-          </Portal>
-        </SidebarProvider>
-      </CategoryPageProvider>
+      <SearchQueryHandler />
+      <SidebarProvider>
+        <Portal target="#serp">
+          <Category />
+        </Portal>
+      </SidebarProvider>
     </ErrorBoundary>
   )
 }
 
 async function init() {
   await new Promise(nostojs)
+  const pageType = tagging.pageType()
   const dummy = document.createElement("div")
   document.body.appendChild(dummy)
-  switch (tagging.pageType()) {
-    case "category":
-      render(<CategoryApp />, dummy)
-      break
-    case "search":
-    default:
-      render(
-        <SearchPageProvider config={serpConfig}>
-          <SerpApp />
-        </SearchPageProvider>,
-        dummy
-      )
+
+  const initialStore = await getInitialStore(pageType === "category" ? "category" : "search")
+
+  if (pageType === "category") {
+    render(
+      <CategoryPageProvider config={categoryConfig} store={initialStore}>
+        <CategoryContent />
+      </CategoryPageProvider>,
+      dummy
+    )
+  } else {
+    render(
+      <SearchPageProvider config={serpConfig} store={initialStore}>
+        <SerpContent />
+      </SearchPageProvider>,
+      dummy
+    )
   }
 }
 init()

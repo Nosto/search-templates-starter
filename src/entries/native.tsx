@@ -12,10 +12,13 @@ import { tagging } from "@/mapping/tagging"
 import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import { nostojs } from "@nosto/nosto-js"
 import Portal from "@/elements/Portal/Portal"
+import { getInitialStore } from "@/utils/initialStore"
 
-function SerpApp() {
+type InitialStore = Awaited<ReturnType<typeof getInitialStore>>
+
+function SerpApp({ initialStore }: { initialStore: InitialStore }) {
   return (
-    <SearchPageProvider config={serpConfig}>
+    <SearchPageProvider config={serpConfig} store={initialStore}>
       <SearchQueryHandler />
       <SidebarProvider>
         <Portal target="#app">
@@ -27,9 +30,9 @@ function SerpApp() {
   )
 }
 
-function CategoryApp() {
+function CategoryApp({ initialStore }: { initialStore: InitialStore }) {
   return (
-    <CategoryPageProvider config={categoryConfig}>
+    <CategoryPageProvider config={categoryConfig} store={initialStore}>
       <SearchQueryHandler />
       <SidebarProvider>
         <Portal target="#app">
@@ -42,10 +45,13 @@ function CategoryApp() {
 
 async function init() {
   await new Promise(nostojs)
-  const App = tagging.pageType() === "category" ? CategoryApp : SerpApp
+  const pageType = tagging.pageType()
+  const App = pageType === "category" ? CategoryApp : SerpApp
+  const initialStore = await getInitialStore(pageType === "category" ? "category" : "search")
+
   render(
     <ErrorBoundary>
-      <App />
+      <App initialStore={initialStore} />
     </ErrorBoundary>,
     document.body
   )
