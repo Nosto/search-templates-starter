@@ -1,4 +1,5 @@
 .pill {
+  font-family: inherit;
   display: inline-flex;
   align-items: center;
   justify-content: center;

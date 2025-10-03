@@ -10,6 +10,9 @@
   --ns-color-primary-dark: #16539e;
   --ns-color-link: #2473d6;
 
+  /* FONT-FAMILY */
+  --ns-font-family: "Arial";
+
   /* FONT-SIZE */
   --ns-font-size-5: 1rem;
   --ns-font-size-4: 0.9rem;
