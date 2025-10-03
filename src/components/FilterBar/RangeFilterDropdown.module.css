@@ -35,13 +35,13 @@
   background: var(--ns-color-grey-light);
 }
 
-.rangeLabel {
+.label {
   font-size: var(--ns-font-size-3);
   color: var(--ns-color-grey-dark);
   font-weight: var(--ns-weight-medium);
 }
 
-.resetButton {
+.button {
   background: none;
   border: none;
   color: var(--ns-color-primary);
@@ -54,7 +54,7 @@
 
 
 
-.rangeInputs {
+.inputs {
   display: flex;
   gap: var(--ns-space-3);
   padding: var(--ns-space-4);
@@ -74,7 +74,7 @@
   font-weight: var(--ns-weight-medium);
 }
 
-.rangeInput {
+.input {
   flex: 1;
   padding: var(--ns-space-3);
   border: none;

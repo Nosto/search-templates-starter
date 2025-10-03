@@ -12,7 +12,7 @@ export default function FilterBar() {
   }
 
   return (
-    <div className={styles.filterBar}>
+    <div className={styles.bar}>
       {facets.map(facet => {
         switch (facet.type) {
           case "terms":

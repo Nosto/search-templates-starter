@@ -99,12 +99,12 @@ export default function RangeFilterDropdown({ facet }: Props) {
       {isOpen && (
         <div className={styles.menu} role="menu">
           <div className={styles.header}>
-            <span className={styles.rangeLabel}>The highest price is ${max}</span>
-            <button type="button" className={styles.resetButton} onClick={resetFilter}>
+            <span className={styles.label}>The highest price is ${max}</span>
+            <button type="button" className={styles.button} onClick={resetFilter}>
               Reset
             </button>
           </div>
-          <div className={styles.rangeInputs}>
+          <div className={styles.inputs}>
             <div className={styles.inputGroup}>
               <span className={styles.inputLabel}>$</span>
               <RangeInput
@@ -113,7 +113,7 @@ export default function RangeFilterDropdown({ facet }: Props) {
                 max={max}
                 placeholder="From"
                 onChange={e => setLocalMin(Number(e.currentTarget.value))}
-                className={styles.rangeInput}
+                className={styles.input}
                 aria-label={`Minimum ${facet.name}`}
               />
             </div>
@@ -125,7 +125,7 @@ export default function RangeFilterDropdown({ facet }: Props) {
                 max={max}
                 placeholder="To"
                 onChange={e => setLocalMax(Number(e.currentTarget.value))}
-                className={styles.rangeInput}
+                className={styles.input}
                 aria-label={`Maximum ${facet.name}`}
               />
             </div>

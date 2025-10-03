@@ -57,10 +57,10 @@ export default function TermsFilterDropdown({ facet }: Props) {
       {isOpen && (
         <div className={styles.menu} role="menu">
           <div className={styles.header}>
-            {selectedFiltersCount > 0 && <div className={styles.selectedCount}>{selectedFiltersCount} selected</div>}
+            {selectedFiltersCount > 0 && <div className={styles.count}>{selectedFiltersCount} selected</div>}
             <button
               type="button"
-              className={styles.resetButton}
+              className={styles.button}
               onClick={() => {
                 facet.data?.forEach(value => {
                   if (value.selected) {

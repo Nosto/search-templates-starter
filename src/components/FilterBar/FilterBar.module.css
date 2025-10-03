@@ -1,4 +1,4 @@
-.filterBar {
+.bar {
   display: flex;
   flex-wrap: wrap;
   gap: var(--ns-space-2);
@@ -8,7 +8,7 @@
 }
 
 @media only screen and (max-width: 767px) {
-  .filterBar {
+  .bar {
     flex-direction: column;
     align-items: stretch;
     gap: var(--ns-space-1);

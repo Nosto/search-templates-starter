@@ -36,13 +36,13 @@
   background: var(--ns-color-grey-light);
 }
 
-.selectedCount {
+.count {
   font-size: var(--ns-font-size-3);
   color: var(--ns-color-grey-dark);
   font-weight: var(--ns-weight-medium);
 }
 
-.resetButton {
+.button {
   background: none;
   border: none;
   color: var(--ns-color-primary);
