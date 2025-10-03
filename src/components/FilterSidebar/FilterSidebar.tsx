@@ -18,7 +18,7 @@ type ToggleProps = {
   onClick?: () => void
 }
 
-function ToggleFilterSidebarButton({ className, onClick }: ToggleProps = {}) {
+function ToggleSidebarButton({ className, onClick }: ToggleProps = {}) {
   return (
     <Button className={cl(styles.close, className)} onClick={onClick}>
       <Icon name="close" circle={true} />
@@ -57,7 +57,7 @@ export default function FilterSidebar() {
         <div className={styles.content}>
           <div className={styles.header}>
             <Heading>Filters</Heading>
-            <ToggleFilterSidebarButton onClick={() => setOpen(false)} />
+            <ToggleSidebarButton onClick={() => setOpen(false)} />
           </div>
           <SelectedFilters />
           <div>
