@@ -8,7 +8,7 @@ import Button from "@/elements/Button/Button"
 import { cl } from "@nosto/search-js/utils"
 import { useFilterSidebar } from "@/contexts/FilterSidebarContext"
 import SelectedFilters from "../SelectedFilters/SelectedFilters"
-import ClearFiltersButton from "../ClearFiltersButton/ClearFiltersButton"
+import ClearFiltersButton from "./ClearFiltersButton/ClearFiltersButton"
 import Heading from "@/elements/Heading/Heading"
 
 export const toggleButtonId = "toggle-mobile-sidebar"
