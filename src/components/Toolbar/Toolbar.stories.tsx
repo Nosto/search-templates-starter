@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Toolbar from "./Toolbar"
-import { SidebarProvider } from "@/contexts/SidebarContext"
+import { FilterSideBarProvider } from "@/contexts/FilterSideBarContext"
 import { withContainer, withSearchContext } from ".storybook/decorators"
 
 export default {
@@ -17,8 +17,8 @@ type Story = StoryObj<typeof Toolbar>
 
 export const Default: Story = {
   render: () => (
-    <SidebarProvider>
+    <FilterSideBarProvider>
       <Toolbar />
-    </SidebarProvider>
+    </FilterSideBarProvider>
   )
 }

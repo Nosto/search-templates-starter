@@ -5,15 +5,15 @@ import Select from "@/elements/Select/Select"
 import style from "./Toolbar.module.css"
 import Button from "@/elements/Button/Button"
 import { cl } from "@nosto/search-js/utils"
-import { useSidebar } from "@/contexts/SidebarContext"
+import { useFilterSideBar } from "@/contexts/FilterSideBarContext"
 
 type Props = {
   selectedFiltersCount: number
   className?: string
 }
 
-function ToggleSidebarButton({ selectedFiltersCount, className }: Props) {
-  const { toggle } = useSidebar()
+function ToggleFilterSideBarButton({ selectedFiltersCount, className }: Props) {
+  const { toggle } = useFilterSideBar()
 
   return (
     <Button light className={cl(style.filter, className)} onClick={toggle}>
@@ -36,7 +36,7 @@ export default function Toolbar() {
   return (
     <div className={cl(style.container, loading && style.loading)}>
       <div className={style.leftSide}>
-        <ToggleSidebarButton selectedFiltersCount={selectedFiltersCount} />
+        <ToggleFilterSideBarButton selectedFiltersCount={selectedFiltersCount} />
       </div>
       <div className={style.rightSide}>
         {!loading && (

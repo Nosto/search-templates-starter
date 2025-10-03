@@ -3,10 +3,10 @@ import TermsFacet from "@/components/TermsFacet/TermsFacet"
 import RangeFacet from "@/components/RangeFacet/RangeFacet"
 import Icon from "@/elements/Icon/Icon"
 import { SearchStatsFacet, SearchTermsFacet } from "@nosto/nosto-js/client"
-import styles from "./Sidebar.module.css"
+import styles from "./FilterSideBar.module.css"
 import Button from "@/elements/Button/Button"
 import { cl } from "@nosto/search-js/utils"
-import { useSidebar } from "@/contexts/SidebarContext"
+import { useFilterSideBar } from "@/contexts/FilterSideBarContext"
 import SelectedFilters from "../SelectedFilters/SelectedFilters"
 import ClearFiltersButton from "../ClearFiltersButton/ClearFiltersButton"
 import Heading from "@/elements/Heading/Heading"
@@ -18,7 +18,7 @@ type ToggleProps = {
   onClick?: () => void
 }
 
-function ToggleSidebarButton({ className, onClick }: ToggleProps = {}) {
+function ToggleFilterSideBarButton({ className, onClick }: ToggleProps = {}) {
   return (
     <Button className={cl(styles.close, className)} onClick={onClick}>
       <Icon name="close" circle={true} />
@@ -26,9 +26,9 @@ function ToggleSidebarButton({ className, onClick }: ToggleProps = {}) {
   )
 }
 
-export default function SideBar() {
+export default function FilterSideBar() {
   const { facets } = useFacets()
-  const { isOpen, setOpen } = useSidebar()
+  const { isOpen, setOpen } = useFilterSideBar()
 
   const handleBackdropClick = () => {
     setOpen(false)
@@ -57,7 +57,7 @@ export default function SideBar() {
         <div className={styles.content}>
           <div className={styles.header}>
             <Heading>Filters</Heading>
-            <ToggleSidebarButton onClick={() => setOpen(false)} />
+            <ToggleFilterSideBarButton onClick={() => setOpen(false)} />
           </div>
           <SelectedFilters />
           <div>

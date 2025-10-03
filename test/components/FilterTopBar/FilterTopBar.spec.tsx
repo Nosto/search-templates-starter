@@ -1,6 +1,6 @@
 import { render } from "@testing-library/preact"
 import { describe, it, expect, vi } from "vitest"
-import FilterBar from "@/components/FilterBar/FilterBar"
+import FilterTopBar from "@/components/FilterTopBar/FilterTopBar"
 import * as hooks from "@nosto/search-js/preact/hooks"
 
 // Mock the hooks module
@@ -10,14 +10,14 @@ vi.mock("@nosto/search-js/preact/hooks", () => ({
   useRange: vi.fn()
 }))
 
-describe("FilterBar", () => {
+describe("FilterTopBar", () => {
   it("renders nothing when no facets are available", () => {
     vi.mocked(hooks.useFacets).mockReturnValue({
       loading: false,
       facets: []
     })
 
-    const { container } = render(<FilterBar />)
+    const { container } = render(<FilterTopBar />)
     expect(container.firstChild).toBeNull()
   })
 
@@ -27,11 +27,11 @@ describe("FilterBar", () => {
       facets: []
     })
 
-    const { container } = render(<FilterBar />)
+    const { container } = render(<FilterTopBar />)
     expect(container.firstChild).toBeNull()
   })
 
-  it("renders FilterBar with facets", () => {
+  it("renders FilterTopBar with facets", () => {
     const mockTermsFacet = {
       id: "category",
       name: "Category",
@@ -73,7 +73,7 @@ describe("FilterBar", () => {
       toggleActive: vi.fn()
     })
 
-    const { getByText } = render(<FilterBar />)
+    const { getByText } = render(<FilterTopBar />)
 
     expect(getByText("Category")).toBeTruthy()
     expect(getByText("Price")).toBeTruthy()

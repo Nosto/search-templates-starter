@@ -1,5 +1,5 @@
 import { JSX } from "preact"
-import Sidebar from "@/components/Sidebar/Sidebar"
+import FilterSideBar from "@/components/FilterSideBar/FilterSideBar"
 import { useNostoAppState } from "@nosto/search-js/preact/hooks"
 import styles from "./ContentWrapper.module.css"
 import { cl } from "@nosto/search-js/utils"
@@ -28,7 +28,7 @@ function ContentWrapper({ type, children }: ContentWrapperProps) {
 
   return (
     <div className={styles.wrapper} data-nosto-element={type}>
-      {foundProducts && <Sidebar />}
+      {foundProducts && <FilterSideBar />}
       <div className={cl(styles.container, loading && styles.loading)}>{children({ loading, foundProducts })}</div>
     </div>
   )
