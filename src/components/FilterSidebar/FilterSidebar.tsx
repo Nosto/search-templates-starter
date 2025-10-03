@@ -1,6 +1,6 @@
 import { useFacets } from "@nosto/search-js/preact/hooks"
-import TermsFacet from "@/components/TermsFacet/TermsFacet"
-import RangeFacet from "@/components/RangeFacet/RangeFacet"
+import TermsFacet from "./TermsFacet/TermsFacet"
+import RangeFacet from "./RangeFacet/RangeFacet"
 import Icon from "@/elements/Icon/Icon"
 import { SearchStatsFacet, SearchTermsFacet } from "@nosto/nosto-js/client"
 import styles from "./FilterSidebar.module.css"
