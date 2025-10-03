@@ -11,7 +11,7 @@ export function initContext(config: Config) {
   const query = createQueryFromUrl()
   const { pageType, ...storeConfig } = config
 
-  if ((query && pageType === "search") || pageType === "category") {
+  if (query || pageType === "category") {
     newSearch(
       {
         store,

@@ -117,7 +117,7 @@ async function init() {
 
   // Initialize context early, before DOM operations
   const pageType = tagging.pageType()
-  const context =
+  const { config, store } =
     pageType === "category"
       ? initContext({ ...categoryConfig, pageType: "category" })
       : initContext({ ...serpConfig, pageType: "search" })
@@ -128,7 +128,7 @@ async function init() {
     switch (pageType) {
       case "category":
         render(
-          <CategoryPageProvider config={context.config} store={context.store}>
+          <CategoryPageProvider config={config} store={store}>
             <CategoryApp />
           </CategoryPageProvider>,
           serpElement
@@ -137,7 +137,7 @@ async function init() {
       case "search":
       default:
         render(
-          <SearchPageProvider config={context.config} store={context.store}>
+          <SearchPageProvider config={config} store={store}>
             <SerpApp />
           </SearchPageProvider>,
           serpElement
