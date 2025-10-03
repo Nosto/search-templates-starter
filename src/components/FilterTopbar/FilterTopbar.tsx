@@ -1,7 +1,7 @@
 import { useFacets } from "@nosto/search-js/preact/hooks"
 import { SearchStatsFacet, SearchTermsFacet } from "@nosto/nosto-js/client"
-import TermsDropdown from "./TermsDropdown"
-import RangeDropdown from "./RangeDropdown"
+import TermsDropdown from "./TermsDropdown/TermsDropdown"
+import RangeDropdown from "./RangeDropdown/RangeDropdown"
 import styles from "./FilterTopbar.module.css"
 
 export default function FilterTopbar() {

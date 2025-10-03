@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "preact/hooks"
 import { useFacet } from "@nosto/search-js/preact/hooks"
 import { SearchTermsFacet } from "@nosto/nosto-js/client"
-import FilterTrigger from "./FilterTrigger"
+import FilterTrigger from "../FilterTrigger/FilterTrigger"
 import Checkbox from "@/elements/Checkbox/Checkbox"
 import styles from "./TermsDropdown.module.css"
 

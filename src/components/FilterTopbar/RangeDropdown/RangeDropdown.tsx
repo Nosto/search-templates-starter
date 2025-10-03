@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "preact/hooks"
 import { useRange } from "@nosto/search-js/preact/hooks"
 import { SearchStatsFacet } from "@nosto/nosto-js/client"
-import FilterTrigger from "./FilterTrigger"
+import FilterTrigger from "../FilterTrigger/FilterTrigger"
 import RangeInput from "@/elements/RangeInput/RangeInput"
 import Button from "@/elements/Button/Button"
 import styles from "./RangeDropdown.module.css"
