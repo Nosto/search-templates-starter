@@ -11,10 +11,12 @@ import Category from "@/components/Category/Category"
 import { tagging } from "@/mapping/tagging"
 import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import { nostojs } from "@nosto/nosto-js"
+import { initStore } from "@/utils/initStore"
 
 function SerpApp() {
+  const store = initStore("search")
   return (
-    <SearchPageProvider config={serpConfig}>
+    <SearchPageProvider config={serpConfig} store={store}>
       <SearchQueryHandler />
       <SidebarProvider>
         <Search />
@@ -25,8 +27,9 @@ function SerpApp() {
 }
 
 function CategoryApp() {
+  const store = initStore("category")
   return (
-    <CategoryPageProvider config={categoryConfig}>
+    <CategoryPageProvider config={categoryConfig} store={store}>
       <SearchQueryHandler />
       <SidebarProvider>
         <Category />
