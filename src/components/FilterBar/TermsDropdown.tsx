@@ -58,19 +58,21 @@ export default function TermsDropdown({ facet }: Props) {
         <div className={styles.menu} role="menu">
           <div className={styles.header}>
             {selectedFiltersCount > 0 && <div className={styles.count}>{selectedFiltersCount} selected</div>}
-            <button
-              type="button"
-              className={styles.button}
-              onClick={() => {
-                facet.data?.forEach(value => {
-                  if (value.selected) {
-                    toggleProductFilter(facet.field, value.value, false)
-                  }
-                })
-              }}
-            >
-              Reset
-            </button>
+            {selectedFiltersCount > 0 && (
+              <button
+                type="button"
+                className={styles.button}
+                onClick={() => {
+                  facet.data?.forEach(value => {
+                    if (value.selected) {
+                      toggleProductFilter(facet.field, value.value, false)
+                    }
+                  })
+                }}
+              >
+                Reset
+              </button>
+            )}
           </div>
           <div className={styles.options}>
             {facet.data?.map(value => (

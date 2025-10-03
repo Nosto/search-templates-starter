@@ -64,6 +64,8 @@ export default function RangeDropdown({ facet }: Props) {
     updateRange([min, max])
   }
 
+  const isFiltered = range[0] !== min || range[1] !== max
+
   return (
     <div className={styles.dropdown} ref={dropdownRef}>
       <FilterTrigger
@@ -78,9 +80,11 @@ export default function RangeDropdown({ facet }: Props) {
         <div className={styles.menu} role="menu">
           <div className={styles.header}>
             <span className={styles.label}>The highest price is ${max}</span>
-            <button type="button" className={styles.button} onClick={resetFilter}>
-              Reset
-            </button>
+            {isFiltered && (
+              <button type="button" className={styles.button} onClick={resetFilter}>
+                Reset
+              </button>
+            )}
           </div>
           <div className={styles.inputs}>
             <div className={styles.inputGroup}>
