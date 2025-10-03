@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import FilterSidebar from "./FilterSidebar"
-import { FilterSidebarProvider } from "@/contexts/FilterSidebarContext"
+import { SidebarProvider } from "@/contexts/SidebarContext"
 import { withSearchContext } from ".storybook/decorators"
 
 export default {
@@ -17,10 +17,10 @@ type Story = StoryObj<typeof FilterSidebar>
 
 export const MockedView: Story = {
   render: () => (
-    <FilterSidebarProvider initialOpen={true}>
+    <SidebarProvider initialOpen={true}>
       <div style={{ position: "relative", width: "300px", height: "800px" }}>
         <FilterSidebar />
       </div>
-    </FilterSidebarProvider>
+    </SidebarProvider>
   )
 }

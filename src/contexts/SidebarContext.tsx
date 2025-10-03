@@ -2,20 +2,20 @@ import { createContext } from "preact"
 import { useContext, useState } from "preact/hooks"
 import { ComponentChildren } from "preact"
 
-type FilterSidebarContextType = {
+type SidebarContextType = {
   isOpen: boolean
   setOpen: (open: boolean) => void
   toggle: () => void
 }
 
-const FilterSidebarContext = createContext<FilterSidebarContextType | undefined>(undefined)
+const SidebarContext = createContext<SidebarContextType | undefined>(undefined)
 
-type FilterSidebarProviderProps = {
+type SidebarProviderProps = {
   children: ComponentChildren
   initialOpen?: boolean
 }
 
-export function FilterSidebarProvider({ children, initialOpen = false }: FilterSidebarProviderProps) {
+export function SidebarProvider({ children, initialOpen = false }: SidebarProviderProps) {
   const [isOpen, setOpen] = useState(initialOpen)
 
   const toggle = () => {
@@ -28,13 +28,13 @@ export function FilterSidebarProvider({ children, initialOpen = false }: FilterS
     toggle
   }
 
-  return <FilterSidebarContext.Provider value={contextValue}>{children}</FilterSidebarContext.Provider>
+  return <SidebarContext.Provider value={contextValue}>{children}</SidebarContext.Provider>
 }
 
 export function useFilterSidebar() {
-  const context = useContext(FilterSidebarContext)
+  const context = useContext(SidebarContext)
   if (context === undefined) {
-    throw new Error("useFilterSidebar must be used within a FilterSidebarProvider")
+    throw new Error("useFilterSidebar must be used within a SidebarProvider")
   }
   return context
 }

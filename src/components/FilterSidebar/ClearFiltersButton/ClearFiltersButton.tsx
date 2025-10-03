@@ -1,6 +1,6 @@
 import { useCallback } from "preact/hooks"
 import { useProductFilters } from "@nosto/search-js/preact/hooks"
-import { useFilterSidebar } from "@/contexts/FilterSidebarContext"
+import { useFilterSidebar } from "@/contexts/SidebarContext"
 import Button from "@/elements/Button/Button"
 
 export default function ClearFiltersButton() {

@@ -5,7 +5,7 @@ import Select from "@/elements/Select/Select"
 import style from "./Toolbar.module.css"
 import Button from "@/elements/Button/Button"
 import { cl } from "@nosto/search-js/utils"
-import { useFilterSidebar } from "@/contexts/FilterSidebarContext"
+import { useFilterSidebar } from "@/contexts/SidebarContext"
 
 type Props = {
   selectedFiltersCount: number

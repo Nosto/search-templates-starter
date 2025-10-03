@@ -5,7 +5,7 @@ import Serp from "@/components/Serp/Serp"
 import "@/variable.css"
 import Results from "@/components/Autocomplete/Results/Results"
 import SearchQueryHandler from "@/components/SearchQueryHandler/SearchQueryHandler"
-import { FilterSidebarProvider } from "@/contexts/FilterSidebarContext"
+import { SidebarProvider } from "@/contexts/SidebarContext"
 import { autocompleteConfig, categoryConfig, serpConfig } from "@/config"
 import { disableNativeAutocomplete } from "@nosto/search-js/utils"
 import { useDomEvents } from "@/hooks/useDomEvents"
@@ -90,12 +90,12 @@ function SerpApp() {
   return (
     <ErrorBoundary>
       <SearchQueryHandler />
-      <FilterSidebarProvider>
+      <SidebarProvider>
         <AutocompletePageProvider config={autocompleteConfig}>
           <Autocomplete onSubmit={onSubmit} />
         </AutocompletePageProvider>
         <Serp />
-      </FilterSidebarProvider>
+      </SidebarProvider>
     </ErrorBoundary>
   )
 }
@@ -105,9 +105,9 @@ function CategoryApp() {
     <ErrorBoundary>
       <CategoryPageProvider config={categoryConfig}>
         <SearchQueryHandler />
-        <FilterSidebarProvider>
+        <SidebarProvider>
           <Category />
-        </FilterSidebarProvider>
+        </SidebarProvider>
       </CategoryPageProvider>
     </ErrorBoundary>
   )

@@ -1,8 +1,8 @@
 import { render, screen, fireEvent } from "@testing-library/preact"
 import { describe, it, expect } from "vitest"
-import { FilterSidebarProvider, useFilterSidebar } from "@/contexts/FilterSidebarContext"
+import { SidebarProvider, useFilterSidebar } from "@/contexts/SidebarContext"
 
-function TestFilterSidebarComponent() {
+function TestSidebarComponent() {
   const { isOpen, toggle, setOpen } = useFilterSidebar()
 
   return (
@@ -21,12 +21,12 @@ function TestFilterSidebarComponent() {
   )
 }
 
-describe("FilterSidebarContext", () => {
+describe("SidebarContext", () => {
   it("should provide default closed state", () => {
     render(
-      <FilterSidebarProvider>
-        <TestFilterSidebarComponent />
-      </FilterSidebarProvider>
+      <SidebarProvider>
+        <TestSidebarComponent />
+      </SidebarProvider>
     )
 
     expect(screen.getByTestId("sidebar-status").textContent).toBe("closed")
@@ -34,9 +34,9 @@ describe("FilterSidebarContext", () => {
 
   it("should accept initialOpen prop to start with open state", () => {
     render(
-      <FilterSidebarProvider initialOpen={true}>
-        <TestFilterSidebarComponent />
-      </FilterSidebarProvider>
+      <SidebarProvider initialOpen={true}>
+        <TestSidebarComponent />
+      </SidebarProvider>
     )
 
     expect(screen.getByTestId("sidebar-status").textContent).toBe("open")
@@ -44,9 +44,9 @@ describe("FilterSidebarContext", () => {
 
   it("should toggle sidebar state", () => {
     render(
-      <FilterSidebarProvider>
-        <TestFilterSidebarComponent />
-      </FilterSidebarProvider>
+      <SidebarProvider>
+        <TestSidebarComponent />
+      </SidebarProvider>
     )
 
     const toggleButton = screen.getByTestId("toggle-button")
@@ -63,9 +63,9 @@ describe("FilterSidebarContext", () => {
 
   it("should set sidebar state directly", () => {
     render(
-      <FilterSidebarProvider>
-        <TestFilterSidebarComponent />
-      </FilterSidebarProvider>
+      <SidebarProvider>
+        <TestSidebarComponent />
+      </SidebarProvider>
     )
 
     const openButton = screen.getByTestId("open-button")
@@ -85,8 +85,8 @@ describe("FilterSidebarContext", () => {
     console.error = () => {}
 
     expect(() => {
-      render(<TestFilterSidebarComponent />)
-    }).toThrow("useFilterSidebar must be used within a FilterSidebarProvider")
+      render(<TestSidebarComponent />)
+    }).toThrow("useFilterSidebar must be used within a SidebarProvider")
 
     console.error = originalError
   })
