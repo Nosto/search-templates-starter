@@ -1,5 +1,6 @@
 import { defaultConfig } from "@/config"
 import { getCurrentUrlState } from "@/mapping/url/getCurrentUrlState"
+import { SearchQuery } from "@nosto/nosto-js/client"
 
 export function createQueryFromUrl() {
   const { filter, page, query, size, sort } = getCurrentUrlState()
@@ -12,5 +13,5 @@ export function createQueryFromUrl() {
       sort,
       size: size || defaultConfig.serpSize
     }
-  }
+  } satisfies SearchQuery
 }
