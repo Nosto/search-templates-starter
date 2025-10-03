@@ -2,7 +2,6 @@ import { SerpElement } from "@nosto/search-js/preact/serp"
 import { cl } from "@nosto/search-js/utils"
 import styles from "./Product.module.css"
 import type { Product } from "@/types"
-import DynamicCard from "@/elements/DynamicCard/DynamicCard"
 import { renderRatingStars } from "./renderRatingStars"
 import ProductImage from "./ProductImage"
 
@@ -48,23 +47,6 @@ export default function Product({ product, children, showAltOnHover = true }: Pr
         )}
       </div>
       {children}
-    </SerpElement>
-  )
-}
-
-export function DynamicCardProduct({ product }: Props) {
-  return (
-    <SerpElement
-      hit={{
-        productId: product.productId!,
-        url: product.url
-      }}
-      componentProps={{
-        "aria-label": `Product ${product.name}`,
-        className: styles.container
-      }}
-    >
-      <DynamicCard handle={product.handle!} template="card" />
     </SerpElement>
   )
 }

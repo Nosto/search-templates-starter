@@ -37,6 +37,14 @@
       import { mockSearch } from "@mocks/search"
       import { init } from "@nosto/nosto-js"
 
+      if (import.meta.env.VITE_MERCHANT_ROOT) {
+        window.Shopify = {
+          routes: {
+            root: import.meta.env.VITE_MERCHANT_ROOT
+          }
+        }
+      }
+
       function renderApp() {
         const mode = import.meta.env.MODE
         if (mode === "injected" || mode === "mocked") {
