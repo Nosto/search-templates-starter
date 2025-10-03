@@ -3,13 +3,13 @@ import { useFacet } from "@nosto/search-js/preact/hooks"
 import { SearchTermsFacet } from "@nosto/nosto-js/client"
 import FilterTrigger from "./FilterTrigger"
 import Checkbox from "@/elements/Checkbox/Checkbox"
-import styles from "./TermsFilterDropdown.module.css"
+import styles from "./TermsDropdown.module.css"
 
 type Props = {
   facet: SearchTermsFacet
 }
 
-export default function TermsFilterDropdown({ facet }: Props) {
+export default function TermsDropdown({ facet }: Props) {
   const { selectedFiltersCount, toggleProductFilter } = useFacet(facet)
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)

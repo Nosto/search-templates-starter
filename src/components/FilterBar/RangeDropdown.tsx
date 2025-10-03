@@ -4,20 +4,18 @@ import { SearchStatsFacet } from "@nosto/nosto-js/client"
 import FilterTrigger from "./FilterTrigger"
 import RangeInput from "@/elements/RangeInput/RangeInput"
 import Button from "@/elements/Button/Button"
-import styles from "./RangeFilterDropdown.module.css"
+import styles from "./RangeDropdown.module.css"
 
 type Props = {
   facet: SearchStatsFacet
 }
 
-export default function RangeFilterDropdown({ facet }: Props) {
+export default function RangeDropdown({ facet }: Props) {
   const { min, max, range, updateRange } = useRange(facet.id)
   const [isOpen, setIsOpen] = useState(false)
   const [localMin, setLocalMin] = useState(range[0])
   const [localMax, setLocalMax] = useState(range[1])
   const dropdownRef = useRef<HTMLDivElement>(null)
-
-  const isFiltered = min !== range[0] || max !== range[1]
 
   // Update local values when range changes
   useEffect(() => {
@@ -66,30 +64,10 @@ export default function RangeFilterDropdown({ facet }: Props) {
     updateRange([min, max])
   }
 
-  const formatDisplayValue = () => {
-    if (!isFiltered) {
-      return "Any"
-    }
-
-    if (localMin === min && localMax === max) {
-      return "Any"
-    }
-
-    if (localMin === min) {
-      return `Up to ${localMax}`
-    }
-
-    if (localMax === max) {
-      return `${localMin}+`
-    }
-
-    return `${localMin} - ${localMax}`
-  }
-
   return (
     <div className={styles.dropdown} ref={dropdownRef}>
       <FilterTrigger
-        value={formatDisplayValue() || facet.name}
+        value={facet.name}
         isOpen={isOpen}
         onClick={toggleDropdown}
         onKeyDown={handleKeyDown}
