@@ -118,9 +118,7 @@ async function init() {
   // Initialize context early, before DOM operations
   const pageType = tagging.pageType()
   const { config, store } =
-    pageType === "category"
-      ? initContext({ ...categoryConfig, pageType: "category" })
-      : initContext({ ...serpConfig, pageType: "search" })
+    pageType === "category" ? initContext("category", categoryConfig) : initContext("search", serpConfig)
 
   const serpElement = document.querySelector<HTMLElement>("#serp")
 

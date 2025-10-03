@@ -2,15 +2,15 @@ import { defaultConfig } from "@/config"
 import { getCurrentUrlState } from "@/mapping/url/getCurrentUrlState"
 
 export function createQueryFromUrl() {
-  const urlState = getCurrentUrlState()
+  const { filter, page, query, size, sort} = getCurrentUrlState()
 
   return {
-    query: urlState.query,
+    query,
     products: {
-      from: urlState.page ? (urlState.page - 1) * (urlState.size || defaultConfig.serpSize) : 0,
-      filter: urlState.filter,
-      sort: urlState.sort,
-      size: urlState.size || defaultConfig.serpSize
+      from: page ? (page - 1) * (size || defaultConfig.serpSize) : 0,
+      filter,
+      sort,
+      size: size || defaultConfig.serpSize
     }
   }
 }

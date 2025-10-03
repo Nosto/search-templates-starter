@@ -14,10 +14,7 @@ import { initContext } from "./initContext"
 import { categoryConfig, serpConfig } from "@/config"
 
 function SerpApp() {
-  const { config, store } = initContext({
-    ...serpConfig,
-    pageType: "search"
-  })
+  const { config, store } = initContext("search", serpConfig)
   return (
     <SearchPageProvider config={config} store={store}>
       <SearchQueryHandler />
@@ -30,10 +27,7 @@ function SerpApp() {
 }
 
 function CategoryApp() {
-  const { config, store } = initContext({
-    ...categoryConfig,
-    pageType: "category"
-  })
+  const { config, store } = initContext("category", categoryConfig)
   return (
     <CategoryPageProvider config={config} store={store}>
       <SearchQueryHandler />
