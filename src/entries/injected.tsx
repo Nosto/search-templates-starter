@@ -1,6 +1,6 @@
 import { SearchPageProvider } from "@nosto/search-js/preact/serp"
 import { AutocompletePageProvider } from "@nosto/search-js/preact/autocomplete"
-import { render, createPortal, useState, useEffect, useCallback } from "preact/compat"
+import { render, useState, useEffect, useCallback } from "preact/compat"
 import Serp from "@/components/Serp/Serp"
 import "@/variable.css"
 import Results from "@/components/Autocomplete/Results/Results"
@@ -17,6 +17,7 @@ import { tagging } from "@/mapping/tagging"
 import { nostojs } from "@nosto/nosto-js"
 import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import { getInitialQuery } from "@/mapping/url/getInitialQuery"
+import Portal from "@/elements/Portal/Portal"
 
 type Props = {
   onSubmit: (input: string) => void
@@ -73,7 +74,7 @@ function Autocomplete({ onSubmit }: Props) {
     }
   })
 
-  return createPortal(<>{showAutocomplete && <Results onSubmit={onSearchSubmit} />}</>, dropdownElement)
+  return showAutocomplete ? <Results onSubmit={onSearchSubmit} /> : null
 }
 
 function SerpApp() {
@@ -92,9 +93,13 @@ function SerpApp() {
       <SearchQueryHandler />
       <SidebarProvider>
         <AutocompletePageProvider config={autocompleteConfig}>
-          <Autocomplete onSubmit={onSubmit} />
+          <Portal target="#dropdown">
+            <Autocomplete onSubmit={onSubmit} />
+          </Portal>
         </AutocompletePageProvider>
-        <Serp />
+        <Portal target="#serp">
+          <Serp />
+        </Portal>
       </SidebarProvider>
     </ErrorBoundary>
   )
@@ -106,7 +111,9 @@ function CategoryApp() {
       <CategoryPageProvider config={categoryConfig}>
         <SearchQueryHandler />
         <SidebarProvider>
-          <Category />
+          <Portal target="#serp">
+            <Category />
+          </Portal>
         </SidebarProvider>
       </CategoryPageProvider>
     </ErrorBoundary>
@@ -115,21 +122,20 @@ function CategoryApp() {
 
 async function init() {
   await new Promise(nostojs)
-  const serpElement = document.querySelector<HTMLElement>("#serp")
-  if (serpElement) {
-    switch (tagging.pageType()) {
-      case "category":
-        render(<CategoryApp />, serpElement)
-        break
-      case "search":
-      default:
-        render(
-          <SearchPageProvider config={serpConfig}>
-            <SerpApp />
-          </SearchPageProvider>,
-          serpElement
-        )
-    }
+  const dummy = document.createElement("div")
+  document.body.appendChild(dummy)
+  switch (tagging.pageType()) {
+    case "category":
+      render(<CategoryApp />, dummy)
+      break
+    case "search":
+    default:
+      render(
+        <SearchPageProvider config={serpConfig}>
+          <SerpApp />
+        </SearchPageProvider>,
+        dummy
+      )
   }
 }
 init()
