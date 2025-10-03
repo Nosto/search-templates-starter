@@ -114,17 +114,21 @@ function CategoryApp() {
 
 async function init() {
   await new Promise(nostojs)
+
+  // Initialize context early, before DOM operations
+  const pageType = tagging.pageType()
+  const context =
+    pageType === "category"
+      ? initContext({ ...categoryConfig, pageType: "category" })
+      : initContext({ ...serpConfig, pageType: "search" })
+
   const serpElement = document.querySelector<HTMLElement>("#serp")
 
   if (serpElement) {
-    switch (tagging.pageType()) {
+    switch (pageType) {
       case "category":
-        const categoryContext = initContext({
-          ...categoryConfig,
-          pageType: "category"
-        })
         render(
-          <CategoryPageProvider config={categoryContext.config} store={categoryContext.store}>
+          <CategoryPageProvider config={context.config} store={context.store}>
             <CategoryApp />
           </CategoryPageProvider>,
           serpElement
@@ -132,12 +136,8 @@ async function init() {
         break
       case "search":
       default:
-        const searchContext = initContext({
-          ...serpConfig,
-          pageType: "search"
-        })
         render(
-          <SearchPageProvider config={searchContext.config} store={searchContext.store}>
+          <SearchPageProvider config={context.config} store={context.store}>
             <SerpApp />
           </SearchPageProvider>,
           serpElement
