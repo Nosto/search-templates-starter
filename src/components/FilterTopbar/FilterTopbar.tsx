@@ -2,9 +2,9 @@ import { useFacets } from "@nosto/search-js/preact/hooks"
 import { SearchStatsFacet, SearchTermsFacet } from "@nosto/nosto-js/client"
 import TermsDropdown from "./TermsDropdown"
 import RangeDropdown from "./RangeDropdown"
-import styles from "./FilterTopBar.module.css"
+import styles from "./FilterTopbar.module.css"
 
-export default function FilterTopBar() {
+export default function FilterTopbar() {
   const { facets } = useFacets()
 
   if (!facets || facets.length === 0) {

@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/preact"
-import FilterTopBar from "./FilterTopBar"
+import FilterTopbar from "./FilterTopbar"
 import { withSearchContext } from ".storybook/decorators"
 
-const meta: Meta<typeof FilterTopBar> = {
-  title: "Components/FilterTopBar",
-  component: FilterTopBar,
+const meta: Meta<typeof FilterTopbar> = {
+  title: "Components/FilterTopbar",
+  component: FilterTopbar,
   tags: ["autodocs"],
   decorators: [withSearchContext],
   parameters: {
@@ -19,14 +19,14 @@ const meta: Meta<typeof FilterTopBar> = {
 }
 
 export default meta
-type Story = StoryObj<typeof FilterTopBar>
+type Story = StoryObj<typeof FilterTopbar>
 
 export const Default: Story = {
   name: "Default",
   parameters: {
     docs: {
       description: {
-        story: "Default FilterTopBar showing multiple facet types including terms and range filters."
+        story: "Default FilterTopbar showing multiple facet types including terms and range filters."
       }
     }
   }
@@ -38,7 +38,7 @@ export const WithMockData: Story = {
     docs: {
       description: {
         story:
-          "FilterTopBar with mock search context data showing real dropdown functionality for both terms and range facets."
+          "FilterTopbar with mock search context data showing real dropdown functionality for both terms and range facets."
       }
     }
   }

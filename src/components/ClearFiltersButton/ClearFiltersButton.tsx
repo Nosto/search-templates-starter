@@ -1,11 +1,11 @@
 import { useCallback } from "preact/hooks"
 import { useProductFilters } from "@nosto/search-js/preact/hooks"
-import { useFilterSideBar } from "@/contexts/FilterSideBarContext"
+import { useFilterSidebar } from "@/contexts/FilterSidebarContext"
 import Button from "@/elements/Button/Button"
 
 export default function ClearFiltersButton() {
   const { filters, removeAll } = useProductFilters()
-  const { setOpen } = useFilterSideBar()
+  const { setOpen } = useFilterSidebar()
 
   const handleClearFilters = useCallback(() => {
     removeAll()

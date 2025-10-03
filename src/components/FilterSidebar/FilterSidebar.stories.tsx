@@ -1,26 +1,26 @@
 import type { Meta, StoryObj } from "@storybook/preact"
-import FilterSideBar from "./FilterSideBar"
-import { FilterSideBarProvider } from "@/contexts/FilterSideBarContext"
+import FilterSidebar from "./FilterSidebar"
+import { FilterSidebarProvider } from "@/contexts/FilterSidebarContext"
 import { withSearchContext } from ".storybook/decorators"
 
 export default {
-  title: "Components/FilterSideBar",
-  component: FilterSideBar,
+  title: "Components/FilterSidebar",
+  component: FilterSidebar,
   parameters: {
     layout: "centered"
   },
   decorators: [withSearchContext],
   tags: ["autodocs"]
-} as Meta<typeof FilterSideBar>
+} as Meta<typeof FilterSidebar>
 
-type Story = StoryObj<typeof FilterSideBar>
+type Story = StoryObj<typeof FilterSidebar>
 
 export const MockedView: Story = {
   render: () => (
-    <FilterSideBarProvider initialOpen={true}>
+    <FilterSidebarProvider initialOpen={true}>
       <div style={{ position: "relative", width: "300px", height: "800px" }}>
-        <FilterSideBar />
+        <FilterSidebar />
       </div>
-    </FilterSideBarProvider>
+    </FilterSidebarProvider>
   )
 }
