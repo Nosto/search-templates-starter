@@ -1,0 +1,20 @@
+.trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--ns-space-2);
+  padding: var(--ns-space-2) var(--ns-space-3);
+  background: var(--ns-color-white);
+  border: none;
+  border-radius: var(--ns-border-radius-3);
+  cursor: pointer;
+  font-size: var(--ns-font-size-4);
+  justify-content: space-between;
+}
+
+.trigger:focus {
+  outline: 2px solid var(--ns-color-primary);
+  outline-offset: 2px;
+}
+
+
+
