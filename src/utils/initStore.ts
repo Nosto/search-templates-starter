@@ -9,7 +9,7 @@ export function initStore(pageType: "category" | "search") {
   const urlState = getCurrentUrlState()
   const config = pageType === "category" ? categoryConfig : serpConfig
 
-  if (urlState.query && (pageType === "search" || pageType === "category")) {
+  if ((urlState.query && pageType === "search") || pageType === "category") {
     newSearch(
       {
         store,
