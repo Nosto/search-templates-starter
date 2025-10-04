@@ -1,13 +1,3 @@
-.header {
-  font-size: 11px;
-  font-weight: 600;
-  color: #9ca3af;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  line-height: 1;
-  padding: 8px 16px;
-}
-
 .historyColumn {
   display: flex;
   flex-direction: column;

@@ -3,6 +3,7 @@ import { useState, useCallback, useRef, useEffect } from "preact/hooks"
 import { SearchInput } from "@nosto/search-js/preact/autocomplete"
 import { useDomEvents } from "@/hooks/useDomEvents"
 import { useDebouncedSearch } from "@/hooks/useDebouncedSearch"
+import { useHistory } from "@nosto/search-js/preact/hooks"
 import { disableNativeAutocomplete } from "@nosto/search-js/utils"
 import { getInitialQuery } from "@/mapping/url/getInitialQuery"
 
@@ -34,8 +35,11 @@ export default function Autocomplete({ onSubmit }: Props) {
     onClick: onClickOutside
   })
 
+  const { addQuery } = useHistory()
+
   const onSearchSubmit = (query: string) => {
     if (query.trim()) {
+      addQuery(query)
       setInput(query.trim())
       searchInputRef.current!.blur()
       onSubmit(query)

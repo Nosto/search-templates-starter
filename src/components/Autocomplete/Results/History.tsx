@@ -1,5 +1,6 @@
 import { useNostoAppState } from "@nosto/search-js/preact/hooks"
 import { HistoryItem } from "../HistoryItem/HistoryItem"
+import Heading from "@/elements/Heading/Heading"
 import styles from "./History.module.css"
 
 export type KeywordsProps = {
@@ -18,7 +19,7 @@ export function History({ onSubmit }: KeywordsProps) {
 
   return (
     <div className={styles.historyColumn}>
-      <div className={styles.header}>Recent searches</div>
+      <Heading>Recent searches</Heading>
       {historyItems.map((item, index) => (
         <HistoryItem key={item} item={item} onSubmit={onSubmit} highlighted={index === highlightedElementIndex} />
       ))}
