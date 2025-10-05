@@ -36,4 +36,19 @@ describe("Image", () => {
       '<nosto-image aspect-ratio="1.5" src="https://example.com/image.jpg" width="500"></nosto-image>'
     )
   })
+
+  it("renders with sizes attribute for responsive images", () => {
+    const { container } = render(
+      <Image
+        src="https://example.com/image.jpg"
+        width={750}
+        sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33.33vw, 100vw"
+      />
+    )
+    const el = container.querySelector("nosto-image") as HTMLElement
+    expect(el).toBeTruthy()
+    expect(el.outerHTML).toBe(
+      '<nosto-image src="https://example.com/image.jpg" width="750" sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33.33vw, 100vw"></nosto-image>'
+    )
+  })
 })
