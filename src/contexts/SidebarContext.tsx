@@ -31,10 +31,10 @@ export function SidebarProvider({ children, initialOpen = false }: SidebarProvid
   return <SidebarContext.Provider value={contextValue}>{children}</SidebarContext.Provider>
 }
 
-export function useSidebar() {
+export function useFilterSidebar() {
   const context = useContext(SidebarContext)
   if (context === undefined) {
-    throw new Error("useSidebar must be used within a SidebarProvider")
+    throw new Error("useFilterSidebar must be used within a SidebarProvider")
   }
   return context
 }

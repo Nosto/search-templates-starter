@@ -1,15 +1,15 @@
 import { useState, useRef, useEffect } from "preact/hooks"
 import { useFacet } from "@nosto/search-js/preact/hooks"
 import { SearchTermsFacet } from "@nosto/nosto-js/client"
-import FilterTrigger from "./FilterTrigger"
+import FilterTrigger from "../FilterTrigger/FilterTrigger"
 import Checkbox from "@/elements/Checkbox/Checkbox"
-import styles from "./TermsFilterDropdown.module.css"
+import styles from "./TermsDropdown.module.css"
 
 type Props = {
   facet: SearchTermsFacet
 }
 
-export default function TermsFilterDropdown({ facet }: Props) {
+export default function TermsDropdown({ facet }: Props) {
   const { selectedFiltersCount, toggleProductFilter } = useFacet(facet)
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
@@ -58,19 +58,21 @@ export default function TermsFilterDropdown({ facet }: Props) {
         <div className={styles.menu} role="menu">
           <div className={styles.header}>
             {selectedFiltersCount > 0 && <div className={styles.count}>{selectedFiltersCount} selected</div>}
-            <button
-              type="button"
-              className={styles.button}
-              onClick={() => {
-                facet.data?.forEach(value => {
-                  if (value.selected) {
-                    toggleProductFilter(facet.field, value.value, false)
-                  }
-                })
-              }}
-            >
-              Reset
-            </button>
+            {selectedFiltersCount > 0 && (
+              <button
+                type="button"
+                className={styles.button}
+                onClick={() => {
+                  facet.data?.forEach(value => {
+                    if (value.selected) {
+                      toggleProductFilter(facet.field, value.value, false)
+                    }
+                  })
+                }}
+              >
+                Reset
+              </button>
+            )}
           </div>
           <div className={styles.options}>
             {facet.data?.map(value => (

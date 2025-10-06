@@ -1,10 +1,10 @@
 import { useFacets } from "@nosto/search-js/preact/hooks"
 import { SearchStatsFacet, SearchTermsFacet } from "@nosto/nosto-js/client"
-import TermsFilterDropdown from "./TermsFilterDropdown"
-import RangeFilterDropdown from "./RangeFilterDropdown"
-import styles from "./FilterBar.module.css"
+import TermsDropdown from "./TermsDropdown/TermsDropdown"
+import RangeDropdown from "./RangeDropdown/RangeDropdown"
+import styles from "./FilterTopbar.module.css"
 
-export default function FilterBar() {
+export default function FilterTopbar() {
   const { facets } = useFacets()
 
   if (!facets || facets.length === 0) {
@@ -16,9 +16,9 @@ export default function FilterBar() {
       {facets.map(facet => {
         switch (facet.type) {
           case "terms":
-            return <TermsFilterDropdown key={facet.id} facet={facet as SearchTermsFacet} />
+            return <TermsDropdown key={facet.id} facet={facet as SearchTermsFacet} />
           case "stats":
-            return <RangeFilterDropdown key={facet.id} facet={facet as SearchStatsFacet} />
+            return <RangeDropdown key={facet.id} facet={facet as SearchStatsFacet} />
           default:
             return null
         }
