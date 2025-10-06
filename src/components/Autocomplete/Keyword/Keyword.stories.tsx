@@ -1,6 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Keyword from "./Keyword"
-import { mockKeyword, mockKeywordNoHighlight } from "@mocks/keywords"
+import {
+  mockKeyword,
+  mockKeywordNoHighlight,
+  mockKeywordWithRedirect,
+  mockKeywordWithRedirectNoHighlight
+} from "@mocks/keywords"
 import { withAutocompleteContext } from ".storybook/decorators"
 
 export default {
@@ -31,6 +36,34 @@ export const WithoutHighlight: Story = {
     docs: {
       description: {
         story: "Keyword without highlighting, displays plain text."
+      }
+    }
+  }
+}
+
+export const WithRedirect: Story = {
+  args: {
+    keyword: mockKeywordWithRedirect,
+    onSubmit: (query: string) => console.info("Search submitted:", query)
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Keyword with redirect URL - clicking will redirect instead of submitting search."
+      }
+    }
+  }
+}
+
+export const WithRedirectNoHighlight: Story = {
+  args: {
+    keyword: mockKeywordWithRedirectNoHighlight,
+    onSubmit: (query: string) => console.info("Search submitted:", query)
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Keyword with redirect URL but no highlighting."
       }
     }
   }

@@ -9,11 +9,12 @@ function createEmptyResponse() {
 
 function createKeyword(
   keyword: string,
-  options: { highlight?: string; facets?: SearchFacet[]; priority?: number; total?: number } = {}
+  options: { highlight?: string; facets?: SearchFacet[]; priority?: number; total?: number; redirect?: string } = {}
 ) {
   return {
     keyword,
     ...(options.highlight ? { _highlight: { keyword: options.highlight } } : {}),
+    ...(options.redirect ? { _redirect: options.redirect } : {}),
     facets: options.facets || [],
     priority: options.priority || 1,
     total: options.total || 1
@@ -32,6 +33,15 @@ export const mockKeyword = createKeyword("running shoes", {
 })
 
 export const mockKeywordNoHighlight = createKeyword("sneakers")
+
+export const mockKeywordWithRedirect = createKeyword("sale items", {
+  highlight: "<b>sale</b> items",
+  redirect: "https://example.com/sale"
+})
+
+export const mockKeywordWithRedirectNoHighlight = createKeyword("clearance", {
+  redirect: "https://example.com/clearance"
+})
 
 export const mockKeywords = createKeywordsResponse([
   createKeyword("running shoes", {
