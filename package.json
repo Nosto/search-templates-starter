@@ -41,7 +41,7 @@
     "@nosto/web-components": "^8.31.0",
     "@playwright/test": "^1.55.1",
     "@preact/preset-vite": "^2.10.2",
-    "@storybook/addon-docs": "^9.1.8",
+    "@storybook/addon-docs": "^9.1.10",
     "@storybook/preact-vite": "^9.1.8",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/preact": "^3.2.3",
