@@ -32,20 +32,22 @@ function Autocomplete({ onSubmit }: Props) {
   const searchForm = document.querySelector<HTMLFormElement>("#search-form")!
 
   useEffect(() => {
-    searchInput.value = getInitialQuery()
-    disableNativeAutocomplete(searchInput)
-  }, [searchInput])
+    const currentSearchInput = document.querySelector<HTMLInputElement>("#search")!
+    currentSearchInput.value = getInitialQuery()
+    disableNativeAutocomplete(currentSearchInput)
+  }, [])
 
   useDebouncedSearch({ input })
 
   // TODO convert to custom hook
   const onClickOutside = useCallback(
     (event: Event) => {
-      if (event.target !== searchInput && !dropdownElement.contains(event.target as Node)) {
+      const currentSearchInput = document.querySelector<HTMLInputElement>("#search")!
+      if (event.target !== currentSearchInput && !dropdownElement.contains(event.target as Node)) {
         setShowAutocomplete(false)
       }
     },
-    [searchInput, dropdownElement]
+    [dropdownElement]
   )
 
   useDomEvents(showAutocomplete ? document.body : null, {
@@ -53,7 +55,10 @@ function Autocomplete({ onSubmit }: Props) {
   })
 
   useDomEvents(searchInput, {
-    onInput: () => setInput(searchInput.value),
+    onInput: () => {
+      const currentSearchInput = document.querySelector<HTMLInputElement>("#search")!
+      setInput(currentSearchInput.value)
+    },
     onFocus: () => setShowAutocomplete(true)
   })
 
@@ -65,8 +70,10 @@ function Autocomplete({ onSubmit }: Props) {
     }
 
     addQuery(query)
-    searchInput.value = query
-    searchInput.blur()
+    // Update input value before other operations
+    const currentSearchInput = document.querySelector<HTMLInputElement>("#search")!
+    currentSearchInput.value = query
+    currentSearchInput.blur()
     onSubmit(query)
     setShowAutocomplete(false)
   }
