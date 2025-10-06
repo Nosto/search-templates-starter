@@ -10,7 +10,7 @@ import { autocompleteConfig, categoryConfig, serpConfig } from "@/config"
 import { disableNativeAutocomplete } from "@nosto/search-js/utils"
 import { useDomEvents } from "@/hooks/useDomEvents"
 import { useDebouncedSearch } from "@/hooks/useDebouncedSearch"
-import { useActions } from "@nosto/search-js/preact/hooks"
+import { useActions, useHistory } from "@nosto/search-js/preact/hooks"
 import Category from "@/components/Category/Category"
 import { CategoryPageProvider } from "@nosto/search-js/preact/category"
 import { tagging } from "@/mapping/tagging"
@@ -57,13 +57,18 @@ function Autocomplete({ onSubmit }: Props) {
     onFocus: () => setShowAutocomplete(true)
   })
 
+  const { addQuery } = useHistory()
+
   const onSearchSubmit = (query: string) => {
-    if (query.trim()) {
-      searchInput.value = query
-      searchInput.blur()
-      onSubmit(query)
-      setShowAutocomplete(false)
+    if (!query.trim()) {
+      return
     }
+
+    addQuery(query)
+    searchInput.value = query
+    searchInput.blur()
+    onSubmit(query)
+    setShowAutocomplete(false)
   }
 
   useDomEvents(searchForm, {

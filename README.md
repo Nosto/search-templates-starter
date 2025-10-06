@@ -35,9 +35,9 @@ If you would like to see the entire app in action in a mostly representative env
 VITE_MERCHANT_ID=shopify-99999999 npm run dev
 ```
 
-Alternatively, you may supply the merchant ID with a .env file.
-
 This will launch the application at http://localhost:8000.
+
+Alternatively, you may supply the merchant ID with a .env file.
 
 ### Storybook
 
