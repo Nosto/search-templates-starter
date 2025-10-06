@@ -1,6 +1,6 @@
 import type { SimpleCard as CustomElement } from "@nosto/web-components"
 
-type SimpleCardProps = Pick<CustomElement, "handle" | "alternate" | "brand" | "discount" | "rating">
+type SimpleCardProps = Pick<CustomElement, "handle" | "alternate" | "brand" | "discount" | "rating" | "sizes">
 
 /**
  * A custom element wrapper that displays a product card using Shopify product data.
