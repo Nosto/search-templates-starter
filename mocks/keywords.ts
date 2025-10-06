@@ -55,8 +55,10 @@ export const mockKeywords = createKeywordsResponse([
 const sampleKeywords = [
   "running shoes",
   "sneakers",
+  "sale items", // This will have a redirect
   "marathon training",
   "trail gear",
+  "clearance", // This will have a redirect
   "fitness tracker",
   "yoga mat",
   "cycling jersey",
@@ -79,14 +81,19 @@ export function generateMockKeywords(count: number) {
   const keywords: SearchKeyword[] = []
   for (let i = 0; i < count; i++) {
     const keyword = getRandomKeyword(i)
-    keywords.push(
-      createKeyword({
-        keyword,
-        _highlight: { keyword: keyword.replace(/(\w+)/, "<b>$1</b>") },
-        priority: i + 1,
-        total: count
-      })
-    )
+    const keywordConfig: Partial<SearchKeyword> & { keyword: string } = {
+      keyword,
+      _highlight: { keyword: keyword.replace(/(\w+)/, "<b>$1</b>") },
+      priority: i + 1,
+      total: count
+    }
+
+    // Add redirect URLs to specific keywords for testing
+    if (keyword === "sale items" || keyword === "clearance") {
+      keywordConfig._redirect = `https://example.com/${keyword.replace(" ", "-")}`
+    }
+
+    keywords.push(createKeyword(keywordConfig))
   }
   return keywords
 }
