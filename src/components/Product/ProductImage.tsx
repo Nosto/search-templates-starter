@@ -1,5 +1,5 @@
 import Image from "@/elements/Image/Image"
-import { defaultImageProps } from "@/constants/imageProps"
+import { defaultImageProps } from "./imageProps"
 
 export default function ProductImage({ src, alt }: { src: string; alt?: string }) {
   if (src.includes("cdn.shopify.com")) {

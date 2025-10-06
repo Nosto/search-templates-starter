@@ -2,7 +2,7 @@ import { Product } from "@/types"
 import { SerpElement } from "@nosto/search-js/preact/serp"
 import styles from "./Product.module.css"
 import SimpleCard from "@/elements/SimpleCard/SimpleCard"
-import { defaultImageSizes } from "@/constants/imageProps"
+import { defaultImageSizes } from "./imageProps"
 
 export default function SimpleCardProduct({ product }: { product: Product }) {
   return (
