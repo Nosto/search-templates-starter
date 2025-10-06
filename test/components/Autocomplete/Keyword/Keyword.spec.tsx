@@ -3,23 +3,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest"
 import type { JSX } from "preact"
 import Keyword from "@/components/Autocomplete/Keyword/Keyword"
 import { SearchKeyword } from "@nosto/nosto-js/client"
-
-// Mock the AutocompleteElement to avoid dependencies on Nosto context
-vi.mock("@nosto/search-js/preact/autocomplete", () => ({
-  AutocompleteElement: ({
-    children,
-    componentProps,
-    hit
-  }: {
-    children: JSX.Element | string
-    componentProps: JSX.HTMLAttributes<HTMLDivElement>
-    hit: unknown
-  }) => (
-    <div {...componentProps} data-testid="autocomplete-element" data-hit={JSON.stringify(hit)}>
-      {children}
-    </div>
-  )
-}))
+import { withAutocompleteContext } from ".storybook/decorators"
 
 describe("Keyword", () => {
   const mockOnSubmit = vi.fn()
@@ -42,9 +26,13 @@ describe("Keyword", () => {
     ...overrides
   })
 
+  const renderWithContext = (component: JSX.Element) => {
+    return render(withAutocompleteContext(() => component))
+  }
+
   it("should render keyword text without highlight", () => {
     const keyword = createKeyword({ keyword: "running shoes" })
-    const { getByText } = render(<Keyword keyword={keyword} onSubmit={mockOnSubmit} />)
+    const { getByText } = renderWithContext(<Keyword keyword={keyword} onSubmit={mockOnSubmit} />)
 
     expect(getByText("running shoes")).toBeTruthy()
   })
@@ -54,18 +42,18 @@ describe("Keyword", () => {
       keyword: "running shoes",
       _highlight: { keyword: "<b>running</b> shoes" }
     })
-    const { container } = render(<Keyword keyword={keyword} onSubmit={mockOnSubmit} />)
+    const { container } = renderWithContext(<Keyword keyword={keyword} onSubmit={mockOnSubmit} />)
 
-    const highlightedSpan = container.querySelector("span")
-    expect(highlightedSpan?.innerHTML).toBe("<b>running</b> shoes")
+    // Check that the highlight content is present in the rendered output
+    expect(container.innerHTML).toContain("<b>running</b> shoes")
   })
 
   it("should call onSubmit with keyword when clicked and no redirect is present", () => {
     const keyword = createKeyword({ keyword: "test search" })
-    const { getByTestId } = render(<Keyword keyword={keyword} onSubmit={mockOnSubmit} />)
+    const { container } = renderWithContext(<Keyword keyword={keyword} onSubmit={mockOnSubmit} />)
 
-    const element = getByTestId("autocomplete-element")
-    element.click()
+    const element = container.querySelector("[role='button']") || container.firstChild
+    element?.dispatchEvent(new MouseEvent("click", { bubbles: true }))
 
     expect(mockOnSubmit).toHaveBeenCalledTimes(1)
     expect(mockOnSubmit).toHaveBeenCalledWith("test search")
@@ -76,28 +64,13 @@ describe("Keyword", () => {
       keyword: "redirect test",
       _redirect: "https://example.com/redirect"
     })
-    const { getByTestId } = render(<Keyword keyword={keyword} onSubmit={mockOnSubmit} />)
+    const { container } = renderWithContext(<Keyword keyword={keyword} onSubmit={mockOnSubmit} />)
 
-    const element = getByTestId("autocomplete-element")
-    element.click()
+    const element = container.querySelector("[role='button']") || container.firstChild
+    element?.dispatchEvent(new MouseEvent("click", { bubbles: true }))
 
     expect(window.location.href).toBe("https://example.com/redirect")
     expect(mockOnSubmit).not.toHaveBeenCalled()
-  })
-
-  it("should prevent default behavior when clicked", () => {
-    const keyword = createKeyword({ keyword: "test" })
-    const { getByTestId } = render(<Keyword keyword={keyword} onSubmit={mockOnSubmit} />)
-
-    const element = getByTestId("autocomplete-element")
-
-    // Simulate click event by dispatching the actual event
-    element.dispatchEvent(new MouseEvent("click", { bubbles: true }))
-
-    // Since we can't easily test preventDefault directly with the mocked component,
-    // let's verify the component behavior instead - onSubmit should be called
-    expect(mockOnSubmit).toHaveBeenCalledTimes(1)
-    expect(mockOnSubmit).toHaveBeenCalledWith("test")
   })
 
   it("should handle empty string redirect as no redirect", () => {
@@ -105,10 +78,10 @@ describe("Keyword", () => {
       keyword: "test search",
       _redirect: ""
     })
-    const { getByTestId } = render(<Keyword keyword={keyword} onSubmit={mockOnSubmit} />)
+    const { container } = renderWithContext(<Keyword keyword={keyword} onSubmit={mockOnSubmit} />)
 
-    const element = getByTestId("autocomplete-element")
-    element.click()
+    const element = container.querySelector("[role='button']") || container.firstChild
+    element?.dispatchEvent(new MouseEvent("click", { bubbles: true }))
 
     expect(mockOnSubmit).toHaveBeenCalledTimes(1)
     expect(mockOnSubmit).toHaveBeenCalledWith("test search")
@@ -119,10 +92,10 @@ describe("Keyword", () => {
       keyword: "search term",
       _redirect: "https://example.com/priority-test"
     })
-    const { getByTestId } = render(<Keyword keyword={keyword} onSubmit={mockOnSubmit} />)
+    const { container } = renderWithContext(<Keyword keyword={keyword} onSubmit={mockOnSubmit} />)
 
-    const element = getByTestId("autocomplete-element")
-    element.click()
+    const element = container.querySelector("[role='button']") || container.firstChild
+    element?.dispatchEvent(new MouseEvent("click", { bubbles: true }))
 
     expect(window.location.href).toBe("https://example.com/priority-test")
     expect(mockOnSubmit).not.toHaveBeenCalled()
