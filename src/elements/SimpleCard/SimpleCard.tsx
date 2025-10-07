@@ -1,5 +1,5 @@
 import type { SimpleCard as CustomElement } from "@nosto/web-components"
-import { type ComponentChildren } from "preact"
+import { ComponentChildren } from "preact"
 
 type SimpleCardProps = Pick<CustomElement, "handle" | "alternate" | "brand" | "discount" | "rating" | "sizes"> & {
   children?: ComponentChildren
