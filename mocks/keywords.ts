@@ -7,15 +7,11 @@ function createEmptyResponse() {
   } satisfies SearchKeywords
 }
 
-const baseKeyword = {
-  facets: [],
-  priority: 1,
-  total: 1
-}
-
 function createKeyword(overrides: Partial<SearchKeyword> & { keyword: string }) {
   return {
-    ...baseKeyword,
+    facets: [],
+    priority: 1,
+    total: 1,
     ...overrides
   } satisfies SearchKeyword
 }
