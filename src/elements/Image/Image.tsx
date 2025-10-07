@@ -1,7 +1,7 @@
 import type { Image as CustomElement } from "@nosto/web-components"
 import { JSX } from "preact/jsx-runtime"
 
-type ImageProps = Pick<CustomElement, "src" | "width" | "height" | "aspectRatio" | "layout" | "crop"> &
+type ImageProps = Pick<CustomElement, "src" | "width" | "height" | "aspectRatio" | "layout" | "crop" | "sizes"> &
   JSX.IntrinsicElements["img"]
 
 /**
