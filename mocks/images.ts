@@ -1,4 +1,4 @@
-export function createRandomImage() {
+export function createMockRandomImage() {
   return `https://picsum.photos/id/${newId()}/500/750`
 }
 

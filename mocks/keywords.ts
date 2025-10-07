@@ -7,7 +7,7 @@ function createEmptyResponse() {
   } satisfies SearchKeywords
 }
 
-function createKeyword(overrides: Partial<SearchKeyword> & { keyword: string }) {
+function createMockKeyword(overrides: Partial<SearchKeyword> & { keyword: string }) {
   return {
     facets: [],
     priority: 1,
@@ -23,39 +23,39 @@ function createKeywordsResponse(keywords: SearchKeyword[]) {
   } satisfies SearchKeywords
 }
 
-export const mockKeyword = createKeyword({
+export const mockKeyword = createMockKeyword({
   keyword: "running shoes",
   _highlight: { keyword: "<b>running</b> shoes" }
 })
 
-export const mockKeywordNoHighlight = createKeyword({ keyword: "sneakers" })
+export const mockKeywordNoHighlight = createMockKeyword({ keyword: "sneakers" })
 
 export const mockKeywords = createKeywordsResponse([
-  createKeyword({
+  createMockKeyword({
     keyword: "running shoes",
     _highlight: { keyword: "<b>running</b> shoes" },
     total: 3
   }),
-  createKeyword({
+  createMockKeyword({
     keyword: "running gear",
     _highlight: { keyword: "<b>running</b> gear" },
     priority: 2,
     total: 3
   }),
-  createKeyword({
+  createMockKeyword({
     keyword: "marathon training",
     _highlight: { keyword: "marathon training" },
     priority: 3,
     total: 3
   }),
-  createKeyword({
+  createMockKeyword({
     keyword: "sale items",
     _redirect: "https://example.com/sale-items",
     _highlight: { keyword: "<b>sale</b> items" },
     priority: 4,
     total: 2
   }),
-  createKeyword({
+  createMockKeyword({
     keyword: "clearance",
     _redirect: "https://example.com/clearance",
     _highlight: { keyword: "<b>clearance</b>" },
@@ -67,10 +67,10 @@ export const mockKeywords = createKeywordsResponse([
 const sampleKeywords = [
   "running shoes",
   "sneakers",
-  "sale items", // This will have a redirect
+  "sale items",
   "marathon training",
   "trail gear",
-  "clearance", // This will have a redirect
+  "clearance",
   "fitness tracker",
   "yoga mat",
   "cycling jersey",
@@ -94,7 +94,7 @@ export function generateMockKeywords(count: number) {
   for (let i = 0; i < count; i++) {
     const keyword = getRandomKeyword(i)
     keywords.push(
-      createKeyword({
+      createMockKeyword({
         keyword,
         _highlight: { keyword: keyword.replace(/(\w+)/, "<b>$1</b>") },
         priority: i + 1,
