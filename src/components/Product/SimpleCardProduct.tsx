@@ -2,6 +2,7 @@ import { Product } from "@/types"
 import { SerpElement } from "@nosto/search-js/preact/serp"
 import styles from "./Product.module.css"
 import SimpleCard from "@/elements/SimpleCard/SimpleCard"
+import VariantSelector from "@/elements/VariantSelector/VariantSelector"
 import { imageSizes } from "./imageProps"
 
 export default function SimpleCardProduct({ product }: { product: Product }) {
@@ -17,6 +18,7 @@ export default function SimpleCardProduct({ product }: { product: Product }) {
       }}
     >
       <SimpleCard handle={product.handle!} alternate brand discount rating={product.ratingValue} sizes={imageSizes} />
+      <VariantSelector handle={product.handle!} />
     </SerpElement>
   )
 }
