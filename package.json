@@ -42,7 +42,7 @@
     "@playwright/test": "^1.56.0",
     "@preact/preset-vite": "^2.10.2",
     "@storybook/addon-docs": "^9.1.10",
-    "@storybook/preact-vite": "^9.1.8",
+    "@storybook/preact-vite": "^9.1.10",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/preact": "^3.2.3",
     "@types/eslint-config-prettier": "^6.11.3",
