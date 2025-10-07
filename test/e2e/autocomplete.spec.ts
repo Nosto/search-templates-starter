@@ -1,18 +1,18 @@
 import { test, expect } from "@playwright/test"
+import { dropdownSelector, dropdownTimeout, searchSelector, waitForApplicationReady } from "./helpers"
 
 test.describe("Autocomplete", () => {
-  const searchSelector = "input[name='q']"
-  const dropdownSelector = "#dropdown"
-
   test.beforeEach(async ({ page }) => {
     await page.goto("/")
-    await page.waitForSelector(searchSelector)
+    await waitForApplicationReady(page)
   })
 
   test("autocomplete dropdown opens after having typed three characters in the input", async ({ page }) => {
     const searchInput = page.locator(searchSelector)
     const dropdown = page.locator(dropdownSelector)
     const dropdownContent = page.locator(`${dropdownSelector} > div`)
+
+    await expect(searchInput).toHaveAttribute("autocomplete", "off")
 
     // Initially, dropdown should not contain autocomplete suggestions
     await expect(dropdown).toBeEmpty()
@@ -27,7 +27,7 @@ test.describe("Autocomplete", () => {
     await searchInput.fill("runn")
 
     // Wait for autocomplete to appear with mock data
-    await expect(dropdownContent).toContainText("running shoes", { timeout: 1000 })
+    await expect(dropdownContent).toContainText("running shoes", { timeout: dropdownTimeout })
     await expect(dropdownContent).toContainText("running gear")
   })
 
@@ -36,11 +36,13 @@ test.describe("Autocomplete", () => {
     const dropdown = page.locator(dropdownSelector)
     const dropdownContent = page.locator(`${dropdownSelector} > div`)
 
+    await expect(searchInput).toHaveAttribute("autocomplete", "off")
+
     await searchInput.fill("run")
 
     // Type to trigger autocomplete
     await searchInput.fill("running")
-    await expect(dropdownContent).toContainText("running shoes", { timeout: 1000 })
+    await expect(dropdownContent).toContainText("running shoes", { timeout: dropdownTimeout })
 
     // Submit by clicking "See all search results" button
     await page.getByRole("button", { name: "See all search results" }).click()
@@ -57,9 +59,11 @@ test.describe("Autocomplete", () => {
     const dropdown = page.locator(dropdownSelector)
     const dropdownContent = page.locator(`${dropdownSelector} > div`)
 
+    await expect(searchInput).toHaveAttribute("autocomplete", "off")
+
     // Type to trigger autocomplete
     await searchInput.fill("running")
-    await expect(dropdownContent).toContainText("running shoes", { timeout: 1000 })
+    await expect(dropdownContent).toContainText("running shoes", { timeout: dropdownTimeout })
 
     // Click outside the input and dropdown (on the page body)
     await page.locator("body").click({ position: { x: 50, y: 10 } })
