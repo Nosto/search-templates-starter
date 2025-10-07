@@ -17,8 +17,9 @@ export default function SimpleCardProduct({ product }: { product: Product }) {
         className: styles.container
       }}
     >
-      <SimpleCard handle={product.handle!} alternate brand discount rating={product.ratingValue} sizes={imageSizes} />
-      <VariantSelector handle={product.handle!} />
+      <SimpleCard handle={product.handle!} alternate brand discount rating={product.ratingValue} sizes={imageSizes}>
+        <VariantSelector handle={product.handle!} />
+      </SimpleCard>
     </SerpElement>
   )
 }
