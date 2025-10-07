@@ -7,14 +7,16 @@ function createEmptyResponse() {
   } satisfies SearchKeywords
 }
 
-function createKeyword(keyword: Partial<SearchKeyword> & { keyword: string }) {
+const baseKeyword = {
+  facets: [],
+  priority: 1,
+  total: 1
+}
+
+function createKeyword(overrides: Partial<SearchKeyword> & { keyword: string }) {
   return {
-    facets: [],
-    priority: 1,
-    total: 1,
-    ...keyword,
-    ...(keyword._highlight ? { _highlight: keyword._highlight } : {}),
-    ...(keyword._redirect ? { _redirect: keyword._redirect } : {})
+    ...baseKeyword,
+    ...overrides
   } satisfies SearchKeyword
 }
 
@@ -49,6 +51,20 @@ export const mockKeywords = createKeywordsResponse([
     _highlight: { keyword: "marathon training" },
     priority: 3,
     total: 3
+  }),
+  createKeyword({
+    keyword: "sale items",
+    _redirect: "https://example.com/sale-items",
+    _highlight: { keyword: "<b>sale</b> items" },
+    priority: 4,
+    total: 2
+  }),
+  createKeyword({
+    keyword: "clearance",
+    _redirect: "https://example.com/clearance",
+    _highlight: { keyword: "<b>clearance</b>" },
+    priority: 5,
+    total: 2
   })
 ])
 
@@ -81,19 +97,14 @@ export function generateMockKeywords(count: number) {
   const keywords: SearchKeyword[] = []
   for (let i = 0; i < count; i++) {
     const keyword = getRandomKeyword(i)
-    const keywordConfig: Partial<SearchKeyword> & { keyword: string } = {
-      keyword,
-      _highlight: { keyword: keyword.replace(/(\w+)/, "<b>$1</b>") },
-      priority: i + 1,
-      total: count
-    }
-
-    // Add redirect URLs to specific keywords for testing
-    if (keyword === "sale items" || keyword === "clearance") {
-      keywordConfig._redirect = `https://example.com/${keyword.replace(" ", "-")}`
-    }
-
-    keywords.push(createKeyword(keywordConfig))
+    keywords.push(
+      createKeyword({
+        keyword,
+        _highlight: { keyword: keyword.replace(/(\w+)/, "<b>$1</b>") },
+        priority: i + 1,
+        total: count
+      })
+    )
   }
   return keywords
 }
