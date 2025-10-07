@@ -1,5 +1,5 @@
 import type { SimpleCard as CustomElement } from "@nosto/web-components"
-import { ComponentChildren } from "preact"
+import { ComponentChildren, createElement } from "preact"
 
 type SimpleCardProps = Pick<CustomElement, "handle" | "alternate" | "brand" | "discount" | "rating" | "sizes"> & {
   children?: ComponentChildren
@@ -11,11 +11,5 @@ type SimpleCardProps = Pick<CustomElement, "handle" | "alternate" | "brand" | "d
  * This component is designed to be used in a Shopify environment and fetches product data dynamically.
  */
 export default function SimpleCard({ children, ...props }: SimpleCardProps) {
-  return (
-    <>
-      {/* @ts-expect-error: Custom element types not properly recognized by TypeScript */}
-      <nosto-simple-card {...props} />
-      {children}
-    </>
-  )
+  return createElement("nosto-simple-card", props, children)
 }
