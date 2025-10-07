@@ -15,7 +15,11 @@ export default function Keyword({ keyword, onSubmit }: KeywordProps) {
         className: style.keyword,
         onClick: (e: Event) => {
           e.preventDefault()
-          onSubmit(keyword.keyword)
+          if (keyword._redirect) {
+            window.location.href = keyword._redirect
+          } else {
+            onSubmit(keyword.keyword)
+          }
         }
       }}
     >
