@@ -31,15 +31,3 @@ export const Default: Story = {
     }
   }
 }
-
-export const WithMockData: Story = {
-  name: "With Mock Data",
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "FilterTopbar with mock search context data showing real dropdown functionality for both terms and range facets."
-      }
-    }
-  }
-}

@@ -15,7 +15,7 @@ export default {
 
 type Story = StoryObj<typeof FilterSidebar>
 
-export const MockedView: Story = {
+export const Default: Story = {
   render: () => (
     <SidebarProvider initialOpen={true}>
       <div style={{ position: "relative", width: "300px", height: "800px" }}>
