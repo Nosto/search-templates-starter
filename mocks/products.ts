@@ -1,8 +1,8 @@
 import { SearchProducts } from "@nosto/nosto-js/client"
 import type { Product } from "../src/types"
-import { createRandomImage } from "./images"
+import { createMockRandomImage } from "./images"
 
-export function createProduct(overrides: Partial<Product> = {}): Product {
+export function createMockProduct(overrides: Partial<Product> = {}): Product {
   const categories = ["Clothing", "Electronics", "Home & Garden", "Sports", "Books", "Beauty"]
   const brands = ["BrandA", "BrandB", "BrandC", "BrandD", "BrandE", "BrandF"]
   const adjectives = ["Premium", "Classic", "Modern", "Vintage", "Eco-Friendly", "Luxury"]
@@ -32,8 +32,8 @@ export function createProduct(overrides: Partial<Product> = {}): Product {
     brand: brands[brandIndex],
     availability: "InStock",
     url: `https://example.com/product-${Math.floor(Math.random() * 10000)}`,
-    imageUrl: createRandomImage(),
-    alternateImageUrls: [createRandomImage()],
+    imageUrl: createMockRandomImage(),
+    alternateImageUrls: [createMockRandomImage()],
     description: `High-quality ${adjectives[adjectiveIndex].toLowerCase()} ${productTypes[typeIndex].toLowerCase()} from ${brands[brandIndex]}`,
     ratingValue,
     reviewCount,
@@ -57,47 +57,47 @@ function createEmptyResponse() {
 
 export function generateMockProducts(count: number): Product[] {
   return Array.from({ length: count }, (_, index) =>
-    createProduct({
+    createMockProduct({
       productId: `product-${index + 1}`,
       url: `https://example.com/product-${index + 1}`
     })
   )
 }
 
-export const mockProduct = createProduct({
+export const mockProduct = createMockProduct({
   productId: "12345",
   name: "Running Shoes"
 })
 
-export const mockProductNoSale = createProduct({
+export const mockProductNoSale = createMockProduct({
   productId: "67890",
   name: "Casual Sneakers"
 })
 
-export const mockProductNoBrand = createProduct({
+export const mockProductNoBrand = createMockProduct({
   productId: "54321",
   name: "Generic Sports Shoes",
   brand: undefined
 })
 
-export const mockSerpProduct = createProduct({
+export const mockSerpProduct = createMockProduct({
   productId: "1",
   name: "Sample Product",
-  alternateImageUrls: [createRandomImage()]
+  alternateImageUrls: [createMockRandomImage()]
 })
 
-export const mockProductWithAlt = createProduct({
+export const mockProductWithAlt = createMockProduct({
   productId: "2",
   name: "Hover-enabled Product",
-  imageUrl: createRandomImage(),
-  alternateImageUrls: [createRandomImage()]
+  imageUrl: createMockRandomImage(),
+  alternateImageUrls: [createMockRandomImage()]
 })
 
-export const mockProductMultipleAlts = createProduct({
+export const mockProductMultipleAlts = createMockProduct({
   productId: "3",
   name: "Multiple Alt Images",
-  imageUrl: createRandomImage(),
-  alternateImageUrls: [createRandomImage(), createRandomImage()]
+  imageUrl: createMockRandomImage(),
+  alternateImageUrls: [createMockRandomImage(), createMockRandomImage()]
 })
 
 export const mockProducts = createProductsResponse(generateMockProducts(5))
