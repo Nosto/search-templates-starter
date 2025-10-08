@@ -7,8 +7,8 @@ type DynamicCardProps = Pick<CustomElement, "handle" | "section" | "template" | 
  *
  * This component is designed to be used in a Shopify environment and fetches product data dynamically.
  */
-export default function DynamicCard({ variantId, ...props }: DynamicCardProps) {
-  return <nosto-dynamic-card variant-id={variantId} {...props} />
+export default function DynamicCard(props: DynamicCardProps) {
+  return <nosto-dynamic-card {...props} />
 }
 
 declare module "preact/jsx-runtime" {

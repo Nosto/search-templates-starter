@@ -9,8 +9,8 @@ type ImageProps = Pick<CustomElement, "src" | "width" | "height" | "aspectRatio"
  * This component provides automatic image optimization, responsive sizing, and cropping capabilities.
  * It supports various layout modes and aspect ratio configurations for flexible image display.
  */
-export default function Image({ aspectRatio, ...props }: ImageProps) {
-  return <nosto-image aspect-ratio={aspectRatio} {...props} />
+export default function Image(props: ImageProps) {
+  return <nosto-image {...props} />
 }
 
 declare module "preact/jsx-runtime" {
