@@ -10,8 +10,14 @@ type ImageProps = Pick<CustomElement, "src" | "width" | "height" | "aspectRatio"
  * It supports various layout modes and aspect ratio configurations for flexible image display.
  */
 export default function Image({ aspectRatio, ...props }: ImageProps) {
-  return (
-    // @ts-expect-error: Custom element types not properly recognized by TypeScript
-    <nosto-image aspect-ratio={aspectRatio} {...props} />
-  )
+  return <nosto-image aspect-ratio={aspectRatio} {...props} />
+}
+
+declare module "preact/jsx-runtime" {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace JSX {
+    interface IntrinsicElements {
+      "nosto-image": ImageProps
+    }
+  }
 }

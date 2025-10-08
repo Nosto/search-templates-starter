@@ -1,5 +1,5 @@
 import type { SimpleCard as CustomElement } from "@nosto/web-components"
-import { ComponentChildren, createElement } from "preact"
+import { ComponentChildren } from "preact"
 
 type SimpleCardProps = Pick<CustomElement, "handle" | "alternate" | "brand" | "discount" | "rating" | "sizes"> & {
   children?: ComponentChildren
@@ -11,5 +11,14 @@ type SimpleCardProps = Pick<CustomElement, "handle" | "alternate" | "brand" | "d
  * This component is designed to be used in a Shopify environment and fetches product data dynamically.
  */
 export default function SimpleCard({ children, ...props }: SimpleCardProps) {
-  return createElement("nosto-simple-card", props, children)
+  return <nosto-simple-card {...props}>{children}</nosto-simple-card>
+}
+
+declare module "preact/jsx-runtime" {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace JSX {
+    interface IntrinsicElements {
+      "nosto-simple-card": SimpleCardProps
+    }
+  }
 }
