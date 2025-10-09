@@ -4,16 +4,11 @@ import DynamicCard from "@/elements/DynamicCard/DynamicCard"
 import "@nosto/web-components"
 import { addHandlers } from "../../msw.setup"
 import { http, HttpResponse } from "msw"
+import { MockIntersectionObserver } from "../../mocks/MockIntersectionObserver"
 
 describe("DynamicCard", () => {
   beforeAll(() => {
-    // Mock IntersectionObserver
-    const mockObserver = {
-      observe: vi.fn(),
-      disconnect: vi.fn()
-    }
-    // @ts-expect-error partial mock assignment
-    global.IntersectionObserver = vi.fn(() => mockObserver)
+    globalThis.IntersectionObserver = MockIntersectionObserver as unknown as typeof IntersectionObserver
   })
 
   beforeEach(() => {
