@@ -10,8 +10,14 @@ type VariantSelectorProps = Pick<CustomElement, "handle">
  * Emits a custom event when variant selections change.
  */
 export default function VariantSelector(props: VariantSelectorProps) {
-  return (
-    // @ts-expect-error: Custom element types not properly recognized by TypeScript
-    <nosto-variant-selector {...props} />
-  )
+  return <nosto-variant-selector {...props} />
+}
+
+declare module "preact/jsx-runtime" {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace JSX {
+    interface IntrinsicElements {
+      "nosto-variant-selector": VariantSelectorProps
+    }
+  }
 }
