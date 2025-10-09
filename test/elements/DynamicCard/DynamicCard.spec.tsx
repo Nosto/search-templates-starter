@@ -1,7 +1,9 @@
 import { render } from "@testing-library/preact"
-import { beforeAll, describe, expect, it, vi } from "vitest"
+import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest"
 import DynamicCard from "@/elements/DynamicCard/DynamicCard"
 import "@nosto/web-components"
+import { addHandlers } from "../../msw.setup"
+import { http, HttpResponse } from "msw"
 
 describe("DynamicCard", () => {
   beforeAll(() => {
@@ -12,13 +14,13 @@ describe("DynamicCard", () => {
     }
     // @ts-expect-error partial mock assignment
     global.IntersectionObserver = vi.fn(() => mockObserver)
+  })
 
-    // mock fetch as it's used internally by the web component
-    globalThis.fetch = vi.fn(() =>
-      Promise.resolve({
-        ok: true,
-        text: () => Promise.resolve("<div>Mocked product markup</div>")
-      } as Response)
+  beforeEach(() => {
+    addHandlers(
+      http.get("/products/:handle", () => {
+        return HttpResponse.text("<div>Mocked product markup</div>")
+      })
     )
   })
 
