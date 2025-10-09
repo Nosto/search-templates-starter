@@ -12,7 +12,9 @@ export default function Portal({ target, children }: Props) {
   const [element, setElement] = useState<HTMLElement | null>(document.querySelector<HTMLElement>(target))
 
   useEffect(() => {
-    if (element) return
+    if (element) {
+      return
+    }
     waitForElement(target).then(el => {
       setElement(el)
     })
