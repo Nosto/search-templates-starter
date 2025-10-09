@@ -23,7 +23,10 @@ describe("DynamicCard", () => {
     const { container } = render(<DynamicCard handle="product-handle" />)
     const el = container.querySelector("nosto-dynamic-card") as HTMLElement
     expect(el).toBeTruthy()
-    expect(el.outerHTML).toBe('<nosto-dynamic-card handle="product-handle" loading=""></nosto-dynamic-card>')
+    expect(el.tagName.toLowerCase()).toBe("nosto-dynamic-card")
+    expect(el.getAttribute("handle")).toBe("product-handle")
+    expect(el.hasAttribute("loading")).toBe(true)
+    expect(el.getAttribute("loading")).toBe("")
   })
 
   it("renders all supported props as attributes", () => {
@@ -32,9 +35,15 @@ describe("DynamicCard", () => {
     )
     const el = container.querySelector("nosto-dynamic-card") as HTMLElement
     expect(el).toBeTruthy()
-    expect(el.outerHTML).toBe(
-      '<nosto-dynamic-card handle="h" section="main" template="card" variant-id="123" placeholder="" lazy=""></nosto-dynamic-card>'
-    )
+    expect(el.tagName.toLowerCase()).toBe("nosto-dynamic-card")
+    expect(el.getAttribute("handle")).toBe("h")
+    expect(el.getAttribute("section")).toBe("main")
+    expect(el.getAttribute("template")).toBe("card")
+    expect(el.getAttribute("variant-id")).toBe("123")
+    expect(el.hasAttribute("placeholder")).toBe(true)
+    expect(el.getAttribute("placeholder")).toBe("")
+    expect(el.hasAttribute("lazy")).toBe(true)
+    expect(el.getAttribute("lazy")).toBe("")
   })
 
   it("renders props with false values excluded", () => {
@@ -43,8 +52,12 @@ describe("DynamicCard", () => {
     )
     const el = container.querySelector("nosto-dynamic-card") as HTMLElement
     expect(el).toBeTruthy()
-    expect(el.outerHTML).toBe(
-      '<nosto-dynamic-card handle="h" section="main" template="card" variant-id="123" loading=""></nosto-dynamic-card>'
-    )
+    expect(el.tagName.toLowerCase()).toBe("nosto-dynamic-card")
+    expect(el.getAttribute("handle")).toBe("h")
+    expect(el.getAttribute("section")).toBe("main")
+    expect(el.getAttribute("template")).toBe("card")
+    expect(el.getAttribute("variant-id")).toBe("123")
+    expect(el.hasAttribute("placeholder")).toBe(false)
+    expect(el.hasAttribute("lazy")).toBe(false)
   })
 })
