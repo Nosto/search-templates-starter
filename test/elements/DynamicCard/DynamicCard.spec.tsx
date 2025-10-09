@@ -1,5 +1,5 @@
 import { render } from "@testing-library/preact"
-import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest"
+import { beforeAll, beforeEach, describe, expect, it } from "vitest"
 import DynamicCard from "@/elements/DynamicCard/DynamicCard"
 import "@nosto/web-components"
 import { addHandlers } from "../../msw.setup"
