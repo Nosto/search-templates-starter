@@ -123,7 +123,6 @@ function CategoryApp() {
 async function init() {
   await new Promise(nostojs)
   const dummy = document.createElement("div")
-  document.body.appendChild(dummy)
   switch (tagging.pageType()) {
     case "category":
       render(<CategoryApp />, dummy)
