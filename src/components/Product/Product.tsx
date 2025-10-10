@@ -4,7 +4,6 @@ import styles from "./Product.module.css"
 import type { Product } from "@/types"
 import { renderRatingStars } from "./renderRatingStars"
 import ProductImage from "./ProductImage"
-import { isProductNew } from "@/utils/product"
 
 type Props = {
   product: Product
@@ -14,7 +13,7 @@ type Props = {
 
 export default function Product({ product, children, showAltOnHover = true }: Props) {
   const hasAlternateImage = showAltOnHover && product.alternateImageUrls && product.alternateImageUrls.length > 0
-  const isNew = isProductNew(product)
+  const isNew = product.datePublished && product.datePublished >= Date.now() - 14 * 24 * 60 * 60 * 1000
 
   return (
     <SerpElement
