@@ -71,18 +71,16 @@ export const mockProduct = createMockProduct({
 
 const DAY_IN_MILLIS = 24 * 60 * 60 * 1000
 
-// Create a product with recent datePublished (within 14 days)
 export const mockNewProduct = createMockProduct({
   productId: "new-123",
   name: "Brand New Sneakers",
-  datePublished: Date.now() - 7 * DAY_IN_MILLIS // 7 days ago
+  datePublished: Date.now() - 7 * DAY_IN_MILLIS
 })
 
-// Create a product with old datePublished (older than 14 days)
 export const mockOldProduct = createMockProduct({
   productId: "old-456",
   name: "Classic Shoes",
-  datePublished: Date.now() - 20 * DAY_IN_MILLIS // 20 days ago
+  datePublished: Date.now() - 20 * DAY_IN_MILLIS
 })
 
 export const mockProductNoSale = createMockProduct({
