@@ -113,14 +113,12 @@ function SerpApp() {
 function CategoryApp() {
   return (
     <ErrorBoundary>
-      <CategoryPageProvider config={categoryConfig}>
-        <SearchQueryHandler />
-        <SidebarProvider>
-          <Portal target="#serp">
-            <Category />
-          </Portal>
-        </SidebarProvider>
-      </CategoryPageProvider>
+      <SearchQueryHandler />
+      <SidebarProvider>
+        <Portal target="#serp">
+          <Category />
+        </Portal>
+      </SidebarProvider>
     </ErrorBoundary>
   )
 }
@@ -130,7 +128,12 @@ async function init() {
   const dummy = document.createElement("div")
   switch (tagging.pageType()) {
     case "category":
-      render(<CategoryApp />, dummy)
+      render(
+        <CategoryPageProvider config={categoryConfig}>
+          <CategoryApp />
+        </CategoryPageProvider>,
+        dummy
+      )
       break
     case "search":
     default:
