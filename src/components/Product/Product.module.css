@@ -56,12 +56,10 @@
   position: absolute;
   top: 8px;
   left: 8px;
-  background-color: var(--ns-color-primary);
-  color: var(--ns-color-white);
-  font-size: var(--ns-font-size-3);
-  font-weight: var(--ns-weight-bold);
+  background-color: var(--ns-color-white);
+  color: var(--ns-color-black);
+  font-size: var(--ns-font-size-4);
   padding: 8px;
-  border-radius: var(--ns-border-radius-pill);
   z-index: 1;
   text-align: center;
 }
