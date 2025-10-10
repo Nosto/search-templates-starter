@@ -69,6 +69,20 @@ export const mockProduct = createMockProduct({
   name: "Running Shoes"
 })
 
+// Create a product with recent datePublished (within 14 days)
+export const mockNewProduct = createMockProduct({
+  productId: "new-123",
+  name: "Brand New Sneakers",
+  datePublished: Date.now() - 7 * 24 * 60 * 60 * 1000 // 7 days ago
+})
+
+// Create a product with old datePublished (older than 14 days)
+export const mockOldProduct = createMockProduct({
+  productId: "old-456",
+  name: "Classic Shoes",
+  datePublished: Date.now() - 20 * 24 * 60 * 60 * 1000 // 20 days ago
+})
+
 export const mockProductNoSale = createMockProduct({
   productId: "67890",
   name: "Casual Sneakers"

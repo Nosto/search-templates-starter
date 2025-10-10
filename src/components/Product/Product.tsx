@@ -4,6 +4,7 @@ import styles from "./Product.module.css"
 import type { Product } from "@/types"
 import { renderRatingStars } from "./renderRatingStars"
 import ProductImage from "./ProductImage"
+import { isProductNew } from "@/utils/product"
 
 type Props = {
   product: Product
@@ -13,6 +14,7 @@ type Props = {
 
 export default function Product({ product, children, showAltOnHover = true }: Props) {
   const hasAlternateImage = showAltOnHover && product.alternateImageUrls && product.alternateImageUrls.length > 0
+  const isNew = isProductNew(product)
 
   return (
     <SerpElement
@@ -30,6 +32,7 @@ export default function Product({ product, children, showAltOnHover = true }: Pr
       <div className={styles.image}>
         <ProductImage src={product.imageUrl!} alt={product.name} />
         {hasAlternateImage && <ProductImage src={product.alternateImageUrls![0]} alt={product.name} />}
+        {isNew && <div className={styles.newRibbon}>New</div>}
       </div>
       <div className={styles.info} data-nosto-element="product">
         {product.brand && <div>{product.brand}</div>}

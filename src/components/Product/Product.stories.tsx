@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Product from "./Product"
-import { mockSerpProduct, mockProductWithAlt } from "@mocks/products"
+import { mockSerpProduct, mockProductWithAlt, mockNewProduct, mockOldProduct } from "@mocks/products"
 import { withSearchContext } from ".storybook/decorators"
 
 export default {
@@ -59,6 +59,32 @@ export const NoAlternateImage: Story = {
     docs: {
       description: {
         story: "Product with hover enabled but no alternate image available. Hover has no effect."
+      }
+    }
+  }
+}
+
+export const NewProduct: Story = {
+  args: {
+    product: mockNewProduct
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Product with 'New' ribbon displayed because it was published within the last 14 days."
+      }
+    }
+  }
+}
+
+export const OldProduct: Story = {
+  args: {
+    product: mockOldProduct
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Product without 'New' ribbon because it was published more than 14 days ago."
       }
     }
   }
