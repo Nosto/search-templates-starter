@@ -13,6 +13,7 @@ type Props = {
 
 export default function Product({ product, children, showAltOnHover = true }: Props) {
   const hasAlternateImage = showAltOnHover && product.alternateImageUrls && product.alternateImageUrls.length > 0
+  const isNew = product.datePublished && product.datePublished >= Date.now() - 14 * 24 * 60 * 60 * 1000
 
   return (
     <SerpElement
@@ -30,6 +31,7 @@ export default function Product({ product, children, showAltOnHover = true }: Pr
       <div className={styles.image}>
         <ProductImage src={product.imageUrl!} alt={product.name} />
         {hasAlternateImage && <ProductImage src={product.alternateImageUrls![0]} alt={product.name} />}
+        {isNew && <div className={styles.newRibbon}>New</div>}
       </div>
       <div className={styles.info} data-nosto-element="product">
         {product.brand && <div>{product.brand}</div>}

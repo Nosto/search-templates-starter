@@ -69,6 +69,20 @@ export const mockProduct = createMockProduct({
   name: "Running Shoes"
 })
 
+const DAY_IN_MILLIS = 24 * 60 * 60 * 1000
+
+export const mockNewProduct = createMockProduct({
+  productId: "new-123",
+  name: "Brand New Sneakers",
+  datePublished: Date.now() - 7 * DAY_IN_MILLIS
+})
+
+export const mockOldProduct = createMockProduct({
+  productId: "old-456",
+  name: "Classic Shoes",
+  datePublished: Date.now() - 20 * DAY_IN_MILLIS
+})
+
 export const mockProductNoSale = createMockProduct({
   productId: "67890",
   name: "Casual Sneakers"
