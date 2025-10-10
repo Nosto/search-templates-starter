@@ -11,14 +11,17 @@ import Category from "@/components/Category/Category"
 import { tagging } from "@/mapping/tagging"
 import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import { nostojs } from "@nosto/nosto-js"
+import Portal from "@/elements/Portal/Portal"
 
 function SerpApp() {
   return (
     <SearchPageProvider config={serpConfig}>
       <SearchQueryHandler />
       <SidebarProvider>
-        <Search />
-        <Serp />
+        <Portal target="#app">
+          <Search />
+          <Serp />
+        </Portal>
       </SidebarProvider>
     </SearchPageProvider>
   )
@@ -29,7 +32,9 @@ function CategoryApp() {
     <CategoryPageProvider config={categoryConfig}>
       <SearchQueryHandler />
       <SidebarProvider>
-        <Category />
+        <Portal target="#app">
+          <Category />
+        </Portal>
       </SidebarProvider>
     </CategoryPageProvider>
   )
@@ -42,7 +47,7 @@ async function init() {
     <ErrorBoundary>
       <App />
     </ErrorBoundary>,
-    document.getElementById("app")!
+    document.body
   )
 }
 init()
