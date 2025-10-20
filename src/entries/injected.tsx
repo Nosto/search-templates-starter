@@ -18,6 +18,7 @@ import { nostojs } from "@nosto/nosto-js"
 import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import { getInitialQuery } from "@/mapping/url/getInitialQuery"
 import { initContext } from "./initContext"
+import Portal from "@/elements/Portal/Portal"
 
 type Props = {
   onSubmit: (input: string) => void
@@ -102,9 +103,7 @@ function SerpApp() {
             <Autocomplete onSubmit={onSubmit} />
           </Portal>
         </AutocompletePageProvider>
-        <Portal target="#serp">
-          <Serp />
-        </Portal>
+        <Serp />
       </SidebarProvider>
     </ErrorBoundary>
   )
