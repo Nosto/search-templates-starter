@@ -7,14 +7,14 @@ const dirname = import.meta.dirname
 
 export default defineConfig(({ mode = "injected" }) => ({
   build: {
-    outDir: "dist",
+    outDir: "build",
     minify: true,
     sourcemap: true,
     rollupOptions: {
       input: resolve(dirname, `src/entries/${mode}.tsx`),
       output: {
-        entryFileNames: "index.js",
-        assetFileNames: "index[extname]",
+        entryFileNames: "bundle.js",
+        assetFileNames: "bundle[extname]",
         banner: "(function(){",
         footer: "})();"
       }
