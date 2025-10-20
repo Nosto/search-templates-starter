@@ -12,7 +12,7 @@ export default function BottomToolbar() {
     <div className={styles.wrapper}>
       <div className={styles.container}>
         <Pagination />
-        {sizeOptions.length > 0 && (
+        {options.length > 0 && (
           <Select
             value={size}
             onChange={e => handleSizeChange(Number((e.target as HTMLSelectElement)?.value))}
