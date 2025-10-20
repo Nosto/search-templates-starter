@@ -18,11 +18,16 @@ function PageLink({ onClick, href, className, ariaLabel, children }: Props) {
 }
 
 export default function Pagination() {
-  const { prev, first, pages, last, next } = usePagination({
+  const { prev, first, pages, last, next, totalPages } = usePagination({
     width: 5
   })
 
   const { updateSearch } = useActions()
+
+  // Hide pagination when there's only one page or no pages
+  if (totalPages <= 1) {
+    return null
+  }
 
   function pageLinkProps({ from, page }: Page) {
     return {
