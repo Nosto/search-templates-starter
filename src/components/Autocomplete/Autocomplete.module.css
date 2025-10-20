@@ -1,0 +1,23 @@
+.autocomplete {
+  position: relative;
+  width: 100%;
+  max-width: var(--ns-max-width-autocomplete);
+}
+
+.submitButton {
+  display: none;
+}
+
+.results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: var(--ns-z-index-autocomplete);
+  background: var(--ns-color-white);
+  border: var(--ns-border-width-thin) solid var(--ns-color-grey);
+  border-top: none;
+  border-radius: 0 0 var(--ns-border-radius-4) var(--ns-border-radius-4);
+  box-shadow: var(--ns-box-shadow-autocomplete);
+  margin-top: var(--ns-width-autocomplete-offset);
+}

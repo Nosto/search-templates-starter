@@ -6,19 +6,29 @@ import { useEffect, useState } from "preact/hooks"
 type Props = {
   target: string
   children: ComponentChildren
+  replace?: boolean
 }
 
-export default function Portal({ target, children }: Props) {
-  const [element, setElement] = useState<HTMLElement | null>(document.querySelector<HTMLElement>(target))
+export default function Portal({ target, children, replace = false }: Props) {
+  const [element, setElement] = useState<HTMLElement | null>(null)
 
   useEffect(() => {
-    if (element) {
+    const existingElement = document.querySelector<HTMLElement>(target)
+    if (existingElement) {
+      if (replace) {
+        existingElement.innerHTML = ""
+      }
+      setElement(existingElement)
       return
     }
+
     waitForElement(target).then(el => {
+      if (replace) {
+        el.innerHTML = ""
+      }
       setElement(el)
     })
-  }, [target, element])
+  }, [target, replace])
 
   return element ? createPortal(children, element) : null
 }

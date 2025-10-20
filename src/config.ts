@@ -91,7 +91,7 @@ export const autocompleteConfig = {
   ...baseConfig,
   memoryCache: true,
   historyEnabled: true,
-  historySize: 10,
+  historySize: 9,
   search: {
     hitDecorators: autocompleteDecorators
   },

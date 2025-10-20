@@ -18,12 +18,13 @@ import { nostojs } from "@nosto/nosto-js"
 import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import { getInitialQuery } from "@/mapping/url/getInitialQuery"
 import Portal from "@/elements/Portal/Portal"
+import SearchBar from "@/components/Autocomplete/SearchBar"
 
 type Props = {
   onSubmit: (input: string) => void
 }
 
-function Autocomplete({ onSubmit }: Props) {
+function AutocompleteResults({ onSubmit }: Props) {
   const [input, setInput] = useState<string>(getInitialQuery())
   const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false)
 
@@ -79,7 +80,22 @@ function Autocomplete({ onSubmit }: Props) {
     }
   })
 
-  return showAutocomplete ? <Results onSubmit={onSearchSubmit} /> : null
+  return (
+    <>
+      <Portal target="#search-bar" replace>
+        <SearchBar
+          value={input}
+          id="search"
+          name="q"
+          onSearchInput={(event: HTMLInputElement) => {
+            setInput(event.value)
+          }}
+          onFocus={() => setShowAutocomplete(true)}
+        />
+      </Portal>
+      {showAutocomplete ? <Results onSubmit={onSearchSubmit} /> : null}
+    </>
+  )
 }
 
 function SerpApp() {
@@ -99,7 +115,7 @@ function SerpApp() {
       <SidebarProvider>
         <AutocompletePageProvider config={autocompleteConfig}>
           <Portal target="#dropdown">
-            <Autocomplete onSubmit={onSubmit} />
+            <AutocompleteResults onSubmit={onSubmit} />
           </Portal>
         </AutocompletePageProvider>
         <Portal target="#serp">

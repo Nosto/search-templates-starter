@@ -2,6 +2,6 @@
   display: flex;
   flex-direction: column;
   border-right: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
-  min-width: 200px;
+  min-width: 160px;
   padding: var(--ns-space-1);
 }

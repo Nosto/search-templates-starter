@@ -1,11 +1,12 @@
 import Results from "@/components/Autocomplete/Results/Results"
+import SearchBar from "@/components/Autocomplete/SearchBar"
 import { useState, useCallback, useRef, useEffect } from "preact/hooks"
-import { SearchInput } from "@nosto/search-js/preact/autocomplete"
 import { useDomEvents } from "@/hooks/useDomEvents"
 import { useDebouncedSearch } from "@/hooks/useDebouncedSearch"
 import { useHistory } from "@nosto/search-js/preact/hooks"
 import { disableNativeAutocomplete } from "@nosto/search-js/utils"
 import { getInitialQuery } from "@/mapping/url/getInitialQuery"
+import styles from "./Autocomplete.module.css"
 
 type Props = {
   onSubmit: (input: string) => void
@@ -48,23 +49,30 @@ export default function Autocomplete({ onSubmit }: Props) {
   }
 
   return (
-    <form
-      ref={autocompleteRef}
-      onSubmit={e => {
-        e.preventDefault()
-        onSearchSubmit(input)
-      }}
-    >
-      <SearchInput
-        onSearchInput={target => setInput(target.value)}
-        componentProps={{
-          value: input,
-          onFocus: () => setShowAutocomplete(true),
-          ref: searchInputRef
+    <div className={styles.autocomplete}>
+      <form
+        ref={autocompleteRef}
+        onSubmit={e => {
+          e.preventDefault()
+          onSearchSubmit(input)
         }}
-      />
-      <button type="submit">Search</button>
-      {showAutocomplete && <Results onSubmit={onSearchSubmit} />}
-    </form>
+      >
+        <SearchBar
+          value={input}
+          placeholder="Search"
+          onSearchInput={target => setInput(target.value)}
+          onFocus={() => setShowAutocomplete(true)}
+          searchInputRef={searchInputRef}
+        />
+        <button type="submit" className={styles.submitButton}>
+          Search
+        </button>
+      </form>
+      {showAutocomplete && (
+        <div className={styles.results}>
+          <Results onSubmit={onSearchSubmit} />
+        </div>
+      )}
+    </div>
   )
 }
