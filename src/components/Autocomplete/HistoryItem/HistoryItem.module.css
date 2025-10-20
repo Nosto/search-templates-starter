@@ -10,9 +10,29 @@
   padding: 4px 8px;
 }
 
+/* Mobile: tag-like appearance */
+@media only screen and (max-width: 480px) {
+  .container {
+    display: inline-flex;
+    background-color: var(--ns-color-grey-light);
+    border-radius: var(--ns-border-radius-pill);
+    padding: var(--ns-space-1) var(--ns-space-2);
+    font-size: var(--ns-font-size-3);
+    white-space: nowrap;
+  }
+}
+
 .container.highlighted,
 .container:hover {
   background-color: #0c080811;
+}
+
+/* Mobile: different hover/highlighted styles for tags */
+@media only screen and (max-width: 480px) {
+  .container.highlighted,
+  .container:hover {
+    background-color: var(--ns-color-primary-light);
+  }
 }
 
 .name {
@@ -23,4 +43,12 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* Mobile: smaller text for tag appearance */
+@media only screen and (max-width: 480px) {
+  .name {
+    font-size: var(--ns-font-size-3);
+    font-weight: var(--ns-weight-medium);
+  }
 }

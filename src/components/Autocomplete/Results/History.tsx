@@ -20,9 +20,11 @@ export function History({ onSubmit }: KeywordsProps) {
   return (
     <div className={styles.historyColumn}>
       <Heading>Recent searches</Heading>
-      {historyItems.map((item, index) => (
-        <HistoryItem key={item} item={item} onSubmit={onSubmit} highlighted={index === highlightedElementIndex} />
-      ))}
+      <div className={styles.historyItems}>
+        {historyItems.map((item, index) => (
+          <HistoryItem key={item} item={item} onSubmit={onSubmit} highlighted={index === highlightedElementIndex} />
+        ))}
+      </div>
     </div>
   )
 }

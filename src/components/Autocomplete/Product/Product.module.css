@@ -7,6 +7,13 @@
   text-decoration: none;
 }
 
+/* Mobile: smaller padding to fit more content */
+@media only screen and (max-width: 480px) {
+  .container {
+    padding: var(--ns-space-1);
+  }
+}
+
 .image {
   height: auto;
   object-fit: contain;
@@ -17,6 +24,14 @@
   padding-top: var(--ns-space-2);
   color: var(--ns-color-black);
   font-size: var(--ns-font-size-4);
+}
+
+/* Mobile: smaller text and padding to fit design */
+@media only screen and (max-width: 480px) {
+  .details {
+    padding-top: var(--ns-space-1);
+    font-size: var(--ns-font-size-3);
+  }
 }
 
 .name {

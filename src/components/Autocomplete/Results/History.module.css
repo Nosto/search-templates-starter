@@ -5,3 +5,33 @@
   min-width: 200px;
   padding: var(--ns-space-1);
 }
+
+.historyItems {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tablet and smaller: remove right border and min-width, add bottom border */
+@media only screen and (max-width: 768px) {
+  .historyColumn {
+    border-right: none;
+    border-bottom: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
+    min-width: unset;
+    width: 100%;
+  }
+}
+
+/* Very small screens: display history as tag list in row format */
+@media only screen and (max-width: 480px) {
+  .historyColumn {
+    border-bottom: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
+    padding: var(--ns-space-2);
+  }
+  
+  .historyItems {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--ns-space-1);
+  }
+}

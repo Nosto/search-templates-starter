@@ -7,6 +7,25 @@
   cursor: pointer;
 }
 
+/* Mobile: tag-like appearance */
+@media only screen and (max-width: 480px) {
+  .keyword {
+    display: inline-flex;
+    background-color: var(--ns-color-grey-light);
+    border-radius: var(--ns-border-radius-pill);
+    padding: var(--ns-space-1) var(--ns-space-2);
+    font-size: var(--ns-font-size-3);
+    white-space: nowrap;
+  }
+}
+
 .keyword:hover {
   background-color: var(--ns-color-grey-light);
+}
+
+/* Mobile: different hover styles for tags */
+@media only screen and (max-width: 480px) {
+  .keyword:hover {
+    background-color: var(--ns-color-primary-light);
+  }
 }
