@@ -15,9 +15,8 @@ import { categoryConfig, serpConfig } from "@/config"
 import Portal from "@/elements/Portal/Portal"
 
 function SerpApp() {
-  const { config, store } = initContext("search", serpConfig)
   return (
-    <SearchPageProvider config={config} store={store}>
+    <ErrorBoundary>
       <SearchQueryHandler />
       <SidebarProvider>
         <Portal target="#app">
@@ -25,32 +24,46 @@ function SerpApp() {
           <Serp />
         </Portal>
       </SidebarProvider>
-    </SearchPageProvider>
+    </ErrorBoundary>
   )
 }
 
 function CategoryApp() {
-  const { config, store } = initContext("category", categoryConfig)
   return (
-    <CategoryPageProvider config={config} store={store}>
+    <ErrorBoundary>
       <SearchQueryHandler />
       <SidebarProvider>
         <Portal target="#app">
           <Category />
         </Portal>
       </SidebarProvider>
-    </CategoryPageProvider>
+    </ErrorBoundary>
   )
 }
 
 async function init() {
   await new Promise(nostojs)
-  const App = tagging.pageType() === "category" ? CategoryApp : SerpApp
-  render(
-    <ErrorBoundary>
-      <App />
-    </ErrorBoundary>,
-    document.body
-  )
+  const pageType = tagging.pageType()
+  const { config, store } =
+    pageType === "category" ? initContext("category", categoryConfig) : initContext("search", serpConfig)
+
+  switch (pageType) {
+    case "category":
+      render(
+        <CategoryPageProvider config={config} store={store}>
+          <CategoryApp />
+        </CategoryPageProvider>,
+        document.body
+      )
+      break
+    case "search":
+    default:
+      render(
+        <SearchPageProvider config={config} store={store}>
+          <SerpApp />
+        </SearchPageProvider>,
+        document.body
+      )
+  }
 }
 init()
