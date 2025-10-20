@@ -13,7 +13,7 @@ export function initContext(pageType: PageType, config: Config) {
   if (pageType !== "category" && pageType !== "search") {
     throw new Error(`Unsupported pageType: ${pageType}`)
   }
-  
+
   if (query.query || pageType === "category") {
     newSearch(
       {
