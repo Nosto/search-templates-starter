@@ -1,6 +1,6 @@
 import type { VariantSelector as CustomElement } from "@nosto/web-components"
 
-type VariantSelectorProps = Pick<CustomElement, "handle">
+type VariantSelectorProps = Pick<CustomElement, keyof typeof CustomElement.properties>
 
 /**
  * A custom element wrapper that displays product variant options as clickable pills.
