@@ -27,7 +27,7 @@ export default defineConfig(({ mode = "injected" }) => ({
   test: {
     globals: true,
     environment: "jsdom",
-    setupFiles: ["./test/vitest.setup.ts"],
+    setupFiles: ["./test/vitest.setup.ts", "./test/msw.setup.ts"],
     exclude: ["node_modules/**", "test/e2e/**"]
   },
   resolve: {

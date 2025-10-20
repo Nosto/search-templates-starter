@@ -1,6 +1,6 @@
 import { SearchPageProvider } from "@nosto/search-js/preact/serp"
 import { AutocompletePageProvider } from "@nosto/search-js/preact/autocomplete"
-import { render, createPortal, useState, useEffect, useCallback } from "preact/compat"
+import { render, useState, useEffect, useCallback } from "preact/compat"
 import Serp from "@/components/Serp/Serp"
 import "@/variable.css"
 import Results from "@/components/Autocomplete/Results/Results"
@@ -10,7 +10,7 @@ import { autocompleteConfig, categoryConfig, serpConfig } from "@/config"
 import { disableNativeAutocomplete } from "@nosto/search-js/utils"
 import { useDomEvents } from "@/hooks/useDomEvents"
 import { useDebouncedSearch } from "@/hooks/useDebouncedSearch"
-import { useActions } from "@nosto/search-js/preact/hooks"
+import { useActions, useHistory } from "@nosto/search-js/preact/hooks"
 import Category from "@/components/Category/Category"
 import { CategoryPageProvider } from "@nosto/search-js/preact/category"
 import { tagging } from "@/mapping/tagging"
@@ -58,13 +58,18 @@ function Autocomplete({ onSubmit }: Props) {
     onFocus: () => setShowAutocomplete(true)
   })
 
+  const { addQuery } = useHistory()
+
   const onSearchSubmit = (query: string) => {
-    if (query.trim()) {
-      searchInput.value = query
-      searchInput.blur()
-      onSubmit(query)
-      setShowAutocomplete(false)
+    if (!query.trim()) {
+      return
     }
+
+    addQuery(query)
+    searchInput.value = query
+    searchInput.blur()
+    onSubmit(query)
+    setShowAutocomplete(false)
   }
 
   useDomEvents(searchForm, {
@@ -74,7 +79,7 @@ function Autocomplete({ onSubmit }: Props) {
     }
   })
 
-  return createPortal(<>{showAutocomplete && <Results onSubmit={onSearchSubmit} />}</>, dropdownElement)
+  return showAutocomplete ? <Results onSubmit={onSearchSubmit} /> : null
 }
 
 function SerpApp() {
@@ -93,9 +98,13 @@ function SerpApp() {
       <SearchQueryHandler />
       <SidebarProvider>
         <AutocompletePageProvider config={autocompleteConfig}>
-          <Autocomplete onSubmit={onSubmit} />
+          <Portal target="#dropdown">
+            <Autocomplete onSubmit={onSubmit} />
+          </Portal>
         </AutocompletePageProvider>
-        <Serp />
+        <Portal target="#serp">
+          <Serp />
+        </Portal>
       </SidebarProvider>
     </ErrorBoundary>
   )

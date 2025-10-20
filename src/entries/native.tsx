@@ -19,8 +19,8 @@ function SerpApp() {
     <SearchPageProvider config={config} store={store}>
       <SearchQueryHandler />
       <SidebarProvider>
-        <Search />
-        <Serp />
+          <Search />
+          <Serp />
       </SidebarProvider>
     </SearchPageProvider>
   )
@@ -32,7 +32,7 @@ function CategoryApp() {
     <CategoryPageProvider config={config} store={store}>
       <SearchQueryHandler />
       <SidebarProvider>
-        <Category />
+          <Category />
       </SidebarProvider>
     </CategoryPageProvider>
   )
@@ -45,7 +45,7 @@ async function init() {
     <ErrorBoundary>
       <App />
     </ErrorBoundary>,
-    document.getElementById("app")!
+    document.body
   )
 }
 init()

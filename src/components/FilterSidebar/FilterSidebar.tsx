@@ -1,14 +1,14 @@
 import { useFacets } from "@nosto/search-js/preact/hooks"
-import TermsFacet from "@/components/TermsFacet/TermsFacet"
-import RangeFacet from "@/components/RangeFacet/RangeFacet"
+import TermsFacet from "./TermsFacet/TermsFacet"
+import RangeFacet from "./RangeFacet/RangeFacet"
 import Icon from "@/elements/Icon/Icon"
 import { SearchStatsFacet, SearchTermsFacet } from "@nosto/nosto-js/client"
-import styles from "./Sidebar.module.css"
+import styles from "./FilterSidebar.module.css"
 import Button from "@/elements/Button/Button"
 import { cl } from "@nosto/search-js/utils"
-import { useSidebar } from "@/contexts/SidebarContext"
+import { useFilterSidebar } from "@/contexts/SidebarContext"
 import SelectedFilters from "../SelectedFilters/SelectedFilters"
-import ClearFiltersButton from "../ClearFiltersButton/ClearFiltersButton"
+import ClearFiltersButton from "./ClearFiltersButton/ClearFiltersButton"
 import Heading from "@/elements/Heading/Heading"
 
 export const toggleButtonId = "toggle-mobile-sidebar"
@@ -26,9 +26,9 @@ function ToggleSidebarButton({ className, onClick }: ToggleProps = {}) {
   )
 }
 
-export default function SideBar() {
+export default function FilterSidebar() {
   const { facets } = useFacets()
-  const { isOpen, setOpen } = useSidebar()
+  const { isOpen, setOpen } = useFilterSidebar()
 
   const handleBackdropClick = () => {
     setOpen(false)

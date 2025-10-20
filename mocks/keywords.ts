@@ -1,4 +1,4 @@
-import { SearchKeywords, SearchKeyword, SearchFacet } from "@nosto/nosto-js/client"
+import { SearchKeywords, SearchKeyword } from "@nosto/nosto-js/client"
 
 function createEmptyResponse() {
   return {
@@ -7,16 +7,12 @@ function createEmptyResponse() {
   } satisfies SearchKeywords
 }
 
-function createKeyword(
-  keyword: string,
-  options: { highlight?: string; facets?: SearchFacet[]; priority?: number; total?: number } = {}
-) {
+function createMockKeyword(overrides: Partial<SearchKeyword> & { keyword: string }) {
   return {
-    keyword,
-    ...(options.highlight ? { _highlight: { keyword: options.highlight } } : {}),
-    facets: options.facets || [],
-    priority: options.priority || 1,
-    total: options.total || 1
+    facets: [],
+    priority: 1,
+    total: 1,
+    ...overrides
   } satisfies SearchKeyword
 }
 
@@ -27,34 +23,54 @@ function createKeywordsResponse(keywords: SearchKeyword[]) {
   } satisfies SearchKeywords
 }
 
-export const mockKeyword = createKeyword("running shoes", {
-  highlight: "<b>running</b> shoes"
+export const mockKeyword = createMockKeyword({
+  keyword: "running shoes",
+  _highlight: { keyword: "<b>running</b> shoes" }
 })
 
-export const mockKeywordNoHighlight = createKeyword("sneakers")
+export const mockKeywordNoHighlight = createMockKeyword({ keyword: "sneakers" })
 
 export const mockKeywords = createKeywordsResponse([
-  createKeyword("running shoes", {
-    highlight: "<b>running</b> shoes",
+  createMockKeyword({
+    keyword: "running shoes",
+    _highlight: { keyword: "<b>running</b> shoes" },
     total: 3
   }),
-  createKeyword("running gear", {
-    highlight: "<b>running</b> gear",
+  createMockKeyword({
+    keyword: "running gear",
+    _highlight: { keyword: "<b>running</b> gear" },
     priority: 2,
     total: 3
   }),
-  createKeyword("marathon training", {
-    highlight: "marathon training",
+  createMockKeyword({
+    keyword: "marathon training",
+    _highlight: { keyword: "marathon training" },
     priority: 3,
     total: 3
+  }),
+  createMockKeyword({
+    keyword: "sale items",
+    _redirect: "https://example.com/sale-items",
+    _highlight: { keyword: "<b>sale</b> items" },
+    priority: 4,
+    total: 2
+  }),
+  createMockKeyword({
+    keyword: "clearance",
+    _redirect: "https://example.com/clearance",
+    _highlight: { keyword: "<b>clearance</b>" },
+    priority: 5,
+    total: 2
   })
 ])
 
 const sampleKeywords = [
   "running shoes",
   "sneakers",
+  "sale items",
   "marathon training",
   "trail gear",
+  "clearance",
   "fitness tracker",
   "yoga mat",
   "cycling jersey",
@@ -78,8 +94,9 @@ export function generateMockKeywords(count: number) {
   for (let i = 0; i < count; i++) {
     const keyword = getRandomKeyword(i)
     keywords.push(
-      createKeyword(keyword, {
-        highlight: keyword.replace(/(\w+)/, "<b>$1</b>"),
+      createMockKeyword({
+        keyword,
+        _highlight: { keyword: keyword.replace(/(\w+)/, "<b>$1</b>") },
         priority: i + 1,
         total: count
       })

@@ -1,13 +1,11 @@
 import { test, expect } from "@playwright/test"
+import { resultsSelector, searchSelector, waitForApplicationReady } from "./helpers"
 
 test.describe("Results", () => {
-  const searchSelector = "input[name='q']"
-  const resultsSelector = "#serp"
-
   test("page renders result when opening with a q parameter that has at least 3 characters", async ({ page }) => {
     // Navigate with query parameter
     await page.goto("/?q=shoes")
-    await page.waitForSelector(searchSelector)
+    await waitForApplicationReady(page)
 
     // Wait for results to load
     await expect(page.locator(resultsSelector)).toBeVisible()
@@ -26,7 +24,7 @@ test.describe("Results", () => {
   test("pagination works", async ({ page }) => {
     // Navigate with query to get results
     await page.goto("/?q=test")
-    await page.waitForSelector(searchSelector)
+    await waitForApplicationReady(page)
 
     // Wait for results to load
     await expect(page.locator(resultsSelector)).toBeVisible()

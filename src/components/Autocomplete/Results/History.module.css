@@ -1,0 +1,7 @@
+.historyColumn {
+  display: flex;
+  flex-direction: column;
+  border-right: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
+  min-width: 200px;
+  padding: var(--ns-space-1);
+}

@@ -1,9 +1,9 @@
 import { render, screen, fireEvent } from "@testing-library/preact"
 import { describe, it, expect } from "vitest"
-import { SidebarProvider, useSidebar } from "@/contexts/SidebarContext"
+import { SidebarProvider, useFilterSidebar } from "@/contexts/SidebarContext"
 
 function TestSidebarComponent() {
-  const { isOpen, toggle, setOpen } = useSidebar()
+  const { isOpen, toggle, setOpen } = useFilterSidebar()
 
   return (
     <>
@@ -86,7 +86,7 @@ describe("SidebarContext", () => {
 
     expect(() => {
       render(<TestSidebarComponent />)
-    }).toThrow("useSidebar must be used within a SidebarProvider")
+    }).toThrow("useFilterSidebar must be used within a SidebarProvider")
 
     console.error = originalError
   })

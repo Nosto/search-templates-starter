@@ -4,7 +4,7 @@ import { mockCategoryFacet, mockBrandFacet } from "@mocks/facets"
 import { withContainer, withSearchContext } from ".storybook/decorators"
 
 export default {
-  title: "Components/TermsFacet",
+  title: "Components/FilterSidebar/TermsFacet",
   component: TermsFacet,
   parameters: {
     layout: "centered"

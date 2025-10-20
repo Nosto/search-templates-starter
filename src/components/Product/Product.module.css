@@ -51,3 +51,15 @@
   text-decoration: line-through;
   margin-left: var(--ns-space-2);
 }
+
+.newRibbon {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: var(--ns-color-white);
+  color: var(--ns-color-black);
+  font-size: var(--ns-font-size-4);
+  padding: 8px;
+  z-index: 1;
+  text-align: center;
+}
