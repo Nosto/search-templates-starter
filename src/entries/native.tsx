@@ -12,6 +12,7 @@ import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import { nostojs } from "@nosto/nosto-js"
 import { initContext } from "./initContext"
 import { categoryConfig, serpConfig } from "@/config"
+import Portal from "@/elements/Portal/Portal"
 
 function SerpApp() {
   const { config, store } = initContext("search", serpConfig)
@@ -19,8 +20,10 @@ function SerpApp() {
     <SearchPageProvider config={config} store={store}>
       <SearchQueryHandler />
       <SidebarProvider>
-        <Search />
-        <Serp />
+        <Portal target="#app">
+          <Search />
+          <Serp />
+        </Portal>
       </SidebarProvider>
     </SearchPageProvider>
   )
@@ -32,7 +35,9 @@ function CategoryApp() {
     <CategoryPageProvider config={config} store={store}>
       <SearchQueryHandler />
       <SidebarProvider>
-        <Category />
+        <Portal target="#app">
+          <Category />
+        </Portal>
       </SidebarProvider>
     </CategoryPageProvider>
   )

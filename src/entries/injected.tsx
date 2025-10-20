@@ -103,7 +103,9 @@ function SerpApp() {
             <Autocomplete onSubmit={onSubmit} />
           </Portal>
         </AutocompletePageProvider>
-        <Serp />
+        <Portal target="#serp">
+          <Serp />
+        </Portal>
       </SidebarProvider>
     </ErrorBoundary>
   )
@@ -114,7 +116,9 @@ function CategoryApp() {
     <ErrorBoundary>
       <SearchQueryHandler />
       <SidebarProvider>
-        <Category />
+        <Portal target="#serp">
+          <Category />
+        </Portal>
       </SidebarProvider>
     </ErrorBoundary>
   )
@@ -128,27 +132,25 @@ async function init() {
   const { config, store } =
     pageType === "category" ? initContext("category", categoryConfig) : initContext("search", serpConfig)
 
-  const serpElement = document.querySelector<HTMLElement>("#serp")
+  const dummy = document.createElement("div")
 
-  if (serpElement) {
-    switch (pageType) {
-      case "category":
-        render(
-          <CategoryPageProvider config={config} store={store}>
-            <CategoryApp />
-          </CategoryPageProvider>,
-          serpElement
-        )
-        break
-      case "search":
-      default:
-        render(
-          <SearchPageProvider config={config} store={store}>
-            <SerpApp />
-          </SearchPageProvider>,
-          serpElement
-        )
-    }
+  switch (pageType) {
+    case "category":
+      render(
+        <CategoryPageProvider config={config} store={store}>
+          <CategoryApp />
+        </CategoryPageProvider>,
+        dummy
+      )
+      break
+    case "search":
+    default:
+      render(
+        <SearchPageProvider config={config} store={store}>
+          <SerpApp />
+        </SearchPageProvider>,
+        dummy
+      )
   }
 }
 init()

@@ -3,10 +3,10 @@ import { categoryConfig, serpConfig } from "@/config"
 import { createStore } from "@nosto/search-js/preact/common"
 import { newSearch } from "@nosto/search-js/preact/legacy"
 import { PageType } from "@nosto/nosto-js/client"
+import { CategoryConfig } from "@nosto/search-js/preact/category"
+import { SerpConfig } from "@nosto/search-js/preact/serp"
 
-type Config = typeof categoryConfig | typeof serpConfig
-
-export function initContext(pageType: PageType, config: Config) {
+export function initContext(pageType: PageType, config: CategoryConfig | SerpConfig) {
   const store = createStore()
   const query = createQueryFromUrl()
 
@@ -14,11 +14,14 @@ export function initContext(pageType: PageType, config: Config) {
     throw new Error(`Unsupported pageType: ${pageType}`)
   }
 
+  const defaultConfig = pageType === "category" ? categoryConfig : serpConfig
+
   if (query.query || pageType === "category") {
     newSearch(
       {
         store,
         config: {
+          ...defaultConfig,
           ...config,
           pageType
         }
