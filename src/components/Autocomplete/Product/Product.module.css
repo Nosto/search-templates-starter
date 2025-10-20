@@ -16,7 +16,13 @@
 .details {
   padding-top: var(--ns-space-2);
   color: var(--ns-color-black);
-  font-size: var(--ns-font-size-4);
+  font-size: var(--ns-font-size-3);
+}
+
+@media only screen and (min-width: 480px) {
+  .details {
+    font-size: var(--ns-font-size-4);
+  }
 }
 
 .name {
