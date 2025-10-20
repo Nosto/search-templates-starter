@@ -10,7 +10,7 @@ export function initContext(pageType: PageType, config: Config) {
   const store = createStore()
   const query = createQueryFromUrl()
 
-  if (query || pageType === "category") {
+  if (query.query || pageType === "category") {
     newSearch(
       {
         store,
