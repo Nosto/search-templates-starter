@@ -12,7 +12,7 @@ export default {
     },
     options: {
       storySort: {
-        order: ["Introduction", "Autocomplete", "Components", "Elements"]
+        order: ["Overview", "Autocomplete", "Components", "Elements"]
       }
     }
   },

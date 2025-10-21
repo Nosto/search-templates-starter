@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 
-const IntroductionComponent = () => {
+const OverviewComponent = () => {
   return (
     <div
       style={{
@@ -243,16 +243,16 @@ const IntroductionComponent = () => {
 }
 
 export default {
-  title: "Introduction",
-  component: IntroductionComponent,
+  title: "Overview",
+  component: OverviewComponent,
   parameters: {
     layout: "fullscreen",
     docs: {
-      page: () => <IntroductionComponent />
+      page: () => <OverviewComponent />
     }
   }
-} as Meta<typeof IntroductionComponent>
+} as Meta<typeof OverviewComponent>
 
-type Story = StoryObj<typeof IntroductionComponent>
+type Story = StoryObj<typeof OverviewComponent>
 
 export const Overview: Story = {}
