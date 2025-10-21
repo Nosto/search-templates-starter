@@ -17,7 +17,7 @@ describe("Campaign", () => {
     const el = container.querySelector("nosto-campaign") as HTMLElement
     expect(el).toBeTruthy()
     expect(el.outerHTML).toBe(
-      '<nosto-campaign product-id="456" variant-id="789" placement="home-top" template="tpl-2" init="true" lazy="true"></nosto-campaign>'
+      '<nosto-campaign placement="home-top" product-id="456" variant-id="789" template="tpl-2" init="true" lazy="true"></nosto-campaign>'
     )
   })
 
@@ -28,7 +28,7 @@ describe("Campaign", () => {
     const el = container.querySelector("nosto-campaign") as HTMLElement
     expect(el).toBeTruthy()
     expect(el.outerHTML).toBe(
-      '<nosto-campaign product-id="456" variant-id="789" placement="home-top" template="tpl-2" init="false"></nosto-campaign>'
+      '<nosto-campaign placement="home-top" product-id="456" variant-id="789" template="tpl-2" init="false"></nosto-campaign>'
     )
   })
 })
