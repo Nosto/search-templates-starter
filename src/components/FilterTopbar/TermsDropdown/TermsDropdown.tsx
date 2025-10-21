@@ -13,7 +13,7 @@ export default function TermsDropdown({ facet }: Props) {
   const { toggleProductFilter } = useFacet(facet)
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
-  
+
   // Count selected terms
   const selectedCount = facet.data?.filter(value => value.selected).length || 0
 
