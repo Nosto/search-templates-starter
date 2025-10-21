@@ -1,0 +1,43 @@
+.productsSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ns-space-2);
+}
+
+
+
+.products {
+  display: grid;
+  gap: var(--ns-space-3);
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+@media only screen and (min-width: 480px) {
+  .products {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .products {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .products {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.buttonContainer {
+  border-top: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
+  padding-top: var(--ns-space-2);
+  display: flex;
+  justify-content: center;
+}
+
+.submitButton {
+  width: 100%;
+  text-align: center;
+}

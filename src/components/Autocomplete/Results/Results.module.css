@@ -34,49 +34,8 @@
   padding: var(--ns-space-1);
 }
 
-.items {
-  display: flex;
-  flex-direction: row;
-}
-
-.suggestionsColumn {
+.sections {
   display: flex;
   flex-direction: column;
-  border-right: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
-  min-width: 200px;
-  padding: var(--ns-space-1);
-}
-
-.productsColumn {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  padding: var(--ns-space-1);
-}
-
-.keywords {
-  display: flex;
-  flex-direction: column;
-}
-
-.products {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: var(--ns-space-2);
-  margin-bottom: var(--ns-space-2);
-}
-
-.button {
-  border-top-color: var(--ns-color-grey-light);
-  border-top-width: var(--ns-border-width-thin);
-  border-top-style: solid;
-  border-radius: 0;
-  display: flex;
-  justify-content: center;
-}
-
-.submit {
-  border-radius: 0;
-  text-align: center;
-  width: 100%;
+  gap: var(--ns-space-3);
 }

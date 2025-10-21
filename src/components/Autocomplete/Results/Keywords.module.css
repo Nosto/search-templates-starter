@@ -1,4 +1,4 @@
-.historySection {
+.keywordsSection {
   display: flex;
   flex-direction: column;
   gap: var(--ns-space-2);

@@ -1,7 +1,7 @@
 import { SearchKeywords } from "@nosto/nosto-js/client"
+import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
 import Heading from "@/elements/Heading/Heading"
-import Keyword from "@/components/Autocomplete/Keyword/Keyword"
-import style from "./Results.module.css"
+import styles from "./Keywords.module.css"
 
 export type KeywordsProps = {
   keywords: SearchKeywords
@@ -14,11 +14,31 @@ export default function Keywords({ keywords, onSubmit }: KeywordsProps) {
   }
 
   return (
-    <div className={style.suggestionsColumn}>
+    <div className={styles.keywordsSection}>
       <Heading>Suggestions</Heading>
-      <div className={style.keywords}>
+      <div className={styles.pillContainer}>
         {keywords.hits.map((keyword, index) => (
-          <Keyword key={index} keyword={keyword} onSubmit={onSubmit} />
+          <AutocompleteElement
+            key={index}
+            hit={keyword}
+            componentProps={{
+              className: styles.pill,
+              onClick: (e: Event) => {
+                e.preventDefault()
+                if (keyword._redirect) {
+                  window.location.href = keyword._redirect
+                } else {
+                  onSubmit(keyword.keyword)
+                }
+              }
+            }}
+          >
+            {keyword?._highlight?.keyword ? (
+              <span dangerouslySetInnerHTML={{ __html: keyword._highlight.keyword }} />
+            ) : (
+              keyword.keyword
+            )}
+          </AutocompleteElement>
         ))}
       </div>
     </div>

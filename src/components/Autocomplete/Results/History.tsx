@@ -1,28 +1,29 @@
 import { useNostoAppState } from "@nosto/search-js/preact/hooks"
-import { HistoryItem } from "../HistoryItem/HistoryItem"
+import { HistoryElement } from "@nosto/search-js/preact/autocomplete"
 import Heading from "@/elements/Heading/Heading"
 import styles from "./History.module.css"
 
-export type KeywordsProps = {
+export type HistoryProps = {
   onSubmit: (query: string) => void
 }
 
-export function History({ onSubmit }: KeywordsProps) {
+export function History({ onSubmit }: HistoryProps) {
   const historyItems = useNostoAppState(state => state.historyItems)
-  // TODO: Keyboard navigation
-  //   const { highlightedElementIndex } = useContext(AutocompleteContext)
-  const highlightedElementIndex = -1
 
-  if (!historyItems) {
+  if (!historyItems?.length) {
     return null
   }
 
   return (
-    <div className={styles.historyColumn}>
+    <div className={styles.historySection}>
       <Heading>Recent searches</Heading>
-      {historyItems.map((item, index) => (
-        <HistoryItem key={item} item={item} onSubmit={onSubmit} highlighted={index === highlightedElementIndex} />
-      ))}
+      <div className={styles.pillContainer}>
+        {historyItems.map(item => (
+          <HistoryElement key={item} onSubmit={() => onSubmit(item)}>
+            <span className={styles.pill}>{item}</span>
+          </HistoryElement>
+        ))}
+      </div>
     </div>
   )
 }
