@@ -250,8 +250,7 @@ export default {
     docs: {
       page: () => <IntroductionComponent />
     }
-  },
-  tags: ["autodocs"]
+  }
 } as Meta<typeof IntroductionComponent>
 
 type Story = StoryObj<typeof IntroductionComponent>
