@@ -21,7 +21,7 @@ describe("toAttributes", () => {
     const input = { dataID: "123", APIResponseCode: 200 }
     const result = toAttributes(input)
 
-    expect(result).toEqual({ "data-id": "123", "apiresponse-code": 200 })
+    expect(result).toEqual({ "data-id": "123", "api-response-code": 200 })
   })
 
   it("returns type-safe attribute keys", () => {
