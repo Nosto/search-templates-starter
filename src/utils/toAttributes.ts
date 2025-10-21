@@ -3,7 +3,10 @@ export function toAttributes<T extends object>(obj: T) {
 }
 
 function toAttribute(str: string) {
-  return str.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()
+  return str
+    .replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2")
+    .replace(/([a-z])([A-Z])/g, "$1-$2")
+    .toLowerCase()
 }
 
 type toAttributes<T extends object> = {
