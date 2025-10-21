@@ -21,6 +21,13 @@ export const defaultConfig = {
   serpSize: sizes[0]
 }
 
+export const selectors = {
+  dropdown: "#dropdown",
+  searchInput: "#search",
+  searchForm: "#search-form",
+  results: "#serp"
+}
+
 const defaultCurrency = "EUR"
 
 function withAutocompleteDefaults(query: SearchQuery) {

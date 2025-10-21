@@ -6,7 +6,7 @@ import "@/variable.css"
 import Results from "@/components/Autocomplete/Results/Results"
 import SearchQueryHandler from "@/components/SearchQueryHandler/SearchQueryHandler"
 import { SidebarProvider } from "@/contexts/SidebarContext"
-import { autocompleteConfig, categoryConfig, serpConfig } from "@/config"
+import { autocompleteConfig, categoryConfig, selectors, serpConfig } from "@/config"
 import { disableNativeAutocomplete } from "@nosto/search-js/utils"
 import { useDomEvents } from "@/hooks/useDomEvents"
 import { useDebouncedSearch } from "@/hooks/useDebouncedSearch"
@@ -27,10 +27,9 @@ function Autocomplete({ onSubmit }: Props) {
   const [input, setInput] = useState<string>(getInitialQuery())
   const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false)
 
-  // TODO: wait for elements is missing
-  const dropdownElement = document.querySelector<HTMLElement>("#dropdown")!
-  const searchInput = document.querySelector<HTMLInputElement>("#search")!
-  const searchForm = document.querySelector<HTMLFormElement>("#search-form")!
+  const dropdownElement = document.querySelector<HTMLElement>(selectors.dropdown)!
+  const searchInput = document.querySelector<HTMLInputElement>(selectors.searchInput)!
+  const searchForm = document.querySelector<HTMLFormElement>(selectors.searchForm)!
 
   useEffect(() => {
     searchInput.value = getInitialQuery()
@@ -98,11 +97,11 @@ function SerpApp() {
       <SearchQueryHandler />
       <SidebarProvider>
         <AutocompletePageProvider config={autocompleteConfig}>
-          <Portal target="#dropdown">
+          <Portal target={selectors.dropdown}>
             <Autocomplete onSubmit={onSubmit} />
           </Portal>
         </AutocompletePageProvider>
-        <Portal target="#serp">
+        <Portal target={selectors.results}>
           <Serp />
         </Portal>
       </SidebarProvider>
@@ -115,7 +114,7 @@ function CategoryApp() {
     <ErrorBoundary>
       <SearchQueryHandler />
       <SidebarProvider>
-        <Portal target="#serp">
+        <Portal target={selectors.results}>
           <Category />
         </Portal>
       </SidebarProvider>
