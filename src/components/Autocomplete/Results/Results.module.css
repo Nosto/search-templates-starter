@@ -89,6 +89,7 @@
   flex-direction: column;
   flex-grow: 1;
   padding: var(--ns-space-1);
+  box-sizing: inherit;
 }
 
 /* Tablet and smaller: ensure full width */
