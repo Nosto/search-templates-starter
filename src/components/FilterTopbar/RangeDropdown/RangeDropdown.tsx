@@ -16,6 +16,9 @@ export default function RangeDropdown({ facet }: Props) {
   const [localMin, setLocalMin] = useState(range[0])
   const [localMax, setLocalMax] = useState(range[1])
   const dropdownRef = useRef<HTMLDivElement>(null)
+  
+  // Check if range filter is active
+  const isRangeActive = range[0] !== min || range[1] !== max
 
   // Update local values when range changes
   useEffect(() => {
@@ -61,7 +64,7 @@ export default function RangeDropdown({ facet }: Props) {
   return (
     <div className={styles.dropdown} ref={dropdownRef}>
       <FilterTrigger
-        value={facet.name}
+        value={isRangeActive ? `${facet.name} (1)` : facet.name}
         isOpen={isOpen}
         onClick={toggleDropdown}
         onKeyDown={handleKeyDown}
