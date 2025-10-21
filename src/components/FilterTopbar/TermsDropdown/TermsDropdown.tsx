@@ -13,6 +13,9 @@ export default function TermsDropdown({ facet }: Props) {
   const { toggleProductFilter } = useFacet(facet)
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  
+  // Count selected terms
+  const selectedCount = facet.data?.filter(value => value.selected).length || 0
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -47,7 +50,7 @@ export default function TermsDropdown({ facet }: Props) {
   return (
     <div className={styles.dropdown} ref={dropdownRef}>
       <FilterTrigger
-        value={facet.name}
+        value={selectedCount > 0 ? `${facet.name} (${selectedCount})` : facet.name}
         isOpen={isOpen}
         onClick={toggleDropdown}
         onKeyDown={handleKeyDown}

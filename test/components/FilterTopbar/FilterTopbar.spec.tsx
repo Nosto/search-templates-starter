@@ -81,7 +81,7 @@ describe("FilterTopbar", () => {
 
     const { getByText } = render(<FilterTopbar />)
 
-    expect(getByText("Category")).toBeTruthy()
+    expect(getByText("Category (1)")).toBeTruthy()
     expect(getByText("Price")).toBeTruthy()
   })
 })
