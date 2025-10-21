@@ -19,7 +19,7 @@ describe("Image", () => {
     expect(element.getAttribute("height")).toBe("180")
     expect(element.getAttribute("alt")).toBe("Example image")
 
-    const img = element.querySelector("img") as HTMLImageElement
+    const img = element.shadowRoot!.querySelector("img") as HTMLImageElement
     expect(img).not.toBeNull()
     expect(img.getAttribute("src")).toBe("https://example.com/img.jpg")
     expect(img.getAttribute("width")).toBe("320")
@@ -54,7 +54,7 @@ describe("Image", () => {
     expect(element.getAttribute("crop")).toBe("center")
     expect(element.getAttribute("sizes")).toBe("(min-width: 1024px) 50vw, 100vw")
 
-    const img = element.querySelector("img") as HTMLImageElement
+    const img = element.shadowRoot!.querySelector("img") as HTMLImageElement
     expect(img).not.toBeNull()
     expect(img.getAttribute("src")).toBe("https://example.com/responsive.jpg")
     expect(img.getAttribute("width")).toBe("640")

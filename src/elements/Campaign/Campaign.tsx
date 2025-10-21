@@ -1,6 +1,6 @@
 import type { Campaign as CustomElement } from "@nosto/web-components"
 
-type CampaignProps = Pick<CustomElement, "placement" | "productId" | "variantId" | "template" | "init" | "lazy">
+type CampaignProps = Pick<CustomElement, keyof typeof CustomElement.properties>
 
 /**
  * A custom element wrapper that renders a Nosto campaign based on the provided placement and fetched campaign data.
