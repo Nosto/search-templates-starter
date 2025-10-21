@@ -11,10 +11,7 @@
   justify-content: space-between;
 }
 
-.trigger:focus {
-  outline: 2px solid var(--ns-color-primary);
-  outline-offset: 2px;
-}
+
 
 
 
