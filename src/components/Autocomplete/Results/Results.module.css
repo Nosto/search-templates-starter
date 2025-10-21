@@ -41,14 +41,14 @@
 }
 
 .suggestionsRow {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: var(--ns-space-2);
 }
 
 @media only screen and (min-width: 768px) {
   .suggestionsRow {
-    flex-direction: row;
+    grid-template-columns: 1fr 1fr;
     gap: var(--ns-space-4);
   }
 }
