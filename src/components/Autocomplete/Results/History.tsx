@@ -1,6 +1,7 @@
 import { useNostoAppState } from "@nosto/search-js/preact/hooks"
 import { HistoryElement } from "@nosto/search-js/preact/autocomplete"
 import Heading from "@/elements/Heading/Heading"
+import Pill from "@/elements/Pill/Pill"
 import styles from "./History.module.css"
 
 export type HistoryProps = {
@@ -20,7 +21,7 @@ export function History({ onSubmit }: HistoryProps) {
       <div className={styles.pillContainer}>
         {historyItems.map(item => (
           <HistoryElement key={item} onSubmit={() => onSubmit(item)}>
-            <span className={styles.pill}>{item}</span>
+            <Pill onClick={() => onSubmit(item)}>{item}</Pill>
           </HistoryElement>
         ))}
       </div>

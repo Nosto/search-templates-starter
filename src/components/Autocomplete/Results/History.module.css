@@ -4,29 +4,8 @@
   gap: var(--ns-space-2);
 }
 
-
-
 .pillContainer {
   display: flex;
   flex-wrap: wrap;
   gap: var(--ns-space-1);
-}
-
-.pill {
-  display: inline-flex;
-  align-items: center;
-  padding: var(--ns-space-1) var(--ns-space-2);
-  background-color: var(--ns-color-grey-lightest);
-  border: 1px solid var(--ns-color-grey-light);
-  border-radius: var(--ns-border-radius-pill);
-  font-size: var(--ns-font-size-3);
-  color: var(--ns-color-text-primary);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  text-decoration: none;
-}
-
-.pill:hover {
-  background-color: var(--ns-color-grey-light);
-  border-color: var(--ns-color-grey);
 }

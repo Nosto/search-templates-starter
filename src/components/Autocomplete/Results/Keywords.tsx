@@ -1,6 +1,7 @@
 import { SearchKeywords } from "@nosto/nosto-js/client"
 import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
 import Heading from "@/elements/Heading/Heading"
+import Pill from "@/elements/Pill/Pill"
 import styles from "./Keywords.module.css"
 
 export type KeywordsProps = {
@@ -22,22 +23,25 @@ export default function Keywords({ keywords, onSubmit }: KeywordsProps) {
             key={index}
             hit={keyword}
             componentProps={{
-              className: styles.pill,
-              onClick: (e: Event) => {
+              style: { all: "unset" }
+            }}
+          >
+            <Pill
+              onClick={(e: Event) => {
                 e.preventDefault()
                 if (keyword._redirect) {
                   window.location.href = keyword._redirect
                 } else {
                   onSubmit(keyword.keyword)
                 }
-              }
-            }}
-          >
-            {keyword?._highlight?.keyword ? (
-              <span dangerouslySetInnerHTML={{ __html: keyword._highlight.keyword }} />
-            ) : (
-              keyword.keyword
-            )}
+              }}
+            >
+              {keyword?._highlight?.keyword ? (
+                <span dangerouslySetInnerHTML={{ __html: keyword._highlight.keyword }} />
+              ) : (
+                keyword.keyword
+              )}
+            </Pill>
           </AutocompleteElement>
         ))}
       </div>
