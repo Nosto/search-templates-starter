@@ -12,7 +12,7 @@ type Props = {
 
 export default function AddToCart({ type, hit, quantity = 1, children }: Props) {
   const onClick = useCallback(
-    (e: MouseEvent) => {
+    (e: Event) => {
       e.stopPropagation()
       addToCart(type, hit, quantity)
     },
