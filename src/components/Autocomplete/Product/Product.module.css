@@ -9,16 +9,11 @@
   transition: all 0.2s ease;
 }
 
-.container:hover {
-  background-color: var(--ns-color-grey-lightest);
-}
-
 .image {
   height: auto;
   object-fit: cover;
   width: 100%;
   aspect-ratio: 1;
-  border-radius: var(--ns-border-radius-2);
   margin-bottom: var(--ns-space-2);
 }
 
