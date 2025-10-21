@@ -65,11 +65,10 @@
 }
 
 .products {
-  justify-self: center;
-  display: flex;
   gap: var(--ns-space-2);
   margin-bottom: var(--ns-space-2);
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 }
 
 .button {
