@@ -22,9 +22,13 @@ export const defaultConfig = {
 }
 
 export const selectors = {
+  // autocomplete dropdown container
   dropdown: "#dropdown",
+  // search input field
   searchInput: "#search",
+  // search form element selector
   searchForm: "#search-form",
+  // container for actual search/category results
   results: "#serp"
 }
 
