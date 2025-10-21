@@ -39,12 +39,28 @@
   flex-direction: row;
 }
 
+/* Mobile-first: Stack suggestions and products vertically on smaller screens */
+@media only screen and (max-width: 767px) {
+  .items {
+    flex-direction: column;
+  }
+}
+
 .suggestionsColumn {
   display: flex;
   flex-direction: column;
   border-right: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
   min-width: 200px;
   padding: var(--ns-space-1);
+}
+
+/* Mobile: Remove right border when stacked vertically and add bottom border */
+@media only screen and (max-width: 767px) {
+  .suggestionsColumn {
+    border-right: none;
+    border-bottom: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
+    min-width: auto;
+  }
 }
 
 .productsColumn {
@@ -61,9 +77,19 @@
 
 .products {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
   gap: var(--ns-space-2);
   margin-bottom: var(--ns-space-2);
+  /* Mobile: 3 rows with fewer columns */
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+/* Desktop: 2 rows with more columns */
+@media only screen and (min-width: 768px) {
+  .products {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
 }
 
 .button {
