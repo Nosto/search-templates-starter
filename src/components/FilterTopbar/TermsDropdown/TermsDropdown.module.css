@@ -27,31 +27,7 @@
   }
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: var(--ns-space-3) var(--ns-space-4);
-  border-bottom: none;
-  background: var(--ns-color-grey-light);
-}
 
-.count {
-  font-size: var(--ns-font-size-3);
-  color: var(--ns-color-grey-dark);
-  font-weight: var(--ns-weight-medium);
-}
-
-.button {
-  background: none;
-  border: none;
-  color: var(--ns-color-primary);
-  cursor: pointer;
-  font-size: var(--ns-font-size-3);
-  font-weight: var(--ns-weight-medium);
-  text-decoration: underline;
-  padding: 0;
-}
 
 
 

@@ -2,6 +2,7 @@ import { useFacets } from "@nosto/search-js/preact/hooks"
 import { SearchStatsFacet, SearchTermsFacet } from "@nosto/nosto-js/client"
 import TermsDropdown from "./TermsDropdown/TermsDropdown"
 import RangeDropdown from "./RangeDropdown/RangeDropdown"
+import ClearFiltersButton from "./ClearFiltersButton/ClearFiltersButton"
 import styles from "./FilterTopbar.module.css"
 
 export default function FilterTopbar() {
@@ -23,6 +24,7 @@ export default function FilterTopbar() {
             return null
         }
       })}
+      <ClearFiltersButton />
     </div>
   )
 }
