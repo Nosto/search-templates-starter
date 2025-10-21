@@ -28,7 +28,7 @@ function withAutocompleteDefaults(query: SearchQuery) {
     ...query,
     products: {
       ...query.products,
-      size: 5
+      size: 6
     },
     keywords: {
       fields: ["keyword", "_highlight.keyword"],

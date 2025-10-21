@@ -34,16 +34,14 @@
   padding: var(--ns-space-1);
 }
 
+.section {
+  display: flex;
+  flex-direction: column;
+}
+
 .items {
   display: flex;
   flex-direction: row;
-}
-
-/* Mobile-first: Stack suggestions and products vertically on smaller screens */
-@media only screen and (max-width: 767px) {
-  .items {
-    flex-direction: column;
-  }
 }
 
 .suggestionsColumn {
@@ -52,15 +50,6 @@
   border-right: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
   min-width: 200px;
   padding: var(--ns-space-1);
-}
-
-/* Mobile: Remove right border when stacked vertically and add bottom border */
-@media only screen and (max-width: 767px) {
-  .suggestionsColumn {
-    border-right: none;
-    border-bottom: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
-    min-width: auto;
-  }
 }
 
 .productsColumn {
@@ -79,17 +68,7 @@
   display: grid;
   gap: var(--ns-space-2);
   margin-bottom: var(--ns-space-2);
-  /* Mobile: 3 rows with fewer columns */
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-}
-
-/* Desktop: 2 rows with more columns */
-@media only screen and (min-width: 768px) {
-  .products {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-  }
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .button {
@@ -105,4 +84,19 @@
   border-radius: 0;
   text-align: center;
   width: 100%;
+}
+
+@media only screen and (max-width: 767px) {
+  .section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+    .items {
+    flex-direction: column;
+  }
+    .suggestionsColumn {
+    border-right: none;
+    border-bottom: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
+    min-width: auto;
+  }
 }
