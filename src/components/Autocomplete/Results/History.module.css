@@ -6,7 +6,6 @@
   padding: var(--ns-space-1);
 }
 
-/* Mobile: Remove right border when stacked vertically and add bottom border */
 @media only screen and (max-width: 767px) {
   .historyColumn {
     border-right: none;
