@@ -22,8 +22,10 @@ export default function Results({ onSubmit }: ResultsProps) {
     <div className={style.autocomplete} data-nosto-element="autocomplete">
       <div className={`${style.container} ${style.paddingContainer}`}>
         <div className={style.sections}>
-          {hasHistory && <History onSubmit={onSubmit} />}
-          {hasResults && <Keywords keywords={keywords} onSubmit={onSubmit} />}
+          <div className={style.suggestionsRow}>
+            {hasHistory && <History onSubmit={onSubmit} />}
+            {hasResults && <Keywords keywords={keywords} onSubmit={onSubmit} />}
+          </div>
           {hasResults && <Products products={products} />}
         </div>
       </div>

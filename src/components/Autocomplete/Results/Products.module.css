@@ -12,11 +12,7 @@
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
 }
 
-@media only screen and (min-width: 480px) {
-  .products {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  }
-}
+
 
 @media only screen and (min-width: 768px) {
   .products {
@@ -26,7 +22,7 @@
 
 @media only screen and (min-width: 1024px) {
   .products {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
   }
 }
 
