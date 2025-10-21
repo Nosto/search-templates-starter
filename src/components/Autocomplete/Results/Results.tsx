@@ -22,11 +22,11 @@ export default function Results({ onSubmit }: ResultsProps) {
     <div className={style.autocomplete} data-nosto-element="autocomplete">
       <div className={`${style.container} ${style.paddingContainer}`}>
         <div className={style.items}>
-          <div className={style.section} >
+          <div className={style.section}>
             {hasHistory && <History onSubmit={onSubmit} />}
             {hasResults && <Keywords keywords={keywords} onSubmit={onSubmit} />}
           </div>
-          
+
           {hasResults && <Products products={products} />}
         </div>
       </div>
