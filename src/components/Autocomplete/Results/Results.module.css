@@ -91,10 +91,10 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
   }
-    .items {
+  .items {
     flex-direction: column;
   }
-    .suggestionsColumn {
+  .suggestionsColumn {
     border-right: none;
     border-bottom: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
     min-width: auto;
