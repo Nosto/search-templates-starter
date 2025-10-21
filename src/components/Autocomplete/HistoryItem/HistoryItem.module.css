@@ -10,8 +10,8 @@
   padding: 4px 8px;
 }
 
-/* Mobile: tag-like appearance */
-@media only screen and (max-width: 480px) {
+/* Tablet and smaller: tag-like appearance */
+@media only screen and (max-width: 768px) {
   .container {
     display: inline-flex;
     background-color: var(--ns-color-grey-light);
@@ -27,8 +27,8 @@
   background-color: #0c080811;
 }
 
-/* Mobile: different hover/highlighted styles for tags */
-@media only screen and (max-width: 480px) {
+/* Tablet and smaller: different hover/highlighted styles for tags */
+@media only screen and (max-width: 768px) {
   .container.highlighted,
   .container:hover {
     background-color: var(--ns-color-primary-light);
@@ -45,8 +45,8 @@
   text-overflow: ellipsis;
 }
 
-/* Mobile: smaller text for tag appearance */
-@media only screen and (max-width: 480px) {
+/* Tablet and smaller: smaller text for tag appearance */
+@media only screen and (max-width: 768px) {
   .name {
     font-size: var(--ns-font-size-3);
     font-weight: var(--ns-weight-medium);

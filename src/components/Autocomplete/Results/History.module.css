@@ -11,20 +11,14 @@
   flex-direction: column;
 }
 
-/* Tablet and smaller: remove right border and min-width, add bottom border */
+/* Tablet and smaller: remove borders, prepare for side-by-side tag layout */
 @media only screen and (max-width: 768px) {
   .historyColumn {
     border-right: none;
-    border-bottom: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
+    border-bottom: none;
     min-width: unset;
-    width: 100%;
-  }
-}
-
-/* Very small screens: display history as tag list in row format */
-@media only screen and (max-width: 480px) {
-  .historyColumn {
-    border-bottom: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
+    width: 50%;
+    flex: 1;
     padding: var(--ns-space-2);
   }
   

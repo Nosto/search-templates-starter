@@ -7,8 +7,8 @@
   cursor: pointer;
 }
 
-/* Mobile: tag-like appearance */
-@media only screen and (max-width: 480px) {
+/* Tablet and smaller: tag-like appearance */
+@media only screen and (max-width: 768px) {
   .keyword {
     display: inline-flex;
     background-color: var(--ns-color-grey-light);
@@ -23,8 +23,8 @@
   background-color: var(--ns-color-grey-light);
 }
 
-/* Mobile: different hover styles for tags */
-@media only screen and (max-width: 480px) {
+/* Tablet and smaller: different hover styles for tags */
+@media only screen and (max-width: 768px) {
   .keyword:hover {
     background-color: var(--ns-color-primary-light);
   }

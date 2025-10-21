@@ -40,10 +40,27 @@
   flex-direction: row;
 }
 
-/* Tablet and smaller: stack suggestions and products vertically */
+/* Tablet and smaller: keep row layout but optimize for inline tag lists */
 @media only screen and (max-width: 768px) {
   .items {
     flex-direction: column;
+  }
+}
+
+/* Top row: History and Keywords side by side */
+.suggestionsRow {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+@media only screen and (max-width: 768px) {
+  .suggestionsRow {
+    display: flex;
+    flex-direction: row;
+    gap: var(--ns-space-2);
+    border-bottom: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
+    margin-bottom: var(--ns-space-2);
   }
 }
 
@@ -55,20 +72,14 @@
   padding: var(--ns-space-1);
 }
 
-/* Tablet and smaller: remove right border and min-width, add bottom border */
+/* Tablet and smaller: remove borders and width restrictions, prepare for tag layout */
 @media only screen and (max-width: 768px) {
   .suggestionsColumn {
     border-right: none;
-    border-bottom: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
+    border-bottom: none;
     min-width: unset;
-    width: 100%;
-  }
-}
-
-/* Very small screens: display suggestions as tag list in row format */
-@media only screen and (max-width: 480px) {
-  .suggestionsColumn {
-    border-bottom: var(--ns-border-width-thin) solid var(--ns-color-grey-light);
+    width: 50%;
+    flex: 1;
     padding: var(--ns-space-2);
   }
 }
@@ -93,8 +104,8 @@
   flex-direction: column;
 }
 
-/* Very small screens: display keywords as inline tag list */
-@media only screen and (max-width: 480px) {
+/* Tablet and smaller: display keywords as inline tag list */
+@media only screen and (max-width: 768px) {
   .keywords {
     display: flex;
     flex-direction: row;
