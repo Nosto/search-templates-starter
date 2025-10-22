@@ -4,6 +4,7 @@ import styles from "./Product.module.css"
 import type { Product } from "@/types"
 import { renderRatingStars } from "./renderRatingStars"
 import ProductImage from "./ProductImage"
+import Swatches from "./Swatches"
 
 type Props = {
   product: Product
@@ -32,6 +33,7 @@ export default function Product({ product, children, showAltOnHover = true }: Pr
         <ProductImage src={product.imageUrl!} alt={product.name} />
         {hasAlternateImage && <ProductImage src={product.alternateImageUrls![0]} alt={product.name} />}
         {isNew && <div className={styles.newRibbon}>New</div>}
+        <Swatches product={product} />
       </div>
       <div className={styles.info} data-nosto-element="product">
         {product.brand && <div>{product.brand}</div>}

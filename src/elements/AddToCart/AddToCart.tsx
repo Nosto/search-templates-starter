@@ -7,7 +7,7 @@ type Props = {
   type: SearchTrackOptions
   hit: SearchHitWithSku
   quantity?: number
-  children: ComponentChildren
+  children?: ComponentChildren
 }
 
 export default function AddToCart({ type, hit, quantity = 1, children }: Props) {

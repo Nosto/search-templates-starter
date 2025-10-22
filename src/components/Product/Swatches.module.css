@@ -1,0 +1,20 @@
+.swatches {
+  display: var(--ns-show-swatches);
+  background: black;
+  color: white;
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+}
+
+.swatches::part(row) {
+  margin: var(--ns-space-2);
+}
+
+.swatches::part(label) {
+  display: none
+}
+
+.swatches::part(value) {
+  padding: var(--ns-space-1) var(--ns-space-2);
+}
