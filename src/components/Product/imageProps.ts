@@ -8,4 +8,6 @@ export const imageSizes = `(min-width: 1024px) 25vw,
 export const imageProps = {
   width: 750,
   sizes: imageSizes
+  // if the product images have a consistent aspect ratio, you can uncomment the line below to set it
+  //aspectRatio: 0.75
 }
