@@ -68,27 +68,37 @@
   gap: var(--ns-space-2);
   margin-bottom: var(--ns-space-2);
   display: grid;
-  /* Desktop: Display 5 products, fallback to 4 if they don't fit */
-  grid-template-columns: repeat(5, minmax(100px, 1fr));
+  /* Mobile-first: Default to 3x2 grid for mobile */
+  grid-template-columns: repeat(3, minmax(100px, 1fr));
+  grid-template-rows: repeat(2, auto);
 }
 
-/* When 5 products don't fit on desktop, display 4 */
-@media only screen and (max-width: 1200px) and (min-width: 768px) {
+/* Tablet and small desktop: Display 4 products in single row */
+@media only screen and (min-width: 768px) {
   .products {
     grid-template-columns: repeat(4, minmax(100px, 1fr));
+    grid-template-rows: auto;
   }
   
-  /* Hide the 5th and 6th products on smaller desktop screens */
+  /* Hide the 5th and 6th products on medium screens */
   .products > :nth-child(n+5) {
     display: none;
   }
 }
 
-/* Mobile: Display all 6 products in two rows (3x2) */
-@media only screen and (max-width: 767px) {
+/* Large desktop: Display 5 products in single row */
+@media only screen and (min-width: 1201px) {
   .products {
-    grid-template-columns: repeat(3, minmax(100px, 1fr));
-    grid-template-rows: repeat(2, auto);
+    grid-template-columns: repeat(5, minmax(100px, 1fr));
+  }
+  
+  /* Show the 5th product, keep 6th hidden */
+  .products > :nth-child(5) {
+    display: block;
+  }
+  
+  .products > :nth-child(n+6) {
+    display: none;
   }
 }
 
