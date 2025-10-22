@@ -80,7 +80,7 @@ export const hitDecorators = [
 
 const autocompleteDecorators = [
   handleDecorator,
-  thumbnailDecorator({ size: "7" }), // 400x400
+  thumbnailDecorator({ size: "8" }), // 400x400
   priceDecorator({ defaultCurrency })
 ]
 
