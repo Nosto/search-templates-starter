@@ -85,24 +85,10 @@
 
 @media only screen and (min-width: 1201px) {
   .products {
-    grid-template-columns: repeat(5, minmax(100px, 1fr));
-  }
-  
-  .products > :nth-child(5) {
-    display: block;
-  }
-  
-  .products > :nth-child(n+6) {
-    display: none;
-  }
-}
-
-@media only screen and (min-width: 1441px) {
-  .products {
     grid-template-columns: repeat(6, minmax(100px, 1fr));
   }
   
-  .products > :nth-child(6) {
+  .products > :nth-child(n+5) {
     display: block;
   }
 }
