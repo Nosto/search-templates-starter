@@ -1,3 +1,4 @@
+import { toAttributes } from "@/utils/toAttributes"
 import type { Campaign as CustomElement } from "@nosto/web-components"
 
 type CampaignProps = Pick<CustomElement, keyof typeof CustomElement.properties>
@@ -8,9 +9,15 @@ type CampaignProps = Pick<CustomElement, keyof typeof CustomElement.properties>
  * It supports both HTML and JSON response modes, allowing for flexible rendering.
  * The placement or id attribute will be used as the identifier of the placement to be fetched.
  */
-export default function Campaign({ productId, variantId, ...props }: CampaignProps) {
-  return (
-    // @ts-expect-error: Custom element types not properly recognized by TypeScript
-    <nosto-campaign product-id={productId} variant-id={variantId} {...props} />
-  )
+export default function Campaign(props: CampaignProps) {
+  return <nosto-campaign {...toAttributes(props)} />
+}
+
+declare module "preact/jsx-runtime" {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace JSX {
+    interface IntrinsicElements {
+      "nosto-campaign": CampaignProps
+    }
+  }
 }

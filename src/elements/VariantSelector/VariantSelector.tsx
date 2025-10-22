@@ -1,3 +1,4 @@
+import { toAttributes } from "@/utils/toAttributes"
 import type { VariantSelector as CustomElement } from "@nosto/web-components"
 
 type VariantSelectorProps = Pick<CustomElement, keyof typeof CustomElement.properties>
@@ -10,7 +11,7 @@ type VariantSelectorProps = Pick<CustomElement, keyof typeof CustomElement.prope
  * Emits a custom event when variant selections change.
  */
 export default function VariantSelector(props: VariantSelectorProps) {
-  return <nosto-variant-selector {...props} />
+  return <nosto-variant-selector {...toAttributes(props)} />
 }
 
 declare module "preact/jsx-runtime" {
