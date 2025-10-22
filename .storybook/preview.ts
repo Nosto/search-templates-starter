@@ -9,6 +9,11 @@ export default {
         color: /(background|color)$/i,
         date: /Date$/i
       }
+    },
+    options: {
+      storySort: {
+        order: ["Overview", "Autocomplete", "Components", "Elements"]
+      }
     }
   },
   decorators: [withWrapperStyles]
