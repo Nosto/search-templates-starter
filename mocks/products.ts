@@ -114,6 +114,6 @@ export const mockProductMultipleAlts = createMockProduct({
   alternateImageUrls: [createMockRandomImage(), createMockRandomImage()]
 })
 
-export const mockProducts = createProductsResponse(generateMockProducts(5))
+export const mockProducts = createProductsResponse(generateMockProducts(6))
 
 export const mockEmptyProducts = createEmptyResponse()
