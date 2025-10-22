@@ -102,6 +102,18 @@
   }
 }
 
+/* Very large desktop: Display all 6 products in single row */
+@media only screen and (min-width: 1441px) {
+  .products {
+    grid-template-columns: repeat(6, minmax(100px, 1fr));
+  }
+  
+  /* Show all products including the 6th */
+  .products > :nth-child(6) {
+    display: block;
+  }
+}
+
 .button {
   border-top-color: var(--ns-color-grey-light);
   border-top-width: var(--ns-border-width-thin);
