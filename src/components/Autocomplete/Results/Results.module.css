@@ -68,6 +68,7 @@
   gap: var(--ns-space-2);
   margin-bottom: var(--ns-space-2);
   display: grid;
+
   /* Mobile-first: Default to 3x2 grid for mobile */
   grid-template-columns: repeat(3, minmax(100px, 1fr));
   grid-template-rows: repeat(2, auto);
