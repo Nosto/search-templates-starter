@@ -1,7 +1,6 @@
 .container {
   padding: var(--ns-space-2);
   color: inherit;
-  margin: var(--ns-space-2) 0;
   box-sizing: border-box;
   flex: 0 0 100%;
   max-width: 100%;
