@@ -68,32 +68,26 @@
   gap: var(--ns-space-2);
   margin-bottom: var(--ns-space-2);
   display: grid;
-
-  /* Mobile-first: Default to 3x2 grid for mobile */
   grid-template-columns: repeat(3, minmax(100px, 1fr));
   grid-template-rows: repeat(2, auto);
 }
 
-/* Tablet and small desktop: Display 4 products in single row */
 @media only screen and (min-width: 768px) {
   .products {
     grid-template-columns: repeat(4, minmax(100px, 1fr));
     grid-template-rows: auto;
   }
   
-  /* Hide the 5th and 6th products on medium screens */
   .products > :nth-child(n+5) {
     display: none;
   }
 }
 
-/* Large desktop: Display 5 products in single row */
 @media only screen and (min-width: 1201px) {
   .products {
     grid-template-columns: repeat(5, minmax(100px, 1fr));
   }
   
-  /* Show the 5th product, keep 6th hidden */
   .products > :nth-child(5) {
     display: block;
   }
@@ -103,13 +97,11 @@
   }
 }
 
-/* Very large desktop: Display all 6 products in single row */
 @media only screen and (min-width: 1441px) {
   .products {
     grid-template-columns: repeat(6, minmax(100px, 1fr));
   }
   
-  /* Show all products including the 6th */
   .products > :nth-child(6) {
     display: block;
   }
