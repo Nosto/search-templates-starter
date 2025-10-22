@@ -1,7 +1,6 @@
 .container {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--ns-space-2);
 }
 
 @media (min-width: 375px) {
