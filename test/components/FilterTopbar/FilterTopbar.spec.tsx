@@ -7,7 +7,8 @@ import * as hooks from "@nosto/search-js/preact/hooks"
 vi.mock("@nosto/search-js/preact/hooks", () => ({
   useFacets: vi.fn(),
   useFacet: vi.fn(),
-  useRange: vi.fn()
+  useRange: vi.fn(),
+  useProductFilters: vi.fn()
 }))
 
 describe("FilterTopbar", () => {
@@ -73,9 +74,14 @@ describe("FilterTopbar", () => {
       toggleActive: vi.fn()
     })
 
+    vi.mocked(hooks.useProductFilters).mockReturnValue({
+      filters: [],
+      removeAll: vi.fn()
+    })
+
     const { getByText } = render(<FilterTopbar />)
 
-    expect(getByText("Category")).toBeTruthy()
+    expect(getByText("Category (1)")).toBeTruthy()
     expect(getByText("Price")).toBeTruthy()
   })
 })

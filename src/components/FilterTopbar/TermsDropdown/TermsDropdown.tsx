@@ -10,9 +10,12 @@ type Props = {
 }
 
 export default function TermsDropdown({ facet }: Props) {
-  const { selectedFiltersCount, toggleProductFilter } = useFacet(facet)
+  const { toggleProductFilter } = useFacet(facet)
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
+
+  // Count selected terms
+  const selectedCount = facet.data?.filter(value => value.selected).length || 0
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -47,7 +50,7 @@ export default function TermsDropdown({ facet }: Props) {
   return (
     <div className={styles.dropdown} ref={dropdownRef}>
       <FilterTrigger
-        value={facet.name}
+        value={selectedCount > 0 ? `${facet.name} (${selectedCount})` : facet.name}
         isOpen={isOpen}
         onClick={toggleDropdown}
         onKeyDown={handleKeyDown}
@@ -56,24 +59,6 @@ export default function TermsDropdown({ facet }: Props) {
 
       {isOpen && (
         <div className={styles.menu} role="menu">
-          <div className={styles.header}>
-            {selectedFiltersCount > 0 && <div className={styles.count}>{selectedFiltersCount} selected</div>}
-            {selectedFiltersCount > 0 && (
-              <button
-                type="button"
-                className={styles.button}
-                onClick={() => {
-                  facet.data?.forEach(value => {
-                    if (value.selected) {
-                      toggleProductFilter(facet.field, value.value, false)
-                    }
-                  })
-                }}
-              >
-                Reset
-              </button>
-            )}
-          </div>
           <div className={styles.options}>
             {facet.data?.map(value => (
               <div key={value.value} className={styles.option} role="menuitem">
