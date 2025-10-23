@@ -1,5 +1,5 @@
 import { createContext } from "preact"
-import { useContext, useRef, useEffect } from "preact/hooks"
+import { useRef, useEffect } from "preact/hooks"
 import { ComponentChildren } from "preact"
 
 type RovingFocusContextType = {
@@ -8,7 +8,7 @@ type RovingFocusContextType = {
   loop: boolean
 }
 
-const RovingFocusContext = createContext<RovingFocusContextType | undefined>(undefined)
+export const RovingFocusContext = createContext<RovingFocusContextType | undefined>(undefined)
 
 type RovingFocusGroupProps = {
   children: ComponentChildren
@@ -30,7 +30,7 @@ export function RovingFocusGroup({
       if (!groupRef.current) return
 
       const focusableElements = Array.from(
-        groupRef.current.querySelectorAll('[role="button"][tabindex]')
+        groupRef.current.querySelectorAll("[data-roving-focus-item][tabindex]")
       ) as HTMLElement[]
 
       if (focusableElements.length === 0) return
@@ -93,12 +93,4 @@ export function RovingFocusGroup({
       </div>
     </RovingFocusContext.Provider>
   )
-}
-
-export function useRovingFocus() {
-  const context = useContext(RovingFocusContext)
-  if (context === undefined) {
-    throw new Error("useRovingFocus must be used within a RovingFocusGroup")
-  }
-  return context
 }

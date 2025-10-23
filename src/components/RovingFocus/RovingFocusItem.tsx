@@ -1,23 +1,19 @@
 import { useRef, useEffect, useCallback } from "preact/hooks"
-import { ComponentChildren, JSX } from "preact"
-import { useRovingFocus } from "./RovingFocusGroup"
+import { ComponentChildren, cloneElement, VNode } from "preact"
+import { useRovingFocus } from "./useRovingFocus"
 
 type RovingFocusItemProps = {
   children: ComponentChildren
-  className?: string
-  onFocus?: (event: FocusEvent) => void
-  onClick?: (event: MouseEvent) => void
-  style?: JSX.CSSProperties
 }
 
-export function RovingFocusItem({ children, className, onFocus, onClick, style }: RovingFocusItemProps) {
-  const elementRef = useRef<HTMLDivElement>(null)
+export function RovingFocusItem({ children }: RovingFocusItemProps) {
+  const elementRef = useRef<HTMLElement>(null)
   const { groupRef } = useRovingFocus()
 
   useEffect(() => {
     if (!elementRef.current || !groupRef.current) return
 
-    const allItems = Array.from(groupRef.current.querySelectorAll('[role="button"]')) as HTMLElement[]
+    const allItems = Array.from(groupRef.current.querySelectorAll("[data-roving-focus-item]")) as HTMLElement[]
 
     const isFirst = allItems.length === 1 && allItems[0] === elementRef.current
     elementRef.current.setAttribute("tabindex", isFirst ? "0" : "-1")
@@ -27,7 +23,7 @@ export function RovingFocusItem({ children, className, onFocus, onClick, style }
     (event: FocusEvent) => {
       if (!elementRef.current || !groupRef.current) return
 
-      const allItems = Array.from(groupRef.current.querySelectorAll('[role="button"]')) as HTMLElement[]
+      const allItems = Array.from(groupRef.current.querySelectorAll("[data-roving-focus-item]")) as HTMLElement[]
 
       const currentIndex = allItems.indexOf(elementRef.current)
 
@@ -37,41 +33,69 @@ export function RovingFocusItem({ children, className, onFocus, onClick, style }
         })
       }
 
-      onFocus?.(event)
+      // Call original onFocus if it exists
+      const element = elementRef.current as HTMLElement & { _originalOnFocus?: (event: FocusEvent) => void }
+      element._originalOnFocus?.(event)
     },
-    [groupRef, onFocus]
+    [groupRef]
   )
 
-  const handleClick = useCallback(
-    (event: MouseEvent) => {
-      elementRef.current?.focus()
-      onClick?.(event)
-    },
-    [onClick]
-  )
+  const handleClick = useCallback((event: MouseEvent) => {
+    elementRef.current?.focus()
 
-  const handleKeyDown = useCallback(
-    (event: KeyboardEvent) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault()
-        onClick?.(event as unknown as MouseEvent)
-      }
-    },
-    [onClick]
-  )
+    // Call original onClick if it exists
+    const element = elementRef.current as HTMLElement & { _originalOnClick?: (event: MouseEvent) => void }
+    element._originalOnClick?.(event)
+  }, [])
 
-  return (
-    <div
-      ref={elementRef}
-      className={className}
-      style={style}
-      tabIndex={-1}
-      role="button"
-      onFocus={handleFocus}
-      onClick={handleClick}
-      onKeyDown={handleKeyDown}
-    >
-      {children}
-    </div>
-  )
+  const handleKeyDown = useCallback((event: KeyboardEvent) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault()
+      const element = elementRef.current as HTMLElement & { _originalOnClick?: (event: MouseEvent) => void }
+      element._originalOnClick?.(event as unknown as MouseEvent)
+    }
+
+    // Call original onKeyDown if it exists
+    const element = elementRef.current as HTMLElement & { _originalOnKeyDown?: (event: KeyboardEvent) => void }
+    element._originalOnKeyDown?.(event)
+  }, [])
+
+  // Clone the child element and add roving focus props
+  if (typeof children === "object" && children && "type" in children) {
+    const child = children as VNode<Record<string, unknown>>
+    const originalProps = child.props || {}
+
+    return cloneElement(child, {
+      ...originalProps,
+      ref: (element: HTMLElement) => {
+        elementRef.current = element
+        const extendedElement = element as HTMLElement & {
+          _originalOnFocus?: (event: FocusEvent) => void
+          _originalOnClick?: (event: MouseEvent) => void
+          _originalOnKeyDown?: (event: KeyboardEvent) => void
+        }
+        if (element && originalProps.onFocus) {
+          extendedElement._originalOnFocus = originalProps.onFocus as (event: FocusEvent) => void
+        }
+        if (element && originalProps.onClick) {
+          extendedElement._originalOnClick = originalProps.onClick as (event: MouseEvent) => void
+        }
+        if (element && originalProps.onKeyDown) {
+          extendedElement._originalOnKeyDown = originalProps.onKeyDown as (event: KeyboardEvent) => void
+        }
+        // Call original ref if it exists
+        if (typeof originalProps.ref === "function") {
+          ;(originalProps.ref as (element: HTMLElement) => void)(element)
+        }
+      },
+      tabIndex: -1,
+      "data-roving-focus-item": true,
+      onFocus: handleFocus,
+      onClick: handleClick,
+      onKeyDown: handleKeyDown
+    })
+  }
+
+  // Fallback for non-element children (shouldn't happen in normal usage)
+  return children
 }
