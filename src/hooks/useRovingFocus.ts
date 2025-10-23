@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from "preact/hooks"
 
-const keyToDirection: Record<string, "up" | "down" | "left" | "right"> = {
-  ArrowDown: "down",
-  ArrowUp: "up",
-  ArrowLeft: "left",
-  ArrowRight: "right"
+const keyToDirection: Record<string, "back" | "front"> = {
+  ArrowDown: "front",
+  ArrowUp: "back",
+  ArrowLeft: "back",
+  ArrowRight: "front"
 }
 
 export function useRovingFocus(
@@ -33,16 +33,16 @@ export function useRovingFocus(
   }, [getFocusableElements, focusedIndex])
 
   const moveFocus = useCallback(
-    (direction: "up" | "down" | "left" | "right") => {
+    (direction: "back" | "front") => {
       const elements = getFocusableElements()
       if (elements.length === 0) return
 
       const currentIndex = getCurrentFocusedIndex()
       let newIndex = currentIndex
 
-      if (direction === "up" || direction === "left") {
+      if (direction === "back") {
         newIndex = currentIndex === 0 ? elements.length - 1 : currentIndex - 1
-      } else if (direction === "down" || direction === "right") {
+      } else if (direction === "front") {
         newIndex = currentIndex === elements.length - 1 ? 0 : currentIndex + 1
       }
 
