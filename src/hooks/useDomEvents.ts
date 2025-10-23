@@ -35,5 +35,5 @@ export function useDomEvents(
       if (onSubmit) el.removeEventListener("submit", onSubmit)
       if (onKeydown) el.removeEventListener("keydown", onKeydown)
     }
-  }, [el, onClick, onInput, onFocus, onBlur, onSubmit])
+  }, [el, onClick, onInput, onFocus, onBlur, onSubmit, onKeydown])
 }

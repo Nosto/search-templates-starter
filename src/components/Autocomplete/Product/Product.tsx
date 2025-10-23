@@ -15,7 +15,7 @@ export default function Product({ hit }: Props) {
   }
 
   return (
-    <a data-autocomplete-item  href={hit.url} className={style.wrapper}>
+    <a data-autocomplete-item href={hit.url} className={style.wrapper}>
       <AutocompleteElement
         key={hit.productId}
         hit={{
