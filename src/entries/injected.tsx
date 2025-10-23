@@ -60,14 +60,12 @@ function Autocomplete({ onSubmit }: Props) {
   const { addQuery } = useHistory()
 
   const onSearchSubmit = (query: string) => {
-    if (!query.trim()) {
-      return
+    if (query.trim()) {
+      addQuery(query)
+      searchInput.value = query
+      onSubmit(query)
     }
-
-    addQuery(query)
-    searchInput.value = query
     searchInput.blur()
-    onSubmit(query)
     setShowAutocomplete(false)
   }
 
