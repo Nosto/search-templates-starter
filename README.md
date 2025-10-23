@@ -37,6 +37,9 @@ Ensure you have the following installed:
    git clone https://github.com/nosto/search-templates-starter.git
    cd search-templates-starter
    ```
+
+    As the Starter is a template repo, you can also utilize the `Use this template` functionality available on Github at the top of this page to make your own clone first.
+
 2. Install dependencies:
 
     ```sh
