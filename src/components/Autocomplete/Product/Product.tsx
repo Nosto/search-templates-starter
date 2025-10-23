@@ -19,8 +19,7 @@ export default function Product({ hit }: Props) {
       componentProps={{
         "aria-label": `Product ${hit.name}`,
         className: style.container,
-        href: hit.url,
-        ...({ "data-roving-focus-item": "true" } as Record<string, unknown>)
+        href: hit.url
       }}
     >
       <img className={style.image} src={hit.imageUrl} alt={hit.name} />

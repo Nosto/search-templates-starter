@@ -14,7 +14,7 @@ export type UseRovingFocusResult = {
 
 export function useRovingFocus(
   parentElementRef: { current: HTMLElement | null },
-  selector: string = "[data-roving-focus-item]"
+  selector: string = ".ns-autocomplete-element"
 ): UseRovingFocusResult {
   const [focusedIndex, setFocusedIndex] = useState(0)
   const [parentElement, setParentElement] = useState<HTMLElement | null>(null)

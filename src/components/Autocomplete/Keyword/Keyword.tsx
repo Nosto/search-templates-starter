@@ -20,8 +20,7 @@ export default function Keyword({ keyword, onSubmit }: KeywordProps) {
           } else {
             onSubmit(keyword.keyword)
           }
-        },
-        ...({ "data-roving-focus-item": "true" } as Record<string, unknown>)
+        }
       }}
     >
       {keyword?._highlight?.keyword ? (
