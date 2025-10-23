@@ -41,10 +41,10 @@ export default function Autocomplete({ onSubmit }: Props) {
     if (query.trim()) {
       addQuery(query)
       setInput(query.trim())
-      searchInputRef.current!.blur()
       onSubmit(query)
-      setShowAutocomplete(false)
     }
+    searchInputRef.current!.blur()
+    setShowAutocomplete(false)
   }
 
   return (
