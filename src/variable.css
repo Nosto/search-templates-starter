@@ -70,7 +70,7 @@
 
   /* WIDTH */
   --ns-max-width-search-template: 1500px;
-  --ns-max-width-autocomplete: 1250px;
+  --ns-max-width-autocomplete: 900px;
   --ns-width-mobile-sidebar: 400px;
   --ns-width-mobile-close-sidebar: 38px;
   --ns-width-icon: 12px;

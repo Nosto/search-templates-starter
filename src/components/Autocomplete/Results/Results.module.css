@@ -68,7 +68,29 @@
   gap: var(--ns-space-2);
   margin-bottom: var(--ns-space-2);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-template-columns: repeat(2, minmax(100px, 1fr));
+  grid-template-rows: repeat(2, auto);
+}
+
+.products > :nth-child(n+5) {
+  display: none;
+}
+
+@media only screen and (min-width: 768px) {
+  .products {
+    grid-template-columns: repeat(4, minmax(100px, 1fr));
+    grid-template-rows: auto;
+  }
+}
+
+@media only screen and (min-width: 1201px) {
+  .products {
+    grid-template-columns: repeat(5, minmax(100px, 1fr));
+  }
+
+  .products > :nth-child(n+5) {
+    display: block;
+  }
 }
 
 .button {
