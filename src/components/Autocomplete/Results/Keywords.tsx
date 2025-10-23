@@ -2,13 +2,16 @@ import { SearchKeywords } from "@nosto/nosto-js/client"
 import Heading from "@/elements/Heading/Heading"
 import Keyword from "@/components/Autocomplete/Keyword/Keyword"
 import style from "./Results.module.css"
+import { UseRovingFocusResult } from "@/hooks/useRovingFocus"
 
 export type KeywordsProps = {
   keywords: SearchKeywords
   onSubmit: (query: string) => void
+  rovingFocus: UseRovingFocusResult
+  startIndex: number
 }
 
-export default function Keywords({ keywords, onSubmit }: KeywordsProps) {
+export default function Keywords({ keywords, onSubmit, rovingFocus, startIndex }: KeywordsProps) {
   if (!keywords?.hits?.length) {
     return null
   }
@@ -18,7 +21,13 @@ export default function Keywords({ keywords, onSubmit }: KeywordsProps) {
       <Heading>Suggestions</Heading>
       <div className={style.keywords}>
         {keywords.hits.map((keyword, index) => (
-          <Keyword key={index} keyword={keyword} onSubmit={onSubmit} />
+          <Keyword
+            key={index}
+            keyword={keyword}
+            onSubmit={onSubmit}
+            rovingFocus={rovingFocus}
+            itemIndex={index + startIndex}
+          />
         ))}
       </div>
     </div>
