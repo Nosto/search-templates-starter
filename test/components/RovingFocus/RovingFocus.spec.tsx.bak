@@ -1,0 +1,66 @@
+import { render } from "@testing-library/preact"
+import { describe, it, expect } from "vitest"
+import { RovingFocusGroup, RovingFocusItem } from "@/components/RovingFocus"
+
+describe("RovingFocus", () => {
+  describe("RovingFocusGroup", () => {
+    it("renders children correctly", () => {
+      const { getByText } = render(
+        <RovingFocusGroup>
+          <div>Child content</div>
+        </RovingFocusGroup>
+      )
+      expect(getByText("Child content")).toBeTruthy()
+    })
+
+    it("applies className when provided", () => {
+      const { container } = render(
+        <RovingFocusGroup className="custom-class">
+          <div>Content</div>
+        </RovingFocusGroup>
+      )
+      expect(container.querySelector(".custom-class")).toBeTruthy()
+    })
+
+    it("sets role='group' on container", () => {
+      const { container } = render(
+        <RovingFocusGroup>
+          <div>Content</div>
+        </RovingFocusGroup>
+      )
+      expect(container.querySelector('[role="group"]')).toBeTruthy()
+    })
+  })
+
+  describe("RovingFocusItem", () => {
+    it("renders children correctly", () => {
+      const { getByText } = render(
+        <RovingFocusGroup>
+          <RovingFocusItem>
+            <span>Item content</span>
+          </RovingFocusItem>
+        </RovingFocusGroup>
+      )
+      expect(getByText("Item content")).toBeTruthy()
+    })
+
+    it("applies className when provided", () => {
+      const { container } = render(
+        <RovingFocusGroup>
+          <RovingFocusItem className="item-class">
+            <span>Item</span>
+          </RovingFocusItem>
+        </RovingFocusGroup>
+      )
+      expect(container.querySelector(".item-class")).toBeTruthy()
+    })
+  })
+
+  describe("Error Handling", () => {
+    it("throws error when RovingFocusItem used outside RovingFocusGroup", () => {
+      expect(() => {
+        render(<RovingFocusItem>Item</RovingFocusItem>)
+      }).toThrow("useRovingFocus must be used within a RovingFocusGroup")
+    })
+  })
+})
