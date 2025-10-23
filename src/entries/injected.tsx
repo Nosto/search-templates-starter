@@ -18,6 +18,7 @@ import { nostojs } from "@nosto/nosto-js"
 import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import { getInitialQuery } from "@/mapping/url/getInitialQuery"
 import Portal from "@/elements/Portal/Portal"
+import { DropdownProvider, useDropdown } from "@/contexts/DropdownContext"
 
 type Props = {
   onSubmit: (input: string) => void
@@ -26,6 +27,7 @@ type Props = {
 function Autocomplete({ onSubmit }: Props) {
   const [input, setInput] = useState<string>(getInitialQuery())
   const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false)
+  const { setHighlightedIndex, highlightedIndex  } = useDropdown()
 
   const dropdownElement = document.querySelector<HTMLElement>(selectors.dropdown)!
   const searchInput = document.querySelector<HTMLInputElement>(selectors.searchInput)!
@@ -54,7 +56,17 @@ function Autocomplete({ onSubmit }: Props) {
 
   useDomEvents(searchInput, {
     onInput: () => setInput(searchInput.value),
-    onFocus: () => setShowAutocomplete(true)
+    onFocus: () => setShowAutocomplete(true),
+    onKeydown: (event) => {
+      if (event.key === "ArrowDown") {
+        event.preventDefault()
+        setHighlightedIndex(highlightedIndex + 1)
+      }
+      if (event.key === "ArrowUp") {
+        event.preventDefault()
+        setHighlightedIndex(highlightedIndex - 1)
+      }
+    }
   })
 
   const { addQuery } = useHistory()
@@ -96,11 +108,13 @@ function SerpApp() {
     <ErrorBoundary>
       <SearchQueryHandler />
       <SidebarProvider>
-        <AutocompletePageProvider config={autocompleteConfig}>
-          <Portal target={selectors.dropdown}>
-            <Autocomplete onSubmit={onSubmit} />
-          </Portal>
-        </AutocompletePageProvider>
+        <DropdownProvider>
+          <AutocompletePageProvider config={autocompleteConfig}>
+            <Portal target={selectors.dropdown}>
+              <Autocomplete onSubmit={onSubmit} />
+            </Portal>
+          </AutocompletePageProvider>
+        </DropdownProvider>
         <Portal target={selectors.results}>
           <Serp />
         </Portal>
