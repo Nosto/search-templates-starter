@@ -170,8 +170,9 @@ Native compatibility with the Nosto CLI is achieved through the use of `nosto.co
 If this file is not present, the CLI will not recognize your repository as a valid starter-based repository. The commands themselves are open for customization or extension as long as they adhere to the expected contract. You can refer to the `nosto.config.ts` file for more detailed description of what is expected.
 
 ## Resources
-- [Search-js docs](https://docs.nosto.com/techdocs/apis/frontend/oss/search-js)
-- [Nosto-js docs](https://docs.nosto.com/techdocs/apis/frontend/oss/nosto-js)
+- [TechDocs: @nosto/search-js](https://docs.nosto.com/techdocs/apis/frontend/oss/search-js)
+- [TechDocs: @nosto/nosto-js](https://docs.nosto.com/techdocs/apis/frontend/oss/nosto-js)
+- [TechDocs: @nosto/nosto-cli](https://docs.nosto.com/techdocs/implementing-nosto/implement-search/implement-search-using-code-editor/using-nosto-cli)
 
 ## Starter and the VSCode Web
 
