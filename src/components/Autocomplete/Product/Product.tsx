@@ -2,19 +2,12 @@ import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
 import style from "./Product.module.css"
 import type { Product } from "@/types"
 import DynamicCard from "@/elements/DynamicCard/DynamicCard"
-import { useCallback } from "preact/hooks"
 
 type Props = {
   hit: Product
 }
 
 export default function Product({ hit }: Props) {
-  const handleSelect = useCallback(() => {
-    if (hit.url) {
-      window.location.href = hit.url
-    }
-  }, [hit.url])
-
   return (
     <AutocompleteElement
       key={hit.productId}
@@ -27,7 +20,6 @@ export default function Product({ hit }: Props) {
         "aria-label": `Product ${hit.name}`,
         className: style.container,
         href: hit.url,
-        onClick: handleSelect,
         ...({ "data-roving-focus-item": "true" } as Record<string, unknown>)
       }}
     >

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "preact/hooks"
+import { useCallback, useEffect, useState } from "preact/hooks"
 
 const keyToDirection: Record<string, "up" | "down" | "left" | "right"> = {
   ArrowDown: "down",
@@ -7,30 +7,22 @@ const keyToDirection: Record<string, "up" | "down" | "left" | "right"> = {
   ArrowRight: "right"
 }
 
-export type RovingFocusConfig = {
-  parentElement: HTMLElement
-  selector: string
-}
-
 export type UseRovingFocusResult = {
   focusedIndex: number
   setFocusedIndex: (index: number) => void
-  setConfig: (config: RovingFocusConfig) => void
 }
 
-export function useRovingFocus(): UseRovingFocusResult {
+export function useRovingFocus(
+  parentElement: HTMLElement | null,
+  selector: string = "[data-roving-focus-item]"
+): UseRovingFocusResult {
   const [focusedIndex, setFocusedIndex] = useState(0)
-  const configRef = useRef<RovingFocusConfig | null>(null)
-
-  const setConfig = useCallback((config: RovingFocusConfig) => {
-    configRef.current = config
-  }, [])
 
   const getFocusableElements = useCallback((): HTMLElement[] => {
-    if (!configRef.current) return []
-    const elements = configRef.current.parentElement.querySelectorAll(configRef.current.selector)
+    if (!parentElement) return []
+    const elements = parentElement.querySelectorAll(selector)
     return Array.from(elements) as HTMLElement[]
-  }, [])
+  }, [parentElement, selector])
 
   const getCurrentFocusedIndex = useCallback((): number => {
     const elements = getFocusableElements()
@@ -85,9 +77,8 @@ export function useRovingFocus(): UseRovingFocusResult {
   }, [getFocusableElements, focusedIndex])
 
   const setupEventListeners = useCallback(() => {
-    if (!configRef.current) return
+    if (!parentElement) return
 
-    const parentElement = configRef.current.parentElement
     const handleParentKeyDown = (event: KeyboardEvent) => {
       // Only handle if the event target is a focusable element
       const elements = getFocusableElements()
@@ -101,16 +92,16 @@ export function useRovingFocus(): UseRovingFocusResult {
     return () => {
       parentElement.removeEventListener("keydown", handleParentKeyDown)
     }
-  }, [handleKeyDown, getFocusableElements])
+  }, [parentElement, handleKeyDown, getFocusableElements])
 
   // Update tab indices whenever focused index changes or elements change
   useEffect(() => {
     updateTabIndices()
   }, [updateTabIndices])
 
-  // Setup event listeners when config changes
+  // Setup event listeners when parent element changes
   useEffect(() => {
-    if (!configRef.current) return
+    if (!parentElement) return
 
     const cleanup = setupEventListeners()
     updateTabIndices()
@@ -120,7 +111,7 @@ export function useRovingFocus(): UseRovingFocusResult {
       updateTabIndices()
     })
 
-    observer.observe(configRef.current.parentElement, {
+    observer.observe(parentElement, {
       childList: true,
       subtree: true
     })
@@ -129,11 +120,10 @@ export function useRovingFocus(): UseRovingFocusResult {
       cleanup?.()
       observer.disconnect()
     }
-  }, [setupEventListeners, updateTabIndices])
+  }, [parentElement, setupEventListeners, updateTabIndices])
 
   return {
     focusedIndex,
-    setFocusedIndex,
-    setConfig
+    setFocusedIndex
   }
 }

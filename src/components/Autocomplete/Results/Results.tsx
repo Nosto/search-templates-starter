@@ -4,7 +4,7 @@ import Keywords from "./Keywords"
 import Products from "./Products"
 import { History } from "./History"
 import { useRovingFocus } from "@/hooks/useRovingFocus"
-import { useEffect, useRef } from "preact/hooks"
+import { useRef } from "preact/hooks"
 
 type ResultsProps = {
   onSubmit: (query: string) => void
@@ -13,21 +13,11 @@ type ResultsProps = {
 export default function Results({ onSubmit }: ResultsProps) {
   const { keywords, products } = useResponse()
   const historyItems = useNostoAppState(state => state.historyItems)
-  const { setConfig } = useRovingFocus()
   const containerRef = useRef<HTMLDivElement>(null)
+  useRovingFocus(containerRef.current, "[data-roving-focus-item]")
 
   const hasResults = !!(keywords?.hits?.length || products?.hits?.length)
   const hasHistory = !!historyItems?.length
-
-  // Configure roving focus when container is available
-  useEffect(() => {
-    if (containerRef.current) {
-      setConfig({
-        parentElement: containerRef.current,
-        selector: "[data-roving-focus-item]"
-      })
-    }
-  }, [setConfig, hasResults, hasHistory])
 
   if (!hasResults && !hasHistory) {
     return null
