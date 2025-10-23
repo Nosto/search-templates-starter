@@ -3,7 +3,10 @@
 This project is a starter template for building Nosto search integrations using [`@nosto/search-js`](https://www.npmjs.com/package/@nosto/search-js) and [`preact`](https://preactjs.com/). It provides a foundation to kickstart development for the Nosto platform with pre-configured components, styles, and utilities for creating search experiences.
 
 > **Note:**
-> Launched in Q4 2025, Search Templates Starter is currently in Beta. We are actively listening for feedback and bug reports. Do expect bugs.
+> 
+> Launched in Q4 2025, Search Templates Starter is currently in Beta.
+> 
+> We are actively listening for feedback and bug reports. Do expect bugs.
 
 # About Nosto
 
@@ -16,7 +19,9 @@ If you wish to know more about our tech stack, we publish extensive documentatio
 Search Templates Starter is a template repository, meaning that you're expected to create your own clone or fork of the repository and update it to match your store and style. As the name suggests, it's a starter kit to kickstart your development. You are free to customize every aspect of this template to suit your needs.
 
 > **Note:**
+> 
 > Nosto is not responsible for any issues introduced during development involving Search Templates Starter. In case you encounter problems, we kindly ask you to ensure the issue in question is reproducible in the default state of this repository, using the latest `main` branch, or with the minimal changes from your side.
+> 
 > For those cases, feel free to open an issue or contact Nosto support, including reproduction steps if possible.
 
 ## Prerequisites
@@ -83,7 +88,9 @@ VITE_MERCHANT_ID=merchant-id
 For best development experience, we recommend using the local Vite dev server for most of your development. If you wish to instead see the templates right in your store, see the **Developing Live** section below.
 
 > Note:
-> The merchant ID is your Nosto account ID that you can find in Nosto Admin. For example, most Shopify accounts will have an ID that looks like `shopify-12345678`.
+> The merchant ID is your Nosto account ID that you can find in Nosto Admin. 
+> 
+> For example, most Shopify accounts will have an ID that looks like `shopify-12345678`.
 
 ### Useful commands
 
