@@ -20,8 +20,9 @@
 .dropdown > .anchor .icon {
   right: var(--ns-space-16);
   display: block;
-  top: var(--ns-space-16);
   position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .dropdown.active .menu {
