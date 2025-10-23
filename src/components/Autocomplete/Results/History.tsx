@@ -7,10 +7,9 @@ import { UseRovingFocusResult } from "@/hooks/useRovingFocus"
 export type HistoryProps = {
   onSubmit: (query: string) => void
   rovingFocus: UseRovingFocusResult
-  startIndex: number
 }
 
-export function History({ onSubmit, rovingFocus, startIndex }: HistoryProps) {
+export function History({ onSubmit, rovingFocus }: HistoryProps) {
   const historyItems = useNostoAppState(state => state.historyItems)
 
   if (!historyItems) {
@@ -20,15 +19,8 @@ export function History({ onSubmit, rovingFocus, startIndex }: HistoryProps) {
   return (
     <div className={styles.historyColumn}>
       <Heading>Recent searches</Heading>
-      {historyItems.map((item, index) => (
-        <HistoryItem
-          key={item}
-          item={item}
-          onSubmit={onSubmit}
-          highlighted={index + startIndex === rovingFocus.focusedIndex}
-          rovingFocus={rovingFocus}
-          itemIndex={index + startIndex}
-        />
+      {historyItems.map(item => (
+        <HistoryItem key={item} item={item} onSubmit={onSubmit} rovingFocus={rovingFocus} />
       ))}
     </div>
   )

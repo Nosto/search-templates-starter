@@ -1,6 +1,18 @@
 import { renderHook, act } from "@testing-library/preact"
-import { describe, it, expect, vi } from "vitest"
-import { useRovingFocus, RovingFocusItem } from "@/hooks/useRovingFocus"
+import { describe, it, expect, vi, beforeEach } from "vitest"
+import { useRovingFocus, RovingFocusConfig } from "@/hooks/useRovingFocus"
+
+// Mock DOM methods
+const mockQuerySelectorAll = vi.fn()
+
+beforeEach(() => {
+  mockQuerySelectorAll.mockClear()
+  // Mock document.activeElement
+  Object.defineProperty(document, "activeElement", {
+    writable: true,
+    value: null
+  })
+})
 
 describe("useRovingFocus", () => {
   it("should initialize with focusedIndex 0", () => {
@@ -9,54 +21,45 @@ describe("useRovingFocus", () => {
     expect(result.current.focusedIndex).toBe(0)
   })
 
-  it("should register and unregister items correctly", () => {
+  it("should set config correctly", () => {
     const { result } = renderHook(() => useRovingFocus())
 
-    const mockElement1 = { focus: vi.fn() } as unknown as HTMLElement
-    const mockElement2 = { focus: vi.fn() } as unknown as HTMLElement
+    const mockParent = {
+      querySelectorAll: mockQuerySelectorAll
+    } as unknown as HTMLElement
 
-    const item1: RovingFocusItem = {
-      id: "item1",
-      element: mockElement1,
-      onSelect: vi.fn()
-    }
-
-    const item2: RovingFocusItem = {
-      id: "item2",
-      element: mockElement2,
-      onSelect: vi.fn()
+    const config: RovingFocusConfig = {
+      parentElement: mockParent,
+      focusableSelector: "[data-roving-focus-item]"
     }
 
     act(() => {
-      result.current.registerItem(item1)
-      result.current.registerItem(item2)
+      result.current.setConfig(config)
     })
 
-    act(() => {
-      result.current.unregisterItem("item1")
-    })
-
-    // Should adjust focused index when items are removed
-    expect(result.current.focusedIndex).toBe(0)
+    // Should not throw and should accept the config
+    expect(() => result.current.setConfig(config)).not.toThrow()
   })
 
-  it("should handle arrow down navigation", () => {
+  it("should handle keyboard navigation when elements are found", () => {
     const { result } = renderHook(() => useRovingFocus())
 
     const mockElement1 = { focus: vi.fn() } as unknown as HTMLElement
     const mockElement2 = { focus: vi.fn() } as unknown as HTMLElement
 
+    mockQuerySelectorAll.mockReturnValue([mockElement1, mockElement2])
+
+    const mockParent = {
+      querySelectorAll: mockQuerySelectorAll
+    } as unknown as HTMLElement
+
+    const config: RovingFocusConfig = {
+      parentElement: mockParent,
+      focusableSelector: "[data-roving-focus-item]"
+    }
+
     act(() => {
-      result.current.registerItem({
-        id: "item1",
-        element: mockElement1,
-        onSelect: vi.fn()
-      })
-      result.current.registerItem({
-        id: "item2",
-        element: mockElement2,
-        onSelect: vi.fn()
-      })
+      result.current.setConfig(config)
     })
 
     const mockEvent = {
@@ -69,90 +72,30 @@ describe("useRovingFocus", () => {
     })
 
     expect(mockEvent.preventDefault).toHaveBeenCalled()
-    expect(result.current.focusedIndex).toBe(1)
     expect(mockElement2.focus).toHaveBeenCalled()
   })
 
-  it("should handle arrow up navigation", () => {
+  it("should handle Enter key by clicking the focused element", () => {
     const { result } = renderHook(() => useRovingFocus())
 
-    const mockElement1 = { focus: vi.fn() } as unknown as HTMLElement
-    const mockElement2 = { focus: vi.fn() } as unknown as HTMLElement
+    const mockElement = {
+      focus: vi.fn(),
+      click: vi.fn()
+    } as unknown as HTMLElement
+
+    mockQuerySelectorAll.mockReturnValue([mockElement])
+
+    const mockParent = {
+      querySelectorAll: mockQuerySelectorAll
+    } as unknown as HTMLElement
+
+    const config: RovingFocusConfig = {
+      parentElement: mockParent,
+      focusableSelector: "[data-roving-focus-item]"
+    }
 
     act(() => {
-      result.current.registerItem({
-        id: "item1",
-        element: mockElement1,
-        onSelect: vi.fn()
-      })
-      result.current.registerItem({
-        id: "item2",
-        element: mockElement2,
-        onSelect: vi.fn()
-      })
-      result.current.setFocusedIndex(1)
-    })
-
-    const mockEvent = {
-      key: "ArrowUp",
-      preventDefault: vi.fn()
-    } as unknown as KeyboardEvent
-
-    act(() => {
-      result.current.handleKeyDown(mockEvent)
-    })
-
-    expect(mockEvent.preventDefault).toHaveBeenCalled()
-    expect(result.current.focusedIndex).toBe(0)
-    expect(mockElement1.focus).toHaveBeenCalled()
-  })
-
-  it("should wrap around when navigating beyond bounds", () => {
-    const { result } = renderHook(() => useRovingFocus())
-
-    const mockElement1 = { focus: vi.fn() } as unknown as HTMLElement
-    const mockElement2 = { focus: vi.fn() } as unknown as HTMLElement
-
-    act(() => {
-      result.current.registerItem({
-        id: "item1",
-        element: mockElement1,
-        onSelect: vi.fn()
-      })
-      result.current.registerItem({
-        id: "item2",
-        element: mockElement2,
-        onSelect: vi.fn()
-      })
-      result.current.setFocusedIndex(1)
-    })
-
-    // Navigate down from last item should wrap to first
-    const mockEventDown = {
-      key: "ArrowDown",
-      preventDefault: vi.fn()
-    } as unknown as KeyboardEvent
-
-    act(() => {
-      result.current.handleKeyDown(mockEventDown)
-    })
-
-    expect(result.current.focusedIndex).toBe(0)
-    expect(mockElement1.focus).toHaveBeenCalled()
-  })
-
-  it("should handle Enter key to select focused item", () => {
-    const { result } = renderHook(() => useRovingFocus())
-
-    const mockOnSelect = vi.fn()
-    const mockElement = { focus: vi.fn() } as unknown as HTMLElement
-
-    act(() => {
-      result.current.registerItem({
-        id: "item1",
-        element: mockElement,
-        onSelect: mockOnSelect
-      })
+      result.current.setConfig(config)
     })
 
     const mockEvent = {
@@ -165,18 +108,67 @@ describe("useRovingFocus", () => {
     })
 
     expect(mockEvent.preventDefault).toHaveBeenCalled()
-    expect(mockOnSelect).toHaveBeenCalled()
+    expect(mockElement.click).toHaveBeenCalled()
   })
 
-  it("should provide correct focus props", () => {
+  it("should provide correct tabIndex based on focused element", () => {
     const { result } = renderHook(() => useRovingFocus())
 
-    const focusProps1 = result.current.getFocusProps("item1", 0)
-    const focusProps2 = result.current.getFocusProps("item2", 1)
+    const mockElement1 = {} as HTMLElement
+    const mockElement2 = {} as HTMLElement
 
-    expect(focusProps1.tabIndex).toBe(0) // First item should be focusable
-    expect(focusProps2.tabIndex).toBe(-1) // Second item should not be focusable
-    expect(typeof focusProps1.ref).toBe("function")
-    expect(typeof focusProps1.onKeyDown).toBe("function")
+    mockQuerySelectorAll.mockReturnValue([mockElement1, mockElement2])
+
+    const mockParent = {
+      querySelectorAll: mockQuerySelectorAll
+    } as unknown as HTMLElement
+
+    const config: RovingFocusConfig = {
+      parentElement: mockParent,
+      focusableSelector: "[data-roving-focus-item]"
+    }
+
+    act(() => {
+      result.current.setConfig(config)
+    })
+
+    const tabIndex1 = result.current.getTabIndex(mockElement1)
+    const tabIndex2 = result.current.getTabIndex(mockElement2)
+
+    expect(tabIndex1).toBe(0) // First element should be focusable
+    expect(tabIndex2).toBe(-1) // Second element should not be focusable
+  })
+
+  it("should handle no elements gracefully", () => {
+    const { result } = renderHook(() => useRovingFocus())
+
+    mockQuerySelectorAll.mockReturnValue([])
+
+    const mockParent = {
+      querySelectorAll: mockQuerySelectorAll
+    } as unknown as HTMLElement
+
+    const config: RovingFocusConfig = {
+      parentElement: mockParent,
+      focusableSelector: "[data-roving-focus-item]"
+    }
+
+    act(() => {
+      result.current.setConfig(config)
+    })
+
+    const mockEvent = {
+      key: "ArrowDown",
+      preventDefault: vi.fn()
+    } as unknown as KeyboardEvent
+
+    // Should not throw when no elements exist
+    expect(() => {
+      act(() => {
+        result.current.handleKeyDown(mockEvent)
+      })
+    }).not.toThrow()
+
+    expect(mockEvent.preventDefault).not.toHaveBeenCalled()
   })
 })

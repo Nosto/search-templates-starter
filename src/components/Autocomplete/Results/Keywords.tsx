@@ -8,10 +8,9 @@ export type KeywordsProps = {
   keywords: SearchKeywords
   onSubmit: (query: string) => void
   rovingFocus: UseRovingFocusResult
-  startIndex: number
 }
 
-export default function Keywords({ keywords, onSubmit, rovingFocus, startIndex }: KeywordsProps) {
+export default function Keywords({ keywords, onSubmit, rovingFocus }: KeywordsProps) {
   if (!keywords?.hits?.length) {
     return null
   }
@@ -21,13 +20,7 @@ export default function Keywords({ keywords, onSubmit, rovingFocus, startIndex }
       <Heading>Suggestions</Heading>
       <div className={style.keywords}>
         {keywords.hits.map((keyword, index) => (
-          <Keyword
-            key={index}
-            keyword={keyword}
-            onSubmit={onSubmit}
-            rovingFocus={rovingFocus}
-            itemIndex={index + startIndex}
-          />
+          <Keyword key={index} keyword={keyword} onSubmit={onSubmit} rovingFocus={rovingFocus} />
         ))}
       </div>
     </div>

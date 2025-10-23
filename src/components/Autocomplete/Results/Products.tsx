@@ -8,10 +8,9 @@ import { UseRovingFocusResult } from "@/hooks/useRovingFocus"
 export type ProductsProps = {
   products: SearchProducts
   rovingFocus: UseRovingFocusResult
-  startIndex: number
 }
 
-export default function Products({ products, rovingFocus, startIndex }: ProductsProps) {
+export default function Products({ products, rovingFocus }: ProductsProps) {
   if (!products?.hits?.length) {
     return null
   }
@@ -20,8 +19,8 @@ export default function Products({ products, rovingFocus, startIndex }: Products
     <div className={style.productsColumn}>
       <Heading>Products</Heading>
       <div className={style.products}>
-        {products.hits.map((hit, index) => (
-          <Product key={hit.productId} hit={hit} rovingFocus={rovingFocus} itemIndex={index + startIndex} />
+        {products.hits.map(hit => (
+          <Product key={hit.productId} hit={hit} rovingFocus={rovingFocus} />
         ))}
       </div>
       <div className={style.button}>

@@ -3,34 +3,21 @@ import style from "./Product.module.css"
 import type { Product } from "@/types"
 import DynamicCard from "@/elements/DynamicCard/DynamicCard"
 import { UseRovingFocusResult } from "@/hooks/useRovingFocus"
-import { useEffect, useCallback } from "preact/hooks"
+import { useCallback, useRef } from "preact/hooks"
 
 type Props = {
   hit: Product
   rovingFocus?: UseRovingFocusResult
-  itemIndex?: number
 }
 
-export default function Product({ hit, rovingFocus, itemIndex }: Props) {
-  const focusProps =
-    rovingFocus && itemIndex !== undefined ? rovingFocus.getFocusProps(`product-${hit.productId}`, itemIndex) : {}
+export default function Product({ hit, rovingFocus }: Props) {
+  const elementRef = useRef<HTMLAnchorElement>(null)
 
   const handleSelect = useCallback(() => {
     if (hit.url) {
       window.location.href = hit.url
     }
   }, [hit.url])
-
-  // Set the onSelect callback when the component mounts/updates
-  useEffect(() => {
-    if (rovingFocus && itemIndex !== undefined) {
-      rovingFocus.registerItem({
-        id: `product-${hit.productId}`,
-        element: null as unknown as HTMLElement, // Will be set by ref
-        onSelect: handleSelect
-      })
-    }
-  }, [hit.productId, rovingFocus, itemIndex, handleSelect])
 
   return (
     <AutocompleteElement
@@ -44,7 +31,18 @@ export default function Product({ hit, rovingFocus, itemIndex }: Props) {
         "aria-label": `Product ${hit.name}`,
         className: style.container,
         href: hit.url,
-        ...focusProps
+        tabIndex: rovingFocus && elementRef.current ? rovingFocus.getTabIndex(elementRef.current) : -1,
+        ref: elementRef,
+        onClick: handleSelect,
+        onKeyDown: (e: KeyboardEvent) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault()
+            handleSelect()
+          } else if (rovingFocus) {
+            rovingFocus.handleKeyDown(e)
+          }
+        },
+        ...({ "data-roving-focus-item": "true" } as Record<string, unknown>)
       }}
     >
       <img className={style.image} src={hit.imageUrl} alt={hit.name} />

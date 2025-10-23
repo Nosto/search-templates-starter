@@ -1,69 +1,63 @@
-import { useCallback, useEffect, useRef, useState } from "preact/hooks"
+import { useCallback, useRef, useState } from "preact/hooks"
 
-export type RovingFocusItem = {
-  id: string
-  element: HTMLElement
-  onSelect?: () => void
+export type RovingFocusConfig = {
+  parentElement: HTMLElement
+  focusableSelector: string
 }
 
 export type UseRovingFocusResult = {
   focusedIndex: number
   setFocusedIndex: (index: number) => void
-  registerItem: (item: RovingFocusItem) => void
-  unregisterItem: (id: string) => void
   handleKeyDown: (event: KeyboardEvent) => void
-  getFocusProps: (
-    id: string,
-    index: number
-  ) => {
-    tabIndex: number
-    ref: (el: HTMLElement | null) => void
-    onKeyDown: (event: KeyboardEvent) => void
-  }
+  getTabIndex: (element: HTMLElement) => number
+  setConfig: (config: RovingFocusConfig) => void
 }
 
 export function useRovingFocus(): UseRovingFocusResult {
   const [focusedIndex, setFocusedIndex] = useState(0)
-  const itemsRef = useRef<RovingFocusItem[]>([])
+  const configRef = useRef<RovingFocusConfig | null>(null)
 
-  const registerItem = useCallback((item: RovingFocusItem) => {
-    itemsRef.current = [...itemsRef.current, item]
+  const setConfig = useCallback((config: RovingFocusConfig) => {
+    configRef.current = config
   }, [])
 
-  const unregisterItem = useCallback(
-    (id: string) => {
-      itemsRef.current = itemsRef.current.filter(item => item.id !== id)
-      // Adjust focused index if needed
-      if (focusedIndex >= itemsRef.current.length && itemsRef.current.length > 0) {
-        setFocusedIndex(itemsRef.current.length - 1)
-      }
-    },
-    [focusedIndex]
-  )
+  const getFocusableElements = useCallback((): HTMLElement[] => {
+    if (!configRef.current) return []
+    const elements = configRef.current.parentElement.querySelectorAll(configRef.current.focusableSelector)
+    return Array.from(elements) as HTMLElement[]
+  }, [])
+
+  const getCurrentFocusedIndex = useCallback((): number => {
+    const elements = getFocusableElements()
+    const activeElement = document.activeElement as HTMLElement
+    const index = elements.findIndex(el => el === activeElement)
+    return index >= 0 ? index : focusedIndex
+  }, [getFocusableElements, focusedIndex])
 
   const moveFocus = useCallback(
     (direction: "up" | "down" | "left" | "right") => {
-      const items = itemsRef.current
-      if (items.length === 0) return
+      const elements = getFocusableElements()
+      if (elements.length === 0) return
 
-      let newIndex = focusedIndex
+      const currentIndex = getCurrentFocusedIndex()
+      let newIndex = currentIndex
 
       if (direction === "up" || direction === "left") {
-        newIndex = focusedIndex === 0 ? items.length - 1 : focusedIndex - 1
+        newIndex = currentIndex === 0 ? elements.length - 1 : currentIndex - 1
       } else if (direction === "down" || direction === "right") {
-        newIndex = focusedIndex === items.length - 1 ? 0 : focusedIndex + 1
+        newIndex = currentIndex === elements.length - 1 ? 0 : currentIndex + 1
       }
 
       setFocusedIndex(newIndex)
-      items[newIndex]?.element?.focus()
+      elements[newIndex]?.focus()
     },
-    [focusedIndex]
+    [getFocusableElements, getCurrentFocusedIndex]
   )
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
-      const items = itemsRef.current
-      if (items.length === 0) return
+      const elements = getFocusableElements()
+      if (elements.length === 0) return
 
       switch (event.key) {
         case "ArrowDown":
@@ -84,54 +78,28 @@ export function useRovingFocus(): UseRovingFocusResult {
           break
         case "Enter":
           event.preventDefault()
-          items[focusedIndex]?.onSelect?.()
+          const currentIndex = getCurrentFocusedIndex()
+          elements[currentIndex]?.click()
           break
       }
     },
-    [focusedIndex, moveFocus]
+    [moveFocus, getFocusableElements, getCurrentFocusedIndex]
   )
 
-  const getFocusProps = useCallback(
-    (id: string, index: number) => {
-      return {
-        tabIndex: index === focusedIndex ? 0 : -1,
-        ref: (el: HTMLElement | null) => {
-          if (el) {
-            const existingIndex = itemsRef.current.findIndex(item => item.id === id)
-            const item: RovingFocusItem = {
-              id,
-              element: el,
-              onSelect: undefined // Will be set when needed
-            }
-
-            if (existingIndex >= 0) {
-              itemsRef.current[existingIndex] = item
-            } else {
-              registerItem(item)
-            }
-          } else {
-            unregisterItem(id)
-          }
-        },
-        onKeyDown: handleKeyDown
-      }
+  const getTabIndex = useCallback(
+    (element: HTMLElement) => {
+      const elements = getFocusableElements()
+      const index = elements.findIndex(el => el === element)
+      return index === focusedIndex ? 0 : -1
     },
-    [focusedIndex, registerItem, unregisterItem, handleKeyDown]
+    [focusedIndex, getFocusableElements]
   )
-
-  // Reset focus index when items change significantly
-  useEffect(() => {
-    if (itemsRef.current.length > 0 && focusedIndex >= itemsRef.current.length) {
-      setFocusedIndex(0)
-    }
-  }, [focusedIndex])
 
   return {
     focusedIndex,
     setFocusedIndex,
-    registerItem,
-    unregisterItem,
     handleKeyDown,
-    getFocusProps
+    getTabIndex,
+    setConfig
   }
 }
