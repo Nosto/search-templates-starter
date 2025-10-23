@@ -56,7 +56,7 @@ export function useAutocomplete({
       if (query.trim()) {
         addQuery(query)
         if (isInjected && searchInputElement) {
-          searchInputElement.value = query
+          searchInputElement.value = query.trim()
         } else {
           setInput(query.trim())
         }
