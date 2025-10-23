@@ -1,8 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from "preact/hooks"
 
+const keyToDirection: Record<string, "up" | "down" | "left" | "right"> = {
+  ArrowDown: "down",
+  ArrowUp: "up",
+  ArrowLeft: "left",
+  ArrowRight: "right"
+}
+
 export type RovingFocusConfig = {
   parentElement: HTMLElement
-  focusableSelector: string
+  selector: string
 }
 
 export type UseRovingFocusResult = {
@@ -21,7 +28,7 @@ export function useRovingFocus(): UseRovingFocusResult {
 
   const getFocusableElements = useCallback((): HTMLElement[] => {
     if (!configRef.current) return []
-    const elements = configRef.current.parentElement.querySelectorAll(configRef.current.focusableSelector)
+    const elements = configRef.current.parentElement.querySelectorAll(configRef.current.selector)
     return Array.from(elements) as HTMLElement[]
   }, [])
 
@@ -56,13 +63,6 @@ export function useRovingFocus(): UseRovingFocusResult {
     (event: KeyboardEvent) => {
       const elements = getFocusableElements()
       if (elements.length === 0) return
-
-      const keyToDirection: Record<string, "up" | "down" | "left" | "right"> = {
-        ArrowDown: "down",
-        ArrowUp: "up",
-        ArrowLeft: "left",
-        ArrowRight: "right"
-      }
 
       const direction = keyToDirection[event.key]
       if (direction) {

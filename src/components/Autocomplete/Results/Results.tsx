@@ -13,7 +13,7 @@ type ResultsProps = {
 export default function Results({ onSubmit }: ResultsProps) {
   const { keywords, products } = useResponse()
   const historyItems = useNostoAppState(state => state.historyItems)
-  const rovingFocus = useRovingFocus()
+  const { setConfig } = useRovingFocus()
   const containerRef = useRef<HTMLDivElement>(null)
 
   const hasResults = !!(keywords?.hits?.length || products?.hits?.length)
@@ -22,12 +22,12 @@ export default function Results({ onSubmit }: ResultsProps) {
   // Configure roving focus when container is available
   useEffect(() => {
     if (containerRef.current) {
-      rovingFocus.setConfig({
+      setConfig({
         parentElement: containerRef.current,
-        focusableSelector: "[data-roving-focus-item]"
+        selector: "[data-roving-focus-item]"
       })
     }
-  }, [rovingFocus, hasResults, hasHistory])
+  }, [setConfig, hasResults, hasHistory])
 
   if (!hasResults && !hasHistory) {
     return null

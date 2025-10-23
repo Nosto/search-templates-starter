@@ -9,11 +9,11 @@ type HistoryItemProps = {
 }
 
 export function HistoryItem({ item, onSubmit }: HistoryItemProps) {
-  const [highlighted, setHighlighted] = useState(false)
+  const [focused, setFocused] = useState(false)
 
   useEffect(() => {
     const handleFocusChange = () => {
-      setHighlighted(document.activeElement?.getAttribute("data-roving-focus-item") === "true")
+      setFocused(document.activeElement?.getAttribute("data-roving-focus-item") === "true")
     }
 
     document.addEventListener("focusin", handleFocusChange)
@@ -28,7 +28,7 @@ export function HistoryItem({ item, onSubmit }: HistoryItemProps) {
   return (
     <HistoryElement key={item} onSubmit={() => onSubmit(item)}>
       <div
-        className={cl(styles.container, highlighted && styles.highlighted)}
+        className={cl(styles.container, focused && styles.highlighted)}
         data-roving-focus-item="true"
         role="button"
         tabIndex={0}
