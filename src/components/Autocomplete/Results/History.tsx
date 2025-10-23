@@ -1,6 +1,8 @@
 import { useNostoAppState } from "@nosto/search-js/preact/hooks"
 import { HistoryItem } from "../HistoryItem/HistoryItem"
 import Heading from "@/elements/Heading/Heading"
+import { RovingFocusGroup } from "@/components/RovingFocus/RovingFocusGroup"
+import { RovingFocusItem } from "@/components/RovingFocus/RovingFocusItem"
 import styles from "./History.module.css"
 
 export type KeywordsProps = {
@@ -20,9 +22,13 @@ export function History({ onSubmit }: KeywordsProps) {
   return (
     <div className={styles.historyColumn}>
       <Heading>Recent searches</Heading>
-      {historyItems.map((item, index) => (
-        <HistoryItem key={item} item={item} onSubmit={onSubmit} highlighted={index === highlightedElementIndex} />
-      ))}
+      <RovingFocusGroup orientation="vertical" loop={true}>
+        {historyItems.map((item, index) => (
+          <RovingFocusItem key={item}>
+            <HistoryItem item={item} onSubmit={onSubmit} highlighted={index === highlightedElementIndex} />
+          </RovingFocusItem>
+        ))}
+      </RovingFocusGroup>
     </div>
   )
 }
