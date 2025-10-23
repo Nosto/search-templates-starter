@@ -59,28 +59,21 @@ export function useRovingFocus(): UseRovingFocusResult {
       const elements = getFocusableElements()
       if (elements.length === 0) return
 
-      switch (event.key) {
-        case "ArrowDown":
-          event.preventDefault()
-          moveFocus("down")
-          break
-        case "ArrowUp":
-          event.preventDefault()
-          moveFocus("up")
-          break
-        case "ArrowLeft":
-          event.preventDefault()
-          moveFocus("left")
-          break
-        case "ArrowRight":
-          event.preventDefault()
-          moveFocus("right")
-          break
-        case "Enter":
-          event.preventDefault()
-          const currentIndex = getCurrentFocusedIndex()
-          elements[currentIndex]?.click()
-          break
+      const keyToDirection: Record<string, "up" | "down" | "left" | "right"> = {
+        ArrowDown: "down",
+        ArrowUp: "up",
+        ArrowLeft: "left",
+        ArrowRight: "right"
+      }
+
+      const direction = keyToDirection[event.key]
+      if (direction) {
+        event.preventDefault()
+        moveFocus(direction)
+      } else if (event.key === "Enter") {
+        event.preventDefault()
+        const currentIndex = getCurrentFocusedIndex()
+        elements[currentIndex]?.click()
       }
     },
     [moveFocus, getFocusableElements, getCurrentFocusedIndex]
