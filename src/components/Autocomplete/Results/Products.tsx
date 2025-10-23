@@ -3,14 +3,12 @@ import Button from "@/elements/Button/Button"
 import Heading from "@/elements/Heading/Heading"
 import Product from "@/components/Autocomplete/Product/Product"
 import style from "./Results.module.css"
-import { UseRovingFocusResult } from "@/hooks/useRovingFocus"
 
 export type ProductsProps = {
   products: SearchProducts
-  rovingFocus: UseRovingFocusResult
 }
 
-export default function Products({ products, rovingFocus }: ProductsProps) {
+export default function Products({ products }: ProductsProps) {
   if (!products?.hits?.length) {
     return null
   }
@@ -20,7 +18,7 @@ export default function Products({ products, rovingFocus }: ProductsProps) {
       <Heading>Products</Heading>
       <div className={style.products}>
         {products.hits.map(hit => (
-          <Product key={hit.productId} hit={hit} rovingFocus={rovingFocus} />
+          <Product key={hit.productId} hit={hit} />
         ))}
       </div>
       <div className={style.button}>

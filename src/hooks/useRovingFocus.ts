@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "preact/hooks"
+import { useCallback, useEffect, useRef, useState } from "preact/hooks"
 
 export type RovingFocusConfig = {
   parentElement: HTMLElement
@@ -8,8 +8,6 @@ export type RovingFocusConfig = {
 export type UseRovingFocusResult = {
   focusedIndex: number
   setFocusedIndex: (index: number) => void
-  handleKeyDown: (event: KeyboardEvent) => void
-  getTabIndex: (element: HTMLElement) => number
   setConfig: (config: RovingFocusConfig) => void
 }
 
@@ -79,20 +77,63 @@ export function useRovingFocus(): UseRovingFocusResult {
     [moveFocus, getFocusableElements, getCurrentFocusedIndex]
   )
 
-  const getTabIndex = useCallback(
-    (element: HTMLElement) => {
+  const updateTabIndices = useCallback(() => {
+    const elements = getFocusableElements()
+    elements.forEach((element, index) => {
+      element.tabIndex = index === focusedIndex ? 0 : -1
+    })
+  }, [getFocusableElements, focusedIndex])
+
+  const setupEventListeners = useCallback(() => {
+    if (!configRef.current) return
+
+    const parentElement = configRef.current.parentElement
+    const handleParentKeyDown = (event: KeyboardEvent) => {
+      // Only handle if the event target is a focusable element
       const elements = getFocusableElements()
-      const index = elements.findIndex(el => el === element)
-      return index === focusedIndex ? 0 : -1
-    },
-    [focusedIndex, getFocusableElements]
-  )
+      if (elements.includes(event.target as HTMLElement)) {
+        handleKeyDown(event)
+      }
+    }
+
+    parentElement.addEventListener("keydown", handleParentKeyDown)
+
+    return () => {
+      parentElement.removeEventListener("keydown", handleParentKeyDown)
+    }
+  }, [handleKeyDown, getFocusableElements])
+
+  // Update tab indices whenever focused index changes or elements change
+  useEffect(() => {
+    updateTabIndices()
+  }, [updateTabIndices])
+
+  // Setup event listeners when config changes
+  useEffect(() => {
+    if (!configRef.current) return
+
+    const cleanup = setupEventListeners()
+    updateTabIndices()
+
+    // Use MutationObserver to detect when elements are added/removed
+    const observer = new MutationObserver(() => {
+      updateTabIndices()
+    })
+
+    observer.observe(configRef.current.parentElement, {
+      childList: true,
+      subtree: true
+    })
+
+    return () => {
+      cleanup?.()
+      observer.disconnect()
+    }
+  }, [setupEventListeners, updateTabIndices])
 
   return {
     focusedIndex,
     setFocusedIndex,
-    handleKeyDown,
-    getTabIndex,
     setConfig
   }
 }

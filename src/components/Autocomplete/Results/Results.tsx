@@ -38,11 +38,11 @@ export default function Results({ onSubmit }: ResultsProps) {
       <div className={`${style.container} ${style.paddingContainer}`} ref={containerRef}>
         <div className={style.items}>
           <div className={style.section}>
-            {hasHistory && <History onSubmit={onSubmit} rovingFocus={rovingFocus} />}
-            {hasResults && <Keywords keywords={keywords} onSubmit={onSubmit} rovingFocus={rovingFocus} />}
+            {hasHistory && <History onSubmit={onSubmit} />}
+            {hasResults && <Keywords keywords={keywords} onSubmit={onSubmit} />}
           </div>
 
-          {hasResults && <Products products={products} rovingFocus={rovingFocus} />}
+          {hasResults && <Products products={products} />}
         </div>
       </div>
     </div>

@@ -2,17 +2,13 @@ import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
 import style from "./Product.module.css"
 import type { Product } from "@/types"
 import DynamicCard from "@/elements/DynamicCard/DynamicCard"
-import { UseRovingFocusResult } from "@/hooks/useRovingFocus"
-import { useCallback, useRef } from "preact/hooks"
+import { useCallback } from "preact/hooks"
 
 type Props = {
   hit: Product
-  rovingFocus?: UseRovingFocusResult
 }
 
-export default function Product({ hit, rovingFocus }: Props) {
-  const elementRef = useRef<HTMLAnchorElement>(null)
-
+export default function Product({ hit }: Props) {
   const handleSelect = useCallback(() => {
     if (hit.url) {
       window.location.href = hit.url
@@ -31,17 +27,7 @@ export default function Product({ hit, rovingFocus }: Props) {
         "aria-label": `Product ${hit.name}`,
         className: style.container,
         href: hit.url,
-        tabIndex: rovingFocus && elementRef.current ? rovingFocus.getTabIndex(elementRef.current) : -1,
-        ref: elementRef,
         onClick: handleSelect,
-        onKeyDown: (e: KeyboardEvent) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault()
-            handleSelect()
-          } else if (rovingFocus) {
-            rovingFocus.handleKeyDown(e)
-          }
-        },
         ...({ "data-roving-focus-item": "true" } as Record<string, unknown>)
       }}
     >
