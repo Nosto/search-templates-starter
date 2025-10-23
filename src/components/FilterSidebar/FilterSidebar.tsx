@@ -1,4 +1,4 @@
-import { useFacets } from "@nosto/search-js/preact/hooks"
+import { useFacets, useProductFilters } from "@nosto/search-js/preact/hooks"
 import TermsFacet from "./TermsFacet/TermsFacet"
 import RangeFacet from "./RangeFacet/RangeFacet"
 import Icon from "@/elements/Icon/Icon"
@@ -28,6 +28,7 @@ function ToggleSidebarButton({ className, onClick }: ToggleProps = {}) {
 
 export default function FilterSidebar() {
   const { facets } = useFacets()
+  const { filters } = useProductFilters()
   const { isOpen, setOpen } = useFilterSidebar()
 
   const handleBackdropClick = () => {
@@ -74,9 +75,11 @@ export default function FilterSidebar() {
               })}
             </ul>
           </div>
-          <div className={styles.clearFilters}>
-            <ClearFiltersButton />
-          </div>
+          {filters.length ? (
+            <div className={styles.clearFilters}>
+              <ClearFiltersButton />
+            </div>
+          ) : null}
         </div>
       </div>
     </>
