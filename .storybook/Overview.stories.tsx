@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 
 const OverviewComponent = () => {
+  const linkStyles = { color: "#0066cc", textDecoration: "none" }
+
   return (
     <div
       style={{
@@ -31,37 +33,37 @@ const OverviewComponent = () => {
         </p>
         <ul style={{ marginLeft: "1rem", marginBottom: "1rem" }}>
           <li>
-            <a href="?path=/docs/autocomplete-autocomplete--docs" style={{ color: "#0066cc", textDecoration: "none" }}>
+            <a href="?path=/docs/autocomplete-autocomplete--docs" target="_top" style={linkStyles}>
               Autocomplete
             </a>{" "}
             - Main search input with suggestions
           </li>
           <li>
-            <a href="?path=/docs/autocomplete-keyword--docs" style={{ color: "#0066cc", textDecoration: "none" }}>
+            <a href="?path=/docs/autocomplete-keyword--docs" target="_top" style={linkStyles}>
               Keyword
             </a>{" "}
             - Individual search keyword suggestions
           </li>
           <li>
-            <a href="?path=/docs/autocomplete-product--docs" style={{ color: "#0066cc", textDecoration: "none" }}>
+            <a href="?path=/docs/autocomplete-product--docs" target="_top" style={linkStyles}>
               Product
             </a>{" "}
             - Product suggestions in autocomplete
           </li>
           <li>
-            <a href="?path=/docs/autocomplete-keywords--docs" style={{ color: "#0066cc", textDecoration: "none" }}>
+            <a href="?path=/docs/autocomplete-keywords--docs" target="_top" style={linkStyles}>
               Keywords
             </a>{" "}
             - Collection of keyword suggestions
           </li>
           <li>
-            <a href="?path=/docs/autocomplete-products--docs" style={{ color: "#0066cc", textDecoration: "none" }}>
+            <a href="?path=/docs/autocomplete-products--docs" target="_top" style={linkStyles}>
               Products
             </a>{" "}
             - Collection of product suggestions
           </li>
           <li>
-            <a href="?path=/docs/autocomplete-results--docs" style={{ color: "#0066cc", textDecoration: "none" }}>
+            <a href="?path=/docs/autocomplete-results--docs" target="_top" style={linkStyles}>
               Results
             </a>{" "}
             - Autocomplete results container
@@ -74,61 +76,61 @@ const OverviewComponent = () => {
         <p style={{ marginBottom: "1rem", color: "#666" }}>Complete UI components for search interfaces:</p>
         <ul style={{ marginLeft: "1rem", marginBottom: "1rem" }}>
           <li>
-            <a href="?path=/docs/components-bottomtoolbar--docs" style={{ color: "#0066cc", textDecoration: "none" }}>
+            <a href="?path=/docs/components-bottomtoolbar--docs" target="_top" style={linkStyles}>
               BottomToolbar
             </a>{" "}
             - Actions toolbar at bottom of results
           </li>
           <li>
-            <a href="?path=/docs/components-filtersidebar--docs" style={{ color: "#0066cc", textDecoration: "none" }}>
+            <a href="?path=/docs/components-filtersidebar--docs" target="_top" style={linkStyles}>
               FilterSidebar
             </a>{" "}
             - Side navigation for filters and facets
           </li>
           <li>
-            <a href="?path=/docs/components-filtertopbar--docs" style={{ color: "#0066cc", textDecoration: "none" }}>
+            <a href="?path=/docs/components-filtertopbar--docs" target="_top" style={linkStyles}>
               FilterTopbar
             </a>{" "}
             - Top bar with filter controls
           </li>
           <li>
-            <a href="?path=/docs/components-noresults--docs" style={{ color: "#0066cc", textDecoration: "none" }}>
+            <a href="?path=/docs/components-noresults--docs" target="_top" style={linkStyles}>
               NoResults
             </a>{" "}
             - Empty state when no search results found
           </li>
           <li>
-            <a href="?path=/docs/components-pagination--docs" style={{ color: "#0066cc", textDecoration: "none" }}>
+            <a href="?path=/docs/components-pagination--docs" target="_top" style={linkStyles}>
               Pagination
             </a>{" "}
             - Navigate through search result pages
           </li>
           <li>
-            <a href="?path=/docs/components-product--docs" style={{ color: "#0066cc", textDecoration: "none" }}>
+            <a href="?path=/docs/components-product--docs" target="_top" style={linkStyles}>
               Product
             </a>{" "}
             - Individual product display card
           </li>
           <li>
-            <a href="?path=/docs/components-products--docs" style={{ color: "#0066cc", textDecoration: "none" }}>
+            <a href="?path=/docs/components-products--docs" target="_top" style={linkStyles}>
               Products
             </a>{" "}
             - Grid/list of product results
           </li>
           <li>
-            <a href="?path=/docs/components-search--docs" style={{ color: "#0066cc", textDecoration: "none" }}>
+            <a href="?path=/docs/components-search--docs" target="_top" style={linkStyles}>
               Search
             </a>{" "}
             - Main search input component
           </li>
           <li>
-            <a href="?path=/docs/components-selectedfilters--docs" style={{ color: "#0066cc", textDecoration: "none" }}>
+            <a href="?path=/docs/components-selectedfilters--docs" target="_top" style={linkStyles}>
               SelectedFilters
             </a>{" "}
             - Show active filters with remove options
           </li>
           <li>
-            <a href="?path=/docs/components-toolbar--docs" style={{ color: "#0066cc", textDecoration: "none" }}>
+            <a href="?path=/docs/components-toolbar--docs" target="_top" style={linkStyles}>
               Toolbar
             </a>{" "}
             - Top toolbar with sorting and view controls
@@ -141,49 +143,49 @@ const OverviewComponent = () => {
         <p style={{ marginBottom: "1rem", color: "#666" }}>Basic UI elements and form controls:</p>
         <ul style={{ marginLeft: "1rem", marginBottom: "1rem" }}>
           <li>
-            <a href="?path=/docs/elements-button--docs" style={{ color: "#0066cc", textDecoration: "none" }}>
+            <a href="?path=/docs/elements-button--docs" target="_top" style={linkStyles}>
               Button
             </a>{" "}
             - Interactive button component
           </li>
           <li>
-            <a href="?path=/docs/elements-checkbox--docs" style={{ color: "#0066cc", textDecoration: "none" }}>
+            <a href="?path=/docs/elements-checkbox--docs" target="_top" style={linkStyles}>
               Checkbox
             </a>{" "}
             - Form checkbox input
           </li>
           <li>
-            <a href="?path=/docs/elements-dualrange--docs" style={{ color: "#0066cc", textDecoration: "none" }}>
+            <a href="?path=/docs/elements-dualrange--docs" target="_top" style={linkStyles}>
               DualRange
             </a>{" "}
             - Two-handle range slider
           </li>
           <li>
-            <a href="?path=/docs/elements-heading--docs" style={{ color: "#0066cc", textDecoration: "none" }}>
+            <a href="?path=/docs/elements-heading--docs" target="_top" style={linkStyles}>
               Heading
             </a>{" "}
             - Text headings with different levels
           </li>
           <li>
-            <a href="?path=/docs/elements-icon--docs" style={{ color: "#0066cc", textDecoration: "none" }}>
+            <a href="?path=/docs/elements-icon--docs" target="_top" style={linkStyles}>
               Icon
             </a>{" "}
             - SVG icon component
           </li>
           <li>
-            <a href="?path=/docs/elements-pill--docs" style={{ color: "#0066cc", textDecoration: "none" }}>
+            <a href="?path=/docs/elements-pill--docs" target="_top" style={linkStyles}>
               Pill
             </a>{" "}
             - Tag/badge UI element
           </li>
           <li>
-            <a href="?path=/docs/elements-rangeinput--docs" style={{ color: "#0066cc", textDecoration: "none" }}>
+            <a href="?path=/docs/elements-rangeinput--docs" target="_top" style={linkStyles}>
               RangeInput
             </a>{" "}
             - Number input for ranges
           </li>
           <li>
-            <a href="?path=/docs/elements-select--docs" style={{ color: "#0066cc", textDecoration: "none" }}>
+            <a href="?path=/docs/elements-select--docs" target="_top" style={linkStyles}>
               Select
             </a>{" "}
             - Dropdown selection component
