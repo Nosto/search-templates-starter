@@ -19,7 +19,7 @@ export function HistoryItem({ item, highlighted, onSubmit, rovingFocus, itemInde
   useEffect(() => {
     rovingFocus.registerItem({
       id: `history-${item}`,
-      element: null as HTMLElement, // Will be set by ref
+      element: null as unknown as HTMLElement, // Will be set by ref
       onSelect: () => onSubmit(item)
     })
   }, [item, onSubmit, rovingFocus])

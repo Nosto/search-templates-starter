@@ -26,7 +26,7 @@ export default function Product({ hit, rovingFocus, itemIndex }: Props) {
     if (rovingFocus && itemIndex !== undefined) {
       rovingFocus.registerItem({
         id: `product-${hit.productId}`,
-        element: null as HTMLElement, // Will be set by ref
+        element: null as unknown as HTMLElement, // Will be set by ref
         onSelect: handleSelect
       })
     }

@@ -26,7 +26,7 @@ export default function Keyword({ keyword, onSubmit, rovingFocus, itemIndex }: K
   useEffect(() => {
     rovingFocus.registerItem({
       id: `keyword-${keyword.keyword}`,
-      element: null as HTMLElement, // Will be set by ref
+      element: null as unknown as HTMLElement, // Will be set by ref
       onSelect: handleSelect
     })
   }, [keyword.keyword, rovingFocus, handleSelect])
