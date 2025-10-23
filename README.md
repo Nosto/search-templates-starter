@@ -49,7 +49,11 @@ Ensure you have the following installed:
 
     [Using the workspace version of TypeScript](https://code.visualstudio.com/docs/typescript/typescript-compiling#_using-the-workspace-version-of-typescript)
 
-4. (Optional) Install `@nosto/nosto-cli` globally to enable deployment of the template to your store.
+4. (Optional) Setup the Nosto CLI to enable deployment of the template to your store.
+
+    As the Starter already includes the CLI as a dependency, you may invoke it simply by calling `npx nosto`.
+
+    Alternatively, you may install it as a global tool with `npm install -g @nosto/nosto-cli`.
 
     Read more about Nosto CLI at the [GitHub Page](https://github.com/Nosto/nosto-cli) or on our [TechDocs](https://docs.nosto.com/techdocs/implementing-nosto/implement-search/implement-search-using-code-editor/using-nosto-cli)
 
@@ -147,9 +151,6 @@ For a quick smoke test, you may also add a simple `console.log` statement into `
 The CLI tool makes the preview deployments simple. To get started, you may use the following set of commands:
 
 ```bash
-# Install the CLI tool:
-npm i @nosto/nosto-cli -g
-
 # Login to Nosto
 # You will see the browser window open with further instructions.
 nosto login
@@ -160,6 +161,8 @@ nosto setup -m merchant-id
 # Run the CLI in dev mode
 nosto st dev
 ```
+
+> **Note:** If you are using a local Nosto CLI dependency, use `npx nosto ...` instead.
 
 Now, while the CLI tool is running in the terminal, you should be able to make changes to your template and see the results immediately upon reloading your store page. Note that you need to have Debug Toolbar enabled and Preview mode toggled on to see those changes.
 
