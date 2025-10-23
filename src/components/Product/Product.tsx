@@ -42,12 +42,11 @@ export default function Product({ product, children, showAltOnHover = true }: Pr
             <span className={styles.specialPrice}>{product.listPriceText}</span>
           )}
         </div>
-        {(product.ratingValue !== undefined && product.reviewCount && (
+        {product.ratingValue !== undefined && product.reviewCount ? (
           <div aria-label={`${product.ratingValue} out of 5 stars, ${product.reviewCount} reviews`}>
             {renderRatingStars(product.ratingValue)} ({product.reviewCount})
           </div>
-        )) ||
-          null}
+        ) : null}
       </div>
       {children}
     </SerpElement>
