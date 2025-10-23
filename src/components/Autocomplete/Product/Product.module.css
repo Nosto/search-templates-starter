@@ -7,6 +7,12 @@
   text-decoration: none;
 }
 
+.wrapper:global(.ns-highlighted) {
+  background-color: var(--ns-color-primary-light);
+  outline: 2px solid var(--ns-color-primary);
+  outline-offset: -2px;
+}
+
 .image {
   height: auto;
   object-fit: contain;

@@ -27,7 +27,7 @@ type Props = {
 function Autocomplete({ onSubmit }: Props) {
   const [input, setInput] = useState<string>(getInitialQuery())
   const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false)
-  const { setHighlightedIndex, highlightedIndex  } = useDropdown()
+  const { highlightNext, highlightPrevious, executeHighlighted } = useDropdown()
 
   const dropdownElement = document.querySelector<HTMLElement>(selectors.dropdown)!
   const searchInput = document.querySelector<HTMLInputElement>(selectors.searchInput)!
@@ -57,14 +57,23 @@ function Autocomplete({ onSubmit }: Props) {
   useDomEvents(searchInput, {
     onInput: () => setInput(searchInput.value),
     onFocus: () => setShowAutocomplete(true),
-    onKeydown: (event) => {
+    onKeydown: event => {
       if (event.key === "ArrowDown") {
         event.preventDefault()
-        setHighlightedIndex(highlightedIndex + 1)
+        highlightNext()
       }
       if (event.key === "ArrowUp") {
         event.preventDefault()
-        setHighlightedIndex(highlightedIndex - 1)
+        highlightPrevious()
+      }
+      if (event.key === "Enter") {
+        if (executeHighlighted()) {
+          event.preventDefault()
+        }
+      }
+      if (event.key === "Escape") {
+        setShowAutocomplete(false)
+        searchInput.blur()
       }
     }
   })

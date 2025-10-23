@@ -6,6 +6,7 @@ import { useDebouncedSearch } from "@/hooks/useDebouncedSearch"
 import { useHistory } from "@nosto/search-js/preact/hooks"
 import { disableNativeAutocomplete } from "@nosto/search-js/utils"
 import { getInitialQuery } from "@/mapping/url/getInitialQuery"
+import { useDropdown } from "@/contexts/DropdownContext"
 
 type Props = {
   onSubmit: (input: string) => void
@@ -16,6 +17,7 @@ export default function Autocomplete({ onSubmit }: Props) {
   const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false)
   const autocompleteRef = useRef<HTMLFormElement>(null)
   const searchInputRef = useRef<HTMLInputElement>(null)
+  const { highlightNext, highlightPrevious, executeHighlighted } = useDropdown()
 
   useDebouncedSearch({ input })
 
@@ -60,6 +62,25 @@ export default function Autocomplete({ onSubmit }: Props) {
         componentProps={{
           value: input,
           onFocus: () => setShowAutocomplete(true),
+          onKeydown: (event: KeyboardEvent) => {
+            if (event.key === "ArrowDown") {
+              event.preventDefault()
+              highlightNext()
+            }
+            if (event.key === "ArrowUp") {
+              event.preventDefault()
+              highlightPrevious()
+            }
+            if (event.key === "Enter") {
+              if (executeHighlighted()) {
+                event.preventDefault()
+              }
+            }
+            if (event.key === "Escape") {
+              setShowAutocomplete(false)
+              searchInputRef.current!.blur()
+            }
+          },
           ref: searchInputRef
         }}
       />

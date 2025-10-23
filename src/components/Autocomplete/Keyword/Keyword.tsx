@@ -8,18 +8,23 @@ type KeywordProps = {
 }
 
 export default function Keyword({ keyword, onSubmit }: KeywordProps) {
+  const handleClick = () => {
+    if (keyword._redirect) {
+      window.location.href = keyword._redirect
+    } else {
+      onSubmit(keyword.keyword)
+    }
+  }
+
   return (
     <AutocompleteElement
       hit={keyword}
       componentProps={{
+        "data-autocomplete-item": true,
         className: style.keyword,
         onClick: (e: Event) => {
           e.preventDefault()
-          if (keyword._redirect) {
-            window.location.href = keyword._redirect
-          } else {
-            onSubmit(keyword.keyword)
-          }
+          handleClick()
         }
       }}
     >

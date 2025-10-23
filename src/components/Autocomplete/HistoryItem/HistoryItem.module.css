@@ -10,9 +10,14 @@
   padding: 4px 8px;
 }
 
-.container.highlighted,
+.container:global(.ns-highlighted) {
+  background-color: var(--ns-color-primary-light);
+  outline: 2px solid var(--ns-color-primary);
+  outline-offset: -2px;
+}
+
 .container:hover {
-  background-color: #0c080811;
+  background-color: var(--ns-color-grey-light);
 }
 
 .name {

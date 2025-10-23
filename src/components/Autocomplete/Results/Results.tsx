@@ -4,6 +4,7 @@ import Keywords from "./Keywords"
 import Products from "./Products"
 import { History } from "./History"
 import { useDropdown } from "@/contexts/DropdownContext"
+import { useEffect } from "preact/hooks"
 
 type ResultsProps = {
   onSubmit: (query: string) => void
@@ -11,10 +12,14 @@ type ResultsProps = {
 
 export default function Results({ onSubmit }: ResultsProps) {
   const { keywords, products } = useResponse()
-  const { highlightedIndex } = useDropdown()
+  const { resetHighlight } = useDropdown()
 
   const hasResults = !!(keywords?.hits?.length || products?.hits?.length)
   const hasHistory = !!useNostoAppState(state => state.historyItems?.length)
+
+  useEffect(() => {
+    resetHighlight()
+  }, [resetHighlight])
 
   if (!hasResults && !hasHistory) {
     return null

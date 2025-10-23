@@ -5,6 +5,7 @@ import style from "./Search.module.css"
 import { useActions } from "@nosto/search-js/preact/hooks"
 import { useCallback } from "preact/hooks"
 import { nostojs } from "@nosto/nosto-js"
+import { DropdownProvider } from "@/contexts/DropdownContext"
 
 export function Search() {
   const { newSearch } = useActions()
@@ -19,9 +20,11 @@ export function Search() {
 
   return (
     <div className={style.wrapper}>
-      <AutocompletePageProvider config={autocompleteConfig}>
-        <Autocomplete onSubmit={onSubmit} />
-      </AutocompletePageProvider>
+      <DropdownProvider>
+        <AutocompletePageProvider config={autocompleteConfig}>
+          <Autocomplete onSubmit={onSubmit} />
+        </AutocompletePageProvider>
+      </DropdownProvider>
     </div>
   )
 }
