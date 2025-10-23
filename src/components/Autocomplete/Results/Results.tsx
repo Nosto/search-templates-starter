@@ -14,7 +14,7 @@ export default function Results({ onSubmit }: ResultsProps) {
   const { keywords, products } = useResponse()
   const historyItems = useNostoAppState(state => state.historyItems)
   const containerRef = useRef<HTMLDivElement>(null)
-  useRovingFocus(containerRef.current, "[data-roving-focus-item]")
+  useRovingFocus(containerRef, "[data-roving-focus-item]")
 
   const hasResults = !!(keywords?.hits?.length || products?.hits?.length)
   const hasHistory = !!historyItems?.length

@@ -13,18 +13,24 @@ export type UseRovingFocusResult = {
 }
 
 export function useRovingFocus(
-  parentElement: HTMLElement | null,
+  parentElementRef: { current: HTMLElement | null },
   selector: string = "[data-roving-focus-item]"
 ): UseRovingFocusResult {
   const [focusedIndex, setFocusedIndex] = useState(0)
+  const [parentElement, setParentElement] = useState<HTMLElement | null>(null)
 
-  const getFocusableElements = useCallback((): HTMLElement[] => {
+  // Resolve ref value inside effect
+  useEffect(() => {
+    setParentElement(parentElementRef.current)
+  }, [parentElementRef])
+
+  const getFocusableElements = useCallback(() => {
     if (!parentElement) return []
     const elements = parentElement.querySelectorAll(selector)
     return Array.from(elements) as HTMLElement[]
   }, [parentElement, selector])
 
-  const getCurrentFocusedIndex = useCallback((): number => {
+  const getCurrentFocusedIndex = useCallback(() => {
     const elements = getFocusableElements()
     const activeElement = document.activeElement as HTMLElement
     const index = elements.findIndex(el => el === activeElement)
