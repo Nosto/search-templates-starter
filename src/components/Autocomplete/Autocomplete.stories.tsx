@@ -1,18 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/preact"
-import Autocomplete from "./Autocomplete"
+import AutocompleteNative from "./AutocompleteNative"
 import { withAutocompleteContext } from ".storybook/decorators"
 
 export default {
   title: "Autocomplete/Autocomplete",
-  component: Autocomplete,
+  component: AutocompleteNative,
   parameters: {
     layout: "centered"
   },
   decorators: [withAutocompleteContext],
   tags: ["autodocs"]
-} as Meta<typeof Autocomplete>
+} as Meta<typeof AutocompleteNative>
 
-type Story = StoryObj<typeof Autocomplete>
+type Story = StoryObj<typeof AutocompleteNative>
 
 export const Default: Story = {
   args: {

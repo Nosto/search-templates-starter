@@ -7,7 +7,7 @@ type Props = {
   onSubmit: (input: string) => void
 }
 
-export default function Autocomplete({ onSubmit }: Props) {
+export default function AutocompleteNative({ onSubmit }: Props) {
   const autocompleteRef = useRef<HTMLFormElement>(null)
   const searchInputRef = useRef<HTMLInputElement>(null)
 
