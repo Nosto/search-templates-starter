@@ -7,23 +7,21 @@ const keyToDirection: Record<string, "back" | "front"> = {
   ArrowRight: "front"
 }
 
-export function useRovingFocus(
-  parentElementRef: { current: HTMLElement | null },
-  selector: string = ".ns-autocomplete-element"
-) {
+export function useRovingFocus(parentElement: HTMLElement | null, selector: string = ".ns-autocomplete-element") {
   const [focusedIndex, setFocusedIndex] = useState(0)
-  const [parentElement, setParentElement] = useState<HTMLElement | null>(null)
+  const [focusableElements, setFocusableElements] = useState<HTMLElement[]>([])
 
-  // Resolve ref value inside effect
+  // Update focusable elements when parent or selector changes
   useEffect(() => {
-    setParentElement(parentElementRef.current)
-  }, [parentElementRef])
-
-  const getFocusableElements = useCallback(() => {
-    if (!parentElement) return []
+    if (!parentElement) {
+      setFocusableElements([])
+      return
+    }
     const elements = parentElement.querySelectorAll(selector)
-    return Array.from(elements) as HTMLElement[]
+    setFocusableElements(Array.from(elements) as HTMLElement[])
   }, [parentElement, selector])
+
+  const getFocusableElements = useCallback(() => focusableElements, [focusableElements])
 
   const getCurrentFocusedIndex = useCallback(() => {
     const elements = getFocusableElements()
