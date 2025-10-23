@@ -70,21 +70,11 @@ export function useAutocomplete({
     [addQuery, onSubmit, searchInputElement, isInjected]
   )
 
-  const handleInputChange = useCallback((newInput: string) => {
-    setInput(newInput)
-  }, [])
-
-  const handleFocus = useCallback(() => {
-    setShowAutocomplete(true)
-  }, [])
-
   return {
     input,
     showAutocomplete,
     setInput,
     setShowAutocomplete,
-    onSearchSubmit,
-    handleInputChange,
-    handleFocus
+    onSearchSubmit
   }
 }

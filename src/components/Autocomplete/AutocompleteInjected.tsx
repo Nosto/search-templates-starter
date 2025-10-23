@@ -12,7 +12,7 @@ export default function AutocompleteInjected({ onSubmit }: Props) {
   const searchInput = document.querySelector<HTMLInputElement>(selectors.searchInput)!
   const searchForm = document.querySelector<HTMLFormElement>(selectors.searchForm)!
 
-  const { input, showAutocomplete, onSearchSubmit, handleInputChange, handleFocus } = useAutocomplete({
+  const { input, showAutocomplete, setInput, setShowAutocomplete, onSearchSubmit } = useAutocomplete({
     onSubmit,
     searchInputElement: searchInput,
     clickOutsideTarget: dropdownElement,
@@ -20,8 +20,8 @@ export default function AutocompleteInjected({ onSubmit }: Props) {
   })
 
   useDomEvents(searchInput, {
-    onInput: () => handleInputChange(searchInput.value),
-    onFocus: handleFocus
+    onInput: () => setInput(searchInput.value),
+    onFocus: () => setShowAutocomplete(true)
   })
 
   useDomEvents(searchForm, {

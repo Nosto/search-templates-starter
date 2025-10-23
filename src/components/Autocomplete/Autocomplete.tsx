@@ -11,7 +11,7 @@ export default function Autocomplete({ onSubmit }: Props) {
   const autocompleteRef = useRef<HTMLFormElement>(null)
   const searchInputRef = useRef<HTMLInputElement>(null)
 
-  const { input, showAutocomplete, onSearchSubmit, handleInputChange, handleFocus } = useAutocomplete({
+  const { input, showAutocomplete, setInput, setShowAutocomplete, onSearchSubmit } = useAutocomplete({
     onSubmit,
     searchInputElement: searchInputRef.current,
     clickOutsideTarget: autocompleteRef.current
@@ -26,10 +26,10 @@ export default function Autocomplete({ onSubmit }: Props) {
       }}
     >
       <SearchInput
-        onSearchInput={target => handleInputChange(target.value)}
+        onSearchInput={target => setInput(target.value)}
         componentProps={{
           value: input,
-          onFocus: handleFocus,
+          onFocus: () => setShowAutocomplete(true),
           ref: searchInputRef
         }}
       />
