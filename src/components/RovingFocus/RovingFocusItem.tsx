@@ -1,57 +1,50 @@
 import { useRef, useEffect, useCallback } from "preact/hooks"
-import { ComponentChildren } from "preact"
+import { ComponentChildren, JSX } from "preact"
 import { useRovingFocus } from "./RovingFocusGroup"
 
 type RovingFocusItemProps = {
   children: ComponentChildren
-  id?: string
   className?: string
   onFocus?: (event: FocusEvent) => void
   onClick?: (event: MouseEvent) => void
+  style?: JSX.CSSProperties
 }
 
-export function RovingFocusItem({ children, id, className, onFocus, onClick }: RovingFocusItemProps) {
+export function RovingFocusItem({ children, className, onFocus, onClick, style }: RovingFocusItemProps) {
   const elementRef = useRef<HTMLDivElement>(null)
-  const { registerItem, unregisterItem, items, setCurrentIndex } = useRovingFocus()
-  const itemId = id || `roving-focus-item-${Math.random().toString(36).substring(2, 9)}`
+  const { groupRef } = useRovingFocus()
 
   useEffect(() => {
-    const element = elementRef.current
-    if (!element) return
+    if (!elementRef.current || !groupRef.current) return
 
-    registerItem(itemId, element)
-    
-    const isFirst = items.length === 0
-    if (isFirst) {
-      element.setAttribute("tabindex", "0")
-    } else {
-      element.setAttribute("tabindex", "-1")
-    }
+    const allItems = Array.from(groupRef.current.querySelectorAll('[role="button"]')) as HTMLElement[]
 
-    return () => unregisterItem(itemId)
-  }, [registerItem, unregisterItem, itemId, items.length])
+    const isFirst = allItems.length === 1 && allItems[0] === elementRef.current
+    elementRef.current.setAttribute("tabindex", isFirst ? "0" : "-1")
+  }, [groupRef])
 
   const handleFocus = useCallback(
     (event: FocusEvent) => {
-      const element = elementRef.current
-      if (!element) return
+      if (!elementRef.current || !groupRef.current) return
 
-      const itemIndex = items.findIndex(item => item.element === element)
-      if (itemIndex !== -1) {
-        setCurrentIndex(itemIndex)
+      const allItems = Array.from(groupRef.current.querySelectorAll('[role="button"]')) as HTMLElement[]
+
+      const currentIndex = allItems.indexOf(elementRef.current)
+
+      if (currentIndex !== -1) {
+        allItems.forEach((item, index) => {
+          item.setAttribute("tabindex", index === currentIndex ? "0" : "-1")
+        })
       }
 
       onFocus?.(event)
     },
-    [items, setCurrentIndex, onFocus]
+    [groupRef, onFocus]
   )
 
   const handleClick = useCallback(
     (event: MouseEvent) => {
-      const element = elementRef.current
-      if (!element) return
-
-      element.focus()
+      elementRef.current?.focus()
       onClick?.(event)
     },
     [onClick]
@@ -71,6 +64,7 @@ export function RovingFocusItem({ children, id, className, onFocus, onClick }: R
     <div
       ref={elementRef}
       className={className}
+      style={style}
       tabIndex={-1}
       role="button"
       onFocus={handleFocus}

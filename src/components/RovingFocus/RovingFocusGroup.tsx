@@ -1,18 +1,11 @@
 import { createContext } from "preact"
-import { useContext, useState, useCallback, useRef } from "preact/hooks"
+import { useContext, useRef, useEffect } from "preact/hooks"
 import { ComponentChildren } from "preact"
 
-type RovingFocusItem = {
-  element: HTMLElement
-  id: string
-}
-
 type RovingFocusContextType = {
-  registerItem: (id: string, element: HTMLElement) => void
-  unregisterItem: (id: string) => void
-  items: RovingFocusItem[]
-  currentIndex: number
-  setCurrentIndex: (index: number) => void
+  groupRef: { current: HTMLDivElement | null }
+  orientation: "horizontal" | "vertical" | "both"
+  loop: boolean
 }
 
 const RovingFocusContext = createContext<RovingFocusContextType | undefined>(undefined)
@@ -30,29 +23,22 @@ export function RovingFocusGroup({
   orientation = "horizontal",
   loop = true
 }: RovingFocusGroupProps) {
-  const [items, setItems] = useState<RovingFocusItem[]>([])
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const containerRef = useRef<HTMLDivElement>(null)
+  const groupRef = useRef<HTMLDivElement>(null)
 
-  const registerItem = useCallback((id: string, element: HTMLElement) => {
-    setItems(current => {
-      const existingIndex = current.findIndex(item => item.id === id)
-      if (existingIndex >= 0) {
-        const updated = [...current]
-        updated[existingIndex] = { id, element }
-        return updated
-      }
-      return [...current, { id, element }]
-    })
-  }, [])
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!groupRef.current) return
 
-  const unregisterItem = useCallback((id: string) => {
-    setItems(current => current.filter(item => item.id !== id))
-  }, [])
+      const focusableElements = Array.from(
+        groupRef.current.querySelectorAll('[role="button"][tabindex]')
+      ) as HTMLElement[]
 
-  const handleKeyDown = useCallback(
-    (event: KeyboardEvent) => {
-      if (items.length === 0) return
+      if (focusableElements.length === 0) return
+
+      const currentFocused = document.activeElement as HTMLElement
+      const currentIndex = focusableElements.indexOf(currentFocused)
+
+      if (currentIndex === -1) return
 
       const isHorizontal = orientation === "horizontal" || orientation === "both"
       const isVertical = orientation === "vertical" || orientation === "both"
@@ -70,38 +56,39 @@ export function RovingFocusGroup({
         let newIndex = currentIndex + direction
 
         if (loop) {
-          if (newIndex >= items.length) {
+          if (newIndex >= focusableElements.length) {
             newIndex = 0
           } else if (newIndex < 0) {
-            newIndex = items.length - 1
+            newIndex = focusableElements.length - 1
           }
         } else {
-          newIndex = Math.max(0, Math.min(items.length - 1, newIndex))
+          newIndex = Math.max(0, Math.min(focusableElements.length - 1, newIndex))
         }
 
-        setCurrentIndex(newIndex)
-        
-        items.forEach((item, index) => {
-          item.element.setAttribute("tabindex", index === newIndex ? "0" : "-1")
+        focusableElements.forEach((element, index) => {
+          element.setAttribute("tabindex", index === newIndex ? "0" : "-1")
         })
-        
-        items[newIndex]?.element.focus()
+
+        focusableElements[newIndex]?.focus()
       }
-    },
-    [items, currentIndex, orientation, loop]
-  )
+    }
+
+    const group = groupRef.current
+    if (!group) return
+
+    group.addEventListener("keydown", handleKeyDown)
+    return () => group.removeEventListener("keydown", handleKeyDown)
+  }, [orientation, loop])
 
   const contextValue = {
-    registerItem,
-    unregisterItem,
-    items,
-    currentIndex,
-    setCurrentIndex
+    groupRef,
+    orientation,
+    loop
   }
 
   return (
     <RovingFocusContext.Provider value={contextValue}>
-      <div ref={containerRef} className={className} role="group" onKeyDown={handleKeyDown}>
+      <div ref={groupRef} className={className} role="group">
         {children}
       </div>
     </RovingFocusContext.Provider>
