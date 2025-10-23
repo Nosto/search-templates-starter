@@ -10,7 +10,6 @@
   padding: 4px 8px;
 }
 
-.container.highlighted,
 .container:hover {
   background-color: #0c080811;
 }

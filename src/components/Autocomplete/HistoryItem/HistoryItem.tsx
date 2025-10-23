@@ -4,14 +4,13 @@ import { cl } from "@nosto/search-js/utils"
 
 type HistoryItemProps = {
   item: string
-  highlighted: boolean
   onSubmit: (query: string) => void
 }
 
-export function HistoryItem({ item, highlighted, onSubmit }: HistoryItemProps) {
+export function HistoryItem({ item, onSubmit }: HistoryItemProps) {
   return (
     <HistoryElement key={item} onSubmit={() => onSubmit(item)}>
-      <div className={cl(styles.container, highlighted && styles.highlighted)}>
+      <div className={cl(styles.container)}>
         <div className={styles.name}>{item}</div>
       </div>
     </HistoryElement>
