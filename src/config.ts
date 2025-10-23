@@ -49,18 +49,23 @@ function withAutocompleteDefaults(query: SearchQuery) {
   } satisfies SearchQuery
 }
 
-function withBaseSize(query: SearchQuery) {
+function withBaseConfig(query: SearchQuery) {
   return {
     ...query,
     products: {
       size: defaultConfig.serpSize,
       ...query.products
+      // uncomment for exchange rates based multi-currency support
+      //currency: tagging.variation() ?? defaultCurrency
+
+      // uncomment for price variation based multi-currency support
+      //variationId: tagging.variation() ?? defaultCurrency
     }
   } satisfies SearchQuery
 }
 
 function withCategoryMetadata(query: SearchQuery) {
-  const augmented = withBaseSize(query)
+  const augmented = withBaseConfig(query)
   return {
     ...augmented,
     products: {
@@ -75,13 +80,13 @@ export const hitDecorators = [
   handleDecorator,
   // commented out, since thumbnails are handled via Image component
   //thumbnailDecorator({ size: "9" }), // 750x750
-  priceDecorator({ defaultCurrency })
+  priceDecorator()
 ] as const
 
 const autocompleteDecorators = [
   handleDecorator,
   thumbnailDecorator({ size: "7" }), // 400x400
-  priceDecorator({ defaultCurrency })
+  priceDecorator()
 ]
 
 export const baseConfig = {
@@ -89,7 +94,7 @@ export const baseConfig = {
   search: {
     hitDecorators
   },
-  queryModifications: withBaseSize
+  queryModifications: withBaseConfig
 }
 
 export const serpConfig = {
