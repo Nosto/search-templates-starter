@@ -9,7 +9,7 @@ type HistoryItemProps = {
 export function HistoryItem({ item, onSubmit }: HistoryItemProps) {
   return (
     <HistoryElement key={item} onSubmit={() => onSubmit(item)}>
-      <div className={styles.container} role="button" tabIndex={0}>
+      <div className={styles.container}>
         <div className={styles.name}>{item}</div>
       </div>
     </HistoryElement>

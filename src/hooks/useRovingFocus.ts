@@ -7,15 +7,10 @@ const keyToDirection: Record<string, "up" | "down" | "left" | "right"> = {
   ArrowRight: "right"
 }
 
-export type UseRovingFocusResult = {
-  focusedIndex: number
-  setFocusedIndex: (index: number) => void
-}
-
 export function useRovingFocus(
   parentElementRef: { current: HTMLElement | null },
   selector: string = ".ns-autocomplete-element"
-): UseRovingFocusResult {
+) {
   const [focusedIndex, setFocusedIndex] = useState(0)
   const [parentElement, setParentElement] = useState<HTMLElement | null>(null)
 
@@ -127,9 +122,4 @@ export function useRovingFocus(
       observer.disconnect()
     }
   }, [parentElement, setupEventListeners, updateTabIndices])
-
-  return {
-    focusedIndex,
-    setFocusedIndex
-  }
 }

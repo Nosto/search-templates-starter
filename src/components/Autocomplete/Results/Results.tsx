@@ -12,12 +12,12 @@ type ResultsProps = {
 
 export default function Results({ onSubmit }: ResultsProps) {
   const { keywords, products } = useResponse()
-  const historyItems = useNostoAppState(state => state.historyItems)
+
   const containerRef = useRef<HTMLDivElement>(null)
   useRovingFocus(containerRef, ".ns-autocomplete-element")
 
   const hasResults = !!(keywords?.hits?.length || products?.hits?.length)
-  const hasHistory = !!historyItems?.length
+  const hasHistory = !!useNostoAppState(state => state.historyItems?.length)
 
   if (!hasResults && !hasHistory) {
     return null
