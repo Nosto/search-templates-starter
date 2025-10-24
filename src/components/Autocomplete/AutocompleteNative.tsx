@@ -2,6 +2,7 @@ import Results from "@/components/Autocomplete/Results/Results"
 import { useRef } from "preact/hooks"
 import { SearchInput } from "@nosto/search-js/preact/autocomplete"
 import { useAutocomplete } from "./useAutocomplete"
+import { useAutocompleteNavigation } from "@/hooks/useAutocompleteNavigation"
 import { SpeechToTextButton } from "./SpeechToText/SpeechToText"
 
 type Props = {
@@ -16,6 +17,13 @@ export default function AutocompleteNative({ onSubmit }: Props) {
     onSubmit,
     searchInputElement: searchInputRef.current,
     clickOutsideTarget: autocompleteRef.current
+  })
+
+  useAutocompleteNavigation({
+    formRef: autocompleteRef,
+    isOpen: showAutocomplete,
+    onClose: () => setShowAutocomplete(false),
+    onSubmit: onSearchSubmit
   })
 
   return (

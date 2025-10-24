@@ -11,8 +11,11 @@
 }
 
 .container.highlighted,
-.container:hover {
+.container:hover,
+.container:focus {
   background-color: #0c080811;
+  outline: 2px solid var(--ns-color-primary);
+  outline-offset: 2px;
 }
 
 .name {

@@ -7,6 +7,9 @@
   cursor: pointer;
 }
 
-.keyword:hover {
+.keyword:hover,
+.keyword:focus {
   background-color: var(--ns-color-grey-light);
+  outline: 2px solid var(--ns-color-primary);
+  outline-offset: 2px;
 }
