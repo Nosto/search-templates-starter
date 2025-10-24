@@ -34,16 +34,17 @@ export function useAutocompleteNavigation({
         return
       }
 
-      e.preventDefault()
-
       if (e.key === "ArrowDown" || e.key === "Tab") {
+         e.preventDefault()
         const newIndex = (focusedIndex + 1) % elements.length
         setFocusedIndex(newIndex)
       } else if (e.key === "ArrowUp") {
+         e.preventDefault()
         const newIndex = (focusedIndex - 1 + elements.length) % elements.length
         setFocusedIndex(newIndex)
       } else if (e.key === "Enter") {
         if (focusedIndex >= 0) {
+           e.preventDefault()
           const element = elements[focusedIndex]
           const query = element.dataset.nostoQuery
           if (query) {
