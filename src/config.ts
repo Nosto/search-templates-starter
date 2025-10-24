@@ -46,8 +46,7 @@ const defaultCurrency = "EUR"
  * Decorators are transformer functions applied in order to all results returned
  * from the search backend. You may define your own decorators using `handleDecorator`
  * as an example.
- * To obtain properly typed results, use the `useDecoratedSearchResults` hook
- * from `@nosto/search-js`.
+ * The type for decorated products is defined in `src/types.ts`.
  */
 export const hitDecorators = [handleDecorator, priceDecorator()] as const
 
