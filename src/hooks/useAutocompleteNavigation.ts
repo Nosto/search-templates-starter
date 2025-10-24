@@ -17,12 +17,11 @@ export function useAutocompleteNavigation({ formRef, isOpen, onClose, onSubmit }
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
-                console.log("Something")
       if (!isOpen) return
 
       const elements = getElements()
       if (elements.length === 0) return
-        console.log("elements", elements)
+
       if (e.key === "ArrowDown") {
         e.preventDefault()
         const newIndex = (focusedIndex + 1) % elements.length
