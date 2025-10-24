@@ -1,4 +1,3 @@
-import { createRef } from "preact"
 import Results from "@/components/Autocomplete/Results/Results"
 import { useDomEvents } from "@/hooks/useDomEvents"
 import { selectors } from "@/config"

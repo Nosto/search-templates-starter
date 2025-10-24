@@ -7,7 +7,12 @@ type UseAutocompleteNavigationProps = {
   setShowAutocomplete: (show: boolean) => void
 }
 
-export function useAutocompleteNavigation({ formRef, isOpen, onSubmit, setShowAutocomplete }: UseAutocompleteNavigationProps) {
+export function useAutocompleteNavigation({
+  formRef,
+  isOpen,
+  onSubmit,
+  setShowAutocomplete
+}: UseAutocompleteNavigationProps) {
   const [focusedIndex, setFocusedIndex] = useState<number>(-1)
 
   const getElements = useCallback(() => {
@@ -56,10 +61,10 @@ export function useAutocompleteNavigation({ formRef, isOpen, onSubmit, setShowAu
 
   useEffect(() => {
     const elements = getElements()
-    if (focusedIndex === (elements.length - 1)) {
-        formRef.current?.querySelector("input")?.focus()
-        setShowAutocomplete(false)
-        return
+    if (focusedIndex === elements.length - 1) {
+      formRef.current?.querySelector("input")?.focus()
+      setShowAutocomplete(false)
+      return
     }
     elements.forEach((element, index) => {
       if (index === focusedIndex) {
