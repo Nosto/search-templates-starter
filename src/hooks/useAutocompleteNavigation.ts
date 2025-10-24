@@ -74,7 +74,7 @@ export function useAutocompleteNavigation({
         element.setAttribute("tabindex", "-1")
       }
     })
-  }, [focusedIndex, getElements, formRef])
+  }, [focusedIndex, getElements, setShowAutocomplete, formRef])
 
   useEffect(() => {
     if (!isOpen) {
@@ -92,5 +92,5 @@ export function useAutocompleteNavigation({
       form.addEventListener("keydown", handleKeyDown)
       return () => form.removeEventListener("keydown", handleKeyDown)
     }
-  }, [handleKeyDown])
+  }, [handleKeyDown, formRef])
 }
