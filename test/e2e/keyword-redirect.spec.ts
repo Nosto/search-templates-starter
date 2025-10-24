@@ -6,11 +6,9 @@ import {
   searchSelector,
   waitForApplicationReady
 } from "./helpers"
-import { skipIfNoBrowsers } from "./test-helpers"
 
 test.describe("Keyword Redirect", () => {
   test.beforeEach(async ({ page }) => {
-    skipIfNoBrowsers()
     await page.goto("/")
     await waitForApplicationReady(page)
   })
