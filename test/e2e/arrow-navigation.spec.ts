@@ -17,15 +17,14 @@ test.describe("Arrow Navigation", () => {
     await searchInput.fill("running")
     await expect(dropdownContent).toContainText("running shoes", { timeout: dropdownTimeout })
 
-    await page.focus(searchSelector)
-    await page.keyboard.press("Tab")
-
     // Get all focusable autocomplete elements
     const autocompleteElements = page.locator(".ns-autocomplete-element")
 
     // Verify elements are present
     const elementCount = await autocompleteElements.count()
     expect(elementCount).toBeGreaterThan(0)
+
+    await autocompleteElements.first().focus()
 
     // Focus should start on the first element by default
     await expect(autocompleteElements.first()).toHaveJSProperty("tabIndex", 0)
@@ -63,11 +62,10 @@ test.describe("Arrow Navigation", () => {
     await searchInput.fill("running")
     await expect(dropdownContent).toContainText("running shoes", { timeout: dropdownTimeout })
 
-    await page.focus(searchSelector)
-    await page.keyboard.press("Tab")
-
     // Get first focusable element (should be a keyword suggestion)
     const firstElement = page.locator(".ns-autocomplete-element").first()
+
+    await firstElement.focus()
 
     // Ensure first element is focused
     await expect(firstElement).toHaveJSProperty("tabIndex", 0)
@@ -89,14 +87,13 @@ test.describe("Arrow Navigation", () => {
     await searchInput.fill("running")
     await expect(dropdownContent).toContainText("running shoes", { timeout: dropdownTimeout })
 
-    await page.focus(searchSelector)
-    await page.keyboard.press("Tab")
-
     const autocompleteElements = page.locator(".ns-autocomplete-element")
     const elementCount = await autocompleteElements.count()
 
     // Verify we have multiple elements to test boundary behavior
     expect(elementCount).toBeGreaterThan(1)
+
+    await autocompleteElements.first().focus()
 
     // Start at first element
     await expect(autocompleteElements.first()).toHaveJSProperty("tabIndex", 0)

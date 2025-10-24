@@ -1,3 +1,4 @@
+import { RefObject } from "preact"
 import { useCallback, useEffect, useState } from "preact/hooks"
 
 const keyToDirection: Record<string, "back" | "front"> = {
@@ -7,17 +8,17 @@ const keyToDirection: Record<string, "back" | "front"> = {
   ArrowRight: "front"
 }
 
-export function useRovingFocus(parentElement: HTMLElement | null, selector: string = ".ns-autocomplete-element") {
+export function useRovingFocus(parentElement: RefObject<HTMLElement>, selector: string = ".ns-autocomplete-element") {
   const [focusedIndex, setFocusedIndex] = useState(0)
   const [focusableElements, setFocusableElements] = useState<HTMLElement[]>([])
 
   // Update focusable elements when parent or selector changes
   useEffect(() => {
-    if (!parentElement) {
+    if (!parentElement.current) {
       setFocusableElements([])
       return
     }
-    const elements = parentElement.querySelectorAll(selector)
+    const elements = parentElement.current.querySelectorAll(selector)
     setFocusableElements(Array.from(elements) as HTMLElement[])
   }, [parentElement, selector])
 
@@ -40,8 +41,10 @@ export function useRovingFocus(parentElement: HTMLElement | null, selector: stri
         newIndex = currentIndex === focusableElements.length - 1 ? currentIndex : currentIndex + 1
       }
 
-      setFocusedIndex(newIndex)
-      focusableElements[newIndex]?.focus()
+      if (newIndex !== currentIndex) {
+        setFocusedIndex(newIndex)
+        focusableElements[newIndex]?.focus()
+      }
     },
     [focusableElements, getCurrentFocusedIndex]
   )
@@ -70,7 +73,7 @@ export function useRovingFocus(parentElement: HTMLElement | null, selector: stri
   }, [focusableElements, focusedIndex])
 
   const setupEventListeners = useCallback(() => {
-    if (!parentElement) return
+    if (!parentElement.current) return
 
     const handleParentKeyDown = (event: KeyboardEvent) => {
       // Only handle if the event target is a focusable element
@@ -79,10 +82,10 @@ export function useRovingFocus(parentElement: HTMLElement | null, selector: stri
       }
     }
 
-    parentElement.addEventListener("keydown", handleParentKeyDown)
+    parentElement.current.addEventListener("keydown", handleParentKeyDown)
 
     return () => {
-      parentElement.removeEventListener("keydown", handleParentKeyDown)
+      parentElement.current?.removeEventListener("keydown", handleParentKeyDown)
     }
   }, [parentElement, handleKeyDown, focusableElements])
 
@@ -93,19 +96,19 @@ export function useRovingFocus(parentElement: HTMLElement | null, selector: stri
 
   // Setup event listeners when parent element changes
   useEffect(() => {
-    if (!parentElement) return
+    if (!parentElement.current) return
 
     const cleanup = setupEventListeners()
     updateTabIndices()
 
     // Use MutationObserver to detect when elements are added/removed
     const observer = new MutationObserver(() => {
-      const newElements = Array.from(parentElement.querySelectorAll(selector)) as HTMLElement[]
+      const newElements = Array.from(parentElement.current?.querySelectorAll(selector) ?? []) as HTMLElement[]
       setFocusableElements(newElements)
       updateTabIndices()
     })
 
-    observer.observe(parentElement, {
+    observer.observe(parentElement.current, {
       childList: true,
       subtree: true
     })
