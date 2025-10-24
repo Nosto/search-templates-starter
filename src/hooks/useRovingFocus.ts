@@ -7,11 +7,17 @@ const keyToDirection: Record<string, "back" | "front"> = {
   ArrowRight: "front"
 }
 
+type Cleanup = () => void
+
 export function useRovingFocus<T extends HTMLElement>(selector: string) {
-  const ref = useRef<T>()
+  const cleanup = useRef<Cleanup>()
 
   const setRef = useCallback(
     (parentElement: T | null) => {
+      if (cleanup.current) {
+        cleanup.current()
+        cleanup.current = undefined
+      }
       if (!parentElement) return
 
       let focusedIndex = 0
@@ -90,7 +96,10 @@ export function useRovingFocus<T extends HTMLElement>(selector: string) {
         subtree: true
       })
 
-      ref.current = parentElement
+      cleanup.current = () => {
+        parentElement.removeEventListener("keydown", handleParentKeyDown)
+        observer.disconnect()
+      }
     },
     [selector]
   )
