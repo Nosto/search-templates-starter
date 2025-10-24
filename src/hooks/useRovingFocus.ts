@@ -44,7 +44,7 @@ export function useRovingFocus<T extends HTMLElement>(selector: string) {
           focusedIndex = newIndex
           focusableElements[currentIndex].tabIndex = -1
           focusableElements[newIndex].tabIndex = 0
-          focusableElements[newIndex]?.focus()
+          focusableElements[newIndex].focus()
         }
       }
 
