@@ -1,5 +1,4 @@
-import { RefObject } from "preact"
-import { useEffect } from "preact/hooks"
+import { useCallback, useRef } from "preact/hooks"
 
 const keyToDirection: Record<string, "back" | "front"> = {
   ArrowDown: "front",
@@ -8,87 +7,93 @@ const keyToDirection: Record<string, "back" | "front"> = {
   ArrowRight: "front"
 }
 
-export function useRovingFocus(parentElement: RefObject<HTMLElement>, selector: string) {
-  useEffect(() => {
-    if (!parentElement.current) return
+export function useRovingFocus<T extends HTMLElement>(selector: string) {
+  const ref = useRef<T>()
 
-    let focusedIndex = 0
-    let focusableElements: HTMLElement[] = []
+  const setRef = useCallback(
+    (parentElement: T | null) => {
+      if (!parentElement) return
 
-    const getCurrentFocusedIndex = () => {
-      const activeElement = document.activeElement as HTMLElement
-      const index = focusableElements.findIndex(el => el === activeElement)
-      return index >= 0 ? index : focusedIndex
-    }
+      let focusedIndex = 0
+      let focusableElements: HTMLElement[] = []
 
-    const moveFocus = (direction: "back" | "front") => {
-      if (focusableElements.length === 0) return
-      const currentIndex = getCurrentFocusedIndex()
-      let newIndex = currentIndex
-
-      if (direction === "back") {
-        newIndex = currentIndex === 0 ? currentIndex : currentIndex - 1
-      } else if (direction === "front") {
-        newIndex = currentIndex === focusableElements.length - 1 ? currentIndex : currentIndex + 1
+      const getCurrentFocusedIndex = () => {
+        const activeElement = document.activeElement as HTMLElement
+        const index = focusableElements.findIndex(el => el === activeElement)
+        return index >= 0 ? index : focusedIndex
       }
 
-      if (newIndex !== currentIndex) {
-        focusedIndex = newIndex
-        focusableElements[newIndex]?.focus()
-      }
-    }
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (focusableElements.length === 0) return
-
-      const direction = keyToDirection[event.key]
-      if (direction) {
-        event.preventDefault()
-        moveFocus(direction)
-      } else if (event.key === "Enter") {
-        event.preventDefault()
+      const moveFocus = (direction: "back" | "front") => {
+        if (focusableElements.length === 0) return
         const currentIndex = getCurrentFocusedIndex()
-        focusableElements[currentIndex]?.click()
+        let newIndex = currentIndex
+
+        if (direction === "back") {
+          newIndex = currentIndex === 0 ? currentIndex : currentIndex - 1
+        } else if (direction === "front") {
+          newIndex = currentIndex === focusableElements.length - 1 ? currentIndex : currentIndex + 1
+        }
+
+        if (newIndex !== currentIndex) {
+          focusedIndex = newIndex
+          focusableElements[currentIndex].tabIndex = -1
+          focusableElements[newIndex].tabIndex = 0
+          focusableElements[newIndex]?.focus()
+        }
       }
-    }
 
-    // Update focusable elements
-    const updateFocusableElements = () => {
-      const elements = parentElement.current?.querySelectorAll(selector)
-      focusableElements = Array.from(elements ?? []) as HTMLElement[]
-    }
-    updateFocusableElements()
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (focusableElements.length === 0) return
 
-    // Update tab indices
-    const updateTabIndices = () => {
-      focusableElements.forEach((element, index) => {
-        element.tabIndex = index === focusedIndex ? 0 : -1
-      })
-    }
-    updateTabIndices()
-
-    // Setup event listeners
-    const handleParentKeyDown = (event: KeyboardEvent) => {
-      if (focusableElements.includes(event.target as HTMLElement)) {
-        handleKeyDown(event)
+        const direction = keyToDirection[event.key]
+        if (direction) {
+          event.preventDefault()
+          moveFocus(direction)
+        } else if (event.key === "Enter") {
+          event.preventDefault()
+          const currentIndex = getCurrentFocusedIndex()
+          focusableElements[currentIndex]?.click()
+        }
       }
-    }
-    parentElement.current.addEventListener("keydown", handleParentKeyDown)
 
-    // Setup mutation observer
-    const observer = new MutationObserver(() => {
+      // Update focusable elements
+      const updateFocusableElements = () => {
+        const elements = parentElement?.querySelectorAll(selector)
+        focusableElements = Array.from(elements ?? []) as HTMLElement[]
+      }
       updateFocusableElements()
+
+      // Update tab indices
+      const updateTabIndices = () => {
+        focusableElements.forEach((element, index) => {
+          element.tabIndex = index === focusedIndex ? 0 : -1
+        })
+      }
       updateTabIndices()
-    })
 
-    observer.observe(parentElement.current, {
-      childList: true,
-      subtree: true
-    })
+      // Setup event listeners
+      const handleParentKeyDown = (event: KeyboardEvent) => {
+        if (focusableElements.includes(event.target as HTMLElement)) {
+          handleKeyDown(event)
+        }
+      }
+      parentElement.addEventListener("keydown", handleParentKeyDown)
 
-    return () => {
-      parentElement.current?.removeEventListener("keydown", handleParentKeyDown)
-      observer.disconnect()
-    }
-  }, [parentElement, selector])
+      // Setup mutation observer
+      const observer = new MutationObserver(() => {
+        updateFocusableElements()
+        updateTabIndices()
+      })
+
+      observer.observe(parentElement, {
+        childList: true,
+        subtree: true
+      })
+
+      ref.current = parentElement
+    },
+    [selector]
+  )
+
+  return setRef
 }
