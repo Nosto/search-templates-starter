@@ -7,6 +7,10 @@
   text-decoration: none;
 }
 
+.container:focus {
+  background-color: #0c080811;
+}
+
 .image {
   height: auto;
   object-fit: contain;

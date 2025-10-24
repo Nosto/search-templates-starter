@@ -114,5 +114,5 @@ export function useRovingFocus(parentElement: HTMLElement | null, selector: stri
       cleanup?.()
       observer.disconnect()
     }
-  }, [parentElement, setupEventListeners, updateTabIndices])
+  }, [parentElement, selector, setupEventListeners, updateTabIndices])
 }
