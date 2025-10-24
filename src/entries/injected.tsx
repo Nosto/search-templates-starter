@@ -18,18 +18,49 @@ import { nostojs } from "@nosto/nosto-js"
 import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import { getInitialQuery } from "@/mapping/url/getInitialQuery"
 import Portal from "@/elements/Portal/Portal"
+import { useShowAutocomplete } from "@/hooks/useShowAutocomplete"
+
+/**
+ * Application entry point in Injected mode
+ */
+async function init() {
+  await new Promise(nostojs)
+  switch (tagging.pageType()) {
+    case "category":
+      render(
+        <CategoryPageProvider config={categoryConfig}>
+          <CategoryApp />
+        </CategoryPageProvider>,
+        document.createElement("div")
+      )
+      break
+    case "search":
+    default:
+      render(
+        <SearchPageProvider config={serpConfig}>
+          <SerpApp />
+        </SearchPageProvider>,
+        document.createElement("div")
+      )
+  }
+}
+init()
+
+/**
+ * Autocomplete injection point
+ */
 
 type Props = {
   onSubmit: (input: string) => void
 }
 
-function Autocomplete({ onSubmit }: Props) {
+function AutocompleteApp({ onSubmit }: Props) {
   const [input, setInput] = useState<string>(getInitialQuery())
-  const [showAutocomplete, setShowAutocomplete] = useState<boolean>(false)
 
-  const dropdownElement = document.querySelector<HTMLElement>(selectors.dropdown)!
   const searchInput = document.querySelector<HTMLInputElement>(selectors.searchInput)!
   const searchForm = document.querySelector<HTMLFormElement>(selectors.searchForm)!
+
+  const { showAutocomplete, setShowAutocomplete } = useShowAutocomplete({ searchInput })
 
   useEffect(() => {
     searchInput.value = getInitialQuery()
@@ -37,20 +68,6 @@ function Autocomplete({ onSubmit }: Props) {
   }, [searchInput])
 
   useDebouncedSearch({ input })
-
-  // TODO convert to custom hook
-  const onClickOutside = useCallback(
-    (event: Event) => {
-      if (event.target !== searchInput && !dropdownElement.contains(event.target as Node)) {
-        setShowAutocomplete(false)
-      }
-    },
-    [searchInput, dropdownElement]
-  )
-
-  useDomEvents(showAutocomplete ? document.body : null, {
-    onClick: onClickOutside
-  })
 
   useDomEvents(searchInput, {
     onInput: () => setInput(searchInput.value),
@@ -79,6 +96,27 @@ function Autocomplete({ onSubmit }: Props) {
   return showAutocomplete ? <Results onSubmit={onSearchSubmit} /> : null
 }
 
+/**
+ * Category injection point
+ */
+
+function CategoryApp() {
+  return (
+    <ErrorBoundary>
+      <SearchQueryHandler />
+      <SidebarProvider>
+        <Portal target={selectors.results}>
+          <Category />
+        </Portal>
+      </SidebarProvider>
+    </ErrorBoundary>
+  )
+}
+
+/**
+ * Search results page injection point
+ */
+
 function SerpApp() {
   const { newSearch } = useActions()
 
@@ -96,7 +134,7 @@ function SerpApp() {
       <SidebarProvider>
         <AutocompletePageProvider config={autocompleteConfig}>
           <Portal target={selectors.dropdown}>
-            <Autocomplete onSubmit={onSubmit} />
+            <AutocompleteApp onSubmit={onSubmit} />
           </Portal>
         </AutocompletePageProvider>
         <Portal target={selectors.results}>
@@ -106,40 +144,3 @@ function SerpApp() {
     </ErrorBoundary>
   )
 }
-
-function CategoryApp() {
-  return (
-    <ErrorBoundary>
-      <SearchQueryHandler />
-      <SidebarProvider>
-        <Portal target={selectors.results}>
-          <Category />
-        </Portal>
-      </SidebarProvider>
-    </ErrorBoundary>
-  )
-}
-
-async function init() {
-  await new Promise(nostojs)
-  const dummy = document.createElement("div")
-  switch (tagging.pageType()) {
-    case "category":
-      render(
-        <CategoryPageProvider config={categoryConfig}>
-          <CategoryApp />
-        </CategoryPageProvider>,
-        dummy
-      )
-      break
-    case "search":
-    default:
-      render(
-        <SearchPageProvider config={serpConfig}>
-          <SerpApp />
-        </SearchPageProvider>,
-        dummy
-      )
-  }
-}
-init()

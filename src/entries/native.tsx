@@ -13,6 +13,21 @@ import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import { nostojs } from "@nosto/nosto-js"
 import Portal from "@/elements/Portal/Portal"
 
+/**
+ * Application entry point in Native mode
+ */
+async function init() {
+  await new Promise(nostojs)
+  const App = tagging.pageType() === "category" ? CategoryApp : SerpApp
+  render(
+    <ErrorBoundary>
+      <App />
+    </ErrorBoundary>,
+    document.body
+  )
+}
+init()
+
 function SerpApp() {
   return (
     <SearchPageProvider config={serpConfig}>
@@ -39,15 +54,3 @@ function CategoryApp() {
     </CategoryPageProvider>
   )
 }
-
-async function init() {
-  await new Promise(nostojs)
-  const App = tagging.pageType() === "category" ? CategoryApp : SerpApp
-  render(
-    <ErrorBoundary>
-      <App />
-    </ErrorBoundary>,
-    document.body
-  )
-}
-init()
