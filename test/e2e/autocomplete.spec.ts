@@ -1,7 +1,10 @@
 import { test, expect } from "@playwright/test"
 import { dropdownSelector, dropdownTimeout, searchSelector, waitForApplicationReady } from "./helpers"
+import { skipIfNoBrowsers } from "./test-helpers"
 
 test.describe("Autocomplete", () => {
+  skipIfNoBrowsers()
+
   test.beforeEach(async ({ page }) => {
     await page.goto("/")
     await waitForApplicationReady(page)

@@ -1,8 +1,10 @@
 import { test, expect } from "@playwright/test"
 import { resultsSelector, searchSelector, waitForApplicationReady } from "./helpers"
+import { skipIfNoBrowsers } from "./test-helpers"
 
 test.describe("Results", () => {
   test("page renders result when opening with a q parameter that has at least 3 characters", async ({ page }) => {
+    skipIfNoBrowsers()
     // Navigate with query parameter
     await page.goto("/?q=shoes")
     await waitForApplicationReady(page)

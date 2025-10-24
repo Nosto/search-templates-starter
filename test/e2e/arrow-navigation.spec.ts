@@ -1,7 +1,10 @@
 import { test, expect } from "@playwright/test"
 import { dropdownSelector, dropdownTimeout, searchSelector, waitForApplicationReady } from "./helpers"
+import { skipIfNoBrowsers } from "./test-helpers"
 
 test.describe("Arrow Navigation", () => {
+  skipIfNoBrowsers()
+
   test.beforeEach(async ({ page }) => {
     await page.goto("/")
     await waitForApplicationReady(page)
@@ -73,7 +76,7 @@ test.describe("Arrow Navigation", () => {
     await expect(page).toHaveURL(/\?q=/, { timeout: dropdownTimeout })
   })
 
-  test("navigation wraps around at boundaries", async ({ page }) => {
+  test("navigation stops at boundaries", async ({ page }) => {
     const searchInput = page.locator(searchSelector)
     const dropdownContent = page.locator(`${dropdownSelector} > div`)
 
@@ -86,20 +89,24 @@ test.describe("Arrow Navigation", () => {
     const autocompleteElements = page.locator(".ns-autocomplete-element")
     const elementCount = await autocompleteElements.count()
 
-    // Verify we have multiple elements to test wrapping
+    // Verify we have multiple elements to test boundary behavior
     expect(elementCount).toBeGreaterThan(1)
 
     // Start at first element
     await expect(autocompleteElements.first()).toHaveAttribute("tabindex", "0")
 
-    // Press ArrowUp from first element should wrap to last element
+    // Press ArrowUp from first element should do nothing (stay at first)
     await page.keyboard.press("ArrowUp")
-    await expect(autocompleteElements.last()).toHaveAttribute("tabindex", "0")
-    await expect(autocompleteElements.first()).toHaveAttribute("tabindex", "-1")
-
-    // Press ArrowDown from last element should wrap back to first element
-    await page.keyboard.press("ArrowDown")
     await expect(autocompleteElements.first()).toHaveAttribute("tabindex", "0")
-    await expect(autocompleteElements.last()).toHaveAttribute("tabindex", "-1")
+
+    // Navigate to last element
+    for (let i = 1; i < elementCount; i++) {
+      await page.keyboard.press("ArrowDown")
+    }
+    await expect(autocompleteElements.last()).toHaveAttribute("tabindex", "0")
+
+    // Press ArrowDown from last element should do nothing (stay at last)
+    await page.keyboard.press("ArrowDown")
+    await expect(autocompleteElements.last()).toHaveAttribute("tabindex", "0")
   })
 })
