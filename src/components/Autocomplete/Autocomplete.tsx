@@ -6,7 +6,7 @@ import { useDebouncedSearch } from "@/hooks/useDebouncedSearch"
 import { useHistory } from "@nosto/search-js/preact/hooks"
 import { disableNativeAutocomplete } from "@nosto/search-js/utils"
 import { getInitialQuery } from "@/mapping/url/getInitialQuery"
-import { SpeechToTextButton } from "../SpeechToText/SpeechToText"
+import { SpeechToTextButton } from "./SpeechToText/SpeechToText"
 
 type Props = {
   onSubmit: (input: string) => void
