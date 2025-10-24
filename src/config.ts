@@ -16,11 +16,17 @@ export const sortOptions = [
   createSortOption("price", "Price ascending", { field: "price", order: "asc" })
 ]
 
+/**
+ * Default values for sort and page size for search results and categories
+ */
 export const defaultConfig = {
   sort: sortOptions[0],
   serpSize: sizes[0]
 }
 
+/**
+ * CSS selectors for the Injected mode
+ */
 export const selectors = {
   // autocomplete dropdown container
   dropdown: "#dropdown",
@@ -34,19 +40,26 @@ export const selectors = {
 
 const defaultCurrency = "EUR"
 
-function withAutocompleteDefaults(query: SearchQuery) {
-  return {
-    ...query,
-    products: {
-      ...query.products,
-      size: 5
-    },
-    keywords: {
-      fields: ["keyword", "_highlight.keyword"],
-      size: 5,
-      facets: ["*"]
-    }
-  } satisfies SearchQuery
+/**
+ * Base hit decorator definitions for the search results.
+ *
+ * Decorators are transformer functions applied in order to all results returned
+ * from the search backend. You may define your own decorators using `handleDecorator`
+ * as an example.
+ * To obtain properly typed results, use the `useDecoratedSearchResults` hook
+ * from `@nosto/search-js`.
+ */
+export const hitDecorators = [handleDecorator, priceDecorator()] as const
+
+/**
+ * Shared configuration for all page types (Autocomplete, Category, Search)
+ */
+export const baseConfig = {
+  defaultCurrency,
+  search: {
+    hitDecorators
+  },
+  queryModifications: withBaseConfig
 }
 
 function withBaseConfig(query: SearchQuery) {
@@ -64,6 +77,50 @@ function withBaseConfig(query: SearchQuery) {
   } satisfies SearchQuery
 }
 
+/**
+ * Autocomplete configuration
+ */
+
+export const autocompleteConfig = {
+  ...baseConfig,
+  memoryCache: true,
+  historyEnabled: true,
+  historySize: 10,
+  search: {
+    hitDecorators: [
+      ...hitDecorators,
+      thumbnailDecorator({ size: "8" }) // 400x400
+    ]
+  },
+  queryModifications: withAutocompleteDefaults
+} satisfies AutocompleteConfig
+
+function withAutocompleteDefaults(query: SearchQuery) {
+  return {
+    ...query,
+    products: {
+      ...query.products,
+      size: 5
+    },
+    keywords: {
+      fields: ["keyword", "_highlight.keyword"],
+      size: 5,
+      facets: ["*"]
+    }
+  } satisfies SearchQuery
+}
+
+/**
+ * Category page configuration
+ */
+
+export const categoryConfig = {
+  ...baseConfig,
+  persistentSearchCache: false,
+  preservePageScroll: false,
+  queryModifications: withCategoryMetadata
+} satisfies CategoryConfig
+
 function withCategoryMetadata(query: SearchQuery) {
   const augmented = withBaseConfig(query)
   return {
@@ -76,47 +133,11 @@ function withCategoryMetadata(query: SearchQuery) {
   } satisfies SearchQuery
 }
 
-export const hitDecorators = [
-  handleDecorator,
-  // commented out, since thumbnails are handled via Image component
-  //thumbnailDecorator({ size: "9" }), // 750x750
-  priceDecorator()
-] as const
-
-const autocompleteDecorators = [
-  handleDecorator,
-  thumbnailDecorator({ size: "8" }), // 400x400
-  priceDecorator()
-]
-
-export const baseConfig = {
-  defaultCurrency,
-  search: {
-    hitDecorators
-  },
-  queryModifications: withBaseConfig
-}
-
+/**
+ * Search result page (serp) configuration
+ */
 export const serpConfig = {
   ...baseConfig,
   persistentSearchCache: false,
   preservePageScroll: false
 } satisfies SerpConfig
-
-export const autocompleteConfig = {
-  ...baseConfig,
-  memoryCache: true,
-  historyEnabled: true,
-  historySize: 10,
-  search: {
-    hitDecorators: autocompleteDecorators
-  },
-  queryModifications: withAutocompleteDefaults
-} satisfies AutocompleteConfig
-
-export const categoryConfig = {
-  ...baseConfig,
-  persistentSearchCache: false,
-  preservePageScroll: false,
-  queryModifications: withCategoryMetadata
-} satisfies CategoryConfig
