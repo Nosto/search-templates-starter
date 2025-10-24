@@ -100,6 +100,8 @@ export function useRovingFocus(parentElement: HTMLElement | null, selector: stri
 
     // Use MutationObserver to detect when elements are added/removed
     const observer = new MutationObserver(() => {
+      const newElements = Array.from(parentElement.querySelectorAll(selector)) as HTMLElement[]
+      setFocusableElements(newElements)
       updateTabIndices()
     })
 
