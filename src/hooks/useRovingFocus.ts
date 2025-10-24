@@ -35,9 +35,9 @@ export function useRovingFocus(parentElement: HTMLElement | null, selector: stri
       let newIndex = currentIndex
 
       if (direction === "back") {
-        newIndex = currentIndex === 0 ? focusableElements.length - 1 : currentIndex - 1
+        newIndex = currentIndex === 0 ? currentIndex : currentIndex - 1
       } else if (direction === "front") {
-        newIndex = currentIndex === focusableElements.length - 1 ? 0 : currentIndex + 1
+        newIndex = currentIndex === focusableElements.length - 1 ? currentIndex : currentIndex + 1
       }
 
       setFocusedIndex(newIndex)
