@@ -1,15 +1,14 @@
 import Button from "@/elements/Button/Button"
-import { speechToTextSupported, useActions, useSpeechToText } from "@nosto/search-js/preact/hooks"
+import { speechToTextSupported, useSpeechToText } from "@nosto/search-js/preact/hooks"
 
-export function SpeechToTextButton() {
-  const { newSearch } = useActions()
+type Props = {
+  onSubmit: (input: string) => void
+}
+
+export function SpeechToTextButton({ onSubmit }: Props) {
   const { startListening, listening, stopListening } = useSpeechToText({
     interimResults: true,
-    onResult: value => {
-      newSearch({
-        query: value
-      })
-    }
+    onResult: onSubmit
   })
 
   if (!speechToTextSupported) {

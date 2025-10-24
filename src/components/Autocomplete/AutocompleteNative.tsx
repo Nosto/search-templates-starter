@@ -34,7 +34,7 @@ export default function AutocompleteNative({ onSubmit }: Props) {
           ref: searchInputRef
         }}
       />
-      <SpeechToTextButton />
+      <SpeechToTextButton onSubmit={onSearchSubmit} />
       <button type="submit">Search</button>
       {showAutocomplete && <Results onSubmit={onSearchSubmit} />}
     </form>
