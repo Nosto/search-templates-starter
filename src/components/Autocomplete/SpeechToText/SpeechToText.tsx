@@ -18,7 +18,7 @@ export function SpeechToTextButton() {
 
   return (
     <Button
-      aria-label={listening ? 'Stop voice search' : 'Start voice search'}
+      aria-label={listening ? "Stop voice search" : "Start voice search"}
       onClick={() => {
         if (listening) {
           stopListening()
