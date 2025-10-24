@@ -11,6 +11,10 @@
   background-color: #0c080811;
 }
 
+.focused {
+  outline: 2px solid var(--ns-color-focus);
+}
+
 .image {
   height: auto;
   object-fit: contain;

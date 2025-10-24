@@ -11,3 +11,7 @@
 .keyword:hover {
   background-color: var(--ns-color-grey-light);
 }
+
+.focused {
+  outline: 2px solid var(--ns-color-focus);
+}
