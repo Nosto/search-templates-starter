@@ -2,6 +2,7 @@ import Results from "@/components/Autocomplete/Results/Results"
 import { useRef } from "preact/hooks"
 import { SearchInput } from "@nosto/search-js/preact/autocomplete"
 import { useAutocomplete } from "./useAutocomplete"
+import { SpeechToTextButton } from "./SpeechToText/SpeechToText"
 
 type Props = {
   onSubmit: (input: string) => void
@@ -33,6 +34,7 @@ export default function AutocompleteNative({ onSubmit }: Props) {
           ref: searchInputRef
         }}
       />
+      <SpeechToTextButton onSubmit={onSearchSubmit} />
       <button type="submit">Search</button>
       {showAutocomplete && <Results onSubmit={onSearchSubmit} />}
     </form>
