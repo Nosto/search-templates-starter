@@ -12,11 +12,7 @@
 
 .container:focus,
 .container:hover {
-  background-color: #0c080811;
-}
-
-.focused {
-  outline: 2px solid var(--ns-color-focus);
+  background-color: var(--ns-color-focus);
 }
 
 .name {
