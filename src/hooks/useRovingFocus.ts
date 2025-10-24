@@ -8,7 +8,7 @@ const keyToDirection: Record<string, "back" | "front"> = {
   ArrowRight: "front"
 }
 
-export function useRovingFocus(parentElement: RefObject<HTMLElement>, selector: string = ".ns-autocomplete-element") {
+export function useRovingFocus(parentElement: RefObject<HTMLElement>, selector: string) {
   const [focusedIndex, setFocusedIndex] = useState(0)
   const [focusableElements, setFocusableElements] = useState<HTMLElement[]>([])
 
