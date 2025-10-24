@@ -1,12 +1,9 @@
 import { defineConfig, devices } from "@playwright/test"
 
-// Check if we're in a sandboxed environment where browsers can't be installed
-const isInSandbox = process.env.CI || process.env.SANDBOX_MODE || !process.stdout.isTTY
-
 export default defineConfig({
   testDir: "./test/e2e",
   fullyParallel: false,
-  retries: isInSandbox ? 0 : 3, // Don't retry in sandbox environments
+  retries: 3,
   use: {
     baseURL: "http://localhost:8000",
     trace: "on-first-retry",
