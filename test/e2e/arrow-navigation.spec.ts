@@ -17,6 +17,8 @@ test.describe("Arrow Navigation", () => {
     await searchInput.fill("running")
     await expect(dropdownContent).toContainText("running shoes", { timeout: dropdownTimeout })
 
+    await page.keyboard.press("Tab")
+
     // Get all focusable autocomplete elements
     const autocompleteElements = page.locator(".ns-autocomplete-element")
 
@@ -60,6 +62,8 @@ test.describe("Arrow Navigation", () => {
     await searchInput.fill("running")
     await expect(dropdownContent).toContainText("running shoes", { timeout: dropdownTimeout })
 
+    await page.keyboard.press("Tab")
+
     // Get first focusable element (should be a keyword suggestion)
     const firstElement = page.locator(".ns-autocomplete-element").first()
 
@@ -82,6 +86,8 @@ test.describe("Arrow Navigation", () => {
     // Type to trigger autocomplete
     await searchInput.fill("running")
     await expect(dropdownContent).toContainText("running shoes", { timeout: dropdownTimeout })
+
+    await page.keyboard.press("Tab")
 
     const autocompleteElements = page.locator(".ns-autocomplete-element")
     const elementCount = await autocompleteElements.count()
