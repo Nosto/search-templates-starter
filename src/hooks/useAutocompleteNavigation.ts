@@ -3,11 +3,11 @@ import { useEffect, useCallback, useState } from "preact/hooks"
 type UseAutocompleteNavigationProps = {
   formRef: preact.RefObject<HTMLFormElement>
   isOpen: boolean
-  onClose: () => void
   onSubmit: (query: string) => void
+  setShowAutocomplete: (show: boolean) => void
 }
 
-export function useAutocompleteNavigation({ formRef, isOpen, onClose, onSubmit }: UseAutocompleteNavigationProps) {
+export function useAutocompleteNavigation({ formRef, isOpen, onSubmit, setShowAutocomplete }: UseAutocompleteNavigationProps) {
   const [focusedIndex, setFocusedIndex] = useState<number>(-1)
 
   const getElements = useCallback(() => {
@@ -17,24 +17,28 @@ export function useAutocompleteNavigation({ formRef, isOpen, onClose, onSubmit }
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      if (!isOpen) return
+      if (e.key === "ArrowDown" && !isOpen) {
+        e.preventDefault()
+        setShowAutocomplete(true)
+      } else if (!isOpen) {
+        return
+      }
 
       const elements = getElements()
-      if (elements.length === 0) return
+      if (elements.length === 0) {
+        return
+      }
 
-      if (e.key === "ArrowDown") {
-        e.preventDefault()
+      e.preventDefault()
+
+      if (e.key === "ArrowDown" || e.key === "Tab") {
         const newIndex = (focusedIndex + 1) % elements.length
         setFocusedIndex(newIndex)
       } else if (e.key === "ArrowUp") {
-        e.preventDefault()
         const newIndex = (focusedIndex - 1 + elements.length) % elements.length
         setFocusedIndex(newIndex)
-      } else if (e.key === "Tab") {
-        onClose()
       } else if (e.key === "Enter") {
         if (focusedIndex >= 0) {
-          e.preventDefault()
           const element = elements[focusedIndex]
           const query = element.dataset.nostoQuery
           if (query) {
@@ -44,14 +48,19 @@ export function useAutocompleteNavigation({ formRef, isOpen, onClose, onSubmit }
           }
         }
       } else if (e.key === "Escape") {
-        onClose()
+        setShowAutocomplete(false)
       }
     },
-    [isOpen, focusedIndex, getElements, onClose, onSubmit]
+    [isOpen, focusedIndex, getElements, setShowAutocomplete, onSubmit]
   )
 
   useEffect(() => {
     const elements = getElements()
+    if (focusedIndex === (elements.length - 1)) {
+        formRef.current?.querySelector("input")?.focus()
+        setShowAutocomplete(false)
+        return
+    }
     elements.forEach((element, index) => {
       if (index === focusedIndex) {
         element.setAttribute("tabindex", "0")

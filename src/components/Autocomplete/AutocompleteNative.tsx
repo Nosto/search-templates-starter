@@ -22,7 +22,7 @@ export default function AutocompleteNative({ onSubmit }: Props) {
   useAutocompleteNavigation({
     formRef: autocompleteRef,
     isOpen: showAutocomplete,
-    onClose: () => setShowAutocomplete(false),
+    setShowAutocomplete,
     onSubmit: onSearchSubmit
   })
 
