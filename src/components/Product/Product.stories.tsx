@@ -21,29 +21,14 @@ export const Default: Story = {
   }
 }
 
-export const WithSingleMode: Story = {
+export const WithAlternateImage: Story = {
   args: {
-    product: mockProductWithAlt,
-    imageMode: "single"
+    product: mockProductWithAlt
   },
   parameters: {
     docs: {
       description: {
-        story: "Product with single image mode - only shows the primary image, ignoring alternates."
-      }
-    }
-  }
-}
-
-export const WithAlternateMode: Story = {
-  args: {
-    product: mockProductWithAlt,
-    imageMode: "alternate"
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Product with alternate image mode - hover over the product to see the alternate image."
+        story: "Product with alternate image - hover over the product to see the alternate image."
       }
     }
   }
@@ -51,13 +36,12 @@ export const WithAlternateMode: Story = {
 
 export const NoAlternateImage: Story = {
   args: {
-    product: mockSerpProduct,
-    imageMode: "alternate"
+    product: mockSerpProduct
   },
   parameters: {
     docs: {
       description: {
-        story: "Product with alternate mode but no alternate image available. Hover has no effect."
+        story: "Product with no alternate image available. Hover has no effect."
       }
     }
   }
