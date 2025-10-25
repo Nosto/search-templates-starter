@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import QuickAdd from "./QuickAdd"
 import type { Product } from "@/types"
-import { mockProduct, mockProductNoSale, createMockProduct } from "../../mocks/products"
+import { mockProduct, mockProductNoSale, createMockProduct } from "@mocks/products"
 
 const meta: Meta<typeof QuickAdd> = {
   title: "Components/QuickAdd",

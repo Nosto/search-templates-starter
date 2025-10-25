@@ -69,6 +69,7 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
 
   // TODO render price and listPrice of selected variant if available
   // TODO add cycling through images when multiple images are available
+  // TODO render SKU dropdown for non-Shopify setups
 
   return (
     <dialog className={styles.modal} aria-labelledby="modal-title" ref={dialogRef} onClick={handleOnClick}>
