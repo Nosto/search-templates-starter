@@ -8,17 +8,13 @@ import ProductImages, { type ProductImagesMode } from "./ProductImages"
 type Props = {
   product: Product
   children?: preact.JSX.Element | preact.JSX.Element[]
-  showAltOnHover?: boolean
   /** Mode for displaying product images */
   imageMode?: ProductImagesMode
 }
 
-export default function Product({ product, children, showAltOnHover = true, imageMode }: Props) {
-  const hasAlternateImage = showAltOnHover && product.alternateImageUrls && product.alternateImageUrls.length > 0
+export default function Product({ product, children, imageMode = "alternate" }: Props) {
+  const hasAlternateImage = product.alternateImageUrls && product.alternateImageUrls.length > 0
   const isNew = product.datePublished && product.datePublished >= Date.now() - 14 * 24 * 60 * 60 * 1000
-
-  // Determine image mode based on props and legacy showAltOnHover
-  const resolvedImageMode: ProductImagesMode = imageMode || (showAltOnHover ? "alternate" : "single")
 
   return (
     <SerpElement
@@ -33,12 +29,7 @@ export default function Product({ product, children, showAltOnHover = true, imag
         href: product.url
       }}
     >
-      <ProductImages
-        imageUrl={product.imageUrl!}
-        alternateImageUrls={product.alternateImageUrls}
-        alt={product.name}
-        mode={resolvedImageMode}
-      >
+      <ProductImages product={product} mode={imageMode}>
         {isNew && <div className={styles.newRibbon}>New</div>}
       </ProductImages>
       <div className={styles.info} data-nosto-element="product">

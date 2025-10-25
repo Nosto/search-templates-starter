@@ -1,30 +1,25 @@
 import { useState } from "preact/hooks"
 import styles from "./Product.module.css"
 import ProductImage from "./ProductImage"
+import type { Product } from "@/types"
 
 export type ProductImagesMode = "single" | "alternate" | "carousel"
 
 type ProductImagesProps = {
-  /** Primary image URL */
-  imageUrl: string
-  /** Alternative image URLs */
-  alternateImageUrls?: string[]
-  /** Alt text for images */
-  alt?: string
+  /** Product data */
+  product: Product
   /** Display mode for images */
   mode?: ProductImagesMode
   /** Additional children (like new ribbon) */
   children?: preact.ComponentChildren
 }
 
-export default function ProductImages({
-  imageUrl,
-  alternateImageUrls = [],
-  alt,
-  mode = "alternate",
-  children
-}: ProductImagesProps) {
+export default function ProductImages({ product, mode = "alternate", children }: ProductImagesProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+
+  const imageUrl = product.imageUrl!
+  const alternateImageUrls = product.alternateImageUrls || []
+  const alt = product.name
 
   // All available images (primary + alternates)
   const allImages = [imageUrl, ...alternateImageUrls]

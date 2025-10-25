@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import ProductImages from "./ProductImages"
-import { createMockRandomImage } from "@mocks/images"
+import { createMockProduct } from "@mocks/products"
 
 export default {
   title: "Components/Product/ProductImages",
@@ -13,14 +13,18 @@ export default {
 
 type Story = StoryObj<typeof ProductImages>
 
-const mockImageUrl = createMockRandomImage()
-const mockAlternateUrls = [createMockRandomImage(), createMockRandomImage(), createMockRandomImage()]
+const mockProductWithAlts = createMockProduct({
+  name: "Product with Multiple Images"
+})
+
+const mockProductNoAlts = createMockProduct({
+  name: "Single Image Product",
+  alternateImageUrls: []
+})
 
 export const SingleMode: Story = {
   args: {
-    imageUrl: mockImageUrl,
-    alternateImageUrls: mockAlternateUrls,
-    alt: "Single mode product image",
+    product: mockProductWithAlts,
     mode: "single"
   },
   parameters: {
@@ -34,9 +38,7 @@ export const SingleMode: Story = {
 
 export const AlternateMode: Story = {
   args: {
-    imageUrl: mockImageUrl,
-    alternateImageUrls: [mockAlternateUrls[0]],
-    alt: "Alternate mode product image",
+    product: mockProductWithAlts,
     mode: "alternate"
   },
   parameters: {
@@ -50,9 +52,7 @@ export const AlternateMode: Story = {
 
 export const AlternateModeNoAlt: Story = {
   args: {
-    imageUrl: mockImageUrl,
-    alternateImageUrls: [],
-    alt: "No alternate image",
+    product: mockProductNoAlts,
     mode: "alternate"
   },
   parameters: {
@@ -66,9 +66,7 @@ export const AlternateModeNoAlt: Story = {
 
 export const CarouselMode: Story = {
   args: {
-    imageUrl: mockImageUrl,
-    alternateImageUrls: mockAlternateUrls,
-    alt: "Carousel mode product images",
+    product: mockProductWithAlts,
     mode: "carousel"
   },
   parameters: {
@@ -82,9 +80,7 @@ export const CarouselMode: Story = {
 
 export const CarouselModeSingleImage: Story = {
   args: {
-    imageUrl: mockImageUrl,
-    alternateImageUrls: [],
-    alt: "Carousel with single image",
+    product: mockProductNoAlts,
     mode: "carousel"
   },
   parameters: {
@@ -98,9 +94,7 @@ export const CarouselModeSingleImage: Story = {
 
 export const WithNewRibbon: Story = {
   args: {
-    imageUrl: mockImageUrl,
-    alternateImageUrls: mockAlternateUrls,
-    alt: "Product with new ribbon",
+    product: mockProductWithAlts,
     mode: "carousel",
     children: (
       <div style="position: absolute; top: 8px; left: 8px; background: white; padding: 8px; z-index: 1;">New</div>
@@ -117,9 +111,7 @@ export const WithNewRibbon: Story = {
 
 export const DefaultMode: Story = {
   args: {
-    imageUrl: mockImageUrl,
-    alternateImageUrls: mockAlternateUrls,
-    alt: "Default mode"
+    product: mockProductWithAlts
   },
   parameters: {
     docs: {
