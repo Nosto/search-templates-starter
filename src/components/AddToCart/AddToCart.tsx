@@ -21,11 +21,11 @@ export default function AddToCart({ product, type, children }: Props) {
       const skus = product.skus || []
       if (skus.length <= 1) {
         const skuId = skus[0]?.id || product.productId
-        if (skuId) {
+        if (skuId && product.productId) {
           addToCart(
             type,
             {
-              productId: product.productId!,
+              productId: product.productId,
               url: product.url,
               skuId
             },
@@ -46,16 +46,18 @@ export default function AddToCart({ product, type, children }: Props) {
 
   const handleAddFromModal = useCallback(
     (selectedSkuId: string) => {
-      addToCart(
-        type,
-        {
-          productId: product.productId!,
-          url: product.url,
-          skuId: selectedSkuId
-        },
-        1
-      )
-      setShowModal(false)
+      if (product.productId) {
+        addToCart(
+          type,
+          {
+            productId: product.productId,
+            url: product.url,
+            skuId: selectedSkuId
+          },
+          1
+        )
+        setShowModal(false)
+      }
     },
     [product, type]
   )

@@ -56,11 +56,13 @@ export default function Modal({ product, onClose, onAddToCart }: Props) {
   )
 
   // Create target element for portal if it doesn't exist
-  if (!document.querySelector("#modal-root")) {
-    const modalRoot = document.createElement("div")
-    modalRoot.id = "modal-root"
-    document.body.appendChild(modalRoot)
-  }
+  useEffect(() => {
+    if (!document.querySelector("#modal-root")) {
+      const modalRoot = document.createElement("div")
+      modalRoot.id = "modal-root"
+      document.body.appendChild(modalRoot)
+    }
+  }, [])
 
   return (
     <Portal target="#modal-root">
@@ -86,7 +88,7 @@ export default function Modal({ product, onClose, onAddToCart }: Props) {
             {product.imageUrl && <img src={product.imageUrl} alt={product.name} className={styles.image} />}
 
             <div className={styles.variantSection} ref={variantSelectorRef}>
-              <VariantSelector handle={product.handle || product.productId!} preselect={true} />
+              <VariantSelector handle={product.handle || product.productId || "unknown"} preselect={true} />
             </div>
           </div>
 
