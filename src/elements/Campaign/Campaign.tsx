@@ -21,7 +21,7 @@ declare module "preact/jsx-runtime" {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
-      "nosto-campaign": CampaignProps & { children?: ComponentChildren }
+      "nosto-campaign": CampaignProps
     }
   }
 }
