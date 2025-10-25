@@ -67,7 +67,7 @@
   left: 8px;
 }
 
-.addToCart {
+.quickAdd {
   composes: ribbon;
   bottom: 8px;
   left: 8px;
@@ -76,6 +76,6 @@
   display: none;
 }
 
-.container:hover .addToCart {
+.container:hover .quickAdd {
   display: block;
 }

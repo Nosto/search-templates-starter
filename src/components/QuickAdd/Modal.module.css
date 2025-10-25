@@ -1,17 +1,28 @@
 .modal {
+  display: none;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background: white;
-  border-radius: 8px;
+  border: none;
+  border-radius: 0;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  max-width: 600px;
+  max-width: 700px;
   width: 90%;
   max-height: 90vh;
   overflow: hidden;
-  display: flex;
   flex-direction: column;
+  padding: 0;
+  margin: 0;
+}
+
+.modal[open] {
+  display: flex;
+}
+
+.modal::backdrop {
+  background-color: rgb(0 0 0 / 50%);
 }
 
 .header {
@@ -30,15 +41,15 @@
 }
 
 .content {
-  padding: 1.5rem;
+  padding: 1rem;
   overflow-y: auto;
   flex: 1;
 }
 
 .columns {
-  display: flex;
-  gap: 1.5rem;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
 }
 
 .leftColumn {
@@ -51,11 +62,11 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  max-width: 300px;
 }
 
 .image {
   width: 100%;
-  max-width: 200px;
   height: auto;
   border-radius: 4px;
   display: block;
@@ -83,4 +94,10 @@
 .addToCartButton:disabled {
   background-color: #d1d5db;
   cursor: not-allowed;
+}
+
+.close {
+  position: absolute;
+  top: 4px;
+  right: 4px;
 }

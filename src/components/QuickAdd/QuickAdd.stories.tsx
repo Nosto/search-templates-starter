@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/preact"
-import AddToCart from "./AddToCart"
+import QuickAdd from "./QuickAdd"
 import type { Product } from "@/types"
 
-const meta: Meta<typeof AddToCart> = {
-  title: "Components/AddToCart",
-  component: AddToCart,
+const meta: Meta<typeof QuickAdd> = {
+  title: "Components/QuickAdd",
+  component: QuickAdd,
   tags: ["autodocs"],
   parameters: {
     docs: {
       description: {
         component:
-          "AddToCart component that handles single and multiple SKU products. For single SKU products, it adds to cart directly. For multiple SKU products, it shows a modal with variant selection."
+          "QuickAdd component that handles single and multiple SKU products. For single SKU products, it adds to cart directly. For multiple SKU products, it shows a modal with variant selection."
       }
     }
   },
@@ -23,7 +23,7 @@ const meta: Meta<typeof AddToCart> = {
 }
 
 export default meta
-type Story = StoryObj<typeof AddToCart>
+type Story = StoryObj<typeof QuickAdd>
 
 const singleSkuProduct: Product = {
   productId: "single-sku-product",
