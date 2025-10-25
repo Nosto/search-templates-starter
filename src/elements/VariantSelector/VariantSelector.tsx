@@ -41,7 +41,7 @@ declare module "preact/jsx-runtime" {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
-      "nosto-variant-selector": VariantSelectorProps & { ref?: preact.Ref<HTMLElement> }
+      "nosto-variant-selector": VariantSelectorProps
     }
   }
 }

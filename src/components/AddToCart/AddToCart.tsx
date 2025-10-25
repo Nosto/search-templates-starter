@@ -7,7 +7,7 @@ import Modal from "./Modal"
 
 type Props = {
   product: Product
-  type: SearchTrackOptions
+  type?: SearchTrackOptions
   children: ComponentChildren
   className?: string
 }
