@@ -131,7 +131,8 @@ export const NewProductOnSale: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Product with both 'New' and 'Sale' ribbons displayed - new product that is also on sale."
+        story:
+          "Product with 'Sale' ribbon displayed - when a product is both new and on sale, only the sale ribbon is shown."
       }
     }
   }
