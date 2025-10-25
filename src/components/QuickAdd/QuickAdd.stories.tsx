@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import QuickAdd from "./QuickAdd"
 import type { Product } from "@/types"
+import { mockProduct, mockProductNoSale, createMockProduct } from "../../mocks/products"
 
 const meta: Meta<typeof QuickAdd> = {
   title: "Components/QuickAdd",
@@ -26,41 +27,29 @@ export default meta
 type Story = StoryObj<typeof QuickAdd>
 
 const singleSkuProduct: Product = {
-  productId: "single-sku-product",
+  ...mockProduct,
   name: "Single SKU T-Shirt",
-  url: "https://example.com/products/single-sku-tshirt",
   handle: "single-sku-tshirt",
-  imageUrl: "https://via.placeholder.com/300x300/FF6B6B/FFFFFF?text=T-Shirt",
-  price: 24.99,
-  priceText: "$24.99",
   skus: [
     {
       id: "sku-single-001",
-      price: 24.99,
-      priceText: "$24.99",
+      price: mockProduct.price,
+      priceText: mockProduct.priceText,
       name: "Single SKU T-Shirt"
     }
   ]
 }
 
 const noSkuProduct: Product = {
-  productId: "no-sku-product",
+  ...mockProductNoSale,
   name: "Simple Product",
-  url: "https://example.com/products/simple-product",
-  handle: "simple-product",
-  imageUrl: "https://via.placeholder.com/300x300/4ECDC4/FFFFFF?text=Simple",
-  price: 19.99,
-  priceText: "$19.99"
+  handle: "simple-product"
 }
 
-const multipleSkuProduct: Product = {
+const multipleSkuProduct: Product = createMockProduct({
   productId: "multiple-sku-product",
   name: "Multi-Variant Hoodie",
-  url: "https://example.com/products/multi-variant-hoodie",
   handle: "multi-variant-hoodie",
-  imageUrl: "https://via.placeholder.com/300x300/45B7D1/FFFFFF?text=Hoodie",
-  price: 49.99,
-  priceText: "$49.99",
   skus: [
     {
       id: "sku-hoodie-s-red",
@@ -93,7 +82,7 @@ const multipleSkuProduct: Product = {
       name: "Multi-Variant Hoodie - Medium Blue"
     }
   ]
-}
+})
 
 export const SingleSKU: Story = {
   args: {
