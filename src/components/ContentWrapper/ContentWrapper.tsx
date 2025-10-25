@@ -12,8 +12,13 @@ type ContentWrapperProps = {
 }
 
 /**
- * ContentWrapper takes a function to render non-empty results in the content area.
- * On loading nothing is shown and for empty results the NoResults component is used.
+ * A wrapper component that manages the layout and loading states for content areas.
+ * Provides a consistent structure with sidebar integration and handles empty/loading states.
+ * Only renders content when the application is initialized and manages loading indicators.
+ *
+ * @param type - The data-nosto-element attribute value for analytics tracking
+ * @param children - A render function that receives loading and foundProducts state
+ * @returns A layout wrapper with sidebar and content area, or null if not initialized
  */
 function ContentWrapper({ type, children }: ContentWrapperProps) {
   const { foundProducts, loading, initialized } = useNostoAppState(state => ({
@@ -34,6 +39,14 @@ function ContentWrapper({ type, children }: ContentWrapperProps) {
   )
 }
 
+/**
+ * Higher-order function that wraps a content component with the ContentWrapper layout.
+ * Creates a new component that automatically handles layout, sidebar, and loading states.
+ *
+ * @param type - The data-nosto-element attribute for analytics tracking
+ * @param Component - A render function component that receives ContentChildrenProps
+ * @returns A new component wrapped with ContentWrapper functionality
+ */
 export function wrapContent(type: string, Component: ContentWrapperProps["children"]) {
   // eslint-disable-next-line react/display-name
   return () => <ContentWrapper type={type}>{Component}</ContentWrapper>

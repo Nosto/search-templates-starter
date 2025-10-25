@@ -5,6 +5,13 @@ import { updateUrl } from "@/mapping/url/updateUrl"
 
 import { useEffect } from "preact/hooks"
 
+/**
+ * A utility component that synchronizes search state between URL parameters and application state.
+ * Handles initialization of search from URL parameters on page load and updates the URL
+ * whenever search parameters change. Does not render any visual content.
+ *
+ * @returns null (this component only handles side effects and doesn't render content)
+ */
 export default function SearchQueryHandler() {
   const { newSearch } = useActions()
 

@@ -11,6 +11,16 @@ type Props = {
   showAltOnHover?: boolean
 }
 
+/**
+ * A comprehensive product card component that displays product information with interactive features.
+ * Supports alternate image display on hover, new product badges, ratings, and price comparisons.
+ * Integrates with Nosto's SERP element tracking for analytics and provides accessible navigation.
+ *
+ * @param product - Product data object containing all display information (name, price, images, etc.)
+ * @param children - Optional child elements to render within the product card (e.g., add to cart buttons)
+ * @param showAltOnHover - Whether to show alternate product images on hover (defaults to true)
+ * @returns An interactive product card with image, details, and optional child elements
+ */
 export default function Product({ product, children, showAltOnHover = true }: Props) {
   const hasAlternateImage = showAltOnHover && product.alternateImageUrls && product.alternateImageUrls.length > 0
   const isNew = product.datePublished && product.datePublished >= Date.now() - 14 * 24 * 60 * 60 * 1000

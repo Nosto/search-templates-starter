@@ -12,6 +12,15 @@ type Props = {
   className?: string
 }
 
+/**
+ * A button component that toggles the filter sidebar visibility.
+ * Displays the current number of selected filters as a badge when filters are active.
+ * Integrates with the SidebarContext to control sidebar state.
+ *
+ * @param selectedFiltersCount - Number of currently active filters to display in badge
+ * @param className - Additional CSS classes to apply to the button
+ * @returns A filter toggle button with selected filters count badge
+ */
 function ToggleFilterSidebarButton({ selectedFiltersCount, className }: Props) {
   const { toggle } = useFilterSidebar()
 
@@ -25,6 +34,13 @@ function ToggleFilterSidebarButton({ selectedFiltersCount, className }: Props) {
   )
 }
 
+/**
+ * The main toolbar component for search and category pages.
+ * Provides filter toggle button, results count display, and sort options.
+ * Shows loading states and manages responsive layout between left and right sections.
+ *
+ * @returns A toolbar with filter controls, results summary, and sorting options
+ */
 export default function Toolbar() {
   const { loading } = useNostoAppState(state => pick(state, "loading"))
   const { activeSort, setSort } = useSort(sortOptions)

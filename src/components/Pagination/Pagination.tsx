@@ -9,6 +9,17 @@ type Props = {
   ariaLabel?: string
 } & JSX.IntrinsicElements["a"]
 
+/**
+ * A specialized link component for pagination controls.
+ * Provides consistent styling and accessibility for pagination navigation links.
+ *
+ * @param onClick - Click handler for the pagination link
+ * @param href - URL for the pagination target (used for SEO and fallback navigation)
+ * @param className - Additional CSS classes to apply
+ * @param ariaLabel - Accessibility label for screen readers
+ * @param children - Content to display within the link (page numbers, icons, etc.)
+ * @returns A styled pagination link with proper accessibility attributes
+ */
 function PageLink({ onClick, href, className, ariaLabel, children }: Props) {
   return (
     <a className={cl(style.link, className)} href={href} aria-label={ariaLabel} onClick={onClick}>
@@ -17,6 +28,13 @@ function PageLink({ onClick, href, className, ariaLabel, children }: Props) {
   )
 }
 
+/**
+ * A complete pagination component with first/last, previous/next, and page number navigation.
+ * Provides accessible navigation with proper ARIA labels and prevents page reload
+ * by handling search state updates internally. Automatically scrolls to top on page change.
+ *
+ * @returns A full-featured pagination control with accessibility and SEO-friendly URLs
+ */
 export default function Pagination() {
   const { prev, first, pages, last, next } = usePagination({
     width: 5

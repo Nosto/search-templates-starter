@@ -15,6 +15,13 @@ import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import Portal from "@/elements/Portal/Portal"
 import AutocompleteInjected from "@/components/Autocomplete/AutocompleteInjected"
 
+/**
+ * The search results page application for injected mode.
+ * Integrates search functionality into existing websites by rendering components
+ * into specific DOM selectors. Includes autocomplete and search results display.
+ *
+ * @returns A search application that injects into existing website structure
+ */
 function SerpApp() {
   const { newSearch } = useActions()
 
@@ -43,6 +50,13 @@ function SerpApp() {
   )
 }
 
+/**
+ * The category browsing application for injected mode.
+ * Injects category functionality into existing websites using DOM selectors.
+ * Provides category product filtering and display capabilities.
+ *
+ * @returns A category browsing application for injection into existing sites
+ */
 function CategoryApp() {
   return (
     <ErrorBoundary>
@@ -56,6 +70,11 @@ function CategoryApp() {
   )
 }
 
+/**
+ * Initializes the injected application based on page type detection.
+ * Creates appropriate provider wrappers and renders the correct app component
+ * for either search or category functionality in injected mode.
+ */
 async function init() {
   await new Promise(nostojs)
   const dummy = document.createElement("div")

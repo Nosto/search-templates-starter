@@ -6,6 +6,13 @@ import { useActions } from "@nosto/search-js/preact/hooks"
 import { useCallback } from "preact/hooks"
 import { nostojs } from "@nosto/nosto-js"
 
+/**
+ * The main search interface component that combines autocomplete functionality with search submission.
+ * Integrates with Nosto's search tracking to record search events and handles search state management.
+ * Provides a complete search experience with autocomplete suggestions and search submission handling.
+ *
+ * @returns A search interface with autocomplete functionality and search submission tracking
+ */
 export function Search() {
   const { newSearch } = useActions()
 
