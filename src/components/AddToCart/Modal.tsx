@@ -1,4 +1,4 @@
-import { useCallback, useState, useRef, useEffect } from "preact/hooks"
+import { useCallback, useState, useEffect } from "preact/hooks"
 import type { Product } from "@/types"
 import Portal from "@/elements/Portal/Portal"
 import VariantSelector from "@/elements/VariantSelector/VariantSelector"
@@ -12,23 +12,9 @@ type Props = {
 
 export default function Modal({ product, onClose, onAddToCart }: Props) {
   const [selectedSkuId, setSelectedSkuId] = useState<string>("")
-  const variantSelectorRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    const handleVariantChange = (event: CustomEvent) => {
-      const { variant } = event.detail
-      if (variant?.id) {
-        setSelectedSkuId(variant.id)
-      }
-    }
-
-    const selectorElement = variantSelectorRef.current?.querySelector("nosto-variant-selector")
-    if (selectorElement) {
-      selectorElement.addEventListener("variantchange", handleVariantChange as EventListener)
-      return () => {
-        selectorElement.removeEventListener("variantchange", handleVariantChange as EventListener)
-      }
-    }
+  const handleVariantChange = useCallback((variant: { id: string }) => {
+    setSelectedSkuId(variant.id)
   }, [])
 
   const handleAddToCart = useCallback(() => {
@@ -90,9 +76,13 @@ export default function Modal({ product, onClose, onAddToCart }: Props) {
                 {product.imageUrl && <img src={product.imageUrl} alt={product.name} className={styles.image} />}
               </div>
               <div className={styles.rightColumn}>
-                <div className={styles.variantSection} ref={variantSelectorRef}>
+                <div className={styles.variantSection}>
                   {product.handle || product.productId ? (
-                    <VariantSelector handle={product.handle || product.productId} preselect={true} />
+                    <VariantSelector
+                      handle={product.handle || product.productId}
+                      preselect={true}
+                      onVariantChange={handleVariantChange}
+                    />
                   ) : (
                     <div role="alert" style={{ color: "red", padding: "1em" }}>
                       Unable to display product options. Product identifier is missing.
