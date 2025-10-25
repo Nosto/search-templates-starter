@@ -30,7 +30,8 @@ function extractClassNames(cssContent: string) {
     classes.add(match[1])
   }
 
-  return Array.from(classes)
+  // drop all composed classes
+  return Array.from(classes).filter(className => !cssContent.includes(`composes: ${className}`))
 }
 
 function findTsxFilesImportingCssModule(cssModulePath: string, srcPath: string) {

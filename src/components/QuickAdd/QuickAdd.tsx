@@ -15,40 +15,17 @@ type Props = {
 export default function AddToCart({ product, type, children, className }: Props) {
   const [showModal, setShowModal] = useState(false)
 
-  const handleClick = useCallback(
-    (e: Event) => {
-      e.preventDefault()
-      e.stopPropagation()
-
-      // If product has no SKUs or only one SKU, add to cart directly
-      const skus = product.skus || []
-      if (skus.length <= 1) {
-        const skuId = skus[0]?.id || product.productId
-        if (skuId && product.productId) {
-          addToCart(
-            type,
-            {
-              productId: product.productId,
-              url: product.url,
-              skuId
-            },
-            1
-          )
-        }
-      } else {
-        // Multiple SKUs - show modal for variant selection
-        setShowModal(true)
-      }
-    },
-    [product, type]
-  )
+  const handleClick = useCallback((e: Event) => {
+    e.preventDefault()
+    setShowModal(true)
+  }, [])
 
   const handleModalClose = useCallback((e: Event) => {
     e.preventDefault()
     setShowModal(false)
   }, [])
 
-  const handleAddFromModal = useCallback(
+  const handleAddToCart = useCallback(
     (selectedSkuId: string) => {
       if (product.productId) {
         addToCart(
@@ -71,7 +48,7 @@ export default function AddToCart({ product, type, children, className }: Props)
       <button onClick={handleClick} className={className}>
         {children}
       </button>
-      <Modal product={product} show={showModal} onClose={handleModalClose} onAddToCart={handleAddFromModal} />
+      <Modal product={product} show={showModal} onClose={handleModalClose} onAddToCart={handleAddToCart} />
     </>
   )
 }

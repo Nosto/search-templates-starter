@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "preact/hooks"
 import { toAttributes } from "@/utils/toAttributes"
 import type { VariantSelector as CustomElement } from "@nosto/web-components"
+import { JSX } from "preact"
 
-type VariantSelectorProps = Pick<CustomElement, keyof typeof CustomElement.properties>
+type VariantSelectorProps = Pick<CustomElement, keyof typeof CustomElement.properties> & JSX.IntrinsicElements["span"]
 
 type Props = VariantSelectorProps & { onVariantChange?: (variant: { id: string }) => void }
 
