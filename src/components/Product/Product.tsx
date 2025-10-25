@@ -1,5 +1,4 @@
 import { SerpElement } from "@nosto/search-js/preact/serp"
-import { cl } from "@nosto/search-js/utils"
 import styles from "./Product.module.css"
 import type { Product } from "@/types"
 import { renderRatingStars } from "./renderRatingStars"
@@ -13,7 +12,6 @@ type Props = {
 }
 
 export default function Product({ product, children, imageMode = "alternate" }: Props) {
-  const hasAlternateImage = product.alternateImageUrls && product.alternateImageUrls.length > 0
   const isNew = product.datePublished && product.datePublished >= Date.now() - 14 * 24 * 60 * 60 * 1000
 
   return (
@@ -25,7 +23,7 @@ export default function Product({ product, children, imageMode = "alternate" }: 
       }}
       componentProps={{
         "aria-label": `Product ${product.name}`,
-        className: cl(styles.container, hasAlternateImage && styles.altContainer),
+        className: styles.container,
         href: product.url
       }}
     >

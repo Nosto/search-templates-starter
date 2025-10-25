@@ -1,5 +1,5 @@
 import { useState } from "preact/hooks"
-import styles from "./Product.module.css"
+import styles from "./ProductImages.module.css"
 import ProductImage from "./ProductImage"
 import type { Product } from "@/types"
 
@@ -33,7 +33,7 @@ export default function ProductImages({ product, mode = "alternate", children }:
   )
 
   const renderAlternateMode = () => (
-    <div className={styles.image}>
+    <div className={`${styles.image} ${hasAlternateImages ? styles.alternateContainer : ""}`}>
       <ProductImage src={imageUrl} alt={alt} />
       {hasAlternateImages && <ProductImage src={alternateImageUrls[0]} alt={alt} />}
       {children}
@@ -57,37 +57,44 @@ export default function ProductImages({ product, mode = "alternate", children }:
       setCurrentImageIndex(prev => (prev === allImages.length - 1 ? 0 : prev + 1))
     }
 
+    const handleIndicatorClick = (index: number) => (e: MouseEvent) => {
+      e.preventDefault()
+      e.stopPropagation()
+      setCurrentImageIndex(index)
+    }
+
     return (
       <div className={`${styles.image} ${styles.carousel}`}>
-        <ProductImage src={allImages[currentImageIndex]} alt={alt} />
+        <div className={styles.carouselContainer} style={{ transform: `translateX(-${currentImageIndex * 100}%)` }}>
+          {allImages.map((imageUrl, index) => (
+            <div key={index} className={styles.carouselSlide}>
+              <ProductImage src={imageUrl} alt={`${alt} - Image ${index + 1}`} />
+            </div>
+          ))}
+        </div>
+
         {allImages.length > 1 && (
           <>
-            <button
-              className={`${styles.carouselButton} ${styles.carouselPrev}`}
-              onClick={handlePrevious}
-              aria-label="Previous image"
-              type="button"
-            >
-              ‹
-            </button>
-            <button
-              className={`${styles.carouselButton} ${styles.carouselNext}`}
-              onClick={handleNext}
-              aria-label="Next image"
-              type="button"
-            >
-              ›
-            </button>
+            <div className={styles.carouselControls}>
+              <button
+                className={styles.carouselButton}
+                onClick={handlePrevious}
+                aria-label="Previous image"
+                type="button"
+              >
+                ‹
+              </button>
+              <button className={styles.carouselButton} onClick={handleNext} aria-label="Next image" type="button">
+                ›
+              </button>
+            </div>
+
             <div className={styles.carouselIndicators}>
               {allImages.map((_, index) => (
                 <button
                   key={index}
                   className={`${styles.carouselIndicator} ${index === currentImageIndex ? styles.active : ""}`}
-                  onClick={(e: MouseEvent) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    setCurrentImageIndex(index)
-                  }}
+                  onClick={handleIndicatorClick(index)}
                   aria-label={`Go to image ${index + 1}`}
                   type="button"
                 />
@@ -95,6 +102,7 @@ export default function ProductImages({ product, mode = "alternate", children }:
             </div>
           </>
         )}
+
         {children}
       </div>
     )
