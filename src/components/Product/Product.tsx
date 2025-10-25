@@ -32,17 +32,15 @@ export default function Product({ product, children, showAltOnHover = true }: Pr
       <div className={styles.image}>
         <ProductImage src={product.imageUrl!} alt={product.name} />
         {hasAlternateImage && <ProductImage src={product.alternateImageUrls![0]} alt={product.name} />}
-        {isNew && <div className={styles.newRibbon}>New</div>}
-        {isOnSale && <div className={styles.saleRibbon}>Sale</div>}
+        {isNew && <div className={styles.ribbon}>New</div>}
+        {isOnSale && <div className={`${styles.ribbon} ${styles.sale}`}>Sale</div>}
       </div>
       <div className={styles.info} data-nosto-element="product">
         {product.brand && <div>{product.brand}</div>}
         <div>{product.name}</div>
         <div aria-label="Price">
           <span>{product.priceText}</span>
-          {product.listPrice && product.price && product.listPrice > product.price && (
-            <span className={styles.specialPrice}>{product.listPriceText}</span>
-          )}
+          {isOnSale && <span className={styles.specialPrice}>{product.listPriceText}</span>}
         </div>
         {product.ratingValue !== undefined && product.reviewCount ? (
           <div aria-label={`${product.ratingValue} out of 5 stars, ${product.reviewCount} reviews`}>

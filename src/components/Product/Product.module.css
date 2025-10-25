@@ -51,7 +51,7 @@
   margin-left: var(--ns-space-2);
 }
 
-.newRibbon {
+.ribbon {
   position: absolute;
   top: 8px;
   left: 8px;
@@ -63,14 +63,9 @@
   text-align: center;
 }
 
-.saleRibbon {
-  position: absolute;
-  top: 8px;
+.ribbon.sale {
   right: 8px;
+  left: auto;
   background-color: var(--ns-color-red);
   color: var(--ns-color-white);
-  font-size: var(--ns-font-size-4);
-  padding: 8px;
-  z-index: 1;
-  text-align: center;
 }
