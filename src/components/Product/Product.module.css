@@ -62,3 +62,15 @@
   z-index: 1;
   text-align: center;
 }
+
+.saleRibbon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: var(--ns-color-red);
+  color: var(--ns-color-white);
+  font-size: var(--ns-font-size-4);
+  padding: 8px;
+  z-index: 1;
+  text-align: center;
+}
