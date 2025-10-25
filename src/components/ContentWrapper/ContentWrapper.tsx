@@ -15,7 +15,7 @@ type ContentWrapperProps = {
  * ContentWrapper takes a function to render non-empty results in the content area.
  * On loading nothing is shown and for empty results the NoResults component is used.
  */
-function ContentWrapper({ type, children }: ContentWrapperProps) {
+export default function ContentWrapper({ type, children }: ContentWrapperProps) {
   const { foundProducts, loading, initialized } = useNostoAppState(state => ({
     foundProducts: (state.response.products?.total || 0) > 0,
     loading: state.loading,

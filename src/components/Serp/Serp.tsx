@@ -5,7 +5,7 @@ import { ContentChildrenProps, wrapContent } from "@/components/ContentWrapper/C
 import { InfiniteScroll } from "@nosto/search-js/preact/common"
 import NoResults from "@/components/NoResults/NoResults"
 
-export function SerpBody({ foundProducts, loading }: ContentChildrenProps) {
+function SerpBody({ foundProducts, loading }: ContentChildrenProps) {
   if (!foundProducts && !loading) return <NoResults />
   return (
     <>
@@ -16,7 +16,8 @@ export function SerpBody({ foundProducts, loading }: ContentChildrenProps) {
   )
 }
 
-export function SerpBodyInfiniteScroll({ foundProducts, loading }: ContentChildrenProps) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function SerpBodyInfiniteScroll({ foundProducts, loading }: ContentChildrenProps) {
   if (!foundProducts && !loading) return <NoResults />
   return (
     <>

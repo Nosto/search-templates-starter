@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/preact"
-import { Search } from "./Search"
+import Search from "./Search"
 import { withSearchContext } from ".storybook/decorators"
 
 export default {

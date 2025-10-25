@@ -37,7 +37,8 @@ export default function Product({ hit }: Props) {
   )
 }
 
-export function DynamicCardProduct({ hit }: Props) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function DynamicCardProduct({ hit }: Props) {
   return (
     <AutocompleteElement
       key={hit.productId}

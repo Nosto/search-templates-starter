@@ -2,7 +2,7 @@ import Results from "@/components/Autocomplete/Results/Results"
 import { useRef } from "preact/hooks"
 import { SearchInput } from "@nosto/search-js/preact/autocomplete"
 import { useAutocomplete } from "./useAutocomplete"
-import { SpeechToTextButton } from "./SpeechToText/SpeechToText"
+import SpeechToTextButton from "./SpeechToText/SpeechToText"
 
 type Props = {
   onSubmit: (input: string) => void

@@ -5,7 +5,7 @@ type Props = {
   onSubmit: (input: string) => void
 }
 
-export function SpeechToTextButton({ onSubmit }: Props) {
+export default function SpeechToTextButton({ onSubmit }: Props) {
   const { startListening, listening, stopListening } = useSpeechToText({
     interimResults: true,
     onResult: onSubmit

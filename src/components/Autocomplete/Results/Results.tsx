@@ -2,7 +2,7 @@ import { useNostoAppState, useResponse } from "@nosto/search-js/preact/hooks"
 import style from "./Results.module.css"
 import Keywords from "./Keywords"
 import Products from "./Products"
-import { History } from "./History"
+import History from "./History"
 
 type ResultsProps = {
   onSubmit: (query: string) => void

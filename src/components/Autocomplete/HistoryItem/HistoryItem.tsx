@@ -8,7 +8,7 @@ type HistoryItemProps = {
   onSubmit: (query: string) => void
 }
 
-export function HistoryItem({ item, highlighted, onSubmit }: HistoryItemProps) {
+export default function HistoryItem({ item, highlighted, onSubmit }: HistoryItemProps) {
   return (
     <HistoryElement key={item} onSubmit={() => onSubmit(item)}>
       <div className={cl(styles.container, highlighted && styles.highlighted)}>
