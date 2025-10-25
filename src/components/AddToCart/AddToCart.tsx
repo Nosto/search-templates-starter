@@ -16,6 +16,7 @@ export default function AddToCart({ product, type, children }: Props) {
 
   const handleClick = useCallback(
     (e: Event) => {
+      e.preventDefault()
       e.stopPropagation()
 
       // If product has no SKUs or only one SKU, add to cart directly
