@@ -19,13 +19,13 @@ type Props = {
 
 function defaultSkuId(product: Product) {
   if (product.skus?.length === 1) {
-    return product.skus[0].id ?? ""
+    return product.skus[0].id
   }
-  return ""
+  return undefined
 }
 
 export default function Modal({ product, show, onClose, onAddToCart }: Props) {
-  const [selectedSkuId, setSelectedSkuId] = useState<string>(defaultSkuId(product))
+  const [selectedSkuId, setSelectedSkuId] = useState(defaultSkuId(product))
   const dialogRef = useRef<HTMLDialogElement>(null)
   const renderSelector = show && product.skus && product.skus.length > 1
 
