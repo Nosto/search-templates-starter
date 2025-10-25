@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { useCallback, useEffect, useRef, useState } from "preact/hooks"
+import { useCallback, useEffect, useMemo, useRef, useState } from "preact/hooks"
 import type { Product } from "@/types"
 import VariantSelector from "@/elements/VariantSelector/VariantSelector"
 import styles from "./Modal.module.css"
@@ -29,6 +29,19 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null)
   const renderSelector = product.skus && product.skus.length > 1
 
+  const data = useMemo(() => {
+    if (selectedSkuId) {
+      const sku = product.skus?.find(sku => sku.id === selectedSkuId)
+      return {
+        imageUrl: sku?.imageUrl || product.imageUrl,
+        priceText: sku?.priceText || product.priceText,
+        // @ts-expect-error FIXME
+        listPriceText: sku?.listPriceText || product.listPriceText
+      }
+    }
+    return product
+  }, [product, selectedSkuId])
+
   useEffect(() => {
     const dialog = dialogRef.current
     startViewTransition(() => {
@@ -41,8 +54,7 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
   }, [show])
 
   const handleVariantChange = useCallback((variant: { id: string }) => {
-    console.log("Selected variant:", variant)
-    setSelectedSkuId(variant.id)
+    setSelectedSkuId(String(variant.id))
   }, [])
 
   const handleAddToCart = useCallback(
@@ -67,7 +79,6 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
     [onClose]
   )
 
-  // TODO render price and listPrice of selected variant if available
   // TODO add cycling through images when multiple images are available
   // TODO render SKU dropdown for non-Shopify setups
 
@@ -79,14 +90,14 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
       <div className={styles.content}>
         <div className={styles.columns}>
           <div className={styles.leftColumn}>
-            {product.imageUrl && <ProductImage src={product.imageUrl} alt={product.name} className={styles.image} />}
+            {data.imageUrl && <ProductImage src={data.imageUrl} alt={product.name} className={styles.image} />}
           </div>
           <div className={styles.rightColumn}>
             <Heading>{product.name}</Heading>
             <div aria-label="Price">
-              <span>{product.priceText}</span>
+              <span>{data.priceText}</span>
               {product.listPrice && product.price && product.listPrice > product.price && (
-                <span className={styles.specialPrice}>{product.listPriceText}</span>
+                <span className={styles.specialPrice}>{data.listPriceText}</span>
               )}
             </div>
             {renderSelector ? (
