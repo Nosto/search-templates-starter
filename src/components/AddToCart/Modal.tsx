@@ -85,17 +85,19 @@ export default function Modal({ product, onClose, onAddToCart }: Props) {
           </div>
 
           <div className={styles.content}>
-            {product.imageUrl && <img src={product.imageUrl} alt={product.name} className={styles.image} />}
-
-            <div className={styles.variantSection} ref={variantSelectorRef}>
-              <VariantSelector handle={product.handle || product.productId || "unknown"} preselect={true} />
+            <div className={styles.columns}>
+              <div className={styles.leftColumn}>
+                {product.imageUrl && <img src={product.imageUrl} alt={product.name} className={styles.image} />}
+              </div>
+              <div className={styles.rightColumn}>
+                <div className={styles.variantSection} ref={variantSelectorRef}>
+                  <VariantSelector handle={product.handle || product.productId || "unknown"} preselect={true} />
+                </div>
+                <button className={styles.addToCartButton} onClick={handleAddToCart} disabled={!selectedSkuId}>
+                  Add to Cart
+                </button>
+              </div>
             </div>
-          </div>
-
-          <div className={styles.footer}>
-            <button className={styles.addToCartButton} onClick={handleAddToCart} disabled={!selectedSkuId}>
-              Add to Cart
-            </button>
           </div>
         </div>
       </div>
