@@ -27,7 +27,7 @@ function defaultSkuId(product: Product) {
 export default function Modal({ product, show, onClose, onAddToCart }: Props) {
   const [selectedSkuId, setSelectedSkuId] = useState<string>(defaultSkuId(product))
   const dialogRef = useRef<HTMLDialogElement>(null)
-  const renderSelector = product.skus && product.skus.length > 1
+  const renderSelector = show && product.skus && product.skus.length > 1
 
   const data = useMemo(() => {
     if (selectedSkuId) {
