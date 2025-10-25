@@ -13,6 +13,19 @@ type Props = {
   id?: string
 }
 
+/**
+ * An interactive dual-range slider component for selecting minimum and maximum values within a range.
+ * Supports both mouse drag and keyboard navigation with full accessibility features.
+ * Provides visual feedback during dragging and properly handles edge cases.
+ *
+ * @param min - The minimum possible value for the range
+ * @param max - The maximum possible value for the range
+ * @param value - Current range selection as [minValue, maxValue] where undefined represents the boundary values
+ * @param onChange - Callback function called when the range values change
+ * @param className - Additional CSS classes to apply to the component container
+ * @param id - Optional HTML id attribute for the component
+ * @returns An accessible dual-range slider with mouse and keyboard interaction support
+ */
 export default function DualRange({ min, max, value, onChange, className, id }: Props) {
   const trackRef = useRef<HTMLDivElement>(null)
   const [isDragging, setIsDragging] = useState<"min" | "max" | null>(null)
