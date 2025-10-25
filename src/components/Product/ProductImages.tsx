@@ -50,13 +50,13 @@ export default function ProductImages({
       return renderSingleMode()
     }
 
-    const handlePrevious = (e: Event) => {
+    const handlePrevious = (e: MouseEvent) => {
       e.preventDefault()
       e.stopPropagation()
       setCurrentImageIndex(prev => (prev === 0 ? allImages.length - 1 : prev - 1))
     }
 
-    const handleNext = (e: Event) => {
+    const handleNext = (e: MouseEvent) => {
       e.preventDefault()
       e.stopPropagation()
       setCurrentImageIndex(prev => (prev === allImages.length - 1 ? 0 : prev + 1))
@@ -88,7 +88,7 @@ export default function ProductImages({
                 <button
                   key={index}
                   className={`${styles.carouselIndicator} ${index === currentImageIndex ? styles.active : ""}`}
-                  onClick={e => {
+                  onClick={(e: MouseEvent) => {
                     e.preventDefault()
                     e.stopPropagation()
                     setCurrentImageIndex(index)
