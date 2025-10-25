@@ -32,7 +32,7 @@ export default function Product({ product, children, showAltOnHover = true }: Pr
       <div className={styles.image}>
         <ProductImage src={product.imageUrl!} alt={product.name} />
         {hasAlternateImage && <ProductImage src={product.alternateImageUrls![0]} alt={product.name} />}
-        {isNew && <div className={styles.ribbon}>New</div>}
+        {isNew && !isOnSale && <div className={styles.ribbon}>New</div>}
         {isOnSale && <div className={`${styles.ribbon} ${styles.sale}`}>Sale</div>}
       </div>
       <div className={styles.info} data-nosto-element="product">

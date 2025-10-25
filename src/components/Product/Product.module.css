@@ -64,8 +64,6 @@
 }
 
 .ribbon.sale {
-  right: 8px;
-  left: auto;
   background-color: var(--ns-color-red);
   color: var(--ns-color-white);
 }
