@@ -1,23 +1,27 @@
 import { useState } from "preact/hooks"
+import type { ComponentChildren } from "preact"
 import styles from "./ProductImages.module.css"
 import ProductImage from "./ProductImage"
 import type { Product } from "@/types"
 
 export type ProductImagesMode = "single" | "alternate" | "carousel"
 
-type ImageComponentProps = {
-  imageUrl: string
-  alternateImageUrls: string[]
-  alt: string
-  children?: preact.ComponentChildren
+type ProductImagesPropsWithoutMode = {
+  /** Product data */
+  product: Product
+  /** Additional children (like new ribbon) */
+  children?: ComponentChildren
 }
 
-type CarouselComponentProps = ImageComponentProps & {
+type CarouselComponentProps = ProductImagesPropsWithoutMode & {
   currentImageIndex: number
   setCurrentImageIndex: (index: number) => void
 }
 
-function ImageSingle({ imageUrl, alt, children }: ImageComponentProps) {
+function ImageSingle({ product, children }: ProductImagesPropsWithoutMode) {
+  const imageUrl = product.imageUrl!
+  const alt = product.name
+
   return (
     <div className={styles.image}>
       <ProductImage src={imageUrl} alt={alt} />
@@ -26,8 +30,12 @@ function ImageSingle({ imageUrl, alt, children }: ImageComponentProps) {
   )
 }
 
-function ImageAlternate({ imageUrl, alternateImageUrls, alt, children }: ImageComponentProps) {
+function ImageAlternate({ product, children }: ProductImagesPropsWithoutMode) {
+  const imageUrl = product.imageUrl!
+  const alternateImageUrls = product.alternateImageUrls || []
+  const alt = product.name
   const hasAlternateImages = alternateImageUrls.length > 0
+
   return (
     <div className={`${styles.image} ${hasAlternateImages ? styles.alternateContainer : ""}`}>
       <ProductImage src={imageUrl} alt={alt} />
@@ -37,22 +45,14 @@ function ImageAlternate({ imageUrl, alternateImageUrls, alt, children }: ImageCo
   )
 }
 
-function ImageCarousel({
-  imageUrl,
-  alternateImageUrls,
-  alt,
-  currentImageIndex,
-  setCurrentImageIndex,
-  children
-}: CarouselComponentProps) {
+function ImageCarousel({ product, currentImageIndex, setCurrentImageIndex, children }: CarouselComponentProps) {
+  const imageUrl = product.imageUrl!
+  const alternateImageUrls = product.alternateImageUrls || []
+  const alt = product.name
   const allImages = [imageUrl, ...alternateImageUrls]
 
   if (allImages.length <= 1) {
-    return (
-      <ImageSingle imageUrl={imageUrl} alternateImageUrls={alternateImageUrls} alt={alt}>
-        {children}
-      </ImageSingle>
-    )
+    return <ImageSingle product={product}>{children}</ImageSingle>
   }
 
   const handleScroll = (e: Event) => {
@@ -119,23 +119,15 @@ function ImageCarousel({
   )
 }
 
-type ProductImagesProps = {
-  /** Product data */
-  product: Product
+type ProductImagesProps = ProductImagesPropsWithoutMode & {
   /** Display mode for images */
   mode?: ProductImagesMode
-  /** Additional children (like new ribbon) */
-  children?: preact.ComponentChildren
 }
 
 export default function ProductImages({ product, mode = "alternate", children }: ProductImagesProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
-  const imageUrl = product.imageUrl!
-  const alternateImageUrls = product.alternateImageUrls || []
-  const alt = product.name
-
-  const commonProps = { imageUrl, alternateImageUrls, alt, children }
+  const commonProps = { product, children }
 
   switch (mode) {
     case "single":
