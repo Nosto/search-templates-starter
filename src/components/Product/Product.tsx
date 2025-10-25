@@ -3,17 +3,22 @@ import { cl } from "@nosto/search-js/utils"
 import styles from "./Product.module.css"
 import type { Product } from "@/types"
 import { renderRatingStars } from "./renderRatingStars"
-import ProductImage from "./ProductImage"
+import ProductImages, { type ProductImagesMode } from "./ProductImages"
 
 type Props = {
   product: Product
   children?: preact.JSX.Element | preact.JSX.Element[]
   showAltOnHover?: boolean
+  /** Mode for displaying product images */
+  imageMode?: ProductImagesMode
 }
 
-export default function Product({ product, children, showAltOnHover = true }: Props) {
+export default function Product({ product, children, showAltOnHover = true, imageMode }: Props) {
   const hasAlternateImage = showAltOnHover && product.alternateImageUrls && product.alternateImageUrls.length > 0
   const isNew = product.datePublished && product.datePublished >= Date.now() - 14 * 24 * 60 * 60 * 1000
+
+  // Determine image mode based on props and legacy showAltOnHover
+  const resolvedImageMode: ProductImagesMode = imageMode || (showAltOnHover ? "alternate" : "single")
 
   return (
     <SerpElement
@@ -28,11 +33,14 @@ export default function Product({ product, children, showAltOnHover = true }: Pr
         href: product.url
       }}
     >
-      <div className={styles.image}>
-        <ProductImage src={product.imageUrl!} alt={product.name} />
-        {hasAlternateImage && <ProductImage src={product.alternateImageUrls![0]} alt={product.name} />}
+      <ProductImages
+        imageUrl={product.imageUrl!}
+        alternateImageUrls={product.alternateImageUrls}
+        alt={product.name}
+        mode={resolvedImageMode}
+      >
         {isNew && <div className={styles.newRibbon}>New</div>}
-      </div>
+      </ProductImages>
       <div className={styles.info} data-nosto-element="product">
         {product.brand && <div>{product.brand}</div>}
         <div>{product.name}</div>

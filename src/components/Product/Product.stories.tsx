@@ -89,3 +89,31 @@ export const OldProduct: Story = {
     }
   }
 }
+
+export const SingleImageMode: Story = {
+  args: {
+    product: mockProductWithAlt,
+    imageMode: "single"
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Product using single image mode - only shows the primary image."
+      }
+    }
+  }
+}
+
+export const CarouselImageMode: Story = {
+  args: {
+    product: mockProductWithAlt,
+    imageMode: "carousel"
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Product using carousel image mode - allows navigation through multiple images. Hover to see controls."
+      }
+    }
+  }
+}
