@@ -23,14 +23,7 @@ export default function Modal({ product, onClose, onAddToCart }: Props) {
     }
   }, [selectedSkuId, onAddToCart])
 
-  const handleBackdropClick = useCallback(
-    (e: Event) => {
-      if (e.target === e.currentTarget) {
-        onClose()
-      }
-    },
-    [onClose]
-  )
+
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -41,20 +34,17 @@ export default function Modal({ product, onClose, onAddToCart }: Props) {
     [onClose]
   )
 
-  // Create target element for portal if it doesn't exist
-  useEffect(() => {
-    if (!document.querySelector("#modal-root")) {
-      const modalRoot = document.createElement("div")
-      modalRoot.id = "modal-root"
-      document.body.appendChild(modalRoot)
-    }
-  }, [])
+
 
   return (
     <Portal target="#modal-root">
       <div
         className={styles.backdrop}
-        onClick={handleBackdropClick}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) {
+            onClose()
+          }
+        }}
         onKeyDown={handleKeyDown}
         role="button"
         tabIndex={0}
@@ -77,17 +67,11 @@ export default function Modal({ product, onClose, onAddToCart }: Props) {
               </div>
               <div className={styles.rightColumn}>
                 <div className={styles.variantSection}>
-                  {product.handle || product.productId ? (
-                    <VariantSelector
-                      handle={product.handle || product.productId}
-                      preselect={true}
-                      onVariantChange={handleVariantChange}
-                    />
-                  ) : (
-                    <div role="alert" style={{ color: "red", padding: "1em" }}>
-                      Unable to display product options. Product identifier is missing.
-                    </div>
-                  )}
+                  <VariantSelector
+                    handle={product.handle!}
+                    preselect={true}
+                    onVariantChange={handleVariantChange}
+                  />
                 </div>
                 <button className={styles.addToCartButton} onClick={handleAddToCart} disabled={!selectedSkuId}>
                   Add to Cart
