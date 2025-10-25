@@ -44,13 +44,15 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
 
   useEffect(() => {
     const dialog = dialogRef.current
-    startViewTransition(() => {
-      if (show) {
-        dialog?.showModal()
-      } else {
-        dialog?.close()
-      }
-    })
+    if (dialog) {
+      startViewTransition(() => {
+        if (show) {
+          dialog.showModal()
+        } else {
+          dialog.close()
+        }
+      })
+    }
   }, [show])
 
   const handleVariantChange = useCallback((variant: { id: string }) => {
