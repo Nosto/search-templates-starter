@@ -6,8 +6,7 @@ import {
   mockNewProduct,
   mockOldProduct,
   mockProductOnSale,
-  mockProductNoSalePrice,
-  mockNewProductOnSale
+  mockProductNoSalePrice
 } from "@mocks/products"
 import { withSearchContext } from ".storybook/decorators"
 
@@ -119,20 +118,6 @@ export const ProductNoSale: Story = {
     docs: {
       description: {
         story: "Product without 'Sale' ribbon because the price equals the list price."
-      }
-    }
-  }
-}
-
-export const NewProductOnSale: Story = {
-  args: {
-    product: mockNewProductOnSale
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Product with 'Sale' ribbon displayed - when a product is both new and on sale, only the sale ribbon is shown."
       }
     }
   }
