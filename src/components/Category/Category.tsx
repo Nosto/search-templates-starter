@@ -5,7 +5,7 @@ import { ContentChildrenProps, wrapContent } from "@/components/ContentWrapper/C
 import { InfiniteScroll } from "@nosto/search-js/preact/common"
 import NoResults from "@/components/NoResults/NoResults"
 
-function CategoryBody({ foundProducts, loading }: ContentChildrenProps) {
+export function CategoryBody({ foundProducts, loading }: ContentChildrenProps) {
   if (!foundProducts && !loading) return <NoResults />
   return (
     <>
@@ -16,8 +16,7 @@ function CategoryBody({ foundProducts, loading }: ContentChildrenProps) {
   )
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function CategoryBodyInfiniteScroll({ foundProducts, loading }: ContentChildrenProps) {
+export function CategoryBodyInfiniteScroll({ foundProducts, loading }: ContentChildrenProps) {
   if (!foundProducts && !loading) return <NoResults />
   return (
     <>

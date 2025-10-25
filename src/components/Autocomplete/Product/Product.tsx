@@ -1,7 +1,6 @@
 import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
 import style from "./Product.module.css"
 import type { Product } from "@/types"
-import DynamicCard from "@/elements/DynamicCard/DynamicCard"
 
 type Props = {
   hit: Product
@@ -33,21 +32,6 @@ export default function Product({ hit }: Props) {
           )}
         </div>
       </div>
-    </AutocompleteElement>
-  )
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function DynamicCardProduct({ hit }: Props) {
-  return (
-    <AutocompleteElement
-      key={hit.productId}
-      hit={{
-        productId: hit.productId!,
-        url: hit.url
-      }}
-    >
-      <DynamicCard handle={hit.handle!} template="card" />
     </AutocompleteElement>
   )
 }

@@ -15,7 +15,7 @@ type SidebarProviderProps = {
   initialOpen?: boolean
 }
 
-export default function SidebarProvider({ children, initialOpen = false }: SidebarProviderProps) {
+export function SidebarProvider({ children, initialOpen = false }: SidebarProviderProps) {
   const [isOpen, setOpen] = useState(initialOpen)
 
   const toggle = () => {

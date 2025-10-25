@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/preact"
 import { describe, it, expect } from "vitest"
-import SidebarProvider, { useFilterSidebar } from "@/contexts/SidebarContext"
+import { SidebarProvider, useFilterSidebar } from "@/contexts/SidebarContext"
 
 function TestSidebarComponent() {
   const { isOpen, toggle, setOpen } = useFilterSidebar()

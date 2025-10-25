@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Toolbar from "./Toolbar"
-import SidebarProvider from "@/contexts/SidebarContext"
+import { SidebarProvider } from "@/contexts/SidebarContext"
 import { withContainer, withSearchContext } from ".storybook/decorators"
 
 export default {
