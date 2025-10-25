@@ -25,7 +25,7 @@
   opacity: 1;
 }
 
-/* Modern CSS-based carousel */
+/* Modern scroll-based carousel */
 .carousel {
   position: relative;
   overflow: hidden;
@@ -33,64 +33,26 @@
 
 .carouselContainer {
   display: flex;
-  transition: transform 0.3s ease-in-out;
-  will-change: transform;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer/Edge */
+}
+
+.carouselContainer::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 .carouselSlide {
   flex: 0 0 100%;
   width: 100%;
+  scroll-snap-align: start;
 }
 
 .carouselSlide img {
   width: 100%;
   height: auto;
   display: block;
-}
-
-.carouselControls {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 8px;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out;
-}
-
-.carousel:hover .carouselControls {
-  opacity: 1;
-}
-
-.carouselButton {
-  background-color: rgba(255, 255, 255, 0.9);
-  border: none;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  pointer-events: auto;
-  transition: background-color 0.2s ease-in-out;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.carouselButton:hover {
-  background-color: rgba(255, 255, 255, 1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-}
-
-.carouselButton:active {
-  transform: scale(0.95);
 }
 
 .carouselIndicators {
