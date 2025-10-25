@@ -201,8 +201,14 @@ describe("AddToCart", () => {
   it("should prevent event propagation when button is clicked", () => {
     const parentClickHandler = vi.fn()
 
+    const handleParentKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Enter" || e.key === " ") {
+        parentClickHandler(e)
+      }
+    }
+
     render(
-      <div onClick={parentClickHandler} onKeyDown={parentClickHandler} role="button" tabIndex={0}>
+      <div onClick={parentClickHandler} onKeyDown={handleParentKeyDown} role="button" tabIndex={0}>
         <AddToCart product={mockProduct} type="serp">
           Add to Cart
         </AddToCart>

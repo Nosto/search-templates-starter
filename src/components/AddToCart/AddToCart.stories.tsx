@@ -142,19 +142,3 @@ export const FromCategory: Story = {
     children: "Add to Bag"
   }
 }
-
-export const MockedVariantSelector: Story = {
-  args: {
-    product: multipleSkuProduct,
-    type: "serp",
-    children: "Select Options"
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "This story shows what the modal looks like with a mocked variant selector since the actual Nosto web component requires a Shopify product handle and backend integration. Note: The variant selector in the modal requires Nosto/Shopify integration to function properly. In a real application, it would show color, size, and other variant options as clickable pills."
-      }
-    }
-  }
-}

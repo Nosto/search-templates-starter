@@ -91,7 +91,13 @@ export default function Modal({ product, onClose, onAddToCart }: Props) {
               </div>
               <div className={styles.rightColumn}>
                 <div className={styles.variantSection} ref={variantSelectorRef}>
-                  <VariantSelector handle={product.handle || product.productId || "unknown"} preselect={true} />
+                  {product.handle || product.productId ? (
+                    <VariantSelector handle={product.handle || product.productId} preselect={true} />
+                  ) : (
+                    <div role="alert" style={{ color: "red", padding: "1em" }}>
+                      Unable to display product options. Product identifier is missing.
+                    </div>
+                  )}
                 </div>
                 <button className={styles.addToCartButton} onClick={handleAddToCart} disabled={!selectedSkuId}>
                   Add to Cart

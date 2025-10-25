@@ -1,13 +1,14 @@
 import { addToCart } from "@nosto/search-js"
 import { SearchTrackOptions } from "@nosto/nosto-js/client"
 import { useCallback, useState } from "preact/hooks"
+import { ComponentChildren } from "preact"
 import type { Product } from "@/types"
 import Modal from "./Modal"
 
 type Props = {
   product: Product
   type: SearchTrackOptions
-  children: preact.ComponentChildren
+  children: ComponentChildren
 }
 
 export default function AddToCart({ product, type, children }: Props) {
