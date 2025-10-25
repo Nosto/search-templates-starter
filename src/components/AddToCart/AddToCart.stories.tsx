@@ -9,7 +9,8 @@ const meta: Meta<typeof AddToCart> = {
   parameters: {
     docs: {
       description: {
-        component: "AddToCart component that handles single and multiple SKU products. For single SKU products, it adds to cart directly. For multiple SKU products, it shows a modal with variant selection."
+        component:
+          "AddToCart component that handles single and multiple SKU products. For single SKU products, it adds to cart directly. For multiple SKU products, it shows a modal with variant selection."
       }
     }
   },
@@ -119,7 +120,8 @@ export const MultipleSKUs: Story = {
   parameters: {
     docs: {
       description: {
-        story: "When a product has multiple SKUs, clicking the button opens a modal dialog for variant selection. The modal includes the product image, name, variant selector, and an add to cart button that is enabled only when a variant is selected."
+        story:
+          "When a product has multiple SKUs, clicking the button opens a modal dialog for variant selection. The modal includes the product image, name, variant selector, and an add to cart button that is enabled only when a variant is selected."
       }
     }
   }
@@ -150,7 +152,8 @@ export const MockedVariantSelector: Story = {
   parameters: {
     docs: {
       description: {
-        story: "This story shows what the modal looks like with a mocked variant selector since the actual Nosto web component requires a Shopify product handle and backend integration. Note: The variant selector in the modal requires Nosto/Shopify integration to function properly. In a real application, it would show color, size, and other variant options as clickable pills."
+        story:
+          "This story shows what the modal looks like with a mocked variant selector since the actual Nosto web component requires a Shopify product handle and backend integration. Note: The variant selector in the modal requires Nosto/Shopify integration to function properly. In a real application, it would show color, size, and other variant options as clickable pills."
       }
     }
   }

@@ -202,14 +202,17 @@ describe("AddToCart", () => {
     const parentClickHandler = vi.fn()
 
     render(
-      <div onClick={parentClickHandler}>
+      <div onClick={parentClickHandler} onKeyDown={parentClickHandler} role="button" tabIndex={0}>
         <AddToCart product={mockProduct} type="serp">
           Add to Cart
         </AddToCart>
       </div>
     )
 
-    fireEvent.click(screen.getByRole("button", { name: "Add to Cart" }))
+    // Click the inner AddToCart button, not the parent div
+    const buttons = screen.getAllByRole("button", { name: "Add to Cart" })
+    const addToCartButton = buttons.find(button => button.tagName === "BUTTON")!
+    fireEvent.click(addToCartButton)
 
     expect(parentClickHandler).not.toHaveBeenCalled()
   })
