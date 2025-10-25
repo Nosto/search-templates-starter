@@ -7,7 +7,7 @@ import Modal from "./Modal"
 
 type Props = {
   product: Product
-  type?: SearchTrackOptions
+  type: SearchTrackOptions
   children: ComponentChildren
   className?: string
 }
@@ -43,7 +43,8 @@ export default function AddToCart({ product, type, children, className }: Props)
     [product, type]
   )
 
-  const handleModalClose = useCallback(() => {
+  const handleModalClose = useCallback((e: Event) => {
+    e.preventDefault()
     setShowModal(false)
   }, [])
 

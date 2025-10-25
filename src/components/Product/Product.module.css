@@ -13,24 +13,24 @@
   position: relative;
 }
 
-.image img {
+.image > img {
   height: auto;
   width: 100%;
   transition: opacity 0.3s ease-in-out;
 }
 
-.image img:nth-child(2), .image nosto-image:nth-child(2) {
+.image > img:nth-child(2), .image nosto-image:nth-child(2) {
   position: absolute;
   top: 0;
   left: 0;
   opacity: 0;
 }
 
-.altContainer:hover .image img:nth-child(1) {
+.altContainer:hover .image > img:nth-child(1) {
   opacity: 0;
 }
 
-.altContainer:hover .image img:nth-child(2), 
+.altContainer:hover .image > img:nth-child(2), 
 .altContainer:hover .image nosto-image:nth-child(2) {
   opacity: 1;
 }
@@ -51,14 +51,31 @@
   margin-left: var(--ns-space-2);
 }
 
-.newRibbon {
+.ribbon {
   position: absolute;
-  top: 8px;
-  left: 8px;
   background-color: var(--ns-color-white);
   color: var(--ns-color-black);
   font-size: var(--ns-font-size-4);
   padding: 8px;
   z-index: 1;
   text-align: center;
+}
+
+.newRibbon {
+  composes: ribbon;
+  top: 8px;
+  left: 8px;
+}
+
+.addToCart {
+  composes: ribbon;
+  bottom: 8px;
+  left: 8px;
+  border: none;
+  cursor: pointer;
+  display: none;
+}
+
+.container:hover .addToCart {
+  display: block;
 }
