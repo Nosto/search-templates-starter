@@ -9,9 +9,10 @@ type Props = {
   product: Product
   type: SearchTrackOptions
   children: ComponentChildren
+  className?: string
 }
 
-export default function AddToCart({ product, type, children }: Props) {
+export default function AddToCart({ product, type, children, className }: Props) {
   const [showModal, setShowModal] = useState(false)
 
   const handleClick = useCallback(
@@ -66,7 +67,9 @@ export default function AddToCart({ product, type, children }: Props) {
 
   return (
     <>
-      <button onClick={handleClick}>{children}</button>
+      <button onClick={handleClick} className={className}>
+        {children}
+      </button>
       {showModal && <Modal product={product} onClose={handleModalClose} onAddToCart={handleAddFromModal} />}
     </>
   )
