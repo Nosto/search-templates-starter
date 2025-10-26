@@ -97,7 +97,7 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
       <div className={styles.content}>
         <div className={styles.columns}>
           <div className={styles.leftColumn}>
-            {data.imageUrl && <ProductImage src={data.imageUrl} alt={product.name} className={styles.image} />}
+            <ProductImage src={data.imageUrl!} alt={product.name} className={styles.image} />
           </div>
           <div className={styles.rightColumn}>
             <Heading>{product.name}</Heading>
