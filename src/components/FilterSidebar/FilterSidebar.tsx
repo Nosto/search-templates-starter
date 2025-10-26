@@ -12,8 +12,6 @@ import ClearFiltersButton from "./ClearFiltersButton/ClearFiltersButton"
 import Heading from "@/elements/Heading/Heading"
 import { useCallback, useEffect, useRef } from "preact/hooks"
 
-export const toggleButtonId = "toggle-mobile-sidebar"
-
 type ToggleProps = {
   className?: string
   onClick?: () => void
