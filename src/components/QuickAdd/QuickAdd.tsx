@@ -48,7 +48,9 @@ export default function AddToCart({ product, type, children, className }: Props)
       <button onClick={handleClick} className={className}>
         {children}
       </button>
-      <Modal product={product} show={showModal} onClose={handleModalClose} onAddToCart={handleAddToCart} />
+      {showModal ? (
+        <Modal product={product} show={showModal} onClose={handleModalClose} onAddToCart={handleAddToCart} />
+      ) : null}
     </>
   )
 }

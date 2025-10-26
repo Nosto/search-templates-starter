@@ -31,7 +31,7 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null)
   const hasMultipleSkus = product.skus && product.skus.length > 1
   // shopify variant selector based on Product API option data
-  const renderShopifySelector = shopifyMode && hasMultipleSkus && show
+  const renderShopifySelector = shopifyMode && hasMultipleSkus
   // simple generic variant selector for non-shopify mode
   const renderSimpleSelector = !shopifyMode && hasMultipleSkus
 
@@ -50,13 +50,10 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
 
   useEffect(() => {
     const dialog = dialogRef.current
-    if (dialog) {
+    if (dialog && show) {
+      // opening transition
       startViewTransition(() => {
-        if (show) {
-          dialog.showModal()
-        } else {
-          dialog.close()
-        }
+        dialog.showModal()
       })
     }
   }, [show])
@@ -75,23 +72,34 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
     [selectedSkuId, onAddToCart]
   )
 
+  const handleClose = useCallback(
+    (e: Event) => {
+      // closing transition
+      startViewTransition(() => {
+        dialogRef.current?.close()
+      })
+      onClose(e)
+    },
+    [onClose]
+  )
+
   const handleOnClick = useCallback(
     (e: MouseEvent) => {
       if (e.target === dialogRef.current) {
-        onClose(e)
+        handleClose(e)
       } else {
         e.preventDefault()
         e.stopPropagation()
       }
     },
-    [onClose]
+    [handleClose]
   )
 
   // TODO add cycling through images when multiple images are available
 
   return (
     <dialog className={styles.modal} aria-labelledby="modal-title" ref={dialogRef} onClick={handleOnClick}>
-      <Button className={styles.close} onClick={onClose}>
+      <Button className={styles.close} onClick={handleClose}>
         <Icon name="close" circle />
       </Button>
       <div className={styles.content}>
