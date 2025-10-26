@@ -11,6 +11,7 @@ import SelectedFilters from "../SelectedFilters/SelectedFilters"
 import ClearFiltersButton from "./ClearFiltersButton/ClearFiltersButton"
 import Heading from "@/elements/Heading/Heading"
 import { useCallback, useEffect, useRef } from "preact/hooks"
+import { JSX } from "preact"
 
 export const toggleButtonId = "toggle-mobile-sidebar"
 
@@ -49,34 +50,21 @@ export default function FilterSidebar() {
   }, [setOpen])
 
   const handleBackdropClick = useCallback(
-    (event: MouseEvent) => {
-      const dialog = dialogRef.current
-      if (event.target === dialog) {
+    (event: JSX.TargetedMouseEvent<HTMLDialogElement>) => {
+      if (event.target === event.currentTarget) {
         setOpen(false)
       }
     },
     [setOpen]
   )
 
-  useEffect(() => {
-    const dialog = dialogRef.current
-    if (!dialog) return
-
-    dialog.addEventListener("close", handleClose)
-    dialog.addEventListener("click", handleBackdropClick)
-
-    return () => {
-      dialog.removeEventListener("close", handleClose)
-      dialog.removeEventListener("click", handleBackdropClick)
-    }
-  }, [handleClose, handleBackdropClick])
-
   if (facets?.length === 0) {
     return null
   }
 
   return (
-    <dialog ref={dialogRef} className={styles.dialog}>
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
+    <dialog ref={dialogRef} className={styles.dialog} onClose={handleClose} onClick={handleBackdropClick}>
       <div className={styles.content}>
         <div className={styles.header}>
           <Heading>Filters</Heading>
