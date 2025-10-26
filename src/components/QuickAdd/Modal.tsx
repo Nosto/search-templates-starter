@@ -2,13 +2,13 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useCallback, useEffect, useMemo, useRef, useState } from "preact/hooks"
 import type { Product } from "@/types"
-import VariantSelector from "@/elements/VariantSelector/VariantSelector"
 import styles from "./Modal.module.css"
 import Button from "@/elements/Button/Button"
 import Icon from "@/elements/Icon/Icon"
 import Heading from "@/elements/Heading/Heading"
 import ProductImage from "../Product/ProductImage"
 import { startViewTransition } from "@/utils/viewTransition"
+import { cl } from "@nosto/search-js/utils"
 
 type Props = {
   product: Product
@@ -27,7 +27,8 @@ function defaultSkuId(product: Product) {
 export default function Modal({ product, show, onClose, onAddToCart }: Props) {
   const [selectedSkuId, setSelectedSkuId] = useState(defaultSkuId(product))
   const dialogRef = useRef<HTMLDialogElement>(null)
-  const renderSelector = show && product.skus && product.skus.length > 1
+  const hasMultipleSkus = product.skus && product.skus.length > 1
+  const renderSimpleSelector = hasMultipleSkus
 
   const data = useMemo(() => {
     if (selectedSkuId) {
@@ -54,10 +55,6 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
       })
     }
   }, [show])
-
-  const handleVariantChange = useCallback((variant: { id: string }) => {
-    setSelectedSkuId(String(variant.id))
-  }, [])
 
   const handleAddToCart = useCallback(
     (e: Event) => {
@@ -102,13 +99,18 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
                 <span className={styles.specialPrice}>{data.listPriceText}</span>
               )}
             </div>
-            {renderSelector ? (
-              <VariantSelector
-                handle={product.handle!}
-                onVariantChange={handleVariantChange}
-                className={styles.swatches}
-                preselect
-              />
+            {renderSimpleSelector ? (
+              <div className={styles.simpleSelector}>
+                {product.skus?.map(sku => (
+                  <label
+                    key={sku.id}
+                    className={cl(styles.simpleOption, selectedSkuId === sku.id && styles.active)}
+                    onClick={() => setSelectedSkuId(sku.id)}
+                  >
+                    {sku.name}
+                  </label>
+                ))}
+              </div>
             ) : null}
             <div className={styles.description}>{product.description}</div>
             <button className={styles.addToCartButton} onClick={handleAddToCart} disabled={!selectedSkuId}>
