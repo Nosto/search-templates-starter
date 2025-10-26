@@ -15,12 +15,12 @@ type Props = {
 export default function AddToCart({ product, type, children, className }: Props) {
   const [showModal, setShowModal] = useState(false)
 
-  const handleClick = useCallback((e: Event) => {
+  const openModal = useCallback((e: Event) => {
     e.preventDefault()
     setShowModal(true)
   }, [])
 
-  const handleModalClose = useCallback((e: Event) => {
+  const closeModal = useCallback((e: Event) => {
     e.preventDefault()
     setShowModal(false)
   }, [])
@@ -45,11 +45,11 @@ export default function AddToCart({ product, type, children, className }: Props)
 
   return (
     <>
-      <button onClick={handleClick} className={className}>
+      <button onClick={openModal} className={className}>
         {children}
       </button>
       {showModal ? (
-        <Modal product={product} show={showModal} onClose={handleModalClose} onAddToCart={handleAddToCart} />
+        <Modal product={product} show={showModal} onClose={closeModal} onAddToCart={handleAddToCart} />
       ) : null}
     </>
   )
