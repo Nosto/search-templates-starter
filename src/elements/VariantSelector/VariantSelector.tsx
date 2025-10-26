@@ -5,7 +5,7 @@ import { JSX } from "preact"
 
 type VariantSelectorProps = Pick<CustomElement, keyof typeof CustomElement.properties> & JSX.IntrinsicElements["span"]
 
-type Props = VariantSelectorProps & { onVariantChange?: (variant: { id: string }) => void }
+type Props = VariantSelectorProps & { onVariantChange?: (variant: { id: number }) => void }
 
 /**
  * A custom element wrapper that displays product variant options as clickable pills.

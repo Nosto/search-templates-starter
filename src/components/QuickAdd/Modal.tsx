@@ -49,16 +49,13 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
   }, [product, selectedSkuId])
 
   useEffect(() => {
-    const dialog = dialogRef.current
-    if (dialog) {
-      startViewTransition(() => {
-        if (show) {
-          dialog.showModal()
-        } else {
-          dialog.close()
-        }
-      })
-    }
+    startViewTransition(() => {
+      if (dialogRef.current?.open && !show) {
+        dialogRef.current?.close()
+      } else if (!dialogRef.current?.open && show) {
+        dialogRef.current?.showModal()
+      }
+    })
   }, [show])
 
   const handleVariantChange = useCallback((variant: { id: number }) => {
@@ -90,7 +87,13 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
   // TODO add cycling through images when multiple images are available
 
   return (
-    <dialog className={styles.modal} aria-labelledby="modal-title" ref={dialogRef} onClick={handleOnClick}>
+    <dialog
+      className={styles.modal}
+      aria-labelledby="modal-title"
+      ref={dialogRef}
+      onClick={handleOnClick}
+      onCancel={onClose}
+    >
       <Button className={styles.close} onClick={onClose}>
         <Icon name="close" circle />
       </Button>
