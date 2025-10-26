@@ -10,7 +10,7 @@ import { useFilterSidebar } from "@/contexts/SidebarContext"
 import SelectedFilters from "../SelectedFilters/SelectedFilters"
 import ClearFiltersButton from "./ClearFiltersButton/ClearFiltersButton"
 import Heading from "@/elements/Heading/Heading"
-import { useEffect, useRef } from "preact/hooks"
+import { useCallback, useEffect, useRef } from "preact/hooks"
 
 export const toggleButtonId = "toggle-mobile-sidebar"
 
@@ -37,26 +37,30 @@ export default function FilterSidebar() {
     const dialog = dialogRef.current
     if (!dialog) return
 
-    if (isOpen) {
+    if (isOpen && !dialog.open) {
       dialog.showModal()
-    } else if (dialog.open) {
+    } else if (!isOpen && dialog.open) {
       dialog.close()
     }
   }, [isOpen])
 
-  useEffect(() => {
-    const dialog = dialogRef.current
-    if (!dialog) return
+  const handleClose = useCallback(() => {
+    setOpen(false)
+  }, [setOpen])
 
-    const handleClose = () => {
-      setOpen(false)
-    }
-
-    const handleBackdropClick = (event: MouseEvent) => {
+  const handleBackdropClick = useCallback(
+    (event: MouseEvent) => {
+      const dialog = dialogRef.current
       if (event.target === dialog) {
         setOpen(false)
       }
-    }
+    },
+    [setOpen]
+  )
+
+  useEffect(() => {
+    const dialog = dialogRef.current
+    if (!dialog) return
 
     dialog.addEventListener("close", handleClose)
     dialog.addEventListener("click", handleBackdropClick)
@@ -65,7 +69,7 @@ export default function FilterSidebar() {
       dialog.removeEventListener("close", handleClose)
       dialog.removeEventListener("click", handleBackdropClick)
     }
-  }, [setOpen])
+  }, [handleClose, handleBackdropClick])
 
   if (facets?.length === 0) {
     return null
