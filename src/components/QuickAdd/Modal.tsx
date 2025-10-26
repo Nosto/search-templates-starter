@@ -110,6 +110,7 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
                 preselect
               />
             ) : null}
+            <div className={styles.description}>{product.description}</div>
             <button className={styles.addToCartButton} onClick={handleAddToCart} disabled={!selectedSkuId}>
               Add to Cart
             </button>

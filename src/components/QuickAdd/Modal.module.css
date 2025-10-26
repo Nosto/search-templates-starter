@@ -40,6 +40,10 @@
   .columns {
     grid-template-columns: 1fr 2fr;
   }
+
+  .description {
+    display: none;
+  }
 }
 
 .leftColumn {
