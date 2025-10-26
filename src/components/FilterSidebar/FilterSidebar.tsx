@@ -11,7 +11,6 @@ import SelectedFilters from "../SelectedFilters/SelectedFilters"
 import ClearFiltersButton from "./ClearFiltersButton/ClearFiltersButton"
 import Heading from "@/elements/Heading/Heading"
 import { useCallback, useEffect, useRef } from "preact/hooks"
-import { JSX } from "preact"
 
 export const toggleButtonId = "toggle-mobile-sidebar"
 
@@ -33,13 +32,10 @@ export default function FilterSidebar() {
   const { filters } = useProductFilters()
   const { isOpen, setOpen } = useFilterSidebar()
   const dialogRef = useRef<HTMLDialogElement>(null)
-  const intentedStateRef = useRef<boolean>(false)
 
   useEffect(() => {
     const dialog = dialogRef.current
     if (!dialog) return
-
-    intentedStateRef.current = isOpen
 
     if (isOpen && !dialog.open) {
       dialog.showModal()
@@ -49,14 +45,11 @@ export default function FilterSidebar() {
   }, [isOpen])
 
   const handleClose = useCallback(() => {
-    // Only update state if we're actually open to prevent redundant re-renders
-    if (intentedStateRef.current) {
-      setOpen(false)
-    }
+    setOpen(false)
   }, [setOpen])
 
   const handleBackdropClick = useCallback(
-    (event: JSX.TargetedMouseEvent<HTMLDialogElement>) => {
+    (event: MouseEvent) => {
       if (event.target === event.currentTarget) {
         setOpen(false)
       }
