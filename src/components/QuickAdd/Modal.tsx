@@ -50,15 +50,18 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
 
   useEffect(() => {
     const dialog = dialogRef.current
-    if (dialog && show) {
-      // opening transition
+    if (dialog) {
       startViewTransition(() => {
-        dialog.showModal()
+        if (show) {
+          dialog.showModal()
+        } else {
+          dialog.close()
+        }
       })
     }
   }, [show])
 
-  const handleVariantChange = useCallback((variant: { id: string }) => {
+  const handleVariantChange = useCallback((variant: { id: number }) => {
     setSelectedSkuId(String(variant.id))
   }, [])
 
@@ -72,34 +75,23 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
     [selectedSkuId, onAddToCart]
   )
 
-  const handleClose = useCallback(
-    (e: Event) => {
-      // closing transition
-      startViewTransition(() => {
-        dialogRef.current?.close()
-      })
-      onClose(e)
-    },
-    [onClose]
-  )
-
   const handleOnClick = useCallback(
     (e: MouseEvent) => {
       if (e.target === dialogRef.current) {
-        handleClose(e)
+        onClose(e)
       } else {
         e.preventDefault()
         e.stopPropagation()
       }
     },
-    [handleClose]
+    [onClose]
   )
 
   // TODO add cycling through images when multiple images are available
 
   return (
     <dialog className={styles.modal} aria-labelledby="modal-title" ref={dialogRef} onClick={handleOnClick}>
-      <Button className={styles.close} onClick={handleClose}>
+      <Button className={styles.close} onClick={onClose}>
         <Icon name="close" circle />
       </Button>
       <div className={styles.content}>
