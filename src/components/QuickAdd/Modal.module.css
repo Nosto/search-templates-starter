@@ -14,23 +14,26 @@
   flex-direction: column;
   padding: 0;
   margin: 0;
-  opacity: 0;
-  transition: opacity 0.25s ease;
+  transition: opacity 5s ease;
 }
 
 .modal[open] {
-  opacity: 1;
   display: flex;
-}
-
-.modal::backdrop {
-  background-color: rgb(0 0 0 / 50%);
-  transition: opacity 0.25s ease;
-  opacity: 0;
+  animation: fadein 0.25s ease-in forwards;
 }
 
 .modal[open]::backdrop {
-  opacity: 1;
+  background-color: rgb(0 0 0 / 50%);
+  animation: fadein 0.25s ease-in forwards;
+}
+
+@keyframes fadein{
+  0%{
+    opacity:0;
+  }
+  100%{
+    opacity:1;
+  }
 }
 
 .content {
