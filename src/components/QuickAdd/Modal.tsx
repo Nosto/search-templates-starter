@@ -7,8 +7,10 @@ import Button from "@/elements/Button/Button"
 import Icon from "@/elements/Icon/Icon"
 import Heading from "@/elements/Heading/Heading"
 import ProductImage from "../Product/ProductImage"
+import SimpleSelector from "./SimpleSelector"
+import VariantSelector from "@/elements/VariantSelector/VariantSelector"
+import { shopifyMode } from "@/config"
 import { startViewTransition } from "@/utils/viewTransition"
-import { cl } from "@nosto/search-js/utils"
 
 type Props = {
   product: Product
@@ -28,7 +30,10 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
   const [selectedSkuId, setSelectedSkuId] = useState(defaultSkuId(product))
   const dialogRef = useRef<HTMLDialogElement>(null)
   const hasMultipleSkus = product.skus && product.skus.length > 1
-  const renderSimpleSelector = hasMultipleSkus
+  // shopify variant selector based on Product API option data
+  const renderShopifySelector = shopifyMode && hasMultipleSkus && show
+  // simple generic variant selector for non-shopify mode
+  const renderSimpleSelector = !shopifyMode && hasMultipleSkus
 
   const data = useMemo(() => {
     if (selectedSkuId) {
@@ -56,6 +61,10 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
     }
   }, [show])
 
+  const handleVariantChange = useCallback((variant: { id: string }) => {
+    setSelectedSkuId(String(variant.id))
+  }, [])
+
   const handleAddToCart = useCallback(
     (e: Event) => {
       e.preventDefault()
@@ -79,7 +88,6 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
   )
 
   // TODO add cycling through images when multiple images are available
-  // TODO render SKU dropdown for non-Shopify setups
 
   return (
     <dialog className={styles.modal} aria-labelledby="modal-title" ref={dialogRef} onClick={handleOnClick}>
@@ -99,18 +107,16 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
                 <span className={styles.specialPrice}>{data.listPriceText}</span>
               )}
             </div>
+            {renderShopifySelector ? (
+              <VariantSelector
+                handle={product.handle!}
+                onVariantChange={handleVariantChange}
+                className={styles.swatches}
+                preselect
+              />
+            ) : null}
             {renderSimpleSelector ? (
-              <div className={styles.simpleSelector}>
-                {product.skus?.map(sku => (
-                  <label
-                    key={sku.id}
-                    className={cl(styles.simpleOption, selectedSkuId === sku.id && styles.active)}
-                    onClick={() => setSelectedSkuId(sku.id)}
-                  >
-                    {sku.name}
-                  </label>
-                ))}
-              </div>
+              <SimpleSelector product={product} skuId={selectedSkuId} onChange={skuId => setSelectedSkuId(skuId)} />
             ) : null}
             <div className={styles.description}>{product.description}</div>
             <button className={styles.addToCartButton} onClick={handleAddToCart} disabled={!selectedSkuId}>
