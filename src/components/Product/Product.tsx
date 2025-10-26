@@ -44,7 +44,7 @@ export default function Product({ product, children, showAltOnHover = true }: Pr
         </div>
         {product.ratingValue !== undefined && product.reviewCount ? (
           <div aria-label={`${product.ratingValue} out of 5 stars, ${product.reviewCount} reviews`}>
-            {renderRatingStars(product.ratingValue)} ({product.reviewCount})
+            {renderRatingStars(product.ratingValue)} {product.ratingValue}
           </div>
         ) : null}
       </div>
