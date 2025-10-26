@@ -17,6 +17,9 @@ build
 dist-ssr
 *.local
 
+# Bundle analysis reports
+bundle-analysis.html
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
