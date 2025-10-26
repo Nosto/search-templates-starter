@@ -118,30 +118,7 @@ npm run style-lint
 # ...with automatic fixing
 npm run lint-fix
 npm run style-lint-fix
-
-# Bundle analysis (analyze bundle size and composition)
-ANALYZE=true npm run build
 ```
-
-### Bundle Analysis
-
-To analyze your bundle size and composition, you can generate an interactive visualization report:
-
-```sh
-ANALYZE=true npm run build
-```
-
-This will create a `bundle-analysis.html` file in the `build` directory that provides:
-- Interactive treemap visualization of your bundle
-- File sizes (rendered, gzipped, and brotli compressed)
-- Module composition and dependencies
-- Ability to filter and explore different parts of your bundle
-
-After running the command, open `build/bundle-analysis.html` in your browser to explore the analysis. This is particularly useful for:
-- Identifying large dependencies that could be optimized
-- Understanding what's included in your bundle
-- Finding duplicate dependencies
-- Analyzing the impact of new features on bundle size
 
 ### Storybook
 

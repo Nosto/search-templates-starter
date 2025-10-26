@@ -13,7 +13,7 @@ export default defineConfig(({ mode = "injected" }) => {
   if (process.env.ANALYZE) {
     plugins.push(
       visualizer({
-        filename: "build/bundle-analysis.html",
+        filename: "dist/analysis.html",
         open: false,
         gzipSize: true,
         brotliSize: true,
