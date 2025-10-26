@@ -10,7 +10,6 @@ import ProductImage from "../Product/ProductImage"
 import SimpleSelector from "./SimpleSelector"
 import VariantSelector from "@/elements/VariantSelector/VariantSelector"
 import { shopifyMode } from "@/config"
-import { startViewTransition } from "@/utils/viewTransition"
 
 type Props = {
   product: Product
@@ -49,13 +48,11 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
   }, [product, selectedSkuId])
 
   useEffect(() => {
-    startViewTransition(() => {
-      if (dialogRef.current?.open && !show) {
-        dialogRef.current?.close()
-      } else if (!dialogRef.current?.open && show) {
-        dialogRef.current?.showModal()
-      }
-    })
+    if (dialogRef.current?.open && !show) {
+      dialogRef.current?.close()
+    } else if (!dialogRef.current?.open && show) {
+      dialogRef.current?.showModal()
+    }
   }, [show])
 
   const handleVariantChange = useCallback((variant: { id: number }) => {

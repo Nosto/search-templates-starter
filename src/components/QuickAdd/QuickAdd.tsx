@@ -1,19 +1,20 @@
 import { addToCart } from "@nosto/search-js"
-import { SearchTrackOptions } from "@nosto/nosto-js/client"
 import { useCallback, useState } from "preact/hooks"
 import { ComponentChildren } from "preact"
 import type { Product } from "@/types"
 import Modal from "./Modal"
+import { useConfig } from "@nosto/search-js/preact/common"
 
 type Props = {
   product: Product
-  type: SearchTrackOptions
   children: ComponentChildren
   className?: string
 }
 
-export default function AddToCart({ product, type, children, className }: Props) {
+export default function QuickAdd({ product, children, className }: Props) {
   const [showModal, setShowModal] = useState(false)
+  const { pageType } = useConfig()
+  const type = pageType === "search" ? "serp" : pageType
 
   const openModal = useCallback((e: Event) => {
     e.preventDefault()
