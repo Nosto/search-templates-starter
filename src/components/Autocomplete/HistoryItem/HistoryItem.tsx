@@ -6,7 +6,7 @@ type HistoryItemProps = {
   onSubmit: (query: string) => void
 }
 
-export function HistoryItem({ item, onSubmit }: HistoryItemProps) {
+export default function HistoryItem({ item, onSubmit }: HistoryItemProps) {
   return (
     <HistoryElement key={item} class={styles.container} onSubmit={() => onSubmit(item)}>
       <div className={styles.name}>{item}</div>
