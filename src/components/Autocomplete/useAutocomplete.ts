@@ -62,7 +62,7 @@ export function useAutocomplete({
     onKeyDown
   })
 
-  useDomEvents(clickOutsideTarget as HTMLElement | null, {
+  useDomEvents(clickOutsideTarget !== searchInputElement ? (clickOutsideTarget as HTMLElement | null) : null, {
     onKeyDown
   })
 
