@@ -2,7 +2,14 @@ export function toAttributes<T extends object>(obj: T) {
   return Object.fromEntries(Object.entries(obj).map(([key, value]) => [toAttribute(key), value])) as toAttributes<T>
 }
 
+const overrides: Record<string, string> = {
+  className: "class"
+}
+
 function toAttribute(str: string) {
+  if (overrides[str]) {
+    return overrides[str]
+  }
   return str
     .replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2")
     .replace(/([a-z])([A-Z])/g, "$1-$2")

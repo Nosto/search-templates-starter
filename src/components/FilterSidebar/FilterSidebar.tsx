@@ -10,8 +10,7 @@ import { useFilterSidebar } from "@/contexts/SidebarContext"
 import SelectedFilters from "../SelectedFilters/SelectedFilters"
 import ClearFiltersButton from "./ClearFiltersButton/ClearFiltersButton"
 import Heading from "@/elements/Heading/Heading"
-
-export const toggleButtonId = "toggle-mobile-sidebar"
+import { useCallback, useEffect, useRef } from "preact/hooks"
 
 type ToggleProps = {
   className?: string
@@ -30,58 +29,65 @@ export default function FilterSidebar() {
   const { facets } = useFacets()
   const { filters } = useProductFilters()
   const { isOpen, setOpen } = useFilterSidebar()
+  const dialogRef = useRef<HTMLDialogElement>(null)
 
-  const handleBackdropClick = () => {
+  useEffect(() => {
+    const dialog = dialogRef.current
+    if (!dialog) return
+
+    if (isOpen && !dialog.open) {
+      dialog.showModal()
+    } else if (!isOpen && dialog.open) {
+      dialog.close()
+    }
+  }, [isOpen])
+
+  const handleClose = useCallback(() => {
     setOpen(false)
-  }
+  }, [setOpen])
+
+  const handleBackdropClick = useCallback(
+    (event: MouseEvent) => {
+      if (event.target === event.currentTarget) {
+        setOpen(false)
+      }
+    },
+    [setOpen]
+  )
 
   if (facets?.length === 0) {
     return null
   }
 
   return (
-    <>
-      {/* Backdrop */}
-      {isOpen && (
-        <button
-          className={styles.backdrop}
-          onClick={handleBackdropClick}
-          onKeyDown={e => {
-            if (e.key === "Escape") {
-              handleBackdropClick()
-            }
-          }}
-          aria-label="Close sidebar filters"
-        />
-      )}
-      <div className={cl(styles.wrapper, isOpen && styles.open)}>
-        <div className={styles.content}>
-          <div className={styles.header}>
-            <Heading>Filters</Heading>
-            <ToggleSidebarButton onClick={() => setOpen(false)} />
-          </div>
-          <SelectedFilters />
-          <div>
-            <ul className={styles.facets}>
-              {facets?.map(facet => {
-                switch (facet.type) {
-                  case "terms":
-                    return <TermsFacet key={facet.id} facet={facet as SearchTermsFacet} />
-                  case "stats":
-                    return <RangeFacet key={facet.id} facet={facet as SearchStatsFacet} />
-                  default:
-                    return null
-                }
-              })}
-            </ul>
-          </div>
-          {filters.length ? (
-            <div className={styles.clearFilters}>
-              <ClearFiltersButton />
-            </div>
-          ) : null}
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
+    <dialog ref={dialogRef} className={styles.dialog} onClose={handleClose} onClick={handleBackdropClick}>
+      <div className={styles.content}>
+        <div className={styles.header}>
+          <Heading>Filters</Heading>
+          <ToggleSidebarButton onClick={() => setOpen(false)} />
         </div>
+        <SelectedFilters />
+        <div>
+          <ul className={styles.facets}>
+            {facets?.map(facet => {
+              switch (facet.type) {
+                case "terms":
+                  return <TermsFacet key={facet.id} facet={facet as SearchTermsFacet} />
+                case "stats":
+                  return <RangeFacet key={facet.id} facet={facet as SearchStatsFacet} />
+                default:
+                  return null
+              }
+            })}
+          </ul>
+        </div>
+        {filters.length ? (
+          <div className={styles.clearFilters}>
+            <ClearFiltersButton />
+          </div>
+        ) : null}
       </div>
-    </>
+    </dialog>
   )
 }
