@@ -16,6 +16,8 @@ export const sortOptions = [
   createSortOption("price", "Price ascending", { field: "price", order: "asc" })
 ]
 
+export const shopifyMode = !!window.Shopify
+
 /**
  * Default values for sort and page size for search results and categories
  */

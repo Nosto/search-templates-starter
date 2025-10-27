@@ -10,9 +10,9 @@
   padding: 4px 8px;
 }
 
-.container.highlighted,
+.container:focus,
 .container:hover {
-  background-color: #0c080811;
+  background-color: var(--ns-color-focus);
 }
 
 .name {

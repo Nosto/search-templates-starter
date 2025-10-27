@@ -18,6 +18,7 @@ This is a Preact-based search interface starter template using `@nosto/search-js
 ```bash
 npm run lint      # ESLint - must pass without errors
 npm run test      # Vitest - must pass all tests
+npm run test:e2e  # Playwright - must pass all end-to-end tests
 npm run typecheck # TypeScript - must pass without errors
 ```
 
