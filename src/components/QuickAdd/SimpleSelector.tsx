@@ -15,7 +15,7 @@ export default function SimpleSelector({ product, skuId, onChange }: Props) {
     <div className={styles.simpleSelector}>
       {product.skus?.map(sku => (
         <label
-          key={skuId}
+          key={sku.id}
           className={cl(styles.simpleOption, skuId === sku.id && styles.active)}
           onClick={() => onChange(sku.id!)}
         >
