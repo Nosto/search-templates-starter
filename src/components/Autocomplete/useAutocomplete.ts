@@ -4,7 +4,6 @@ import { useDomEvents } from "@/hooks/useDomEvents"
 import { useHistory } from "@nosto/search-js/preact/hooks"
 import { disableNativeAutocomplete } from "@nosto/search-js/utils"
 import { getInitialQuery } from "@/mapping/url/getInitialQuery"
-import { search } from "@nosto/search-js"
 
 type UseAutocompleteOptions = {
   onSubmit: (input: string) => void
@@ -70,8 +69,8 @@ export function useAutocomplete({
   )
 
   const onKeyDown = useCallback(
-    (e: Event) => {
-      if ((e as KeyboardEvent).key === "Escape") {
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
         searchInputElement?.blur()
         setShowAutocomplete(false)
       }

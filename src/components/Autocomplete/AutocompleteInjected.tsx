@@ -2,7 +2,6 @@ import Results from "@/components/Autocomplete/Results/Results"
 import { useDomEvents } from "@/hooks/useDomEvents"
 import { selectors } from "@/config"
 import { useAutocomplete } from "./useAutocomplete"
-import { useCallback } from "preact/hooks"
 
 type Props = {
   onSubmit: (input: string) => void

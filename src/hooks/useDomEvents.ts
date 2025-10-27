@@ -1,6 +1,13 @@
 import { useEffect } from "preact/hooks"
 
-type Events = Record<"onClick" | "onInput" | "onFocus" | "onKeyDown" | "onBlur" | "onSubmit", (e: Event) => void>
+type Events = {
+  onClick: (e: MouseEvent) => void
+  onInput: (e: Event) => void
+  onFocus: (e: FocusEvent) => void
+  onKeyDown: (e: KeyboardEvent) => void
+  onBlur: (e: FocusEvent) => void
+  onSubmit: (e: SubmitEvent) => void
+}
 
 export function useDomEvents(
   el: HTMLElement | null,
