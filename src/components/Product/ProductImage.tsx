@@ -1,9 +1,15 @@
 import Image from "@/elements/Image/Image"
 import { imageProps } from "./imageProps"
 
-export default function ProductImage({ src, alt }: { src: string; alt?: string }) {
-  if (src.includes("cdn.shopify.com")) {
-    return <Image src={src} alt={alt} {...imageProps} />
+type Props = {
+  src: string
+  alt?: string
+  className?: string
+}
+
+export default function ProductImage(props: Props) {
+  if (props.src.includes("cdn.shopify.com")) {
+    return <Image {...props} {...imageProps} />
   }
-  return <img src={src} alt={alt} />
+  return <img {...props} alt={props.alt || ""} />
 }

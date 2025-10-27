@@ -1,0 +1,28 @@
+.simpleSelector {
+  margin-top: var(--ns-space-4);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ns-space-2);
+}
+
+.simpleOption {
+  display: inline-block;
+  margin-bottom: var(--ns-space-4);
+}
+
+.simpleOption input {
+  display: none;
+}
+
+.simpleOption {
+  background: var(--ns-color-grey-light);
+  border: var(--ns-color-grey);
+  padding: var(--ns-space-2);
+  cursor: pointer;
+}
+
+.simpleOption.active {
+  color: var(--ns-color-white);
+  background: var(--ns-color-black);
+  border: var(--ns-color-black);
+}
