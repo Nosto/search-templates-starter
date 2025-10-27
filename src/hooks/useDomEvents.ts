@@ -1,8 +1,11 @@
 import { useEffect } from "preact/hooks"
 
-type Events = Record<"onClick" | "onInput" | "onFocus" | "onBlur" | "onSubmit", (e: Event) => void>
+type Events = Record<"onClick" | "onInput" | "onFocus" | "onBlur" | "onSubmit" | "onKeyDown", (e: Event) => void>
 
-export function useDomEvents(el: HTMLElement | null, { onClick, onInput, onFocus, onBlur, onSubmit }: Partial<Events>) {
+export function useDomEvents(
+  el: HTMLElement | null,
+  { onClick, onInput, onFocus, onBlur, onSubmit, onKeyDown }: Partial<Events>
+) {
   useEffect(() => {
     if (!el) return
     if (onClick) {
@@ -20,12 +23,16 @@ export function useDomEvents(el: HTMLElement | null, { onClick, onInput, onFocus
     if (onSubmit) {
       el.addEventListener("submit", onSubmit)
     }
+    if (onKeyDown) {
+      el.addEventListener("keydown", onKeyDown)
+    }
     return () => {
       if (onClick) el.removeEventListener("click", onClick)
       if (onInput) el.removeEventListener("input", onInput)
       if (onFocus) el.removeEventListener("focus", onFocus)
       if (onBlur) el.removeEventListener("blur", onBlur)
       if (onSubmit) el.removeEventListener("submit", onSubmit)
+      if (onKeyDown) el.removeEventListener("keydown", onKeyDown)
     }
-  }, [el, onClick, onInput, onFocus, onBlur, onSubmit])
+  }, [el, onClick, onInput, onFocus, onBlur, onSubmit, onKeyDown])
 }

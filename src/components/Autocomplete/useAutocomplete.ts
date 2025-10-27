@@ -47,8 +47,19 @@ export function useAutocomplete({
     [clickOutsideTarget, searchInputElement, isInjected]
   )
 
+  const onKeyDown = useCallback((event: Event) => {
+    const keyboardEvent = event as KeyboardEvent
+    if (keyboardEvent.key === "Escape") {
+      setShowAutocomplete(false)
+    }
+  }, [])
+
   useDomEvents(showAutocomplete ? document.body : null, {
     onClick: onClickOutside
+  })
+
+  useDomEvents(searchInputElement ?? null, {
+    onKeyDown
   })
 
   const onSearchSubmit = useCallback(

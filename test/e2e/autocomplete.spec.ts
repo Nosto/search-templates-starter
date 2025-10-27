@@ -71,4 +71,45 @@ test.describe("Autocomplete", () => {
     // Dropdown should close after clicking outside
     await expect(dropdown).toBeEmpty()
   })
+
+  test("autocomplete dropdown closes when Escape is pressed in the input field", async ({ page }) => {
+    const searchInput = page.locator(searchSelector)
+    const dropdown = page.locator(dropdownSelector)
+    const dropdownContent = page.locator(`${dropdownSelector} > div`)
+
+    await expect(searchInput).toHaveAttribute("autocomplete", "off")
+
+    // Type to trigger autocomplete
+    await searchInput.fill("running")
+    await expect(dropdownContent).toContainText("running shoes", { timeout: dropdownTimeout })
+
+    // Press Escape key while input is focused
+    await searchInput.focus()
+    await page.keyboard.press("Escape")
+
+    // Dropdown should close after pressing Escape
+    await expect(dropdown).toBeEmpty()
+  })
+
+  test("autocomplete dropdown closes when Escape is pressed on a focused dropdown item", async ({ page }) => {
+    const searchInput = page.locator(searchSelector)
+    const dropdown = page.locator(dropdownSelector)
+    const dropdownContent = page.locator(`${dropdownSelector} > div`)
+
+    await expect(searchInput).toHaveAttribute("autocomplete", "off")
+
+    // Type to trigger autocomplete
+    await searchInput.fill("running")
+    await expect(dropdownContent).toContainText("running shoes", { timeout: dropdownTimeout })
+
+    // Focus on a dropdown item
+    const firstAutocompleteElement = page.locator(".ns-autocomplete-element").first()
+    await firstAutocompleteElement.focus()
+
+    // Press Escape key while dropdown item is focused
+    await page.keyboard.press("Escape")
+
+    // Dropdown should close after pressing Escape
+    await expect(dropdown).toBeEmpty()
+  })
 })
