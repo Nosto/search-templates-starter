@@ -102,7 +102,7 @@
   right: 4px;
 }
 
-.specialPrice {
+.listPrice {
   text-decoration: line-through;
   margin-left: var(--ns-space-2);
 }

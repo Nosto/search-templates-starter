@@ -105,7 +105,7 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
             <div aria-label="Price">
               <span>{data.priceText}</span>
               {product.listPrice && product.price && product.listPrice > product.price && (
-                <span className={styles.specialPrice}>{data.listPriceText}</span>
+                <span className={styles.listPrice}>{data.listPriceText}</span>
               )}
             </div>
             {renderShopifySelector ? (
