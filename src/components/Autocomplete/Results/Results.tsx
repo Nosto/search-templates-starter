@@ -7,9 +7,10 @@ import { useRovingFocus } from "@/hooks/useRovingFocus"
 
 type ResultsProps = {
   onSubmit: (query: string) => void
+  onKeyDown: (e: KeyboardEvent) => void
 }
 
-export default function Results({ onSubmit }: ResultsProps) {
+export default function Results({ onSubmit, onKeyDown }: ResultsProps) {
   const { keywords, products } = useResponse()
 
   const containerRef = useRovingFocus<HTMLDivElement>(".ns-autocomplete-element")
@@ -22,7 +23,8 @@ export default function Results({ onSubmit }: ResultsProps) {
   }
 
   return (
-    <div className={style.autocomplete} data-nosto-element="autocomplete">
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+    <div className={style.autocomplete} data-nosto-element="autocomplete" onKeyDown={onKeyDown}>
       <div className={`${style.container} ${style.paddingContainer}`} ref={containerRef}>
         <div className={style.items}>
           <div className={style.section}>

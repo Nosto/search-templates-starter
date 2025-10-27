@@ -12,7 +12,7 @@ export default function AutocompleteNative({ onSubmit }: Props) {
   const autocompleteRef = useRef<HTMLFormElement>(null)
   const searchInputRef = useRef<HTMLInputElement>(null)
 
-  const { input, showAutocomplete, setInput, setShowAutocomplete, onSearchSubmit } = useAutocomplete({
+  const { input, showAutocomplete, setInput, setShowAutocomplete, onSearchSubmit, onKeyDown } = useAutocomplete({
     onSubmit,
     searchInputElement: searchInputRef.current,
     clickOutsideTarget: autocompleteRef.current
@@ -36,7 +36,7 @@ export default function AutocompleteNative({ onSubmit }: Props) {
       />
       <SpeechToTextButton onSubmit={onSearchSubmit} />
       <button type="submit">Search</button>
-      {showAutocomplete && <Results onSubmit={onSearchSubmit} />}
+      {showAutocomplete && <Results onSubmit={onSearchSubmit} onKeyDown={onKeyDown} />}
     </form>
   )
 }
