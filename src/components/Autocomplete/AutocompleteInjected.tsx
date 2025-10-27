@@ -2,6 +2,7 @@ import Results from "@/components/Autocomplete/Results/Results"
 import { useDomEvents } from "@/hooks/useDomEvents"
 import { selectors } from "@/config"
 import { useAutocomplete } from "./useAutocomplete"
+import { useCallback } from "preact/hooks"
 
 type Props = {
   onSubmit: (input: string) => void
@@ -12,7 +13,7 @@ export default function AutocompleteInjected({ onSubmit }: Props) {
   const searchInput = document.querySelector<HTMLInputElement>(selectors.searchInput)!
   const searchForm = document.querySelector<HTMLFormElement>(selectors.searchForm)!
 
-  const { input, showAutocomplete, setInput, setShowAutocomplete, onSearchSubmit } = useAutocomplete({
+  const { input, showAutocomplete, setInput, setShowAutocomplete, onSearchSubmit, onKeyDown } = useAutocomplete({
     onSubmit,
     searchInputElement: searchInput,
     clickOutsideTarget: dropdownElement,
@@ -21,7 +22,8 @@ export default function AutocompleteInjected({ onSubmit }: Props) {
 
   useDomEvents(searchInput, {
     onInput: () => setInput(searchInput.value),
-    onFocus: () => setShowAutocomplete(true)
+    onFocus: () => setShowAutocomplete(true),
+    onKeyDown
   })
 
   useDomEvents(searchForm, {
@@ -31,5 +33,5 @@ export default function AutocompleteInjected({ onSubmit }: Props) {
     }
   })
 
-  return showAutocomplete ? <Results onSubmit={onSearchSubmit} /> : null
+  return showAutocomplete ? <Results onSubmit={onSearchSubmit} onKeyDown={onKeyDown} /> : null
 }
