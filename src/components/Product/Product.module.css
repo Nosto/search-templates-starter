@@ -13,7 +13,8 @@
   position: relative;
 }
 
-.image > img {
+.image > img,
+.image > nosto-image {
   height: auto;
   width: 100%;
   transition: opacity 0.3s ease-in-out;
