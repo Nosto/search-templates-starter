@@ -1,0 +1,11 @@
+.container {
+  /* Default styles for the view transition container */
+  display: contents;
+}
+
+/* Support for view transitions when available */
+@supports (view-transition-name: auto) {
+  .container {
+    /* Container will have view-transition-name set via inline styles */
+  }
+}
