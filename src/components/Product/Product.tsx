@@ -15,6 +15,7 @@ type Props = {
 export default function Product({ product, children, showAltOnHover = true }: Props) {
   const hasAlternateImage = showAltOnHover && product.alternateImageUrls && product.alternateImageUrls.length > 0
   const isNew = product.datePublished && product.datePublished >= Date.now() - 14 * 24 * 60 * 60 * 1000
+  const isOnSale = product.listPrice && product.price && product.listPrice > product.price
 
   return (
     <SerpElement
@@ -32,7 +33,8 @@ export default function Product({ product, children, showAltOnHover = true }: Pr
       <div className={styles.image}>
         <ProductImage src={product.imageUrl!} alt={product.name} />
         {hasAlternateImage && <ProductImage src={product.alternateImageUrls![0]} alt={product.name} />}
-        {isNew && <div className={styles.newRibbon}>New</div>}
+        {isNew && !isOnSale && <div className={styles.newRibbon}>New</div>}
+        {isOnSale && <div className={styles.saleRibbon}>Sale</div>}
         <QuickAdd product={product} className={styles.quickAdd}>
           Add to cart
         </QuickAdd>
@@ -42,9 +44,7 @@ export default function Product({ product, children, showAltOnHover = true }: Pr
         <div>{product.name}</div>
         <div aria-label="Price">
           <span>{product.priceText}</span>
-          {product.listPrice && product.price && product.listPrice > product.price && (
-            <span className={styles.specialPrice}>{product.listPriceText}</span>
-          )}
+          {isOnSale && <span className={styles.specialPrice}>{product.listPriceText}</span>}
         </div>
         {product.ratingValue !== undefined && product.reviewCount ? (
           <div aria-label={`${product.ratingValue} out of 5 stars, ${product.reviewCount} reviews`}>

@@ -61,6 +61,14 @@
   text-align: center;
 }
 
+.saleRibbon {
+  composes: ribbon;
+  top: 8px;
+  left: 8px;
+  background-color: var(--ns-color-red);
+  color: var(--ns-color-white);
+}
+
 .newRibbon {
   composes: ribbon;
   top: 8px;
