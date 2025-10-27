@@ -3,15 +3,12 @@ import { HistoryItem } from "../HistoryItem/HistoryItem"
 import Heading from "@/elements/Heading/Heading"
 import styles from "./History.module.css"
 
-export type KeywordsProps = {
+export type HistoryProps = {
   onSubmit: (query: string) => void
 }
 
-export function History({ onSubmit }: KeywordsProps) {
+export function History({ onSubmit }: HistoryProps) {
   const historyItems = useNostoAppState(state => state.historyItems)
-  // TODO: Keyboard navigation
-  //   const { highlightedElementIndex } = useContext(AutocompleteContext)
-  const highlightedElementIndex = -1
 
   if (!historyItems) {
     return null
@@ -20,8 +17,8 @@ export function History({ onSubmit }: KeywordsProps) {
   return (
     <div className={styles.historyColumn}>
       <Heading>Recent searches</Heading>
-      {historyItems.map((item, index) => (
-        <HistoryItem key={item} item={item} onSubmit={onSubmit} highlighted={index === highlightedElementIndex} />
+      {historyItems.map(item => (
+        <HistoryItem key={item} item={item} onSubmit={onSubmit} />
       ))}
     </div>
   )
