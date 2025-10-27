@@ -28,7 +28,7 @@ function defaultSkuId(product: Product) {
 export default function Modal({ product, show, onClose, onAddToCart }: Props) {
   const [selectedSkuId, setSelectedSkuId] = useState(defaultSkuId(product))
   const dialogRef = useRef<HTMLDialogElement>(null)
-  const hasMultipleSkus = product.skus && product.skus.length > 1
+  const hasMultipleSkus = !!product.skus?.length
   // shopify variant selector based on Product API option data
   const renderShopifySelector = shopifyMode && hasMultipleSkus
   // simple generic variant selector for non-shopify mode
@@ -40,7 +40,8 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
       return {
         imageUrl: sku?.imageUrl || product.imageUrl,
         priceText: sku?.priceText || product.priceText,
-        // @ts-expect-error FIXME
+        // listPriceText property may not exist on all SKU types
+        // @ts-expect-error - listPriceText is not in the type definition but may be present at runtime
         listPriceText: sku?.listPriceText || product.listPriceText
       }
     }
