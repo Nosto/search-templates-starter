@@ -62,6 +62,10 @@ export function useAutocomplete({
     onKeyDown
   })
 
+  useDomEvents(clickOutsideTarget as HTMLElement | null, {
+    onKeyDown
+  })
+
   const onSearchSubmit = useCallback(
     (query: string) => {
       if (query.trim()) {

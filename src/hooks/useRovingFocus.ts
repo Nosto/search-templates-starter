@@ -59,9 +59,6 @@ export function useRovingFocus<T extends HTMLElement>(selector: string) {
           event.preventDefault()
           const currentIndex = getCurrentFocusedIndex()
           focusableElements[currentIndex]?.click()
-        } else if (event.key === "Escape") {
-          event.preventDefault()
-          event.stopPropagation()
         }
       }
 
