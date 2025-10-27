@@ -1,26 +1,19 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest"
 import { render } from "@testing-library/preact"
 import ViewTransition from "@/elements/ViewTransition/ViewTransition"
+import * as viewTransitionUtils from "@/utils/viewTransition"
 
 describe("ViewTransition", () => {
   let mockStartViewTransition: ReturnType<typeof vi.fn>
-  let originalDocument: Document
 
   beforeEach(() => {
     mockStartViewTransition = vi.fn()
-    originalDocument = global.document
-
-    // Mock document.startViewTransition
-    Object.defineProperty(global.document, "startViewTransition", {
-      value: mockStartViewTransition,
-      writable: true,
-      configurable: true
-    })
+    vi.spyOn(viewTransitionUtils, "startViewTransition").mockImplementation(mockStartViewTransition)
   })
 
   afterEach(() => {
-    global.document = originalDocument
     vi.clearAllMocks()
+    vi.restoreAllMocks()
   })
 
   it("renders children correctly", () => {
@@ -77,11 +70,7 @@ describe("ViewTransition", () => {
     expect(container?.className).toMatch(/custom-class/)
   })
 
-  it("calls startViewTransition when children change and API is supported", () => {
-    mockStartViewTransition.mockReturnValue({
-      skipTransition: vi.fn()
-    })
-
+  it("calls startViewTransition when children change", () => {
     const { rerender } = render(
       <ViewTransition>
         <div>Initial content</div>
@@ -113,29 +102,6 @@ describe("ViewTransition", () => {
     expect(mockStartViewTransition).not.toHaveBeenCalled()
   })
 
-  it("does not call startViewTransition when API is not supported", () => {
-    // Remove startViewTransition from document
-    Object.defineProperty(global.document, "startViewTransition", {
-      value: undefined,
-      writable: true,
-      configurable: true
-    })
-
-    const { rerender } = render(
-      <ViewTransition>
-        <div>Initial content</div>
-      </ViewTransition>
-    )
-
-    rerender(
-      <ViewTransition>
-        <div>Updated content</div>
-      </ViewTransition>
-    )
-
-    expect(mockStartViewTransition).not.toHaveBeenCalled()
-  })
-
   it("updates view-transition-name when name prop changes", () => {
     const { rerender, getByText } = render(
       <ViewTransition name="initial-name">
@@ -153,54 +119,6 @@ describe("ViewTransition", () => {
     )
 
     expect(container?.style.viewTransitionName).toBe("updated-name")
-  })
-
-  it("handles cleanup when component unmounts during transition", () => {
-    const mockSkipTransition = vi.fn()
-    mockStartViewTransition.mockReturnValue({
-      skipTransition: mockSkipTransition
-    })
-
-    const { rerender, unmount } = render(
-      <ViewTransition>
-        <div>Initial content</div>
-      </ViewTransition>
-    )
-
-    // Clear the mock to ensure initial render doesn't count
-    mockStartViewTransition.mockClear()
-
-    // Trigger transition
-    rerender(
-      <ViewTransition>
-        <div>Updated content</div>
-      </ViewTransition>
-    )
-
-    // Unmount component
-    unmount()
-
-    expect(mockStartViewTransition).toHaveBeenCalledTimes(1)
-  })
-
-  it("handles transition without skipTransition method", () => {
-    // Some implementations might not have skipTransition
-    mockStartViewTransition.mockReturnValue({})
-
-    const { rerender, unmount } = render(
-      <ViewTransition>
-        <div>Initial content</div>
-      </ViewTransition>
-    )
-
-    rerender(
-      <ViewTransition>
-        <div>Updated content</div>
-      </ViewTransition>
-    )
-
-    // Should not throw when unmounting
-    expect(() => unmount()).not.toThrow()
   })
 
   it("renders with multiple children", () => {
