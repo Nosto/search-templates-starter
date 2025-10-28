@@ -114,6 +114,7 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
                 onVariantChange={handleVariantChange}
                 className={styles.swatches}
                 preselect
+                filtered
               />
             ) : null}
             {renderSimpleSelector ? (
