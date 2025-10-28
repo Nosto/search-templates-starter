@@ -6,16 +6,16 @@ import DynamicCard from "@/elements/DynamicCard/DynamicCard"
 export default function DynamicCardProduct({ product }: { product: Product }) {
   return (
     <SerpElement
+      as={DynamicCard}
       hit={{
         productId: product.productId!,
         url: product.url
       }}
       componentProps={{
-        "aria-label": `Product ${product.name}`,
+        handle: product.handle!,
+        template: "card",
         className: styles.container
       }}
-    >
-      <DynamicCard handle={product.handle!} template="card" />
-    </SerpElement>
+    />
   )
 }
