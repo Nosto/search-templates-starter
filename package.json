@@ -36,9 +36,9 @@
   "devDependencies": {
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
+    "@nosto/nosto-cli": "^1.0.4",
     "@nosto/nosto-js": "^2.9.1",
     "@nosto/search-js": "^3.21.2",
-    "@nosto/nosto-cli": "^1.0.4",
     "@nosto/web-components": "^9.10.2",
     "@playwright/test": "^1.56.1",
     "@preact/preset-vite": "^2.10.2",
@@ -59,6 +59,7 @@
     "jsdom": "^27.0.1",
     "preact": "^10.27.2",
     "prettier": "^3.3.3",
+    "rollup-plugin-visualizer": "^6.0.5",
     "storybook": "^9.1.15",
     "stylelint": "^16.25.0",
     "stylelint-config-css-modules": "^4.5.1",
