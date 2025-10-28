@@ -1,6 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Product from "./Product"
-import { mockSerpProduct, mockProductWithAlt, mockNewProduct, mockOldProduct } from "@mocks/products"
+import {
+  mockSerpProduct,
+  mockProductWithAlt,
+  mockNewProduct,
+  mockOldProduct,
+  mockProductOnSale,
+  mockProductNoSalePrice
+} from "@mocks/products"
 import { withSearchContext } from ".storybook/decorators"
 
 export default {
@@ -85,6 +92,32 @@ export const OldProduct: Story = {
     docs: {
       description: {
         story: "Product without 'New' ribbon because it was published more than 14 days ago."
+      }
+    }
+  }
+}
+
+export const ProductOnSale: Story = {
+  args: {
+    product: mockProductOnSale
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Product with 'Sale' ribbon displayed because the price is lower than the list price."
+      }
+    }
+  }
+}
+
+export const ProductNoSale: Story = {
+  args: {
+    product: mockProductNoSalePrice
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Product without 'Sale' ribbon because the price equals the list price."
       }
     }
   }

@@ -54,6 +54,26 @@ test.describe("Autocomplete", () => {
     await expect(dropdown).toBeEmpty()
   })
 
+  test("autocomplete dropdown closes on Escape click", async ({ page }) => {
+    const searchInput = page.locator(searchSelector)
+    const dropdown = page.locator(dropdownSelector)
+    const dropdownContent = page.locator(`${dropdownSelector} > div`)
+
+    await expect(searchInput).toHaveAttribute("autocomplete", "off")
+
+    await searchInput.fill("run")
+
+    // Type to trigger autocomplete
+    await searchInput.fill("running")
+    await expect(dropdownContent).toContainText("running shoes", { timeout: dropdownTimeout })
+
+    // Press Escape to close autocomplete dropdown
+    await searchInput.press("Escape")
+
+    // Dropdown should no longer contain autocomplete suggestions (now on results page)
+    await expect(dropdown).toBeEmpty()
+  })
+
   test.skip("autocomplete dropdown closes when clicked outside input and autocomplete dropdown", async ({ page }) => {
     const searchInput = page.locator(searchSelector)
     const dropdown = page.locator(dropdownSelector)

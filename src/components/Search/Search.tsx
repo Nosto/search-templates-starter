@@ -6,7 +6,7 @@ import { useActions } from "@nosto/search-js/preact/hooks"
 import { useCallback } from "preact/hooks"
 import { nostojs } from "@nosto/nosto-js"
 
-export function Search() {
+export default function Search() {
   const { newSearch } = useActions()
 
   const onSubmit = useCallback(

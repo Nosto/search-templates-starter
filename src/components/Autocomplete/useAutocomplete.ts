@@ -62,12 +62,20 @@ export function useAutocomplete({
         }
         onSubmit(query)
       }
-      if (searchInputElement) {
-        searchInputElement.blur()
-      }
+      searchInputElement?.blur()
       setShowAutocomplete(false)
     },
     [addQuery, onSubmit, searchInputElement, isInjected]
+  )
+
+  const onKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        searchInputElement?.blur()
+        setShowAutocomplete(false)
+      }
+    },
+    [searchInputElement]
   )
 
   return {
@@ -75,6 +83,7 @@ export function useAutocomplete({
     showAutocomplete,
     setInput,
     setShowAutocomplete,
-    onSearchSubmit
+    onSearchSubmit,
+    onKeyDown
   }
 }

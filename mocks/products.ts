@@ -114,6 +114,34 @@ export const mockProductMultipleAlts = createMockProduct({
   alternateImageUrls: [createMockRandomImage(), createMockRandomImage()]
 })
 
+export const mockProductOnSale = createMockProduct({
+  productId: "sale-123",
+  name: "Discounted Running Shoes",
+  price: 50,
+  listPrice: 80,
+  priceText: "€50.00",
+  listPriceText: "€80.00"
+})
+
+export const mockProductNoSalePrice = createMockProduct({
+  productId: "no-sale-456",
+  name: "Regular Price Shoes",
+  price: 75,
+  listPrice: 75,
+  priceText: "€75.00",
+  listPriceText: "€75.00"
+})
+
+export const mockNewProductOnSale = createMockProduct({
+  productId: "new-sale-789",
+  name: "New & On Sale Sneakers",
+  price: 60,
+  listPrice: 90,
+  priceText: "€60.00",
+  listPriceText: "€90.00",
+  datePublished: Date.now() - 7 * DAY_IN_MILLIS
+})
+
 export const mockProducts = createProductsResponse(generateMockProducts(5))
 
 export const mockEmptyProducts = createEmptyResponse()
