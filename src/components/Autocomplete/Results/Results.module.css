@@ -19,6 +19,20 @@
   font-size: var(--ns-font-size-4);
 }
 
+.autocomplete::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--ns-color-black);
+  opacity: 0.15;
+  z-index: -1;
+  transition: opacity var(--ns-transition-duration) var(--ns-transition-easing);
+  pointer-events: none;
+}
+
 @media only screen and (min-width: 768px) {
   .autocomplete {
     width: auto;
