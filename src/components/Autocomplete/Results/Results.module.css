@@ -19,18 +19,16 @@
   font-size: var(--ns-font-size-4);
 }
 
-.autocomplete::after {
+.autocomplete::before {
   content: "";
   position: fixed;
-  top: 0;
+  top: 30px;
   left: 0;
   right: 0;
   bottom: 0;
   background-color: var(--ns-color-black);
   opacity: 0.15;
-  z-index: -1;
-  transition: opacity var(--ns-transition-duration) var(--ns-transition-easing);
-  pointer-events: none;
+  z-index: 1;
 }
 
 @media only screen and (min-width: 768px) {
@@ -40,8 +38,10 @@
 }
 
 .container {
+  background-color: var(--ns-color-white);
   margin-top: auto;
   width: 100%;
+  z-index: var(--ns-z-index-autocomplete);
 }
 
 .paddingContainer {
