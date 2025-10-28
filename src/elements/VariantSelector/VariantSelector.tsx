@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "preact/hooks"
-import { toAttributes } from "@/utils/toAttributes"
 import type { VariantSelector as CustomElement } from "@nosto/web-components"
 import { JSX } from "preact"
 
@@ -35,7 +34,7 @@ export default function VariantSelector({ onVariantChange, ...props }: Props) {
     }
   }, [onVariantChange])
 
-  return <nosto-variant-selector ref={elementRef} {...toAttributes(props)} />
+  return <nosto-variant-selector ref={elementRef} {...props} />
 }
 
 declare module "preact/jsx-runtime" {

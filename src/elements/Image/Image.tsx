@@ -1,4 +1,3 @@
-import { toAttributes } from "@/utils/toAttributes"
 import type { Image as CustomElement } from "@nosto/web-components"
 import { JSX } from "preact/jsx-runtime"
 
@@ -10,7 +9,7 @@ type ImageProps = Pick<CustomElement, keyof typeof CustomElement.properties> & J
  * It supports various layout modes and aspect ratio configurations for flexible image display.
  */
 export default function Image(props: ImageProps) {
-  return <nosto-image {...toAttributes(props)} />
+  return <nosto-image {...props} />
 }
 
 declare module "preact/jsx-runtime" {

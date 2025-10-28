@@ -1,4 +1,3 @@
-import { toAttributes } from "@/utils/toAttributes"
 import type { DynamicCard as CustomElement } from "@nosto/web-components"
 import { JSX } from "preact"
 
@@ -10,7 +9,7 @@ type DynamicCardProps = Pick<CustomElement, keyof typeof CustomElement.propertie
  * This component is designed to be used in a Shopify environment and fetches product data dynamically.
  */
 export default function DynamicCard(props: DynamicCardProps) {
-  return <nosto-dynamic-card {...toAttributes(props)} />
+  return <nosto-dynamic-card {...props} />
 }
 
 declare module "preact/jsx-runtime" {
