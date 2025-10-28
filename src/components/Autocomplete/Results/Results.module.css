@@ -22,7 +22,7 @@
 .autocomplete::before {
   content: "";
   position: fixed;
-  top: 30px;
+  top: var(--ns-height-autocomplete-offset);
   left: 0;
   right: 0;
   bottom: 0;

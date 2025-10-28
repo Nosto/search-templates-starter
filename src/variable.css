@@ -88,4 +88,8 @@
   --ns-height-input-checkbox-tick: 10px;
   --ns-min-height-content: 890px;
   --ns-facet-max-height: 500px;
+  --ns-height-autocomplete-offset: 30px;
+
+  /* SCROLL BEHAVOUR */
+  overscroll-behavior: none;
 }
