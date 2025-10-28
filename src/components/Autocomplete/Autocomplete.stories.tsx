@@ -28,7 +28,7 @@ export const Interactive: Story = {
     docs: {
       description: {
         story:
-          "Type in the search box to see autocomplete suggestions appear. The component uses Nosto search context for suggestions."
+          "Type in the search box to see autocomplete suggestions appear with a backdrop overlay. The component uses Nosto search context for suggestions. The backdrop has minimal opacity and allows interaction with the header while blocking interaction with the rest of the page."
       }
     }
   }

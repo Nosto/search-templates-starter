@@ -6,7 +6,7 @@ describe("Backdrop", () => {
   it("renders backdrop when visible", () => {
     const onClick = vi.fn()
     const { container } = render(<Backdrop isVisible={true} onClick={onClick} />)
-    
+
     const backdrop = container.querySelector("div")
     expect(backdrop).toBeDefined()
     expect(backdrop?.getAttribute("aria-hidden")).toBe("true")
@@ -15,17 +15,17 @@ describe("Backdrop", () => {
   it("does not render when not visible", () => {
     const onClick = vi.fn()
     const { container } = render(<Backdrop isVisible={false} onClick={onClick} />)
-    
+
     expect(container.innerHTML).toBe("")
   })
 
   it("calls onClick when clicked", () => {
     const onClick = vi.fn()
     const { container } = render(<Backdrop isVisible={true} onClick={onClick} />)
-    
+
     const backdrop = container.querySelector("div")
     backdrop?.click()
-    
+
     expect(onClick).toHaveBeenCalledTimes(1)
   })
 })
