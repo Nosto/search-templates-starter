@@ -1,0 +1,12 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.05);
+  z-index: calc(var(--ns-z-index-autocomplete) - 1);
+  transition: opacity var(--ns-transition-duration) var(--ns-transition-easing);
+  opacity: 1;
+  pointer-events: auto;
+}

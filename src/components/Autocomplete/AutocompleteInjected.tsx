@@ -1,4 +1,5 @@
 import Results from "@/components/Autocomplete/Results/Results"
+import Backdrop from "@/components/Autocomplete/Backdrop/Backdrop"
 import { useDomEvents } from "@/hooks/useDomEvents"
 import { selectors } from "@/config"
 import { useAutocomplete } from "./useAutocomplete"
@@ -32,5 +33,14 @@ export default function AutocompleteInjected({ onSubmit }: Props) {
     }
   })
 
-  return showAutocomplete ? <Results onSubmit={onSearchSubmit} onKeyDown={onKeyDown} /> : null
+  return (
+    <>
+      {showAutocomplete && (
+        <>
+          <Backdrop isVisible={showAutocomplete} onClick={() => setShowAutocomplete(false)} />
+          <Results onSubmit={onSearchSubmit} onKeyDown={onKeyDown} />
+        </>
+      )}
+    </>
+  )
 }

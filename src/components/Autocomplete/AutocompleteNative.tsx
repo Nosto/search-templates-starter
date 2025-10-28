@@ -1,4 +1,5 @@
 import Results from "@/components/Autocomplete/Results/Results"
+import Backdrop from "@/components/Autocomplete/Backdrop/Backdrop"
 import { useRef } from "preact/hooks"
 import { SearchInput } from "@nosto/search-js/preact/autocomplete"
 import { useAutocomplete } from "./useAutocomplete"
@@ -19,24 +20,27 @@ export default function AutocompleteNative({ onSubmit }: Props) {
   })
 
   return (
-    <form
-      ref={autocompleteRef}
-      onSubmit={e => {
-        e.preventDefault()
-        onSearchSubmit(input)
-      }}
-    >
-      <SearchInput
-        onSearchInput={target => setInput(target.value)}
-        componentProps={{
-          value: input,
-          onFocus: () => setShowAutocomplete(true),
-          ref: searchInputRef
+    <>
+      <form
+        ref={autocompleteRef}
+        onSubmit={e => {
+          e.preventDefault()
+          onSearchSubmit(input)
         }}
-      />
-      <SpeechToTextButton onSubmit={onSearchSubmit} />
-      <button type="submit">Search</button>
-      {showAutocomplete && <Results onSubmit={onSearchSubmit} onKeyDown={onKeyDown} />}
-    </form>
+      >
+        <SearchInput
+          onSearchInput={target => setInput(target.value)}
+          componentProps={{
+            value: input,
+            onFocus: () => setShowAutocomplete(true),
+            ref: searchInputRef
+          }}
+        />
+        <SpeechToTextButton onSubmit={onSearchSubmit} />
+        <button type="submit">Search</button>
+        {showAutocomplete && <Results onSubmit={onSearchSubmit} onKeyDown={onKeyDown} />}
+      </form>
+      {showAutocomplete && <Backdrop isVisible={showAutocomplete} onClick={() => setShowAutocomplete(false)} />}
+    </>
   )
 }
