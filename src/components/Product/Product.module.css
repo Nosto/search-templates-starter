@@ -13,22 +13,20 @@
   position: relative;
 }
 
-.image > img,
-.image > nosto-image {
+.image > .img {
   height: auto;
   width: 100%;
   transition: opacity 0.3s ease-in-out;
 }
 
-.image > img:nth-child(2), .image > nosto-image:nth-child(2) {
+.image > .img:nth-child(2) {
   position: absolute;
   top: 0;
   left: 0;
   opacity: 0;
 }
 
-.altContainer:hover .image > img:nth-child(2), 
-.altContainer:hover .image > nosto-image:nth-child(2) {
+.altContainer:hover .image > .img:nth-child(2) {
   opacity: 1;
 }
 

@@ -31,8 +31,10 @@ export default function Product({ product, children, showAltOnHover = true }: Pr
       }}
     >
       <div className={styles.image}>
-        <ProductImage src={product.imageUrl!} alt={product.name} />
-        {hasAlternateImage && <ProductImage src={product.alternateImageUrls![0]} alt={product.name} />}
+        <ProductImage src={product.imageUrl!} alt={product.name} className={styles.img} />
+        {hasAlternateImage && (
+          <ProductImage src={product.alternateImageUrls![0]} alt={product.name} className={styles.img} />
+        )}
         {isNew && !isOnSale && <div className={styles.newRibbon}>New</div>}
         {isOnSale && <div className={styles.saleRibbon}>Sale</div>}
         <QuickAdd product={product} className={styles.quickAdd}>
