@@ -4,9 +4,10 @@ import { useDomEvents } from "@/hooks/useDomEvents"
 import { useHistory } from "@nosto/search-js/preact/hooks"
 import { disableNativeAutocomplete } from "@nosto/search-js/utils"
 import { getInitialQuery } from "@/mapping/url/getInitialQuery"
+import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 
 type UseAutocompleteOptions = {
-  onSubmit: (input: string) => void
+  onSubmit: (input: string, options?: SearchAnalyticsOptions) => void
   searchInputElement?: HTMLInputElement | null
   clickOutsideTarget?: HTMLElement | Node | null
   isInjected?: boolean
@@ -52,7 +53,7 @@ export function useAutocomplete({
   })
 
   const onSearchSubmit = useCallback(
-    (query: string) => {
+    (query: string, options?: SearchAnalyticsOptions) => {
       if (query.trim()) {
         addQuery(query)
         if (isInjected && searchInputElement) {
@@ -60,7 +61,7 @@ export function useAutocomplete({
         } else {
           setInput(query.trim())
         }
-        onSubmit(query)
+        onSubmit(query, options)
       }
       searchInputElement?.blur()
       setShowAutocomplete(false)

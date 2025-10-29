@@ -4,9 +4,10 @@ import Keywords from "./Keywords"
 import Products from "./Products"
 import History from "./History"
 import { useRovingFocus } from "@/hooks/useRovingFocus"
+import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 
 type ResultsProps = {
-  onSubmit: (query: string) => void
+  onSubmit: (query: string, options?: SearchAnalyticsOptions) => void
   onKeyDown: (e: KeyboardEvent) => void
 }
 
@@ -29,7 +30,7 @@ export default function Results({ onSubmit, onKeyDown }: ResultsProps) {
         <div className={style.items}>
           <div className={style.section}>
             {hasHistory && <History onSubmit={onSubmit} />}
-            {hasResults && <Keywords keywords={keywords} onSubmit={onSubmit} />}
+            {hasResults && <Keywords keywords={keywords} onSubmit={query => onSubmit(query, { isKeyword: true })} />}
           </div>
 
           {hasResults && <Products products={products} />}

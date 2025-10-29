@@ -14,14 +14,15 @@ import { nostojs } from "@nosto/nosto-js"
 import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import Portal from "@/elements/Portal/Portal"
 import AutocompleteInjected from "@/components/Autocomplete/AutocompleteInjected"
+import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 
 function SerpApp() {
   const { newSearch } = useActions()
 
   const onSubmit = useCallback(
-    (query: string) => {
+    (query: string, options?: SearchAnalyticsOptions) => {
       nostojs(api => api.recordSearchSubmit(query))
-      newSearch({ query })
+      newSearch({ query }, options)
     },
     [newSearch]
   )
