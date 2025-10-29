@@ -2,9 +2,10 @@ import Results from "@/components/Autocomplete/Results/Results"
 import { useDomEvents } from "@/hooks/useDomEvents"
 import { selectors } from "@/config"
 import { useAutocomplete } from "./useAutocomplete"
+import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 
 type Props = {
-  onSubmit: (input: string) => void
+  onSubmit: (input: string, options?: SearchAnalyticsOptions) => void
 }
 
 export default function AutocompleteInjected({ onSubmit }: Props) {

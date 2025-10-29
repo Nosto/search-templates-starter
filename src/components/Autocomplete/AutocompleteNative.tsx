@@ -3,9 +3,10 @@ import { useRef } from "preact/hooks"
 import { SearchInput } from "@nosto/search-js/preact/autocomplete"
 import { useAutocomplete } from "./useAutocomplete"
 import SpeechToTextButton from "./SpeechToText/SpeechToText"
+import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 
 type Props = {
-  onSubmit: (input: string) => void
+  onSubmit: (input: string, options?: SearchAnalyticsOptions) => void
 }
 
 export default function AutocompleteNative({ onSubmit }: Props) {

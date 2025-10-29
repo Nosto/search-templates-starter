@@ -5,14 +5,15 @@ import style from "./Search.module.css"
 import { useActions } from "@nosto/search-js/preact/hooks"
 import { useCallback } from "preact/hooks"
 import { nostojs } from "@nosto/nosto-js"
+import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 
 export default function Search() {
   const { newSearch } = useActions()
 
   const onSubmit = useCallback(
-    (query: string) => {
+    (query: string, options?: SearchAnalyticsOptions) => {
       nostojs(api => api.recordSearchSubmit(query))
-      newSearch({ query })
+      newSearch({ query }, options)
     },
     [newSearch]
   )
