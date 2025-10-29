@@ -1,4 +1,3 @@
-import { toAttributes } from "@/utils/toAttributes"
 import type { Campaign as CustomElement } from "@nosto/web-components"
 import type { ComponentChildren } from "preact"
 
@@ -13,7 +12,7 @@ type CampaignProps = Pick<CustomElement, keyof typeof CustomElement.properties> 
  * The placement or id attribute will be used as the identifier of the placement to be fetched.
  */
 export default function Campaign({ children, ...campaignProps }: CampaignProps) {
-  return <nosto-campaign {...toAttributes(campaignProps)}>{children}</nosto-campaign>
+  return <nosto-campaign {...campaignProps}>{children}</nosto-campaign>
 }
 
 declare module "preact/jsx-runtime" {

@@ -1,13 +1,24 @@
 import { render } from "@testing-library/preact"
-import { describe, expect, it } from "vitest"
+import { beforeAll, describe, expect, it } from "vitest"
 import Campaign from "@/elements/Campaign/Campaign"
+import "@nosto/web-components"
 
 describe("Campaign", () => {
+  beforeAll(() => {
+    // Mock IntersectionObserver if Campaign uses it internally
+    globalThis.IntersectionObserver = class {
+      constructor() {}
+      disconnect() {}
+      observe() {}
+      unobserve() {}
+    } as unknown as typeof IntersectionObserver
+  })
+
   it("renders custom element with required props", () => {
     const { container } = render(<Campaign placement="home-top" />)
     const el = container.querySelector("nosto-campaign") as HTMLElement
     expect(el).toBeTruthy()
-    expect(el.outerHTML).toBe('<nosto-campaign placement="home-top"></nosto-campaign>')
+    expect(el.outerHTML).toBe('<nosto-campaign placement="home-top" loading=""></nosto-campaign>')
   })
 
   it("renders all supported props as attributes", () => {
@@ -17,7 +28,7 @@ describe("Campaign", () => {
     const el = container.querySelector("nosto-campaign") as HTMLElement
     expect(el).toBeTruthy()
     expect(el.outerHTML).toBe(
-      '<nosto-campaign placement="home-top" product-id="456" variant-id="789" template="tpl-2" init="true" lazy="true"></nosto-campaign>'
+      '<nosto-campaign placement="home-top" product-id="456" variant-id="789" template="tpl-2" init="true" lazy=""></nosto-campaign>'
     )
   })
 
@@ -41,7 +52,7 @@ describe("Campaign", () => {
     const el = container.querySelector("nosto-campaign") as HTMLElement
     expect(el).toBeTruthy()
     expect(el.outerHTML).toBe(
-      '<nosto-campaign placement="home-top"><div>Custom template content</div></nosto-campaign>'
+      '<nosto-campaign placement="home-top" loading=""><div>Custom template content</div></nosto-campaign>'
     )
   })
 })

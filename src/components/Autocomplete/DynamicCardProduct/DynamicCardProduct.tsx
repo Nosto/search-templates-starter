@@ -10,12 +10,15 @@ export default function DynamicCardProduct({ hit }: Props) {
   return (
     <AutocompleteElement
       key={hit.productId}
+      as={DynamicCard}
       hit={{
         productId: hit.productId!,
         url: hit.url
       }}
-    >
-      <DynamicCard handle={hit.handle!} template="card" />
-    </AutocompleteElement>
+      componentProps={{
+        handle: hit.handle!,
+        template: "card"
+      }}
+    />
   )
 }
