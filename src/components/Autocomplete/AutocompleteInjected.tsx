@@ -3,6 +3,7 @@ import { useDomEvents } from "@/hooks/useDomEvents"
 import { selectors } from "@/config"
 import { useAutocomplete } from "./useAutocomplete"
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
+import AutocompleteContext from "./AutocompleteContext"
 
 type Props = {
   onSubmit: (input: string, options?: SearchAnalyticsOptions) => void
@@ -33,5 +34,9 @@ export default function AutocompleteInjected({ onSubmit }: Props) {
     }
   })
 
-  return showAutocomplete ? <Results onSubmit={onSearchSubmit} onKeyDown={onKeyDown} /> : null
+  return showAutocomplete ? (
+    <AutocompleteContext.Provider value={{ onSubmit: onSearchSubmit }}>
+      <Results onKeyDown={onKeyDown} />
+    </AutocompleteContext.Provider>
+  ) : null
 }

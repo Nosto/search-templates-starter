@@ -4,14 +4,12 @@ import Keywords from "./Keywords"
 import Products from "./Products"
 import History from "./History"
 import { useRovingFocus } from "@/hooks/useRovingFocus"
-import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 
 type ResultsProps = {
-  onSubmit: (query: string, options?: SearchAnalyticsOptions) => void
   onKeyDown: (e: KeyboardEvent) => void
 }
 
-export default function Results({ onSubmit, onKeyDown }: ResultsProps) {
+export default function Results({ onKeyDown }: ResultsProps) {
   const { keywords, products } = useResponse()
 
   const containerRef = useRovingFocus<HTMLDivElement>(".ns-autocomplete-element")
@@ -29,8 +27,8 @@ export default function Results({ onSubmit, onKeyDown }: ResultsProps) {
       <div className={`${style.container} ${style.paddingContainer}`} ref={containerRef}>
         <div className={style.items}>
           <div className={style.section}>
-            {hasHistory && <History onSubmit={onSubmit} />}
-            {hasResults && <Keywords keywords={keywords} onSubmit={query => onSubmit(query, { isKeyword: true })} />}
+            {hasHistory && <History />}
+            {hasResults && <Keywords keywords={keywords} />}
           </div>
 
           {hasResults && <Products products={products} />}

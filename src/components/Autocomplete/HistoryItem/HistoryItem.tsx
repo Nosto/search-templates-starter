@@ -1,12 +1,13 @@
 import { HistoryElement } from "@nosto/search-js/preact/autocomplete"
 import styles from "./HistoryItem.module.css"
+import { useAutocompleteContext } from "../AutocompleteContext"
 
 type HistoryItemProps = {
   item: string
-  onSubmit: (query: string) => void
 }
 
-export default function HistoryItem({ item, onSubmit }: HistoryItemProps) {
+export default function HistoryItem({ item }: HistoryItemProps) {
+  const { onSubmit } = useAutocompleteContext()
   return (
     <HistoryElement key={item} class={styles.container} onSubmit={() => onSubmit(item)}>
       <div className={styles.name}>{item}</div>

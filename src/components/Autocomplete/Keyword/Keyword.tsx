@@ -1,13 +1,14 @@
 import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
 import { SearchKeyword } from "@nosto/nosto-js/client"
 import style from "./Keyword.module.css"
+import { useAutocompleteContext } from "../AutocompleteContext"
 
-type KeywordProps = {
+export type KeywordProps = {
   keyword: SearchKeyword
-  onSubmit: (query: string) => void
 }
 
-export default function Keyword({ keyword, onSubmit }: KeywordProps) {
+export default function Keyword({ keyword }: KeywordProps) {
+  const { onSubmit } = useAutocompleteContext()
   return (
     <AutocompleteElement
       hit={keyword}
@@ -18,7 +19,7 @@ export default function Keyword({ keyword, onSubmit }: KeywordProps) {
           if (keyword._redirect) {
             window.location.href = keyword._redirect
           } else {
-            onSubmit(keyword.keyword)
+            onSubmit(keyword.keyword, { isKeyword: true })
           }
         }
       }}

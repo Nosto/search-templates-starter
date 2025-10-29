@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/preact"
 import Keyword from "./Keyword"
 import { mockKeyword, mockKeywordNoHighlight } from "@mocks/keywords"
 import { withAutocompleteContext } from ".storybook/decorators"
+import AutocompleteContext from "../AutocompleteContext"
 
 export default {
   title: "Autocomplete/Keyword",
@@ -9,7 +10,14 @@ export default {
   parameters: {
     layout: "centered"
   },
-  decorators: [withAutocompleteContext],
+  decorators: [
+    withAutocompleteContext,
+    Story => (
+      <AutocompleteContext.Provider value={{ onSubmit: (query: string) => console.info("Search submitted:", query) }}>
+        <Story />
+      </AutocompleteContext.Provider>
+    )
+  ],
   tags: ["autodocs"]
 } as Meta<typeof Keyword>
 
@@ -17,15 +25,13 @@ type Story = StoryObj<typeof Keyword>
 
 export const Default: Story = {
   args: {
-    keyword: mockKeyword,
-    onSubmit: (query: string) => console.info("Search submitted:", query)
+    keyword: mockKeyword
   }
 }
 
 export const WithoutHighlight: Story = {
   args: {
-    keyword: mockKeywordNoHighlight,
-    onSubmit: (query: string) => console.info("Search submitted:", query)
+    keyword: mockKeywordNoHighlight
   },
   parameters: {
     docs: {
