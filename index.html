@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Search templates starter</title>
     <style>
+      header {
+        position: sticky;
+        top: 0;
+        background-color: white;
+        z-index: 9001;
+        padding: 8px 0;
+      }
       #dropdown {
         top: 30px;
         position: absolute;
@@ -16,6 +23,27 @@
         display: flex;
         gap: 12px;
         justify-content: center;
+      }
+      body.autocomplete-backdrop-active::after {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.15);
+        z-index: 8999;
+        transition: opacity 0.3s ease-in-out;
+        opacity: 1;
+        animation: fadeIn 0.3s ease-in-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
       }
     </style>
   </head>

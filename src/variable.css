@@ -54,6 +54,8 @@
 
   /* Z-INDEX */
   --ns-z-index-autocomplete: 9000;
+  --ns-z-index-autocomplete-backdrop: 8999;
+  --ns-z-index-header: 9001;
   --ns-z-index-sidebar-backdrop: 1051;
   --ns-z-index-sidebar-wrapper: 1052;
   --ns-z-index-sidebar-close: 1053;
@@ -69,6 +71,9 @@
   /* TRANSITIONS */
   --ns-transition-duration: 0.3s;
   --ns-transition-easing: ease-in-out;
+  
+  /* OPACITY */
+  --ns-backdrop-opacity: 0.15;
 
   /* WIDTH */
   --ns-max-width-search-template: 1500px;
