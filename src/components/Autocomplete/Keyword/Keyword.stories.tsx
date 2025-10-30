@@ -17,15 +17,13 @@ type Story = StoryObj<typeof Keyword>
 
 export const Default: Story = {
   args: {
-    keyword: mockKeyword,
-    onSubmit: (query: string) => console.info("Search submitted:", query)
+    keyword: mockKeyword
   }
 }
 
 export const WithoutHighlight: Story = {
   args: {
-    keyword: mockKeywordNoHighlight,
-    onSubmit: (query: string) => console.info("Search submitted:", query)
+    keyword: mockKeywordNoHighlight
   },
   parameters: {
     docs: {

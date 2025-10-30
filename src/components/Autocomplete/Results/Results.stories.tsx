@@ -21,7 +21,7 @@ export const Default: Story = {
   render: () => (
     <>
       <style>{styles}</style>
-      <Results onSubmit={() => {}} onKeyDown={() => {}} />
+      <Results onKeyDown={() => {}} />
     </>
   )
 }

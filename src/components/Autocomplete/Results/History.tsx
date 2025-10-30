@@ -3,11 +3,7 @@ import HistoryItem from "../HistoryItem/HistoryItem"
 import Heading from "@/elements/Heading/Heading"
 import styles from "./History.module.css"
 
-export type HistoryProps = {
-  onSubmit: (query: string) => void
-}
-
-export default function History({ onSubmit }: HistoryProps) {
+export default function History() {
   const historyItems = useNostoAppState(state => state.historyItems)
 
   if (!historyItems) {
@@ -18,7 +14,7 @@ export default function History({ onSubmit }: HistoryProps) {
     <div className={styles.historyColumn}>
       <Heading>Recent searches</Heading>
       {historyItems.map(item => (
-        <HistoryItem key={item} item={item} onSubmit={onSubmit} />
+        <HistoryItem key={item} item={item} />
       ))}
     </div>
   )
