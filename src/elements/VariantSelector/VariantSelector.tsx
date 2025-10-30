@@ -2,7 +2,10 @@ import { useEffect, useRef } from "preact/hooks"
 import type { VariantSelector as CustomElement } from "@nosto/web-components"
 import { JSX } from "preact"
 
-type VariantSelectorProps = Pick<CustomElement, keyof typeof CustomElement.properties> & JSX.IntrinsicElements["span"]
+type VariantSelectorProps = Partial<
+  Pick<CustomElement, "handle" | "variantId" | "preselect" | "filtered" | "placeholder" | "selectedOptions">
+> &
+  JSX.IntrinsicElements["span"]
 
 type Props = VariantSelectorProps & { onVariantChange?: (variant: { id: number }) => void }
 

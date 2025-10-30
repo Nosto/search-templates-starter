@@ -1,7 +1,12 @@
 import type { Campaign as CustomElement } from "@nosto/web-components"
 import type { ComponentChildren } from "preact"
 
-type CampaignProps = Pick<CustomElement, keyof typeof CustomElement.properties> & {
+type CampaignProps = Partial<
+  Pick<
+    CustomElement,
+    "placement" | "productId" | "variantId" | "template" | "init" | "lazy" | "cartSynced" | "templateElement"
+  >
+> & {
   children?: ComponentChildren
 }
 
