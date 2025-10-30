@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/preact"
 import Keywords from "./Keywords"
 import { mockKeywords, mockEmptyKeywords } from "@mocks/keywords"
 import { withAutocompleteContext } from ".storybook/decorators"
+import { OnSubmitProvider } from "../OnSubmitContext"
 
 export default {
   title: "Autocomplete/Keywords",
@@ -16,17 +17,19 @@ export default {
 type Story = StoryObj<typeof Keywords>
 
 export const Default: Story = {
-  args: {
-    keywords: mockKeywords,
-    onSubmit: (query: string) => console.info("Search submitted:", query)
-  }
+  render: () => (
+    <OnSubmitProvider onSubmit={(query: string) => console.info("Search submitted:", query)}>
+      <Keywords keywords={mockKeywords} />
+    </OnSubmitProvider>
+  )
 }
 
 export const EmptyKeywords: Story = {
-  args: {
-    keywords: mockEmptyKeywords,
-    onSubmit: (query: string) => console.info("Search submitted:", query)
-  },
+  render: () => (
+    <OnSubmitProvider onSubmit={(query: string) => console.info("Search submitted:", query)}>
+      <Keywords keywords={mockEmptyKeywords} />
+    </OnSubmitProvider>
+  ),
   parameters: {
     docs: {
       description: {
