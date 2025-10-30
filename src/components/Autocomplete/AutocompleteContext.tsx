@@ -9,12 +9,12 @@ type AutocompleteContextValue = {
 
 const AutocompleteContext = createContext<AutocompleteContextValue | undefined>(undefined)
 
-type AutocompleteContextProviderProps = {
+type Props = {
   children: ComponentChildren
   onSubmit: (query: string, options?: SearchAnalyticsOptions) => void
 }
 
-export function AutocompleteContextProvider({ children, onSubmit }: AutocompleteContextProviderProps) {
+export function AutocompleteContextProvider({ children, onSubmit }: Props) {
   const contextValue = {
     onSubmit
   }
