@@ -5,6 +5,7 @@ import { SearchPageProvider } from "@nosto/search-js/preact/serp"
 import { StoryFn } from "@storybook/preact-vite"
 import { AutocompletePageProvider } from "@nosto/search-js/preact/autocomplete"
 import { OnSubmitProvider } from "@/components/Autocomplete/OnSubmitContext"
+import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 
 export function withWrapperStyles(story: StoryFn) {
   return h("div", { style: "font-family: var(--ns-font-family);", children: h(story, {}) })
@@ -29,7 +30,7 @@ export function withAutocompleteContext(story: StoryFn) {
     config: mockConfig,
     store: createStore(mockAutocompleteState),
     children: h(OnSubmitProvider, {
-      onSubmit: (query: string) => console.info("Search submitted:", query),
+      onSubmit: (query: string, options?: SearchAnalyticsOptions) => console.info("Search submitted:", query, options),
       children: h(story, {})
     })
   })
