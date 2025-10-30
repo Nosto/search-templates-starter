@@ -16,6 +16,4 @@ export const imageProps = {
   sizes: imageSizes,
   fetchpriority: "high",
   breakpoints
-  // if the product images have a consistent aspect ratio, you can uncomment the line below to set it
-  //aspectRatio: 0.75
 } as const

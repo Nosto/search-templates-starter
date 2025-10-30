@@ -19,6 +19,10 @@
   transition: opacity 0.3s ease-in-out;
 }
 
+.img, .img::part(img) {
+  aspect-ratio: var(--ns-aspect-ratio);
+}
+
 .image > .img:nth-child(2) {
   position: absolute;
   top: 0;
