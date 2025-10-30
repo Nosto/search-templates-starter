@@ -3,7 +3,6 @@ import { mockAutocompleteState, mockConfig, mockInitialState } from "@mocks/mock
 import { createStore } from "@nosto/search-js/preact/common"
 import { SearchPageProvider } from "@nosto/search-js/preact/serp"
 import { StoryFn } from "@storybook/preact-vite"
-import { AutocompletePageProvider } from "@nosto/search-js/preact/autocomplete"
 import { AutocompleteContextProvider } from "@/components/Autocomplete/AutocompleteContext"
 
 export function withWrapperStyles(story: StoryFn) {
@@ -22,17 +21,15 @@ export function withSearchContext(story: StoryFn) {
 }
 
 /**
- * A decorator that wraps a story in an AutocompletePageProvider with mock data
- * and an AutocompleteContextProvider for onSubmit handling.
+ * A decorator that wraps a story in an AutocompleteContextProvider with mock data
+ * for onSubmit handling. The AutocompletePageProvider is applied internally.
  */
 export function withAutocompleteContext(story: StoryFn) {
-  return h(AutocompletePageProvider, {
+  return h(AutocompleteContextProvider, {
     config: mockConfig,
     store: createStore(mockAutocompleteState),
-    children: h(AutocompleteContextProvider, {
-      onSubmit: (query: string) => console.info("Search submitted:", query),
-      children: h(story, {})
-    })
+    onSubmit: (query: string) => console.info("Search submitted:", query),
+    children: h(story, {})
   })
 }
 

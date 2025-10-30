@@ -1,5 +1,4 @@
 import { SearchPageProvider } from "@nosto/search-js/preact/serp"
-import { AutocompletePageProvider } from "@nosto/search-js/preact/autocomplete"
 import { render, useCallback } from "preact/compat"
 import Serp from "@/components/Serp/Serp"
 import "@/variable.css"
@@ -31,11 +30,9 @@ function SerpApp() {
     <ErrorBoundary>
       <SearchQueryHandler />
       <SidebarProvider>
-        <AutocompletePageProvider config={autocompleteConfig}>
-          <Portal target={selectors.dropdown}>
-            <AutocompleteInjected onSubmit={onSubmit} />
-          </Portal>
-        </AutocompletePageProvider>
+        <Portal target={selectors.dropdown}>
+          <AutocompleteInjected onSubmit={onSubmit} config={autocompleteConfig} />
+        </Portal>
         <Portal target={selectors.results}>
           <Serp />
         </Portal>

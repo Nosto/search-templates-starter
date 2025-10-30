@@ -5,12 +5,16 @@ import { useAutocomplete } from "./useAutocomplete"
 import SpeechToTextButton from "./SpeechToText/SpeechToText"
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 import { AutocompleteContextProvider } from "./AutocompleteContext"
+import { AutocompleteConfig } from "@nosto/search-js/preact/autocomplete"
+import { Store } from "@nosto/search-js/preact/common"
 
 type Props = {
   onSubmit: (input: string, options?: SearchAnalyticsOptions) => void
+  config: AutocompleteConfig
+  store?: Store
 }
 
-export default function AutocompleteNative({ onSubmit }: Props) {
+export default function AutocompleteNative({ onSubmit, config, store }: Props) {
   const autocompleteRef = useRef<HTMLFormElement>(null)
   const searchInputRef = useRef<HTMLInputElement>(null)
 
@@ -21,7 +25,7 @@ export default function AutocompleteNative({ onSubmit }: Props) {
   })
 
   return (
-    <AutocompleteContextProvider onSubmit={onSearchSubmit}>
+    <AutocompleteContextProvider onSubmit={onSearchSubmit} config={config} store={store}>
       <form
         ref={autocompleteRef}
         onSubmit={e => {

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import AutocompleteNative from "./AutocompleteNative"
 import { withAutocompleteContext } from ".storybook/decorators"
+import { mockConfig } from "@mocks/mocks"
 
 export default {
   title: "Autocomplete/Autocomplete",
@@ -16,13 +17,15 @@ type Story = StoryObj<typeof AutocompleteNative>
 
 export const Default: Story = {
   args: {
-    onSubmit: (input: string) => console.info("Search submitted:", input)
+    onSubmit: (input: string) => console.info("Search submitted:", input),
+    config: mockConfig
   }
 }
 
 export const Interactive: Story = {
   args: {
-    onSubmit: (input: string) => console.info("Search submitted:", input)
+    onSubmit: (input: string) => console.info("Search submitted:", input),
+    config: mockConfig
   },
   parameters: {
     docs: {
