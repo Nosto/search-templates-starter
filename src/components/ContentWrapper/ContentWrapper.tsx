@@ -1,7 +1,6 @@
 import { JSX } from "preact"
 import FilterSidebar from "@/components/FilterSidebar/FilterSidebar"
 import { useNostoAppState } from "@nosto/search-js/preact/hooks"
-import styles from "./ContentWrapper.module.css"
 import { cl } from "@nosto/search-js/utils"
 
 export type ContentChildrenProps = { loading: boolean; foundProducts: boolean }
@@ -27,9 +26,9 @@ function ContentWrapper({ type, children }: ContentWrapperProps) {
   }
 
   return (
-    <div className={styles.wrapper} data-nosto-element={type}>
+    <div className="font-ns text-ns-4 min-h-ns-content flex flex-col p-0 my-0 mx-auto md:!flex-row" data-nosto-element={type}>
       {foundProducts && <FilterSidebar />}
-      <div className={cl(styles.container, loading && styles.loading)}>{children({ loading, foundProducts })}</div>
+      <div className={cl("block w-full box-border p-0 [position:initial] md:inline-block", loading && "relative")}>{children({ loading, foundProducts })}</div>
     </div>
   )
 }
