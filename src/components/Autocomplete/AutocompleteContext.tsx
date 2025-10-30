@@ -1,5 +1,6 @@
 import { createContext } from "preact"
 import { useContext } from "preact/hooks"
+import { ComponentChildren } from "preact"
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 
 type AutocompleteContextValue = {
@@ -8,6 +9,19 @@ type AutocompleteContextValue = {
 
 const AutocompleteContext = createContext<AutocompleteContextValue | undefined>(undefined)
 
+type AutocompleteContextProviderProps = {
+  children: ComponentChildren
+  onSubmit: (query: string, options?: SearchAnalyticsOptions) => void
+}
+
+export function AutocompleteContextProvider({ children, onSubmit }: AutocompleteContextProviderProps) {
+  const contextValue = {
+    onSubmit
+  }
+
+  return <AutocompleteContext.Provider value={contextValue}>{children}</AutocompleteContext.Provider>
+}
+
 export function useAutocompleteContext() {
   const context = useContext(AutocompleteContext)
   if (!context) {
@@ -15,5 +29,3 @@ export function useAutocompleteContext() {
   }
   return context
 }
-
-export default AutocompleteContext

@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/preact"
 import Results from "./Results"
 import { withAutocompleteContext } from ".storybook/decorators"
-import AutocompleteContext from "../AutocompleteContext"
 
 export default {
   title: "Autocomplete/Results",
@@ -22,9 +21,7 @@ export const Default: Story = {
   render: () => (
     <>
       <style>{styles}</style>
-      <AutocompleteContext.Provider value={{ onSubmit: () => {} }}>
-        <Results onKeyDown={() => {}} />
-      </AutocompleteContext.Provider>
+      <Results onKeyDown={() => {}} />
     </>
   )
 }

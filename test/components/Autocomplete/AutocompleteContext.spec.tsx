@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest"
 import { render } from "@testing-library/preact"
-import AutocompleteContext, { useAutocompleteContext } from "@/components/Autocomplete/AutocompleteContext"
+import { AutocompleteContextProvider, useAutocompleteContext } from "@/components/Autocomplete/AutocompleteContext"
 
 describe("AutocompleteContext", () => {
   it("provides onSubmit handler to children", () => {
@@ -13,9 +13,9 @@ describe("AutocompleteContext", () => {
     }
 
     render(
-      <AutocompleteContext.Provider value={{ onSubmit: mockOnSubmit }}>
+      <AutocompleteContextProvider onSubmit={mockOnSubmit}>
         <TestComponent />
-      </AutocompleteContext.Provider>
+      </AutocompleteContextProvider>
     )
 
     expect(contextValue).toBeDefined()

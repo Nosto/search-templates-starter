@@ -4,7 +4,7 @@ import { SearchInput } from "@nosto/search-js/preact/autocomplete"
 import { useAutocomplete } from "./useAutocomplete"
 import SpeechToTextButton from "./SpeechToText/SpeechToText"
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
-import AutocompleteContext from "./AutocompleteContext"
+import { AutocompleteContextProvider } from "./AutocompleteContext"
 
 type Props = {
   onSubmit: (input: string, options?: SearchAnalyticsOptions) => void
@@ -21,7 +21,7 @@ export default function AutocompleteNative({ onSubmit }: Props) {
   })
 
   return (
-    <AutocompleteContext.Provider value={{ onSubmit: onSearchSubmit }}>
+    <AutocompleteContextProvider onSubmit={onSearchSubmit}>
       <form
         ref={autocompleteRef}
         onSubmit={e => {
@@ -41,6 +41,6 @@ export default function AutocompleteNative({ onSubmit }: Props) {
         <button type="submit">Search</button>
         {showAutocomplete && <Results onKeyDown={onKeyDown} />}
       </form>
-    </AutocompleteContext.Provider>
+    </AutocompleteContextProvider>
   )
 }
