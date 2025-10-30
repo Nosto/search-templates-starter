@@ -1,11 +1,9 @@
 import { createContext } from "preact"
-import { useContext, useMemo } from "preact/hooks"
+import { useContext } from "preact/hooks"
 import { ComponentChildren } from "preact"
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 
-type OnSubmitContextType = {
-  onSubmit: (query: string, options?: SearchAnalyticsOptions) => void
-}
+type OnSubmitContextType = (query: string, options?: SearchAnalyticsOptions) => void
 
 const OnSubmitContext = createContext<OnSubmitContextType | undefined>(undefined)
 
@@ -15,14 +13,7 @@ type OnSubmitProviderProps = {
 }
 
 export function OnSubmitProvider({ children, onSubmit }: OnSubmitProviderProps) {
-  const contextValue = useMemo(
-    () => ({
-      onSubmit
-    }),
-    [onSubmit]
-  )
-
-  return <OnSubmitContext.Provider value={contextValue}>{children}</OnSubmitContext.Provider>
+  return <OnSubmitContext.Provider value={onSubmit}>{children}</OnSubmitContext.Provider>
 }
 
 export function useOnSubmit() {
@@ -30,5 +21,5 @@ export function useOnSubmit() {
   if (context === undefined) {
     throw new Error("useOnSubmit must be used within an OnSubmitProvider")
   }
-  return context.onSubmit
+  return context
 }
