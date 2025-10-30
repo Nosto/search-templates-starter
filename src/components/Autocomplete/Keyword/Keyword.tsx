@@ -12,7 +12,8 @@ export default function Keyword({ keyword }: KeywordProps) {
     <AutocompleteElement
       hit={keyword}
       componentProps={{
-        className: "p-ns-1 px-ns-2 no-underline rounded-ns-3 transition-[background-color_0.2s_ease] cursor-pointer focus:bg-ns-focus hover:bg-ns-focus",
+        className:
+          "p-ns-1 px-ns-2 no-underline rounded-ns-3 transition-[background-color_0.2s_ease] cursor-pointer focus:bg-ns-focus hover:bg-ns-focus",
         onClick: (e: Event) => {
           e.preventDefault()
           if (keyword._redirect) {

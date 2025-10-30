@@ -3,7 +3,6 @@ import { SearchStatsFacet, SearchTermsFacet } from "@nosto/nosto-js/client"
 import TermsDropdown from "./TermsDropdown/TermsDropdown"
 import RangeDropdown from "./RangeDropdown/RangeDropdown"
 import ClearFiltersButton from "./ClearFiltersButton/ClearFiltersButton"
-import styles from "./FilterTopbar.module.css"
 
 export default function FilterTopbar() {
   const { facets } = useFacets()
@@ -13,7 +12,7 @@ export default function FilterTopbar() {
   }
 
   return (
-    <div className={styles.bar}>
+    <div className="flex flex-wrap gap-ns-2 items-center py-ns-2 px-0 border-b border-ns-thin border-ns-grey-light max-md:flex-col max-md:items-stretch max-md:gap-ns-1">
       {facets.map(facet => {
         switch (facet.type) {
           case "terms":

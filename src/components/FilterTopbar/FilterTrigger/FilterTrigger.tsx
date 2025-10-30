@@ -1,5 +1,4 @@
 import Icon from "@/elements/Icon/Icon"
-import styles from "./FilterTrigger.module.css"
 
 interface FilterTriggerProps {
   value?: string
@@ -12,7 +11,7 @@ interface FilterTriggerProps {
 function FilterTrigger({ value, isOpen, onClick, onKeyDown, ariaLabel }: FilterTriggerProps) {
   return (
     <button
-      className={styles.trigger}
+      className="flex items-center gap-ns-2 p-ns-2 px-ns-3 bg-ns-white border-none rounded-ns-3 cursor-pointer text-ns-4 justify-between focus-visible:outline-2 focus-visible:outline-ns-primary focus-visible:outline-offset-2"
       onClick={onClick}
       onKeyDown={onKeyDown}
       aria-expanded={isOpen}

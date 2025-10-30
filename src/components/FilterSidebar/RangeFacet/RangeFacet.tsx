@@ -13,7 +13,12 @@ export default function RangeFacet({ facet }: Props) {
   const isSelected = min !== range[0] || max !== range[1]
 
   return (
-    <li className={cl("border-b border-ns-thin border-ns-grey-light md:last:border-b-0", active && "[&>.menu]:max-h-ns-facet [&>.menu]:p-ns-4 [&>.menu]:opacity-100")}>
+    <li
+      className={cl(
+        "border-b border-ns-thin border-ns-grey-light md:last:border-b-0",
+        active && "[&>.menu]:max-h-ns-facet [&>.menu]:p-ns-4 [&>.menu]:opacity-100"
+      )}
+    >
       <button
         className="cursor-pointer inline-block relative w-full box-border p-ns-4 bg-transparent border-none text-left [&>.icon]:right-ns-16 [&>.icon]:block [&>.icon]:absolute [&>.icon]:top-1/2 [&>.icon]:-translate-y-1/2"
         onClick={() => {
@@ -31,12 +36,20 @@ export default function RangeFacet({ facet }: Props) {
         type="button"
       >
         <span className="text-ns-black text-ns-4">{facet.name}</span>
-        {isSelected && <span className="whitespace-nowrap align-baseline leading-ns-tiny inline-block text-center text-ns-3 font-ns-bold rounded-ns-pill text-ns-white bg-ns-primary py-[0.1rem] px-[0.35rem] ml-ns-1">{1}</span>}
+        {isSelected && (
+          <span className="whitespace-nowrap align-baseline leading-ns-tiny inline-block text-center text-ns-3 font-ns-bold rounded-ns-pill text-ns-white bg-ns-primary py-[0.1rem] px-[0.35rem] ml-ns-1">
+            {1}
+          </span>
+        )}
         <span className="icon">
           <Icon name={active ? "arrow-up" : "arrow-down"} circle={true} />
         </span>
       </button>
-      <div className="menu max-h-0 overflow-hidden p-0 px-ns-4 transition-[max-height_var(--ns-transition-duration)_var(--ns-transition-easing),opacity_var(--ns-transition-duration)_var(--ns-transition-easing),padding_var(--ns-transition-duration)_var(--ns-transition-easing)] opacity-0" id={`${facet.id}-range-menu`} aria-expanded={active}>
+      <div
+        className="menu max-h-0 overflow-hidden p-0 px-ns-4 transition-[max-height_var(--ns-transition-duration)_var(--ns-transition-easing),opacity_var(--ns-transition-duration)_var(--ns-transition-easing),padding_var(--ns-transition-duration)_var(--ns-transition-easing)] opacity-0"
+        id={`${facet.id}-range-menu`}
+        aria-expanded={active}
+      >
         <DualRange
           min={min}
           max={max}

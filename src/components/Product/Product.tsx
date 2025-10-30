@@ -25,18 +25,40 @@ export default function Product({ product, children, showAltOnHover = true }: Pr
       }}
       componentProps={{
         "aria-label": `Product ${product.name}`,
-        className: cl("p-ns-2 box-border flex-[0_0_100%] max-w-full relative w-full no-underline", hasAlternateImage && "group"),
+        className: cl(
+          "p-ns-2 box-border flex-[0_0_100%] max-w-full relative w-full no-underline",
+          hasAlternateImage && "group"
+        ),
         href: product.url
       }}
     >
       <div className="relative">
-        <ProductImage src={product.imageUrl!} alt={product.name} className="h-auto w-full transition-opacity duration-ns ease-ns" />
+        <ProductImage
+          src={product.imageUrl!}
+          alt={product.name}
+          className="h-auto w-full transition-opacity duration-ns ease-ns"
+        />
         {hasAlternateImage && (
-          <ProductImage src={product.alternateImageUrls![0]} alt={product.name} className="absolute top-0 left-0 h-auto w-full opacity-0 group-hover:opacity-100 transition-opacity duration-ns ease-ns" />
+          <ProductImage
+            src={product.alternateImageUrls![0]}
+            alt={product.name}
+            className="absolute top-0 left-0 h-auto w-full opacity-0 group-hover:opacity-100 transition-opacity duration-ns ease-ns"
+          />
         )}
-        {isNew && !isOnSale && <div className="absolute top-[8px] left-[8px] bg-ns-white text-ns-black text-ns-4 p-[8px] z-[1] text-center">New</div>}
-        {isOnSale && <div className="absolute top-[8px] left-[8px] bg-ns-red text-ns-white text-ns-4 p-[8px] z-[1] text-center">Sale</div>}
-        <QuickAdd product={product} className="absolute bottom-[8px] left-[8px] bg-ns-white text-ns-black text-ns-4 p-[8px] z-[1] text-center border-none cursor-pointer hidden group-hover:block">
+        {isNew && !isOnSale && (
+          <div className="absolute top-[8px] left-[8px] bg-ns-white text-ns-black text-ns-4 p-[8px] z-[1] text-center">
+            New
+          </div>
+        )}
+        {isOnSale && (
+          <div className="absolute top-[8px] left-[8px] bg-ns-red text-ns-white text-ns-4 p-[8px] z-[1] text-center">
+            Sale
+          </div>
+        )}
+        <QuickAdd
+          product={product}
+          className="absolute bottom-[8px] left-[8px] bg-ns-white text-ns-black text-ns-4 p-[8px] z-[1] text-center border-none cursor-pointer hidden group-hover:block"
+        >
           Add to cart
         </QuickAdd>
       </div>
@@ -48,7 +70,10 @@ export default function Product({ product, children, showAltOnHover = true }: Pr
           {isOnSale && <span className="line-through ml-ns-2">{product.listPriceText}</span>}
         </div>
         {product.ratingValue !== undefined && product.reviewCount ? (
-          <div aria-label={`${product.ratingValue} out of 5 stars, ${product.reviewCount} reviews`} className="text-ns-black text-ns-4 !mb-ns-1">
+          <div
+            aria-label={`${product.ratingValue} out of 5 stars, ${product.reviewCount} reviews`}
+            className="text-ns-black text-ns-4 !mb-ns-1"
+          >
             {renderRatingStars(product.ratingValue)} {product.ratingValue}
           </div>
         ) : null}

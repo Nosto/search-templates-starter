@@ -4,7 +4,6 @@ import { SearchStatsFacet } from "@nosto/nosto-js/client"
 import FilterTrigger from "../FilterTrigger/FilterTrigger"
 import RangeInput from "@/elements/RangeInput/RangeInput"
 import Button from "@/elements/Button/Button"
-import styles from "./RangeDropdown.module.css"
 
 type Props = {
   facet: SearchStatsFacet
@@ -59,7 +58,7 @@ export default function RangeDropdown({ facet }: Props) {
   }
 
   return (
-    <div className={styles.dropdown} ref={dropdownRef}>
+    <div className="relative inline-block" ref={dropdownRef}>
       <FilterTrigger
         value={facet.name}
         isOpen={isOpen}
@@ -69,34 +68,37 @@ export default function RangeDropdown({ facet }: Props) {
       />
 
       {isOpen && (
-        <div className={styles.menu} role="menu">
-          <div className={styles.inputs}>
-            <div className={styles.inputGroup}>
-              <span className={styles.inputLabel}>$</span>
+        <div
+          className="absolute top-full left-0 z-[1000] min-w-[300px] bg-ns-white border-none rounded-ns-3 shadow-[0_4px_12px_rgb(0_0_0/0.15)] mt-ns-1 overflow-hidden max-md:right-0 max-md:min-w-[280px]"
+          role="menu"
+        >
+          <div className="flex gap-ns-3 p-ns-4 items-center">
+            <div className="flex-1 flex items-center gap-ns-2">
+              <span className="text-ns-4 text-ns-black font-ns-medium">$</span>
               <RangeInput
                 value={localMin}
                 min={min}
                 max={max}
                 placeholder="From"
                 onChange={e => setLocalMin(Number(e.currentTarget.value))}
-                className={styles.input}
+                className="flex-1 p-ns-3 border-none rounded-ns-3 text-ns-4"
                 aria-label={`Minimum ${facet.name}`}
               />
             </div>
-            <div className={styles.inputGroup}>
-              <span className={styles.inputLabel}>$</span>
+            <div className="flex-1 flex items-center gap-ns-2">
+              <span className="text-ns-4 text-ns-black font-ns-medium">$</span>
               <RangeInput
                 value={localMax}
                 min={min}
                 max={max}
                 placeholder="To"
                 onChange={e => setLocalMax(Number(e.currentTarget.value))}
-                className={styles.input}
+                className="flex-1 p-ns-3 border-none rounded-ns-3 text-ns-4"
                 aria-label={`Maximum ${facet.name}`}
               />
             </div>
           </div>
-          <div className={styles.actions}>
+          <div className="p-ns-3 px-ns-4 border-t-0 bg-ns-grey-light">
             <Button onClick={applyFilter}>Apply</Button>
           </div>
         </div>

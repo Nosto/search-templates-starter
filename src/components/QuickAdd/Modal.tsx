@@ -120,7 +120,11 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
               <SimpleSelector product={product} skuId={selectedSkuId} onChange={skuId => setSelectedSkuId(skuId)} />
             ) : null}
             <div className="description">{product.description}</div>
-            <button className="bg-ns-black text-white border-none py-[0.75rem] px-[1.5rem] rounded-[6px] font-semibold cursor-pointer transition-[background-color_0.2s] hover:bg-ns-grey-dark disabled:bg-[#d1d5db] disabled:cursor-not-allowed" onClick={handleAddToCart} disabled={!selectedSkuId}>
+            <button
+              className="bg-ns-black text-white border-none py-[0.75rem] px-[1.5rem] rounded-[6px] font-semibold cursor-pointer transition-[background-color_0.2s] hover:bg-ns-grey-dark disabled:bg-[#d1d5db] disabled:cursor-not-allowed"
+              onClick={handleAddToCart}
+              disabled={!selectedSkuId}
+            >
               Add to Cart
             </button>
           </div>

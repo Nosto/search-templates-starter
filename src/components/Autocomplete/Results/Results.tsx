@@ -22,7 +22,11 @@ export default function Results({ onKeyDown }: ResultsProps) {
 
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div className="absolute flex flex-col items-start bg-ns-white box-border mx-auto left-0 right-0 z-ns-autocomplete max-w-ns-autocomplete border border-ns-thin border-ns-grey-light rounded-ns-3 shadow-ns-autocomplete w-[calc(100%-var(--ns-width-autocomplete-offset))] font-ns text-ns-4 md:w-auto" data-nosto-element="autocomplete" onKeyDown={onKeyDown}>
+    <div
+      className="absolute flex flex-col items-start bg-ns-white box-border mx-auto left-0 right-0 z-ns-autocomplete max-w-ns-autocomplete border border-ns-thin border-ns-grey-light rounded-ns-3 shadow-ns-autocomplete w-[calc(100%-var(--ns-width-autocomplete-offset))] font-ns text-ns-4 md:w-auto"
+      data-nosto-element="autocomplete"
+      onKeyDown={onKeyDown}
+    >
       <div className="mt-auto w-full p-ns-1" ref={containerRef}>
         <div className="flex flex-row max-md:flex-col">
           <div className="flex flex-row max-md:grid max-md:grid-cols-2">

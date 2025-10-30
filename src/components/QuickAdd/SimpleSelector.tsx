@@ -15,7 +15,10 @@ export default function SimpleSelector({ product, skuId, onChange }: Props) {
       {product.skus?.map(sku => (
         <label
           key={sku.id}
-          className={cl("inline-block mb-ns-4 bg-ns-grey-light border-ns-grey p-ns-2 cursor-pointer", skuId === sku.id && "text-ns-white bg-ns-black border-ns-black")}
+          className={cl(
+            "inline-block mb-ns-4 bg-ns-grey-light border-ns-grey p-ns-2 cursor-pointer",
+            skuId === sku.id && "text-ns-white bg-ns-black border-ns-black"
+          )}
           onClick={() => onChange(sku.id!)}
         >
           {sku.name}

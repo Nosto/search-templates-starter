@@ -26,9 +26,14 @@ function ContentWrapper({ type, children }: ContentWrapperProps) {
   }
 
   return (
-    <div className="font-ns text-ns-4 min-h-ns-content flex flex-col p-0 my-0 mx-auto md:!flex-row" data-nosto-element={type}>
+    <div
+      className="font-ns text-ns-4 min-h-ns-content flex flex-col p-0 my-0 mx-auto md:!flex-row"
+      data-nosto-element={type}
+    >
       {foundProducts && <FilterSidebar />}
-      <div className={cl("block w-full box-border p-0 [position:initial] md:inline-block", loading && "relative")}>{children({ loading, foundProducts })}</div>
+      <div className={cl("block w-full box-border p-0 [position:initial] md:inline-block", loading && "relative")}>
+        {children({ loading, foundProducts })}
+      </div>
     </div>
   )
 }

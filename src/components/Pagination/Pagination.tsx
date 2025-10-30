@@ -10,7 +10,12 @@ type Props = {
 
 function PageLink({ onClick, href, className, ariaLabel, children }: Props) {
   return (
-    <a className={cl("block relative no-underline text-ns-black p-ns-2 px-ns-4 rounded-ns-3 cursor-pointer", className)} href={href} aria-label={ariaLabel} onClick={onClick}>
+    <a
+      className={cl("block relative no-underline text-ns-black p-ns-2 px-ns-4 rounded-ns-3 cursor-pointer", className)}
+      href={href}
+      aria-label={ariaLabel}
+      onClick={onClick}
+    >
       {children}
     </a>
   )

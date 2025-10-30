@@ -3,7 +3,6 @@ import { useFacet } from "@nosto/search-js/preact/hooks"
 import { SearchTermsFacet } from "@nosto/nosto-js/client"
 import FilterTrigger from "../FilterTrigger/FilterTrigger"
 import Checkbox from "@/elements/Checkbox/Checkbox"
-import styles from "./TermsDropdown.module.css"
 
 type Props = {
   facet: SearchTermsFacet
@@ -48,7 +47,7 @@ export default function TermsDropdown({ facet }: Props) {
   }
 
   return (
-    <div className={styles.dropdown} ref={dropdownRef}>
+    <div className="relative inline-block" ref={dropdownRef}>
       <FilterTrigger
         value={selectedCount > 0 ? `${facet.name} (${selectedCount})` : facet.name}
         isOpen={isOpen}
@@ -58,10 +57,13 @@ export default function TermsDropdown({ facet }: Props) {
       />
 
       {isOpen && (
-        <div className={styles.menu} role="menu">
-          <div className={styles.options}>
+        <div
+          className="absolute top-full left-0 z-[1000] min-w-[280px] max-w-[400px] bg-ns-white border-none rounded-ns-3 shadow-[0_4px_12px_rgb(0_0_0/0.15)] mt-ns-1 overflow-hidden max-md:right-0 max-md:min-w-[320px]"
+          role="menu"
+        >
+          <div className="max-h-[300px] overflow-y-auto py-ns-2 px-0">
             {facet.data?.map(value => (
-              <div key={value.value} className={styles.option} role="menuitem">
+              <div key={value.value} className="p-ns-1 px-ns-4 cursor-pointer" role="menuitem">
                 <Checkbox
                   value={`${value.value} (${value.count})`}
                   selected={value.selected}

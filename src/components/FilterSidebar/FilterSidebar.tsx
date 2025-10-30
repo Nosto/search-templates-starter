@@ -18,7 +18,13 @@ type ToggleProps = {
 
 function ToggleSidebarButton({ className, onClick }: ToggleProps = {}) {
   return (
-    <Button className={cl("border-ns-none max-w-ns-mobile-close-sidebar top-ns-4 right-ns-4 absolute block text-right items-center text-ns-3 cursor-pointer", className)} onClick={onClick}>
+    <Button
+      className={cl(
+        "border-ns-none max-w-ns-mobile-close-sidebar top-ns-4 right-ns-4 absolute block text-right items-center text-ns-3 cursor-pointer",
+        className
+      )}
+      onClick={onClick}
+    >
       <Icon name="close" circle={true} />
     </Button>
   )
@@ -60,7 +66,12 @@ export default function FilterSidebar() {
 
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
-    <dialog ref={dialogRef} className="fixed top-0 left-0 m-0 p-0 border-none max-w-ns-mobile-sidebar h-full max-h-full animate-[dialog-slide-in_0.3s_ease] backdrop:bg-black backdrop:opacity-50 backdrop:animate-[backdrop-fade-in_0.3s_ease]" onClose={handleClose} onClick={handleBackdropClick}>
+    <dialog
+      ref={dialogRef}
+      className="fixed top-0 left-0 m-0 p-0 border-none max-w-ns-mobile-sidebar h-full max-h-full animate-[dialog-slide-in_0.3s_ease] backdrop:bg-black backdrop:opacity-50 backdrop:animate-[backdrop-fade-in_0.3s_ease]"
+      onClose={handleClose}
+      onClick={handleBackdropClick}
+    >
       <div className="overflow-y-auto relative bg-ns-white h-full mr-0 p-ns-1 min-w-ns-mobile-sidebar flex flex-col w-full">
         <div className="flex items-baseline p-ns-4 border-b border-ns-thin border-ns-grey-light">
           <Heading>Filters</Heading>
