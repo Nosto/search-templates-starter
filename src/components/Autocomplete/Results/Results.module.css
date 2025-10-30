@@ -19,6 +19,18 @@
   font-size: var(--ns-font-size-4);
 }
 
+.autocomplete::before {
+  content: "";
+  position: fixed;
+  top: var(--ns-height-autocomplete-offset);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--ns-color-black);
+  opacity: 0.15;
+  z-index: 1;
+}
+
 @media only screen and (min-width: 768px) {
   .autocomplete {
     width: auto;
@@ -26,8 +38,10 @@
 }
 
 .container {
+  background-color: var(--ns-color-white);
   margin-top: auto;
   width: 100%;
+  z-index: var(--ns-z-index-autocomplete);
 }
 
 .paddingContainer {
