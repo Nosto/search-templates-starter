@@ -1,6 +1,6 @@
 import Button from "@/elements/Button/Button"
 import { speechToTextSupported, useSpeechToText } from "@nosto/search-js/preact/hooks"
-import { useAutocompleteContext } from "../AutocompleteContext"
+import { useAutocompleteContext } from "@/contexts/AutocompleteContext"
 
 export default function SpeechToTextButton() {
   const { onSubmit } = useAutocompleteContext()

@@ -3,7 +3,7 @@ import { mockAutocompleteState, mockConfig, mockInitialState } from "@mocks/mock
 import { createStore } from "@nosto/search-js/preact/common"
 import { SearchPageProvider } from "@nosto/search-js/preact/serp"
 import { StoryFn } from "@storybook/preact-vite"
-import { AutocompleteContextProvider } from "@/components/Autocomplete/AutocompleteContext"
+import { AutocompleteContextProvider } from "@/contexts/AutocompleteContext"
 
 export function withWrapperStyles(story: StoryFn) {
   return h("div", { style: "font-family: var(--ns-font-family);", children: h(story, {}) })

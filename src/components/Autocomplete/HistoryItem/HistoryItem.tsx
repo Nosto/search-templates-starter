@@ -1,6 +1,6 @@
 import { HistoryElement } from "@nosto/search-js/preact/autocomplete"
 import styles from "./HistoryItem.module.css"
-import { useAutocompleteContext } from "../AutocompleteContext"
+import { useAutocompleteContext } from "@/contexts/AutocompleteContext"
 
 type HistoryItemProps = {
   item: string

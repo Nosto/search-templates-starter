@@ -4,7 +4,7 @@ import { SearchInput } from "@nosto/search-js/preact/autocomplete"
 import { useAutocomplete } from "./useAutocomplete"
 import SpeechToTextButton from "./SpeechToText/SpeechToText"
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
-import { AutocompleteContextProvider } from "./AutocompleteContext"
+import { AutocompleteContextProvider } from "@/contexts/AutocompleteContext"
 import { AutocompleteConfig } from "@nosto/search-js/preact/autocomplete"
 import { Store } from "@nosto/search-js/preact/common"
 

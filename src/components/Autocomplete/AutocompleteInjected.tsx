@@ -3,7 +3,7 @@ import { useDomEvents } from "@/hooks/useDomEvents"
 import { selectors } from "@/config"
 import { useAutocomplete } from "./useAutocomplete"
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
-import { AutocompleteContextProvider } from "./AutocompleteContext"
+import { AutocompleteContextProvider } from "@/contexts/AutocompleteContext"
 import { AutocompleteConfig } from "@nosto/search-js/preact/autocomplete"
 import { Store } from "@nosto/search-js/preact/common"
 

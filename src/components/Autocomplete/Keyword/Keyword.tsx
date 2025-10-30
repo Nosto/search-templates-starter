@@ -1,7 +1,7 @@
 import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
 import { SearchKeyword } from "@nosto/nosto-js/client"
 import style from "./Keyword.module.css"
-import { useAutocompleteContext } from "../AutocompleteContext"
+import { useAutocompleteContext } from "@/contexts/AutocompleteContext"
 
 export type KeywordProps = {
   keyword: SearchKeyword

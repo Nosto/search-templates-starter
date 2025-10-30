@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest"
 import { render } from "@testing-library/preact"
-import { AutocompleteContextProvider, useAutocompleteContext } from "@/components/Autocomplete/AutocompleteContext"
+import { AutocompleteContextProvider, useAutocompleteContext } from "@/contexts/AutocompleteContext"
 import type { AutocompleteConfig } from "@nosto/search-js/preact/autocomplete"
 
 const mockConfig: AutocompleteConfig = {
