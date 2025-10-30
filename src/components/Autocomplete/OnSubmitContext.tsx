@@ -1,5 +1,5 @@
 import { createContext } from "preact"
-import { useContext } from "preact/hooks"
+import { useContext, useMemo } from "preact/hooks"
 import { ComponentChildren } from "preact"
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 
@@ -15,9 +15,12 @@ type OnSubmitProviderProps = {
 }
 
 export function OnSubmitProvider({ children, onSubmit }: OnSubmitProviderProps) {
-  const contextValue = {
-    onSubmit
-  }
+  const contextValue = useMemo(
+    () => ({
+      onSubmit
+    }),
+    [onSubmit]
+  )
 
   return <OnSubmitContext.Provider value={contextValue}>{children}</OnSubmitContext.Provider>
 }
