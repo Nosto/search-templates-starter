@@ -1,5 +1,4 @@
 import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
-import style from "./Product.module.css"
 import type { Product } from "@/types"
 
 type Props = {
@@ -17,18 +16,18 @@ export default function Product({ hit }: Props) {
       as="a"
       componentProps={{
         "aria-label": `Product ${hit.name}`,
-        className: style.container,
+        className: "flex flex-col cursor-pointer p-ns-2 no-underline focus:bg-ns-focus",
         href: hit.url
       }}
     >
-      <img className={style.image} src={hit.imageUrl} alt={hit.name} />
-      <div className={style.details} data-nosto-element="product">
+      <img className="h-auto object-contain w-full" src={hit.imageUrl} alt={hit.name} />
+      <div className="pt-ns-2 text-ns-black text-ns-4" data-nosto-element="product">
         {hit.brand && <div>{hit.brand}</div>}
-        <div className={style.name}>{hit.name}</div>
-        <div className={style.price}>
+        <div className="overflow-hidden text-ellipsis [-webkit-box-orient:vertical] [-webkit-line-clamp:1] [line-clamp:1] [display:-webkit-box] mb-ns-1">{hit.name}</div>
+        <div className="font-bold">
           <span>{hit.priceText}</span>
           {hit.listPrice && hit.price && hit.listPrice > hit.price && (
-            <span className={style.strikedPrice}>{hit.listPriceText}</span>
+            <span className="line-through ml-ns-2">{hit.listPriceText}</span>
           )}
         </div>
       </div>

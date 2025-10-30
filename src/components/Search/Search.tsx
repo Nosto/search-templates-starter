@@ -1,7 +1,6 @@
 import { AutocompletePageProvider } from "@nosto/search-js/preact/autocomplete"
 import AutocompleteNative from "@/components/Autocomplete/AutocompleteNative"
 import { autocompleteConfig } from "@/config"
-import style from "./Search.module.css"
 import { useActions } from "@nosto/search-js/preact/hooks"
 import { useCallback } from "preact/hooks"
 import { nostojs } from "@nosto/nosto-js"
@@ -19,7 +18,7 @@ export default function Search() {
   )
 
   return (
-    <div className={style.wrapper}>
+    <div className="flex gap-[4px] w-full justify-center">
       <AutocompletePageProvider config={autocompleteConfig}>
         <AutocompleteNative onSubmit={onSubmit} />
       </AutocompletePageProvider>

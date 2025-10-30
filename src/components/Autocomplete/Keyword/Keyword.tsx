@@ -1,6 +1,5 @@
 import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
 import { SearchKeyword } from "@nosto/nosto-js/client"
-import style from "./Keyword.module.css"
 import { useOnSubmit } from "../OnSubmitContext"
 
 type KeywordProps = {
@@ -13,7 +12,7 @@ export default function Keyword({ keyword }: KeywordProps) {
     <AutocompleteElement
       hit={keyword}
       componentProps={{
-        className: style.keyword,
+        className: "p-ns-1 px-ns-2 no-underline rounded-ns-3 transition-[background-color_0.2s_ease] cursor-pointer focus:bg-ns-focus hover:bg-ns-focus",
         onClick: (e: Event) => {
           e.preventDefault()
           if (keyword._redirect) {
