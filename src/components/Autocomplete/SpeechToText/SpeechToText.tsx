@@ -1,11 +1,9 @@
 import Button from "@/elements/Button/Button"
 import { speechToTextSupported, useSpeechToText } from "@nosto/search-js/preact/hooks"
+import { useOnSubmit } from "../OnSubmitContext"
 
-type Props = {
-  onSubmit: (input: string) => void
-}
-
-export default function SpeechToTextButton({ onSubmit }: Props) {
+export default function SpeechToTextButton() {
+  const onSubmit = useOnSubmit()
   const { startListening, listening, stopListening } = useSpeechToText({
     interimResults: true,
     onResult: onSubmit

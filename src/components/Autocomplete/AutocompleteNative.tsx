@@ -28,21 +28,19 @@ export default function AutocompleteNative({ onSubmit }: Props) {
         onSearchSubmit(input)
       }}
     >
-      <SearchInput
-        onSearchInput={target => setInput(target.value)}
-        componentProps={{
-          value: input,
-          onFocus: () => setShowAutocomplete(true),
-          ref: searchInputRef
-        }}
-      />
-      <SpeechToTextButton onSubmit={onSearchSubmit} />
-      <button type="submit">Search</button>
-      {showAutocomplete && (
-        <OnSubmitProvider onSubmit={onSearchSubmit}>
-          <Results onKeyDown={onKeyDown} />
-        </OnSubmitProvider>
-      )}
+      <OnSubmitProvider onSubmit={onSearchSubmit}>
+        <SearchInput
+          onSearchInput={target => setInput(target.value)}
+          componentProps={{
+            value: input,
+            onFocus: () => setShowAutocomplete(true),
+            ref: searchInputRef
+          }}
+        />
+        <SpeechToTextButton />
+        <button type="submit">Search</button>
+        {showAutocomplete && <Results onKeyDown={onKeyDown} />}
+      </OnSubmitProvider>
     </form>
   )
 }
