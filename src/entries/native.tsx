@@ -5,7 +5,6 @@ import Search from "@/components/Search/Search"
 import "@/variable.css"
 import { categoryConfig, serpConfig } from "@/config"
 import { render } from "preact"
-import { SidebarProvider } from "@/contexts/SidebarContext"
 import { CategoryPageProvider } from "@nosto/search-js/preact/category"
 import Category from "@/components/Category/Category"
 import { tagging } from "@/mapping/tagging"
@@ -17,12 +16,10 @@ function SerpApp() {
   return (
     <SearchPageProvider config={serpConfig}>
       <SearchQueryHandler />
-      <SidebarProvider>
-        <Portal target="#app">
-          <Search />
-          <Serp />
-        </Portal>
-      </SidebarProvider>
+      <Portal target="#app">
+        <Search />
+        <Serp />
+      </Portal>
     </SearchPageProvider>
   )
 }
@@ -31,11 +28,9 @@ function CategoryApp() {
   return (
     <CategoryPageProvider config={categoryConfig}>
       <SearchQueryHandler />
-      <SidebarProvider>
-        <Portal target="#app">
-          <Category />
-        </Portal>
-      </SidebarProvider>
+      <Portal target="#app">
+        <Category />
+      </Portal>
     </CategoryPageProvider>
   )
 }

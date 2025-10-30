@@ -4,7 +4,6 @@ import { render, useCallback } from "preact/compat"
 import Serp from "@/components/Serp/Serp"
 import "@/variable.css"
 import SearchQueryHandler from "@/components/SearchQueryHandler/SearchQueryHandler"
-import { SidebarProvider } from "@/contexts/SidebarContext"
 import { autocompleteConfig, categoryConfig, selectors, serpConfig } from "@/config"
 import { useActions } from "@nosto/search-js/preact/hooks"
 import Category from "@/components/Category/Category"
@@ -30,16 +29,14 @@ function SerpApp() {
   return (
     <ErrorBoundary>
       <SearchQueryHandler />
-      <SidebarProvider>
-        <AutocompletePageProvider config={autocompleteConfig}>
-          <Portal target={selectors.dropdown}>
-            <AutocompleteInjected onSubmit={onSubmit} />
-          </Portal>
-        </AutocompletePageProvider>
-        <Portal target={selectors.results}>
-          <Serp />
+      <AutocompletePageProvider config={autocompleteConfig}>
+        <Portal target={selectors.dropdown}>
+          <AutocompleteInjected onSubmit={onSubmit} />
         </Portal>
-      </SidebarProvider>
+      </AutocompletePageProvider>
+      <Portal target={selectors.results}>
+        <Serp />
+      </Portal>
     </ErrorBoundary>
   )
 }
@@ -48,11 +45,9 @@ function CategoryApp() {
   return (
     <ErrorBoundary>
       <SearchQueryHandler />
-      <SidebarProvider>
-        <Portal target={selectors.results}>
-          <Category />
-        </Portal>
-      </SidebarProvider>
+      <Portal target={selectors.results}>
+        <Category />
+      </Portal>
     </ErrorBoundary>
   )
 }

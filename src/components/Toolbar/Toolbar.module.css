@@ -1,22 +1,3 @@
-.badge {
-  border-radius: var(--ns-border-radius-pill);
-  padding: 0.1rem 0.35rem;
-  display: inline-block;
-  text-align: center;
-  font-size: var(--ns-font-size-3);
-  font-weight: var(--ns-weight-bold);
-  color: var(--ns-color-white);
-  background-color: var(--ns-color-primary);
-  margin-left: var(--ns-space-1);
-}
-
-.label {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: var(--ns-space-2);
-}
-
 .container {
   display: flex;
   flex-direction: row;
@@ -36,6 +17,11 @@
 .filter {
   display: flex;
   align-items: center;
+}
+
+.filtersCount {
+  color: var(--ns-color-grey-dark);
+  font-size: var(--ns-font-size-3);
 }
 
 .leftSide {

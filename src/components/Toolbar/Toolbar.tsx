@@ -3,27 +3,7 @@ import { pick } from "@nosto/search-js/utils"
 import { sortOptions, defaultConfig, sizes } from "@/config"
 import Select from "@/elements/Select/Select"
 import style from "./Toolbar.module.css"
-import Button from "@/elements/Button/Button"
 import { cl } from "@nosto/search-js/utils"
-import { useFilterSidebar } from "@/contexts/SidebarContext"
-
-type Props = {
-  selectedFiltersCount: number
-  className?: string
-}
-
-function ToggleFilterSidebarButton({ selectedFiltersCount, className }: Props) {
-  const { toggle } = useFilterSidebar()
-
-  return (
-    <Button light className={cl(style.filter, className)} onClick={toggle}>
-      <div className={style.label}>
-        <span>Filter</span>
-      </div>
-      {selectedFiltersCount > 0 && <span className={style.badge}>{selectedFiltersCount}</span>}
-    </Button>
-  )
-}
 
 export default function Toolbar() {
   const { loading } = useNostoAppState(state => pick(state, "loading"))
@@ -36,7 +16,9 @@ export default function Toolbar() {
   return (
     <div className={cl(style.container, loading && style.loading)}>
       <div className={style.leftSide}>
-        <ToggleFilterSidebarButton selectedFiltersCount={selectedFiltersCount} />
+        {!loading && selectedFiltersCount > 0 && (
+          <span className={style.filtersCount}>{selectedFiltersCount} filters applied</span>
+        )}
       </div>
       <div className={style.rightSide}>
         {!loading && (
