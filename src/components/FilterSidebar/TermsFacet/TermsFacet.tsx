@@ -40,7 +40,7 @@ export default function TermsFacet({ facet }: Props) {
         </span>
       </button>
       <div
-        className="menu max-h-0 overflow-hidden transition-[max-height_var(--ns-transition-duration)_var(--ns-transition-easing),opacity_var(--ns-transition-duration)_var(--ns-transition-easing)] opacity-0"
+        className="menu max-h-0 overflow-hidden transition-[max-height,opacity] duration-ns ease-ns opacity-0"
         id={`${facet.id}-sub-menu`}
       >
         <div className="p-ns-2" role="menu">

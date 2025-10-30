@@ -46,7 +46,7 @@ export default function RangeFacet({ facet }: Props) {
         </span>
       </button>
       <div
-        className="menu max-h-0 overflow-hidden p-0 px-ns-4 transition-[max-height_var(--ns-transition-duration)_var(--ns-transition-easing),opacity_var(--ns-transition-duration)_var(--ns-transition-easing),padding_var(--ns-transition-duration)_var(--ns-transition-easing)] opacity-0"
+        className="menu max-h-0 overflow-hidden p-0 px-ns-4 transition-[max-height,opacity,padding] duration-ns ease-ns opacity-0"
         id={`${facet.id}-range-menu`}
         aria-expanded={active}
       >

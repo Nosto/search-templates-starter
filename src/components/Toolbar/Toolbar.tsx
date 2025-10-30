@@ -39,7 +39,7 @@ export default function Toolbar() {
   return (
     <div
       className={cl(
-        "flex flex-row flex-wrap items-center justify-between p-[0_var(--ns-space-2)_var(--ns-space-1)_var(--ns-space-2)] z-ns-header-control",
+        "flex flex-row flex-wrap items-center justify-between px-ns-2 py-ns-1 pb-ns-1 z-ns-header-control",
         loading && "opacity-30 !justify-end"
       )}
     >
