@@ -1,4 +1,4 @@
-import { useNostoAppState } from "@nosto/search-js/preact/hooks"
+import { useNostoAppState, useResponse } from "@nosto/search-js/preact/hooks"
 import style from "./Results.module.css"
 import Keywords from "./Keywords"
 import Products from "./Products"
@@ -12,14 +12,7 @@ type ResultsProps = {
 }
 
 export default function Results({ onKeyDown }: ResultsProps) {
-  // TODO refactor back to useResponse, when types are fixed
-  const { categories, keywords, products, popularSearches } = useNostoAppState(state => ({
-    categories: state.response.categories!,
-    keywords: state.response.keywords!,
-    products: state.response.products!,
-    popularSearches: state.response.popularSearches!
-  }))
-
+  const { categories, keywords, products, popularSearches } = useResponse()
   const containerRef = useRovingFocus<HTMLDivElement>(".ns-autocomplete-element")
 
   const hasResults = !!(
