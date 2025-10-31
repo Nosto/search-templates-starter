@@ -104,6 +104,10 @@ function withAutocompleteDefaults(query: SearchQuery) {
       fields: ["keyword", "_highlight.keyword"],
       size: 5,
       facets: ["*"]
+    },
+    popularSearches: {
+      fields: ["query"],
+      size: 5
     }
   } satisfies SearchQuery
 }
