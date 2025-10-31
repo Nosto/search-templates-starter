@@ -40,8 +40,6 @@ export const selectors = {
   results: "#serp"
 }
 
-const defaultCurrency = "EUR"
-
 /**
  * Base hit decorator definitions for the search results.
  *
@@ -56,7 +54,6 @@ export const hitDecorators = [handleDecorator, priceDecorator()] as const
  * Shared configuration for all page types (Autocomplete, Category, Search)
  */
 export const baseConfig = {
-  defaultCurrency,
   search: {
     hitDecorators
   },
