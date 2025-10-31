@@ -16,6 +16,7 @@ export default function Product({ product, children, showAltOnHover = true }: Pr
   const hasAlternateImage = showAltOnHover && product.alternateImageUrls && product.alternateImageUrls.length > 0
   const isNew = product.datePublished && product.datePublished >= Date.now() - 14 * 24 * 60 * 60 * 1000
   const isOnSale = product.listPrice && product.price && product.listPrice > product.price
+  const viewTransitionName = product.productId ? `product-image-${product.productId}` : undefined
 
   return (
     <SerpElement
@@ -31,7 +32,12 @@ export default function Product({ product, children, showAltOnHover = true }: Pr
       }}
     >
       <div className={styles.image}>
-        <ProductImage src={product.imageUrl!} alt={product.name} className={styles.img} />
+        <ProductImage
+          src={product.imageUrl!}
+          alt={product.name}
+          className={styles.img}
+          style={viewTransitionName ? { viewTransitionName } : undefined}
+        />
         {hasAlternateImage && (
           <ProductImage src={product.alternateImageUrls![0]} alt={product.name} className={styles.img} />
         )}

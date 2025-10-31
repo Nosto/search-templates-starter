@@ -4,6 +4,7 @@ import { ComponentChildren } from "preact"
 import type { Product } from "@/types"
 import Modal from "./Modal"
 import { useConfig } from "@nosto/search-js/preact/common"
+import { startViewTransition } from "@/utils/viewTransition"
 
 type Props = {
   product: Product
@@ -18,12 +19,12 @@ export default function QuickAdd({ product, children, className }: Props) {
 
   const openModal = useCallback((e: Event) => {
     e.preventDefault()
-    setShowModal(true)
+    startViewTransition(() => setShowModal(true))
   }, [])
 
   const closeModal = useCallback((e: Event) => {
     e.preventDefault()
-    setShowModal(false)
+    startViewTransition(() => setShowModal(false))
   }, [])
 
   const handleAddToCart = useCallback(
@@ -38,7 +39,7 @@ export default function QuickAdd({ product, children, className }: Props) {
           },
           1
         )
-        setShowModal(false)
+        startViewTransition(() => setShowModal(false))
       }
     },
     [product, type]

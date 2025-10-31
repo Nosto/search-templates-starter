@@ -33,6 +33,7 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
   const renderShopifySelector = shopifyMode && hasMultipleSkus
   // simple generic variant selector for non-shopify mode
   const renderSimpleSelector = !shopifyMode && hasMultipleSkus
+  const viewTransitionName = product.productId ? `product-image-${product.productId}` : undefined
 
   const data = useMemo(() => {
     if (selectedSkuId) {
@@ -98,7 +99,12 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
       <div className={styles.content}>
         <div className={styles.columns}>
           <div className={styles.leftColumn}>
-            <ProductImage src={data.imageUrl!} alt={product.name} className={styles.image} />
+            <ProductImage
+              src={data.imageUrl!}
+              alt={product.name}
+              className={styles.image}
+              style={viewTransitionName ? { viewTransitionName } : undefined}
+            />
           </div>
           <div className={styles.rightColumn}>
             <Heading>{product.name}</Heading>
