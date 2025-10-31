@@ -1,4 +1,4 @@
-.keyword {
+.item {
   padding: var(--ns-space-1) var(--ns-space-2);
   color: inherit;
   text-decoration: none;
@@ -7,7 +7,7 @@
   cursor: pointer;
 }
 
-.keyword:focus,
-.keyword:hover {
+.item:focus,
+.item:hover {
   background-color: var(--ns-color-focus);
 }

@@ -1,6 +1,6 @@
 import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
 import { SearchPopularSearch } from "@nosto/nosto-js/client"
-import style from "./Keyword.module.css"
+import style from "./Item.module.css"
 import { useOnSubmit } from "../OnSubmitContext"
 
 type PopularSearchProps = {
@@ -13,7 +13,7 @@ export default function PopularSearch({ search }: PopularSearchProps) {
     <AutocompleteElement
       hit={{ keyword: search.query! }}
       componentProps={{
-        className: style.keyword,
+        className: style.item,
         onClick: (e: Event) => {
           e.preventDefault()
           onSubmit(search.query!, { isPopular: true })

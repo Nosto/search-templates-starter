@@ -1,5 +1,6 @@
 import { SearchCategory } from "@nosto/nosto-js/client"
-import style from "./Keyword.module.css"
+import style from "./Item.module.css"
+import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
 
 type CategoryProps = {
   category: SearchCategory
@@ -7,8 +8,17 @@ type CategoryProps = {
 
 export default function Category({ category }: CategoryProps) {
   return (
-    <a href={category.url} className={style.keyword}>
+    <AutocompleteElement
+      key={category.url}
+      hit={category}
+      as="a"
+      componentProps={{
+        href: category.url,
+        className: style.item,
+        "aria-label": `Category ${category.fullName ?? category.name}`
+      }}
+    >
       {category.fullName ?? category.name}
-    </a>
+    </AutocompleteElement>
   )
 }
