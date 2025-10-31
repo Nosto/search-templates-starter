@@ -21,13 +21,27 @@
   max-width: var(--ns-width-mobile-sidebar);
   height: 100%;
   max-height: 100%;
-  animation: dialog-slide-in 0.3s ease;
+  view-transition-name: filter-sidebar;
 }
 
 .dialog::backdrop {
   background-color: black;
   opacity: 0.5;
-  animation: backdrop-fade-in 0.3s ease;
+  view-transition-name: filter-sidebar-backdrop;
+}
+
+::view-transition-old(filter-sidebar),
+::view-transition-new(filter-sidebar) {
+  animation-duration: 0.3s;
+  animation-timing-function: ease;
+}
+
+::view-transition-old(filter-sidebar) {
+  animation-name: dialog-slide-out;
+}
+
+::view-transition-new(filter-sidebar) {
+  animation-name: dialog-slide-in;
 }
 
 @keyframes dialog-slide-in {
@@ -41,12 +55,46 @@
   }
 }
 
+@keyframes dialog-slide-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+::view-transition-old(filter-sidebar-backdrop),
+::view-transition-new(filter-sidebar-backdrop) {
+  animation-duration: 0.3s;
+  animation-timing-function: ease;
+}
+
+::view-transition-old(filter-sidebar-backdrop) {
+  animation-name: backdrop-fade-out;
+}
+
+::view-transition-new(filter-sidebar-backdrop) {
+  animation-name: backdrop-fade-in;
+}
+
 @keyframes backdrop-fade-in {
   from {
     opacity: 0;
   }
   to {
     opacity: 0.5;
+  }
+}
+
+@keyframes backdrop-fade-out {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 0;
   }
 }
 

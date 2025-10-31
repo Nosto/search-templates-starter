@@ -11,6 +11,7 @@ import SelectedFilters from "../SelectedFilters/SelectedFilters"
 import ClearFiltersButton from "./ClearFiltersButton/ClearFiltersButton"
 import Heading from "@/elements/Heading/Heading"
 import { useCallback, useEffect, useRef } from "preact/hooks"
+import { startViewTransition } from "@/utils/viewTransition"
 
 type ToggleProps = {
   className?: string
@@ -36,9 +37,13 @@ export default function FilterSidebar() {
     if (!dialog) return
 
     if (isOpen && !dialog.open) {
-      dialog.showModal()
+      startViewTransition(() => {
+        dialog.showModal()
+      })
     } else if (!isOpen && dialog.open) {
-      dialog.close()
+      startViewTransition(() => {
+        dialog.close()
+      })
     }
   }, [isOpen])
 
