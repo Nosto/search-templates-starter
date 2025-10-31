@@ -1,5 +1,5 @@
 import { addToCart } from "@nosto/search-js"
-import { useCallback, useState, useRef } from "preact/hooks"
+import { useCallback, useState } from "preact/hooks"
 import { ComponentChildren } from "preact"
 import type { Product } from "@/types"
 import Modal from "./Modal"
@@ -16,7 +16,6 @@ export default function QuickAdd({ product, children, className }: Props) {
   const [showModal, setShowModal] = useState(false)
   const { pageType } = useConfig()
   const type = pageType === "search" ? "serp" : pageType
-  const buttonRef = useRef<HTMLButtonElement>(null)
 
   const openModal = useCallback((e: Event) => {
     e.preventDefault()
@@ -54,7 +53,7 @@ export default function QuickAdd({ product, children, className }: Props) {
 
   return (
     <>
-      <button onClick={openModal} className={className} ref={buttonRef} data-product-id={product.productId}>
+      <button onClick={openModal} className={className}>
         {children}
       </button>
       {showModal ? (

@@ -5,6 +5,7 @@ describe("View Transition Utility", () => {
   it("calls document.startViewTransition when available", () => {
     const mockCallback = vi.fn()
     const mockStartViewTransition = vi.fn((cb: () => void) => cb())
+    // @ts-expect-error - mocking for test
     document.startViewTransition = mockStartViewTransition
 
     startViewTransition(mockCallback)
@@ -31,6 +32,7 @@ describe("View Transition Utility", () => {
       await Promise.resolve()
     })
     const mockStartViewTransition = vi.fn((cb: () => void) => cb())
+    // @ts-expect-error - mocking for test
     document.startViewTransition = mockStartViewTransition
 
     startViewTransition(mockCallback)
