@@ -2,6 +2,7 @@ import { Product } from "@/types"
 import { SerpElement } from "@nosto/search-js/preact/serp"
 import styles from "./Product.module.css"
 import SimpleCard from "@/elements/SimpleCard/SimpleCard"
+import { imageSizes } from "./imageProps"
 
 export default function SimpleCardProduct({ product }: { product: Product }) {
   return (
@@ -13,7 +14,10 @@ export default function SimpleCardProduct({ product }: { product: Product }) {
       }}
       componentProps={{
         handle: product.handle!,
-        className: styles.container
+        className: styles.container,
+        alternate: true,
+        discount: true,
+        sizes: imageSizes
       }}
     />
   )

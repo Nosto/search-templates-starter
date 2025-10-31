@@ -9,6 +9,10 @@
   text-decoration: none;
 }
 
+.container::part(card) {
+  padding: 0;
+}
+
 .image {
   position: relative;
 }
