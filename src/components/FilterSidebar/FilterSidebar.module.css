@@ -69,7 +69,7 @@
 ::view-transition-old(filter-sidebar-backdrop),
 ::view-transition-new(filter-sidebar-backdrop) {
   animation-duration: 0.3s;
-  animation-timing-function: ease;
+  animation-timing-function: linear;
 }
 
 ::view-transition-old(filter-sidebar-backdrop) {
