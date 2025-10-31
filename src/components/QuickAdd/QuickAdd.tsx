@@ -50,9 +50,7 @@ export default function QuickAdd({ product, children, className }: Props) {
       <button onClick={openModal} className={className}>
         {children}
       </button>
-      {showModal ? (
-        <Modal product={product} show={showModal} onClose={closeModal} onAddToCart={handleAddToCart} />
-      ) : null}
+      <Modal product={product} show={showModal} onClose={closeModal} onAddToCart={handleAddToCart} />
     </>
   )
 }
