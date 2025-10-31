@@ -13,6 +13,7 @@
 
 .image {
   height: auto;
+  aspect-ratio: var(--ns-aspect-ratio);
   object-fit: contain;
   width: 100%;
 }
