@@ -5,6 +5,7 @@ import type { Product } from "@/types"
 import { renderRatingStars } from "./renderRatingStars"
 import ProductImage from "./ProductImage"
 import QuickAdd from "../QuickAdd/QuickAdd"
+import { getProductImageTransitionName } from "@/utils/viewTransition"
 
 type Props = {
   product: Product
@@ -16,7 +17,7 @@ export default function Product({ product, children, showAltOnHover = true }: Pr
   const hasAlternateImage = showAltOnHover && product.alternateImageUrls && product.alternateImageUrls.length > 0
   const isNew = product.datePublished && product.datePublished >= Date.now() - 14 * 24 * 60 * 60 * 1000
   const isOnSale = product.listPrice && product.price && product.listPrice > product.price
-  const viewTransitionName = product.productId ? `product-image-${product.productId}` : undefined
+  const viewTransitionName = getProductImageTransitionName(product.productId)
 
   return (
     <SerpElement

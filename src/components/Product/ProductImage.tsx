@@ -13,5 +13,5 @@ export default function ProductImage(props: Props) {
   if (props.src.includes("cdn.shopify.com")) {
     return <Image {...props} {...imageProps} />
   }
-  return <img {...props} alt={props.alt || ""} />
+  return <img {...props} alt={props.alt || ""} style={props.style} />
 }

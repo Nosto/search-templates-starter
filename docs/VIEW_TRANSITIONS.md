@@ -20,16 +20,24 @@ export function startViewTransition(callback: () => Promise<void> | void) {
     callback()
   }
 }
+
+export function getProductImageTransitionName(productId?: string): string | undefined {
+  return productId ? `product-image-${productId}` : undefined
+}
 ```
 
-This utility function provides graceful degradation for browsers that don't support the View Transitions API.
+These utility functions provide:
+- Graceful degradation for browsers that don't support the View Transitions API
+- Consistent naming for product image transitions across components
 
 ### 2. Product Card Image (`src/components/Product/Product.tsx`)
 
-The product card assigns a unique `view-transition-name` to the main product image based on the product ID:
+The product card assigns a unique `view-transition-name` to the main product image:
 
 ```typescript
-const viewTransitionName = product.productId ? `product-image-${product.productId}` : undefined
+import { getProductImageTransitionName } from "@/utils/viewTransition"
+
+const viewTransitionName = getProductImageTransitionName(product.productId)
 
 <ProductImage
   src={product.imageUrl!}
@@ -41,10 +49,12 @@ const viewTransitionName = product.productId ? `product-image-${product.productI
 
 ### 3. Modal Image (`src/components/QuickAdd/Modal.tsx`)
 
-The modal uses the same `view-transition-name` for its product image:
+The modal uses the same utility to generate a matching `view-transition-name`:
 
 ```typescript
-const viewTransitionName = product.productId ? `product-image-${product.productId}` : undefined
+import { getProductImageTransitionName } from "@/utils/viewTransition"
+
+const viewTransitionName = getProductImageTransitionName(product.productId)
 
 <ProductImage
   src={data.imageUrl!}
@@ -94,6 +104,7 @@ For browsers that don't support the API, the modal will still open and close nor
 ## Technical Details
 
 - **Unique Names**: Each product gets a unique `view-transition-name` based on its `productId` to prevent conflicts
+- **Missing Product ID**: If a product doesn't have a `productId`, no view-transition-name is assigned, and the modal will open/close without the morph animation (falling back to the standard fade animation)
 - **CSS Property**: The `viewTransitionName` is applied as an inline style to ensure it takes precedence
 - **Synchronization**: Both the source (card) and destination (modal) elements must have the same `view-transition-name` for the browser to animate between them
 - **Timing**: The browser automatically handles the timing and easing of the animation
