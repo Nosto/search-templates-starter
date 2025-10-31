@@ -5,13 +5,16 @@ import Products from "./Products"
 import History from "./History"
 import PopularSearches from "./PopularSearches"
 import { useRovingFocus } from "@/hooks/useRovingFocus"
+import Categories from "./Categories"
 
 type ResultsProps = {
   onKeyDown: (e: KeyboardEvent) => void
 }
 
 export default function Results({ onKeyDown }: ResultsProps) {
-  const { keywords, products, popularSearches } = useNostoAppState(state => ({
+  // TODO refactor back to useResponse, when types are fixed
+  const { categories, keywords, products, popularSearches } = useNostoAppState(state => ({
+    categories: state.response.categories!,
     keywords: state.response.keywords!,
     products: state.response.products!,
     popularSearches: state.response.popularSearches!
@@ -19,7 +22,12 @@ export default function Results({ onKeyDown }: ResultsProps) {
 
   const containerRef = useRovingFocus<HTMLDivElement>(".ns-autocomplete-element")
 
-  const hasResults = !!(keywords?.hits?.length || products?.hits?.length || popularSearches?.hits?.length)
+  const hasResults = !!(
+    categories?.hits?.length ||
+    keywords?.hits?.length ||
+    products?.hits?.length ||
+    popularSearches?.hits?.length
+  )
   const hasHistory = !!useNostoAppState(state => state.historyItems?.length)
 
   if (!hasResults && !hasHistory) {
@@ -34,6 +42,7 @@ export default function Results({ onKeyDown }: ResultsProps) {
           <div className={style.section}>
             {hasHistory && <History />}
             {hasResults && <Keywords keywords={keywords} />}
+            {hasResults && <Categories categories={categories} />}
             {hasResults && <PopularSearches searches={popularSearches} />}
           </div>
           {hasResults && <Products products={products} />}

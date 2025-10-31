@@ -108,6 +108,10 @@ function withAutocompleteDefaults(query: SearchQuery) {
     popularSearches: {
       fields: ["query"],
       size: 5
+    },
+    categories: {
+      fields: ["name", "url"],
+      size: 5
     }
   } satisfies SearchQuery
 }
