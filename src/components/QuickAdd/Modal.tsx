@@ -33,6 +33,7 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
   const renderShopifySelector = shopifyMode && hasMultipleSkus
   // simple generic variant selector for non-shopify mode
   const renderSimpleSelector = !shopifyMode && hasMultipleSkus
+  const viewTransitionName = product.productId ? `product-${product.productId}` : undefined
 
   const data = useMemo(() => {
     if (selectedSkuId) {
@@ -91,6 +92,7 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
       ref={dialogRef}
       onClick={handleOnClick}
       onCancel={onClose}
+      style={{ viewTransitionName }}
     >
       <Button className={styles.close} onClick={onClose}>
         <Icon name="close" circle />

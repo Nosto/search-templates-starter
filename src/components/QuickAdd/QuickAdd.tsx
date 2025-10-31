@@ -1,9 +1,10 @@
 import { addToCart } from "@nosto/search-js"
-import { useCallback, useState } from "preact/hooks"
+import { useCallback, useState, useRef } from "preact/hooks"
 import { ComponentChildren } from "preact"
 import type { Product } from "@/types"
 import Modal from "./Modal"
 import { useConfig } from "@nosto/search-js/preact/common"
+import { startViewTransition } from "@/utils/viewTransition"
 
 type Props = {
   product: Product
@@ -15,15 +16,20 @@ export default function QuickAdd({ product, children, className }: Props) {
   const [showModal, setShowModal] = useState(false)
   const { pageType } = useConfig()
   const type = pageType === "search" ? "serp" : pageType
+  const buttonRef = useRef<HTMLButtonElement>(null)
 
   const openModal = useCallback((e: Event) => {
     e.preventDefault()
-    setShowModal(true)
+    startViewTransition(() => {
+      setShowModal(true)
+    })
   }, [])
 
   const closeModal = useCallback((e: Event) => {
     e.preventDefault()
-    setShowModal(false)
+    startViewTransition(() => {
+      setShowModal(false)
+    })
   }, [])
 
   const handleAddToCart = useCallback(
@@ -38,7 +44,9 @@ export default function QuickAdd({ product, children, className }: Props) {
           },
           1
         )
-        setShowModal(false)
+        startViewTransition(() => {
+          setShowModal(false)
+        })
       }
     },
     [product, type]
@@ -46,7 +54,7 @@ export default function QuickAdd({ product, children, className }: Props) {
 
   return (
     <>
-      <button onClick={openModal} className={className}>
+      <button onClick={openModal} className={className} ref={buttonRef} data-product-id={product.productId}>
         {children}
       </button>
       {showModal ? (
