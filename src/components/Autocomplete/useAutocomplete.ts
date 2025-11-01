@@ -26,6 +26,18 @@ export function useAutocomplete({
 
   const { addQuery } = useHistory()
 
+  // Add backdrop class to body when autocomplete is shown
+  useEffect(() => {
+    if (showAutocomplete) {
+      document.body.classList.add("autocomplete-backdrop-active")
+    } else {
+      document.body.classList.remove("autocomplete-backdrop-active")
+    }
+    return () => {
+      document.body.classList.remove("autocomplete-backdrop-active")
+    }
+  }, [showAutocomplete])
+
   // Disable native autocomplete when search input element is available
   useEffect(() => {
     if (searchInputElement) {

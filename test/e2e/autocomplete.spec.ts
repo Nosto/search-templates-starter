@@ -91,4 +91,25 @@ test.describe("Autocomplete", () => {
     // Dropdown should close after clicking outside
     await expect(dropdown).toBeEmpty()
   })
+
+  test("backdrop appears when autocomplete is open", async ({ page }) => {
+    const searchInput = page.locator(searchSelector)
+    const dropdownContent = page.locator(`${dropdownSelector} > div`)
+
+    // Initially, body should not have backdrop class
+    await expect(page.locator("body")).not.toHaveClass(/autocomplete-backdrop-active/)
+
+    // Type to trigger autocomplete
+    await searchInput.fill("running")
+    await expect(dropdownContent).toContainText("running shoes", { timeout: dropdownTimeout })
+
+    // Body should have backdrop class when autocomplete is open
+    await expect(page.locator("body")).toHaveClass(/autocomplete-backdrop-active/)
+
+    // Press Escape to close
+    await searchInput.press("Escape")
+
+    // Backdrop class should be removed
+    await expect(page.locator("body")).not.toHaveClass(/autocomplete-backdrop-active/)
+  })
 })
