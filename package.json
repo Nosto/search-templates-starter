@@ -41,7 +41,7 @@
     "@semantic-release/github": "^11.0.0",
     "@semantic-release/release-notes-generator": "^14.0.0",
     "semantic-release": "^24.0.0",
-    "@nosto/nosto-js": "^2.9.2",
+    "@nosto/nosto-js": "^2.9.3",
     "@nosto/search-js": "^3.22.1",
     "@nosto/web-components": "^9.13.1",
     "@playwright/test": "^1.56.1",
