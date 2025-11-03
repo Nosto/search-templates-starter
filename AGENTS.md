@@ -67,10 +67,7 @@ File-specific coding conventions are documented in `.github/instructions/`:
 - **Storybook Stories** (`**/*.stories.tsx`): `.github/instructions/storybook.instructions.md`
 - **Preact Components** (`**/*.tsx`): `.github/instructions/preact.instructions.md`
 
-Always reference these instruction files when modifying or creating files that match their patterns.
-
-## Additional Resources
-
-- Main documentation: `README.md`
+Additional conventions:
 - Copilot-specific instructions: `.github/copilot-instructions.md`
-- Package configuration: `package.json`
+
+Always reference these instruction files when modifying or creating files that match their patterns.
