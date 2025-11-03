@@ -244,6 +244,7 @@ You can customize redirect behavior by modifying the `onClick` handler:
 
 ```typescript
 // Open redirects in new tab
+// Note: Consider validating redirect URLs against an allowlist for security
 if (keyword._redirect) {
   window.open(keyword._redirect, '_blank')
   return
@@ -276,6 +277,7 @@ To enable redirects on the main search results page (not just autocomplete), you
 const onSubmit = useCallback(
   (query: string, options?: SearchAnalyticsOptions) => {
     // Check if this search term has a redirect
+    // Note: Implement checkForRedirect based on your backend configuration
     const redirectUrl = checkForRedirect(query)
     if (redirectUrl) {
       window.location.href = redirectUrl
