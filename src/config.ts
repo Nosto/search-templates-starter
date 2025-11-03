@@ -104,15 +104,17 @@ function withAutocompleteDefaults(query: SearchQuery) {
       fields: ["keyword", "_highlight.keyword"],
       size: 5,
       facets: ["*"]
-    },
-    popularSearches: {
+    }
+    // uncomment for popular searches suggestions
+    /*popularSearches: {
       fields: ["query"],
       size: 5
-    },
-    categories: {
+    },*/
+    // uncomment for category suggestions
+    /*categories: {
       fields: ["name", "url"],
       size: 5
-    }
+    }*/
   } satisfies SearchQuery
 }
 
