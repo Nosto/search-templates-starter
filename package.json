@@ -39,7 +39,7 @@
     "@nosto/nosto-cli": "^1.0.4",
     "@nosto/nosto-js": "^2.9.2",
     "@nosto/search-js": "^3.22.1",
-    "@nosto/web-components": "^9.10.2",
+    "@nosto/web-components": "^9.13.1",
     "@playwright/test": "^1.56.1",
     "@preact/preset-vite": "^2.10.2",
     "@storybook/addon-docs": "^9.1.15",

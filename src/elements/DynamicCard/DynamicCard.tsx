@@ -1,7 +1,11 @@
 import type { DynamicCard as CustomElement } from "@nosto/web-components"
 import { JSX } from "preact"
 
-type DynamicCardProps = Pick<CustomElement, keyof typeof CustomElement.properties> & JSX.IntrinsicElements["span"]
+type DynamicCardProps = Pick<
+  CustomElement,
+  "handle" | "section" | "template" | "variantId" | "placeholder" | "lazy"
+> &
+  JSX.IntrinsicElements["span"]
 
 /**
  * A custom element wrapper that renders a product by fetching the markup from Shopify based on the provided handle and template.
