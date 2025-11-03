@@ -1,10 +1,11 @@
+import { JSX } from "preact"
 import { useEffect, useRef } from "preact/hooks"
 import type { VariantSelector as CustomElement } from "@nosto/web-components"
-import { JSX } from "preact"
+import { Props } from "@/types"
 
-type VariantSelectorProps = Pick<CustomElement, keyof typeof CustomElement.properties> & JSX.IntrinsicElements["span"]
+type VariantSelectorProps = Props<CustomElement> & JSX.IntrinsicElements["span"]
 
-type Props = VariantSelectorProps & { onVariantChange?: (variant: { id: number }) => void }
+type ComponentProps = VariantSelectorProps & { onVariantChange?: (variant: { id: number }) => void }
 
 /**
  * A custom element wrapper that displays product variant options as clickable pills.
@@ -13,7 +14,7 @@ type Props = VariantSelectorProps & { onVariantChange?: (variant: { id: number }
  * Preselects the first value for each option and highlights the currently selected choices.
  * Emits a custom event when variant selections change.
  */
-export default function VariantSelector({ onVariantChange, ...props }: Props) {
+export default function VariantSelector({ onVariantChange, ...props }: ComponentProps) {
   const elementRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
