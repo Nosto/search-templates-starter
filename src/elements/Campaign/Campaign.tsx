@@ -1,12 +1,8 @@
 import type { Campaign as CustomElement } from "@nosto/web-components"
 import type { ComponentChildren } from "preact"
+import { Props } from "@/types"
 
-type CampaignProps = Pick<
-  CustomElement,
-  "placement" | "productId" | "variantId" | "template" | "init" | "lazy" | "cartSynced"
-> & {
-  children?: ComponentChildren
-}
+type CampaignProps = Props<CustomElement> & { children?: ComponentChildren }
 
 /**
  * A custom element wrapper that renders a Nosto campaign based on the provided placement and fetched campaign data.
