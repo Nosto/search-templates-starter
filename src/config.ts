@@ -57,12 +57,11 @@ export const baseConfig = {
   search: {
     hitDecorators
   },
-  queryModifications: withBaseConfig
+  queryModifications: merge(withBaseConfig)
 }
 
 function withBaseConfig(query: SearchQuery) {
   return {
-    ...query,
     products: {
       size: defaultConfig.serpSize,
       ...query.products
@@ -90,25 +89,39 @@ export const autocompleteConfig = {
       thumbnailDecorator({ size: "8" }) // 400x400
     ]
   },
-  queryModifications: withAutocompleteDefaults
+  queryModifications: merge(withBaseConfig, withAutocompleteProducts, withKeywords, withPopularSearches, withCategories)
 } satisfies AutocompleteConfig
 
-function withAutocompleteDefaults(query: SearchQuery) {
+function withAutocompleteProducts(query: SearchQuery) {
   return {
-    ...query,
     products: {
       ...query.products,
       size: 5
-    },
+    }
+  } satisfies SearchQuery
+}
+
+function withKeywords() {
+  return {
     keywords: {
       fields: ["keyword", "_highlight.keyword"],
       size: 5,
       facets: ["*"]
-    },
+    }
+  } satisfies SearchQuery
+}
+
+function withPopularSearches() {
+  return {
     popularSearches: {
       fields: ["query"],
       size: 5
-    },
+    }
+  } satisfies SearchQuery
+}
+
+function withCategories() {
+  return {
     categories: {
       fields: ["name", "url"],
       size: 5
@@ -124,17 +137,15 @@ export const categoryConfig = {
   ...baseConfig,
   persistentSearchCache: false,
   preservePageScroll: false,
-  queryModifications: withCategoryMetadata
+  queryModifications: merge(withBaseConfig, withCategoryMetadata)
 } satisfies CategoryConfig
 
 function withCategoryMetadata(query: SearchQuery) {
-  const augmented = withBaseConfig(query)
   return {
-    ...augmented,
     products: {
       categoryId: tagging.categoryId(),
       categoryPath: tagging.categoryPath(),
-      ...augmented.products
+      ...query.products
     }
   } satisfies SearchQuery
 }
@@ -147,3 +158,7 @@ export const serpConfig = {
   persistentSearchCache: false,
   preservePageScroll: false
 } satisfies SerpConfig
+
+function merge(...fns: Array<(arg: SearchQuery) => SearchQuery>) {
+  return (initial: SearchQuery) => fns.reduce((acc, fn) => ({ ...acc, ...fn(initial) }), initial)
+}
