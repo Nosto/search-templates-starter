@@ -1,5 +1,5 @@
 import { useNostoAppState } from "@nosto/search-js/preact/hooks"
-import HistoryItem from "../HistoryItem/HistoryItem"
+import HistoryItem from "../Item/HistoryItem"
 import Heading from "@/elements/Heading/Heading"
 import styles from "./History.module.css"
 
