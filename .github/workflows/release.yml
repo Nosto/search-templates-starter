@@ -19,7 +19,6 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
         with:
           fetch-depth: 0
-          persist-credentials: false
 
       - name: Setup Node
         uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8
@@ -47,6 +46,6 @@ jobs:
           npm run test:e2e
 
       - name: Semantic Release
-        uses: cycjimmy/semantic-release-action@v4
+        uses: cycjimmy/semantic-release-action@cb914dc2d6db9e87283a9c5a6be4f5a7bae34ece
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
