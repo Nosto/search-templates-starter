@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/preact"
+import type { Meta, StoryObj } from "@storybook/preact-vite"
 import QuickAdd from "./QuickAdd"
 import type { Product } from "@/types"
 import { mockProduct, mockProductNoSale, createMockProduct } from "@mocks/products"

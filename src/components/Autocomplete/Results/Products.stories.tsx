@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/preact"
+import type { Meta, StoryObj } from "@storybook/preact-vite"
 import Products from "./Products"
 import { mockProducts, mockEmptyProducts } from "@mocks/products"
 import { withAutocompleteContext } from ".storybook/decorators"

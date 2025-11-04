@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/preact"
+import type { Meta, StoryObj } from "@storybook/preact-vite"
 import FilterTopbar from "./FilterTopbar"
 import { withSearchContext } from ".storybook/decorators"
 
