@@ -44,6 +44,16 @@
           }
         }
       }
+      function appendStylesheet(href) {
+        const link = document.createElement("link")
+        link.rel = "stylesheet"
+        link.href = href
+        document.head.appendChild(link)
+      }
+      const storeStyles = import.meta.env.VITE_STORE_STYLES
+      if (storeStyles) {
+        appendStylesheet(storeStyles)
+      }
 
       function renderApp() {
         const mode = import.meta.env.MODE
