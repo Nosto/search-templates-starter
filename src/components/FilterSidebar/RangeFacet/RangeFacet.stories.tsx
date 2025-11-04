@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/preact"
+import type { Meta, StoryObj } from "@storybook/preact-vite"
 import RangeFacet from "./RangeFacet"
 import { mockPriceFacet, mockRatingFacet, mockWeightFacet } from "@mocks/facets"
 import { withContainer, withSearchContext } from ".storybook/decorators"

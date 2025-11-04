@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/preact"
+import type { Meta, StoryObj } from "@storybook/preact-vite"
 import Results from "./Results"
 import { withAutocompleteContext } from ".storybook/decorators"
 

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/preact"
+import type { Meta, StoryObj } from "@storybook/preact-vite"
 import TermsDropdown from "./TermsDropdown"
 import { mockCategoryFacet, mockBrandFacet } from "@mocks/facets"
 import { withSearchContext, withContainer } from ".storybook/decorators"

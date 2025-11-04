@@ -1,7 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/preact"
+import type { Meta, StoryObj } from "@storybook/preact-vite"
 import QuickAdd from "./QuickAdd"
 import type { Product } from "@/types"
 import { mockProduct, mockProductNoSale, createMockProduct } from "@mocks/products"
+import { withSearchContext } from ".storybook/decorators"
 
 const meta: Meta<typeof QuickAdd> = {
   title: "Components/QuickAdd",
@@ -15,6 +16,7 @@ const meta: Meta<typeof QuickAdd> = {
       }
     }
   },
+  decorators: [withSearchContext],
   argTypes: {
     type: {
       control: { type: "select" },

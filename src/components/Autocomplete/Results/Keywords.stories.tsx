@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/preact"
+import type { Meta, StoryObj } from "@storybook/preact-vite"
 import Keywords from "./Keywords"
 import { mockKeywords, mockEmptyKeywords } from "@mocks/keywords"
 import { withAutocompleteContext } from ".storybook/decorators"

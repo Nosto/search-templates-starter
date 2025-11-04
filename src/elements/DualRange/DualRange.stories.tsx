@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/preact"
+import type { Meta, StoryObj } from "@storybook/preact-vite"
 import { useState } from "preact/hooks"
 import DualRange from "./DualRange"
 import { withContainer } from ".storybook/decorators"
