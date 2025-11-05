@@ -1,5 +1,5 @@
 import type { Preview } from "@storybook/preact-vite"
-import "../src/variable.css"
+import "../src/variables.css"
 import { withWrapperStyles } from "./decorators"
 
 export default {
