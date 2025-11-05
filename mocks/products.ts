@@ -145,3 +145,12 @@ export const mockNewProductOnSale = createMockProduct({
 export const mockProducts = createProductsResponse(generateMockProducts(5))
 
 export const mockEmptyProducts = createEmptyResponse()
+
+export const mockSkeletonProduct = createMockProduct({
+  productId: "skeleton-product",
+  name: "Loading Product",
+  url: "#",
+  imageUrl:
+    "data:image/svg+xml,%3Csvg width='300' height='400' fill='lightgrey' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='300' height='400'/%3E%3C/svg%3E",
+  tags1: ["skeleton"]
+})
