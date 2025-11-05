@@ -7,6 +7,7 @@ import { handleDecorator } from "./decorators"
 import { CategoryConfig } from "@nosto/search-js/preact/category"
 import { SearchQuery } from "@nosto/nosto-js/client"
 import { tagging } from "./mapping/tagging"
+import { pipe } from "./utils/pipe"
 
 export const sizes = [24, 48, 72]
 
@@ -90,7 +91,7 @@ export const autocompleteConfig = {
       thumbnailDecorator({ size: "8" }) // 400x400
     ]
   },
-  queryModifications: pipe(withBaseConfig, withAutocompleteDefaults)
+  queryModifications: pipe<SearchQuery>(withBaseConfig, withAutocompleteDefaults)
 } satisfies AutocompleteConfig
 
 function withAutocompleteDefaults(query: SearchQuery) {
@@ -148,7 +149,3 @@ export const serpConfig = {
   persistentSearchCache: false,
   preservePageScroll: false
 } satisfies SerpConfig
-
-function pipe(...fns: Array<(arg: SearchQuery) => SearchQuery>) {
-  return (input: SearchQuery) => fns.reduce((acc, fn) => fn(acc), input)
-}
