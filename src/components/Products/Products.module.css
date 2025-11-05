@@ -1,6 +1,7 @@
 .container {
   display: grid;
   grid-template-columns: 1fr;
+  transition: opacity 0.3s ease;
 }
 
 @media (min-width: 375px) {
