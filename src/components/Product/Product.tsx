@@ -16,6 +16,7 @@ export default function Product({ product, children, showAltOnHover = true }: Pr
   const hasAlternateImage = showAltOnHover && product.alternateImageUrls && product.alternateImageUrls.length > 0
   const isNew = product.datePublished && product.datePublished >= Date.now() - 14 * 24 * 60 * 60 * 1000
   const isOnSale = product.listPrice && product.price && product.listPrice > product.price
+  const isSkeleton = product.tags1?.includes("skeleton")
 
   return (
     <SerpElement
@@ -26,7 +27,7 @@ export default function Product({ product, children, showAltOnHover = true }: Pr
       }}
       componentProps={{
         "aria-label": `Product ${product.name}`,
-        className: cl(styles.container, hasAlternateImage && styles.altContainer),
+        className: cl(styles.container, hasAlternateImage && styles.altContainer, isSkeleton && styles.skeleton),
         href: product.url
       }}
     >

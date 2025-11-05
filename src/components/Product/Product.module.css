@@ -86,3 +86,7 @@
 .container:hover .quickAdd {
   display: block;
 }
+
+.skeleton {
+  pointer-events: none;
+}
