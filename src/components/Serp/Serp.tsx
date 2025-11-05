@@ -24,7 +24,7 @@ export function SerpBodyInfiniteScroll({ foundProducts, loading }: ContentChildr
       <Toolbar />
       <InfiniteScroll
         observerOptions={{
-          rootMargin: "100% 0px"
+          rootMargin: "50% 0px"
         }}
       >
         <Products />

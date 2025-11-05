@@ -22,7 +22,11 @@ export function CategoryBodyInfiniteScroll({ foundProducts, loading }: ContentCh
   return (
     <>
       <Toolbar />
-      <InfiniteScroll>
+      <InfiniteScroll
+        observerOptions={{
+          rootMargin: "50% 0px"
+        }}
+      >
         <Products />
       </InfiniteScroll>
     </>
