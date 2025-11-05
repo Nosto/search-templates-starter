@@ -39,7 +39,7 @@ export default {
     "csstools/value-no-unknown-custom-properties": [
       true,
       {
-        importFrom: "src/variable.css"
+        importFrom: "src/variables.css"
       }
     ]
   }
