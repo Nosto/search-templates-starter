@@ -89,10 +89,16 @@
 
 .skeleton {
   pointer-events: none;
+  --skeleton-gradient: linear-gradient(
+    90deg,
+    var(--ns-color-skeleton-light) 25%,
+    var(--ns-color-skeleton-dark) 50%,
+    var(--ns-color-skeleton-light) 75%
+  );
 }
 
 .skeleton .image {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: var(--skeleton-gradient);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
   border-radius: var(--ns-border-radius-4);
@@ -100,7 +106,7 @@
 }
 
 .skeleton .info > div {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: var(--skeleton-gradient);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
   color: transparent;

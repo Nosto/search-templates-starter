@@ -11,6 +11,8 @@
   --ns-color-link: #2473d6;
   --ns-color-red: #e53e3e;
   --ns-color-focus: #f0f3f6;
+  --ns-color-skeleton-light: #f0f0f0;
+  --ns-color-skeleton-dark: #e0e0e0;
 
   /* FONT-FAMILY */
   --ns-font-family: "Arial";

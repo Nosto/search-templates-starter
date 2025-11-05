@@ -2,6 +2,10 @@ import { SearchProducts } from "@nosto/nosto-js/client"
 import type { Product } from "../src/types"
 import { createMockRandomImage } from "./images"
 
+// Placeholder SVG for skeleton loading state (300x400 light grey rectangle)
+const SKELETON_IMAGE_URL =
+  "data:image/svg+xml,%3Csvg width='300' height='400' fill='lightgrey' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='300' height='400'/%3E%3C/svg%3E"
+
 export function createMockProduct(overrides: Partial<Product> = {}): Product {
   const categories = ["Clothing", "Electronics", "Home & Garden", "Sports", "Books", "Beauty"]
   const brands = ["BrandA", "BrandB", "BrandC", "BrandD", "BrandE", "BrandF"]
@@ -150,7 +154,6 @@ export const mockSkeletonProduct = createMockProduct({
   productId: "skeleton-product",
   name: "Loading Product",
   url: "#",
-  imageUrl:
-    "data:image/svg+xml,%3Csvg width='300' height='400' fill='lightgrey' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='300' height='400'/%3E%3C/svg%3E",
+  imageUrl: SKELETON_IMAGE_URL,
   tags1: ["skeleton"]
 })
