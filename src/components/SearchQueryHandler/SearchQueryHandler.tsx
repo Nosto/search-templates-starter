@@ -1,5 +1,5 @@
 import { useEffect } from "preact/hooks"
-import { defaultSerpSize } from "@/config"
+import { defaultSize } from "@/config"
 import { useActions, useNostoAppState } from "@nosto/search-js/preact/hooks"
 import { getQueryFromUrlState } from "@/mapping/url/getCurrentUrlState"
 import { updateUrlFromQuery } from "@/mapping/url/updateUrl"
@@ -12,7 +12,7 @@ export default function SearchQueryHandler() {
     query: state.query?.query,
     from: state.query?.products?.from,
     filter: state.query?.products?.filter,
-    size: state.query?.products?.size ?? defaultSerpSize,
+    size: state.query?.products?.size ?? defaultSize,
     sort: state.query?.products?.sort
   }))
 

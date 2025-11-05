@@ -1,6 +1,6 @@
 import { useNostoAppState, useSelectedFiltersCount, useSort, useSizeOptions } from "@nosto/search-js/preact/hooks"
 import { pick } from "@nosto/search-js/utils"
-import { sortOptions, defaultSerpSize, sizes } from "@/config"
+import { sortOptions, defaultSize, sizes } from "@/config"
 import Select from "@/elements/Select/Select"
 import style from "./Toolbar.module.css"
 import Button from "@/elements/Button/Button"
@@ -29,7 +29,7 @@ export default function Toolbar() {
   const { loading } = useNostoAppState(state => pick(state, "loading"))
   const { activeSort, setSort } = useSort(sortOptions)
   const selectedFiltersCount = useSelectedFiltersCount()
-  const { from, to, total } = useSizeOptions(sizes, defaultSerpSize)
+  const { from, to, total } = useSizeOptions(sizes, defaultSize)
 
   const options = sortOptions.map(o => ({ value: o.id, label: o.value.name }))
 

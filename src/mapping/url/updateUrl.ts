@@ -1,6 +1,6 @@
 import { SimpleQuery, UrlQueryState } from "./types"
 import { getUrlFromState } from "./getUrlFromState"
-import { defaultSerpSize, infiniteScroll } from "@/config"
+import { defaultSize, infiniteScroll } from "@/config"
 
 export function updateUrl(state: UrlQueryState) {
   const url = getUrlFromState(state)
@@ -10,7 +10,7 @@ export function updateUrl(state: UrlQueryState) {
 function toPageParameters(from: number | undefined, size: number) {
   if (infiniteScroll) {
     return {
-      page: Math.floor(size / defaultSerpSize)
+      page: Math.floor(size / defaultSize)
     }
   }
   return {

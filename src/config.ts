@@ -32,7 +32,7 @@ export const defaultSort = sortOptions[0]
 /**
  * Default page size for search results and categories
  */
-export const defaultSerpSize = sizes[0]
+export const defaultSize = sizes[0]
 
 /**
  * CSS selectors for the Injected mode
@@ -72,7 +72,7 @@ function withBaseConfig(query: SearchQuery) {
   return {
     ...query,
     products: {
-      size: defaultSerpSize,
+      size: defaultSize,
       ...query.products
       // uncomment for exchange rates based multi-currency support
       //currency: tagging.variation() ?? defaultCurrency
