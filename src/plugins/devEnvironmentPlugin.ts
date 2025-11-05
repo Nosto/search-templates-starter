@@ -2,8 +2,13 @@ import { loadEnv } from "vite"
 import type { Plugin } from "vite"
 
 export function devEnvironmentPlugin(): Plugin {
+  let isDev = false
+
   return {
     name: "dev-environment-plugin",
+    config(_, { command }) {
+      isDev = command === "serve"
+    },
     configureServer(server) {
       // Skip polluting the logs if running in Storybook
       const isStorybook = process.argv.some(arg => arg.includes("storybook"))
@@ -40,6 +45,44 @@ export function devEnvironmentPlugin(): Plugin {
         console.error(
           `${YELLOW}Merchant ID environment variable is not set. The development store will not be able to connect.${RESET}`
         )
+      }
+    },
+    transformIndexHtml: {
+      order: "pre",
+      handler() {
+        if (!isDev) {
+          return []
+        }
+
+        return [
+          {
+            tag: "script",
+            injectTo: "head",
+            children: `
+              (function() {
+                if (typeof window.nostojs === 'function') {
+                  window.nostojs(function(api) {
+                    var analyticsEvents = [
+                      'searchimpression',
+                      'searchclick', 
+                      'searchaddtocart',
+                      'categoryimpression',
+                      'categoryclick',
+                      'categoryaddtocart'
+                    ];
+                    
+                    analyticsEvents.forEach(function(eventType) {
+                      api.listen(eventType, function(eventData) {
+                        console.log('[Nosto Analytics] Event: ' + eventType);
+                        console.log('Payload:', eventData);
+                      });
+                    });
+                  });
+                }
+              })();
+            `
+          }
+        ]
       }
     }
   }
