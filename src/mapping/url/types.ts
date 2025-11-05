@@ -9,3 +9,8 @@ export interface UrlQueryState {
   filter?: SimpleFilter[]
   sort?: InputSearchSort[]
 }
+
+export type SimpleQuery = Omit<UrlQueryState, "page" | "size"> & {
+  from?: number
+  size: number
+}
