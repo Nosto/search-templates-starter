@@ -16,6 +16,11 @@ export const sortOptions = [
   createSortOption("price", "Price ascending", { field: "price", order: "asc" })
 ]
 
+/**
+ * Enable or disable infinite scroll for search results
+ */
+export const infiniteScroll = false
+
 export const shopifyMode = !!window.Shopify
 
 /**

@@ -1,4 +1,4 @@
-import { defaultConfig } from "@/config"
+import { defaultConfig, infiniteScroll } from "@/config"
 import { useActions, useNostoAppState } from "@nosto/search-js/preact/hooks"
 import { getCurrentUrlState } from "@/mapping/url/getCurrentUrlState"
 import { updateUrl } from "@/mapping/url/updateUrl"
@@ -21,14 +21,10 @@ export default function SearchQueryHandler() {
   useEffect(() => {
     const { query, page, size: urlSize, filter, sort } = getCurrentUrlState()
     if (query) {
-      const size = urlSize ?? defaultConfig.serpSize
-      const from = page ? (page - 1) * size : 0
-
       const searchConfig = {
         query,
         products: {
-          size,
-          from,
+          ...fromPageParameters(urlSize, page),
           filter,
           sort
         }
@@ -40,16 +36,39 @@ export default function SearchQueryHandler() {
 
   // Update URL when app state changes
   useEffect(() => {
-    const page = from ? Math.floor(from / size) + 1 : 1
-
     updateUrl({
+      ...toPageParameters(from, size),
       query,
-      page,
-      size,
       filter,
       sort
     })
   }, [query, from, size, filter, sort])
 
   return null
+}
+
+function fromPageParameters(urlSize: number | undefined, page: number | undefined) {
+  const size = urlSize ?? defaultConfig.serpSize
+  if (infiniteScroll) {
+    return {
+      from: 0,
+      size: (page ?? 1) * size
+    }
+  }
+  return {
+    from: page ? (page - 1) * size : 0,
+    size
+  }
+}
+
+function toPageParameters(from: number | undefined, size: number) {
+  if (infiniteScroll) {
+    return {
+      page: Math.floor(size / defaultConfig.serpSize)
+    }
+  }
+  return {
+    page: from ? Math.floor(from / size) + 1 : 1,
+    size
+  }
 }
