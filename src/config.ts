@@ -90,7 +90,7 @@ export const autocompleteConfig = {
       thumbnailDecorator({ size: "8" }) // 400x400
     ]
   },
-  queryModifications: withAutocompleteDefaults
+  queryModifications: pipe(withBaseConfig, withAutocompleteDefaults)
 } satisfies AutocompleteConfig
 
 function withAutocompleteDefaults(query: SearchQuery) {
@@ -126,17 +126,16 @@ export const categoryConfig = {
   ...baseConfig,
   persistentSearchCache: false,
   preservePageScroll: false,
-  queryModifications: withCategoryMetadata
+  queryModifications: pipe(withBaseConfig, withCategoryMetadata)
 } satisfies CategoryConfig
 
 function withCategoryMetadata(query: SearchQuery) {
-  const augmented = withBaseConfig(query)
   return {
-    ...augmented,
+    ...query,
     products: {
       categoryId: tagging.categoryId(),
       categoryPath: tagging.categoryPath(),
-      ...augmented.products
+      ...query.products
     }
   } satisfies SearchQuery
 }
@@ -149,3 +148,7 @@ export const serpConfig = {
   persistentSearchCache: false,
   preservePageScroll: false
 } satisfies SerpConfig
+
+function pipe(...fns: Array<(arg: SearchQuery) => SearchQuery>) {
+  return (input: SearchQuery) => fns.reduce((acc, fn) => fn(acc), input)
+}
