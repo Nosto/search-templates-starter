@@ -4,6 +4,7 @@ import BottomToolbar from "@/components/BottomToolbar/BottomToolbar"
 import { ContentChildrenProps, wrapContent } from "@/components/ContentWrapper/ContentWrapper"
 import { InfiniteScroll } from "@nosto/search-js/preact/common"
 import NoResults from "@/components/NoResults/NoResults"
+import { infiniteScroll } from "@/config"
 
 export function CategoryBody({ foundProducts, loading }: ContentChildrenProps) {
   if (!foundProducts && !loading) return <NoResults />
@@ -21,13 +22,16 @@ export function CategoryBodyInfiniteScroll({ foundProducts, loading }: ContentCh
   return (
     <>
       <Toolbar />
-      <InfiniteScroll>
+      <InfiniteScroll
+        observerOptions={{
+          rootMargin: "50% 0px"
+        }}
+      >
         <Products />
       </InfiniteScroll>
     </>
   )
 }
 
-// replace with following line to enable infinite scroll
-// export default wrapContent("category", CategoryBodyInfiniteScroll)
-export default wrapContent("category", CategoryBody)
+const Component = infiniteScroll ? CategoryBodyInfiniteScroll : CategoryBody
+export default wrapContent("category", Component)

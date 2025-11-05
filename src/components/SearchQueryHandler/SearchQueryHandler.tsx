@@ -1,9 +1,8 @@
+import { useEffect } from "preact/hooks"
 import { defaultConfig } from "@/config"
 import { useActions, useNostoAppState } from "@nosto/search-js/preact/hooks"
-import { getCurrentUrlState } from "@/mapping/url/getCurrentUrlState"
-import { updateUrl } from "@/mapping/url/updateUrl"
-
-import { useEffect } from "preact/hooks"
+import { getQueryFromUrlState } from "@/mapping/url/getCurrentUrlState"
+import { updateUrlFromQuery } from "@/mapping/url/updateUrl"
 
 export default function SearchQueryHandler() {
   const { newSearch } = useActions()
@@ -19,36 +18,15 @@ export default function SearchQueryHandler() {
 
   // Initialize search from URL on first load
   useEffect(() => {
-    const { query, page, size: urlSize, filter, sort } = getCurrentUrlState()
+    const query = getQueryFromUrlState()
     if (query) {
-      const size = urlSize ?? defaultConfig.serpSize
-      const from = page ? (page - 1) * size : 0
-
-      const searchConfig = {
-        query,
-        products: {
-          size,
-          from,
-          filter,
-          sort
-        }
-      }
-
-      newSearch(searchConfig)
+      newSearch(query)
     }
   }, [newSearch])
 
   // Update URL when app state changes
   useEffect(() => {
-    const page = from ? Math.floor(from / size) + 1 : 1
-
-    updateUrl({
-      query,
-      page,
-      size,
-      filter,
-      sort
-    })
+    updateUrlFromQuery({ from, size, query, filter, sort })
   }, [query, from, size, filter, sort])
 
   return null
