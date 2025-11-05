@@ -43,7 +43,7 @@
     "semantic-release": "^25.0.1",
     "@nosto/nosto-js": "^2.9.3",
     "@nosto/search-js": "^3.22.1",
-    "@nosto/web-components": "^9.13.1",
+    "@nosto/web-components": "^9.15.0",
     "@playwright/test": "^1.56.1",
     "@preact/preset-vite": "^2.10.2",
     "@storybook/addon-docs": "^10.0.3",
