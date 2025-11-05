@@ -1,9 +1,10 @@
-import { defaultConfig, infiniteScroll } from "@/config"
+import { useEffect } from "preact/hooks"
+import { defaultConfig } from "@/config"
 import { useActions, useNostoAppState } from "@nosto/search-js/preact/hooks"
 import { getCurrentUrlState } from "@/mapping/url/getCurrentUrlState"
 import { updateUrl } from "@/mapping/url/updateUrl"
-
-import { useEffect } from "preact/hooks"
+import { fromPageParameters } from "@/mapping/url/fromPageParameters"
+import { toPageParameters } from "@/mapping/url/toPageParameters"
 
 export default function SearchQueryHandler() {
   const { newSearch } = useActions()
@@ -45,30 +46,4 @@ export default function SearchQueryHandler() {
   }, [query, from, size, filter, sort])
 
   return null
-}
-
-function fromPageParameters(urlSize: number | undefined, page: number | undefined) {
-  const size = urlSize ?? defaultConfig.serpSize
-  if (infiniteScroll) {
-    return {
-      from: 0,
-      size: (page ?? 1) * size
-    }
-  }
-  return {
-    from: page ? (page - 1) * size : 0,
-    size
-  }
-}
-
-function toPageParameters(from: number | undefined, size: number) {
-  if (infiniteScroll) {
-    return {
-      page: Math.floor(size / defaultConfig.serpSize)
-    }
-  }
-  return {
-    page: from ? Math.floor(from / size) + 1 : 1,
-    size
-  }
 }
