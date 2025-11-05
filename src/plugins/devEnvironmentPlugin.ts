@@ -64,7 +64,7 @@ export function devEnvironmentPlugin(): Plugin {
                   window.nostojs(function(api) {
                     var analyticsEvents = [
                       'searchimpression',
-                      'searchclick', 
+                      'searchclick',
                       'searchaddtocart',
                       'categoryimpression',
                       'categoryclick',
