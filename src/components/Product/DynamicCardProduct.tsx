@@ -9,7 +9,10 @@ export default function DynamicCardProduct({ product }: { product: Product }) {
 
   if (isSkeleton) {
     return (
-      <div className={cl(styles.container, styles.skeleton)}>
+      <div
+        className={cl(styles.container, styles.skeleton)}
+        aria-label={`Product ${product.name}`}
+      >
         <div className={styles.image}>
           <img src={product.imageUrl} alt={product.name} className={styles.img} />
         </div>
