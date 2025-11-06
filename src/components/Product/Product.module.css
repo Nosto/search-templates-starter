@@ -94,6 +94,7 @@
 }
 
 .fakeProduct {
+  pointer-events: none;
   display: block;
   text-decoration: none;
 }
