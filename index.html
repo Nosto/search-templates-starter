@@ -53,7 +53,7 @@
       import "@nosto/web-components"
       import { mockNostojs } from "@nosto/nosto-js/testing"
       import { mockSearch } from "@mocks/search"
-      import { init } from "@nosto/nosto-js"
+      import { init, nostojs } from "@nosto/nosto-js"
 
       if (import.meta.env.VITE_MERCHANT_ROOT) {
         window.Shopify = {
@@ -61,6 +61,27 @@
             root: import.meta.env.VITE_MERCHANT_ROOT
           }
         }
+      }
+
+      function logAnalyticsEvents() {
+        const analyticsEvents = [
+          "searchimpression",
+          "searchclick",
+          "searchaddtocart",
+          "categoryimpression",
+          "categoryclick",
+          "categoryaddtocart",
+        ];
+        nostojs(api => {
+          analyticsEvents.forEach(eventType => {
+            api.listen(eventType, eventData => {
+              console.info(
+                `\x1b[32m[Nosto Analytics] Event: ${eventType}`,
+                eventData,
+              );
+            });
+          });
+        });
       }
 
       function renderApp() {
@@ -93,6 +114,7 @@
           merchantId: import.meta.env.VITE_MERCHANT_ID
         })
         renderApp()
+        logAnalyticsEvents()
       }
       setupNosto()
     </script>
