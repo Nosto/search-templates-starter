@@ -1,5 +1,5 @@
 import { pick } from "@nosto/search-js/utils"
-import Product from "@/components/Product/Product"
+import Product from "@/components/Product/DynamicCardProduct"
 import { useDecoratedSearchResults, useNostoAppState } from "@nosto/search-js/preact/hooks"
 import style from "./Products.module.css"
 import { cl } from "@nosto/search-js/utils"
