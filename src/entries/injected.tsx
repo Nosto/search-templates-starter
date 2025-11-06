@@ -36,7 +36,7 @@ function SerpApp() {
             <AutocompleteInjected onSubmit={onSubmit} />
           </Portal>
         </AutocompletePageProvider>
-        <Portal target={selectors.results}>
+        <Portal target={selectors.results} clear>
           <Serp />
         </Portal>
       </SidebarProvider>
@@ -49,7 +49,7 @@ function CategoryApp() {
     <ErrorBoundary>
       <SearchQueryHandler />
       <SidebarProvider>
-        <Portal target={selectors.results}>
+        <Portal target={selectors.results} clear>
           <Category />
         </Portal>
       </SidebarProvider>
