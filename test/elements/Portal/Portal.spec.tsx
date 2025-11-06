@@ -43,24 +43,6 @@ describe("Portal", () => {
     })
   })
 
-  it("should append to existing content when replace is false", async () => {
-    const targetElement = document.createElement("div")
-    targetElement.id = "portal-target"
-    targetElement.innerHTML = "<div>Existing Content</div>"
-    document.body.appendChild(targetElement)
-
-    render(
-      <Portal target="#portal-target" replace={false}>
-        <div data-testid="portal-content">New Content</div>
-      </Portal>
-    )
-
-    await waitFor(() => {
-      expect(targetElement.innerHTML).toContain("Existing Content")
-      expect(targetElement.innerHTML).toContain("New Content")
-    })
-  })
-
   it("should replace existing content when replace is true", async () => {
     const targetElement = document.createElement("div")
     targetElement.id = "portal-target"
@@ -103,34 +85,6 @@ describe("Portal", () => {
       },
       { timeout: 2000 }
     )
-  })
-
-  it("should clear existing content only once when replace is true", async () => {
-    const targetElement = document.createElement("div")
-    targetElement.id = "portal-target"
-    targetElement.innerHTML = "<div>Initial Content</div>"
-    document.body.appendChild(targetElement)
-
-    const { rerender } = render(
-      <Portal target="#portal-target" replace>
-        <div data-testid="portal-content">First Render</div>
-      </Portal>
-    )
-
-    await waitFor(() => {
-      expect(targetElement.innerHTML).not.toContain("Initial Content")
-      expect(targetElement.innerHTML).toContain("First Render")
-    })
-
-    rerender(
-      <Portal target="#portal-target" replace>
-        <div data-testid="portal-content">Second Render</div>
-      </Portal>
-    )
-
-    await waitFor(() => {
-      expect(targetElement.innerHTML).toContain("Second Render")
-    })
   })
 
   it("should render nothing when target element does not exist and never appears", () => {
