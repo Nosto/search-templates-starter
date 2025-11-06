@@ -24,7 +24,7 @@ export default function Portal({ target, children, replace = false }: Props) {
     }
     return el
   })
-  const hasCleared = useRef(!!element)
+  const hasCleared = useRef(element !== null && replace)
 
   useEffect(() => {
     if (element) {
