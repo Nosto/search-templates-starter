@@ -105,7 +105,7 @@
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
   overflow: hidden;
-  height: 400px;
+  height: var(--ns-skeleton-height);
 }
 
 @keyframes shimmer {
