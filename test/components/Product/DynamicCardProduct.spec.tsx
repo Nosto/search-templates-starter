@@ -1,7 +1,6 @@
 import { render } from "@testing-library/preact"
 import { describe, it, expect, beforeAll } from "vitest"
 import DynamicCardProduct from "@/components/Product/DynamicCardProduct"
-import SkeletonProduct from "@/components/Product/SkeletonProduct"
 import { createMockProduct } from "@mocks/products"
 import { MockIntersectionObserver } from "../../mocks/MockIntersectionObserver"
 import { SearchPageProvider } from "@nosto/search-js/preact/serp"
@@ -34,15 +33,14 @@ describe("DynamicCardProduct", () => {
 
     const { container } = renderWithProvider(<DynamicCardProduct product={skeletonProduct} />)
 
-    // Should render a div (skeleton) instead of nosto-dynamic-card
-    const skeletonDiv = container.querySelector("div")
+    // Should render an anchor (skeleton) instead of nosto-dynamic-card
+    const fakeProduct = container.querySelector("a[class*='fakeProduct']")
     const dynamicCard = container.querySelector("nosto-dynamic-card")
-    const fakeProduct = container.querySelector("div[class*='fakeProduct']")
+    const imageDiv = container.querySelector("div[class*='image']")
 
-    expect(skeletonDiv).toBeTruthy()
-    expect(dynamicCard).toBeNull()
     expect(fakeProduct).toBeTruthy()
-    expect(skeletonDiv?.getAttribute("aria-label")).toBe("Loading product")
+    expect(dynamicCard).toBeNull()
+    expect(imageDiv).toBeTruthy()
   })
 
   it("renders DynamicCard when product does not have skeleton tag", () => {
@@ -61,15 +59,5 @@ describe("DynamicCardProduct", () => {
     expect(dynamicCard).toBeTruthy()
     expect(dynamicCard?.getAttribute("handle")).toBe("product-handle")
     expect(dynamicCard?.getAttribute("template")).toBe("card")
-  })
-})
-
-describe("SkeletonProduct", () => {
-  it("renders a simple div with fakeProduct class", () => {
-    const { container } = render(<SkeletonProduct />)
-
-    const fakeProduct = container.querySelector("div")
-    expect(fakeProduct).toBeTruthy()
-    expect(fakeProduct?.className).toContain("fakeProduct")
   })
 })

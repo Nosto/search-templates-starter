@@ -3,44 +3,23 @@ import { SerpElement } from "@nosto/search-js/preact/serp"
 import { cl } from "@nosto/search-js/utils"
 import styles from "./Product.module.css"
 import DynamicCard from "@/elements/DynamicCard/DynamicCard"
-import SkeletonProduct from "./SkeletonProduct"
-import ProductImage from "./ProductImage"
+
+function SkeletonProduct() {
+  return (
+    // eslint-disable-next-line jsx-a11y/anchor-is-valid
+    <a href="#" className={cl(styles.container, styles.fakeProduct)}>
+      <div className={styles.image}></div>
+    </a>
+  )
+}
 
 export default function DynamicCardProduct({ product }: { product: Product }) {
   const isSkeleton = product.tags1?.includes("skeleton")
-
-  if (isSkeleton) {
-    return (
-      <SerpElement
-        as="div"
-        hit={{
-          productId: product.productId!,
-          url: product.url
-        }}
-        componentProps={{
-          "aria-label": "Loading product",
-          className: cl(styles.container, styles.skeleton)
-        }}
-      >
-        <div className={styles.image}>
-          <ProductImage src={product.imageUrl!} alt="" className={styles.img} />
-        </div>
-        <div className={styles.info}>
-          {product.brand && <div>{product.brand}</div>}
-          <div>{product.name}</div>
-          <div>
-            <span>{product.priceText}</span>
-          </div>
-          {product.ratingValue !== undefined && product.reviewCount ? <div>★★★★★ {product.ratingValue}</div> : null}
-        </div>
-        <SkeletonProduct />
-      </SerpElement>
-    )
-  }
+  const ProductCard = isSkeleton ? SkeletonProduct : DynamicCard
 
   return (
     <SerpElement
-      as={DynamicCard}
+      as={ProductCard}
       hit={{
         productId: product.productId!,
         url: product.url
@@ -48,7 +27,7 @@ export default function DynamicCardProduct({ product }: { product: Product }) {
       componentProps={{
         handle: product.handle!,
         template: "card",
-        className: styles.container
+        className: cl(styles.container, isSkeleton && styles.skeleton)
       }}
     />
   )
