@@ -24,7 +24,7 @@ describe("DynamicCardProduct", () => {
     )
   }
 
-  it("renders SkeletonProduct when product has skeleton tag", () => {
+  it("renders skeleton structure when product has skeleton tag", () => {
     const skeletonProduct = createMockProduct({
       productId: "skeleton-1",
       tags1: ["skeleton"],
@@ -37,9 +37,11 @@ describe("DynamicCardProduct", () => {
     // Should render a div (skeleton) instead of nosto-dynamic-card
     const skeletonDiv = container.querySelector("div")
     const dynamicCard = container.querySelector("nosto-dynamic-card")
+    const fakeProduct = container.querySelector("div[class*='fakeProduct']")
 
     expect(skeletonDiv).toBeTruthy()
     expect(dynamicCard).toBeNull()
+    expect(fakeProduct).toBeTruthy()
     expect(skeletonDiv?.getAttribute("aria-label")).toBe("Loading product")
   })
 
@@ -63,68 +65,11 @@ describe("DynamicCardProduct", () => {
 })
 
 describe("SkeletonProduct", () => {
-  beforeAll(() => {
-    globalThis.IntersectionObserver = MockIntersectionObserver as unknown as typeof IntersectionObserver
-  })
+  it("renders a simple div with fakeProduct class", () => {
+    const { container } = render(<SkeletonProduct />)
 
-  const renderWithProvider = (component: preact.JSX.Element) => {
-    return render(
-      h(SearchPageProvider, {
-        config: mockConfig,
-        store: createStore(mockInitialState),
-        children: component
-      })
-    )
-  }
-
-  it("renders with skeleton CSS class", () => {
-    const skeletonProduct = createMockProduct({
-      productId: "skeleton-1",
-      tags1: ["skeleton"],
-      name: "Loading Product",
-      brand: "Loading Brand",
-      priceText: "$0.00",
-      url: "#"
-    })
-
-    const { container } = renderWithProvider(<SkeletonProduct product={skeletonProduct} />)
-
-    const skeletonDiv = container.querySelector("div")
-    expect(skeletonDiv?.className).toContain("skeleton")
-  })
-
-  it("renders product info placeholders", () => {
-    const skeletonProduct = createMockProduct({
-      productId: "skeleton-1",
-      tags1: ["skeleton"],
-      name: "Loading Product Name",
-      brand: "Loading Brand",
-      priceText: "$100.00",
-      ratingValue: 5,
-      reviewCount: 100,
-      url: "#"
-    })
-
-    const { getByText } = renderWithProvider(<SkeletonProduct product={skeletonProduct} />)
-
-    expect(getByText("Loading Product Name")).toBeTruthy()
-    expect(getByText("Loading Brand")).toBeTruthy()
-    expect(getByText("$100.00")).toBeTruthy()
-  })
-
-  it("renders without rating when not provided", () => {
-    const skeletonProduct = createMockProduct({
-      productId: "skeleton-1",
-      tags1: ["skeleton"],
-      name: "Loading Product",
-      url: "#",
-      ratingValue: undefined,
-      reviewCount: undefined
-    })
-
-    const { container } = renderWithProvider(<SkeletonProduct product={skeletonProduct} />)
-
-    // Should not contain star rating
-    expect(container.textContent).not.toContain("★")
+    const fakeProduct = container.querySelector("div")
+    expect(fakeProduct).toBeTruthy()
+    expect(fakeProduct?.className).toContain("fakeProduct")
   })
 })
