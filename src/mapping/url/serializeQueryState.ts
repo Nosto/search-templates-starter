@@ -1,5 +1,5 @@
 import type { InputSearchSort } from "@nosto/nosto-js/client"
-import { defaultConfig } from "@/config"
+import { defaultSize, defaultSort } from "@/config"
 import { UrlQueryState } from "./types"
 import { QUERY_PARAM, PAGE_PARAM, SIZE_PARAM, FILTER_PREFIX, SORT_PARAM } from "./constants"
 import { isMatchingSort } from "@/utils/sorting"
@@ -34,7 +34,7 @@ export function serializeQueryState(state: UrlQueryState, params: URLSearchParam
     params.set(PAGE_PARAM, state.page.toString())
   }
 
-  if (state.size && state.size !== defaultConfig.serpSize) {
+  if (state.size && state.size !== defaultSize) {
     params.set(SIZE_PARAM, state.size.toString())
   }
 
@@ -60,7 +60,7 @@ export function serializeQueryState(state: UrlQueryState, params: URLSearchParam
     })
   }
 
-  if (state.sort && state.sort.length > 0 && !isMatchingSort(state.sort, defaultConfig.sort.value.sort)) {
+  if (state.sort && state.sort.length > 0 && !isMatchingSort(state.sort, defaultSort.value.sort)) {
     params.set(SORT_PARAM, serializeSortToUrl(state.sort))
   }
 

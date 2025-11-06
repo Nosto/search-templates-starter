@@ -1,4 +1,4 @@
-import { defaultConfig } from "@/config"
+import { defaultSize } from "@/config"
 import { Product } from "@/types"
 
 export function createSkeletonContent() {
@@ -8,10 +8,10 @@ export function createSkeletonContent() {
     response: {
       products: {
         facets: [],
-        hits: Array.from({ length: defaultConfig.serpSize }, () => mockProduct),
+        hits: Array.from({ length: defaultSize }, () => mockProduct),
         from: 0,
-        size: defaultConfig.serpSize,
-        total: defaultConfig.serpSize
+        size: defaultSize,
+        total: defaultSize
       }
     }
   }

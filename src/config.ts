@@ -30,12 +30,14 @@ export const skeletonLoading = true
 export const shopifyMode = !!window.Shopify
 
 /**
- * Default values for sort and page size for search results and categories
+ * Default sort option for search results and categories
  */
-export const defaultConfig = {
-  sort: sortOptions[0],
-  serpSize: sizes[0]
-}
+export const defaultSort = sortOptions[0]
+
+/**
+ * Default page size for search results and categories
+ */
+export const defaultSize = sizes[0]
 
 /**
  * CSS selectors for the Injected mode
@@ -75,7 +77,7 @@ function withBaseConfig(query: SearchQuery) {
   return {
     ...query,
     products: {
-      size: defaultConfig.serpSize,
+      size: defaultSize,
       ...query.products
       // uncomment for exchange rates based multi-currency support
       //currency: tagging.variation() ?? defaultCurrency
