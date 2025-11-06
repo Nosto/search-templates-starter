@@ -10,18 +10,23 @@ type Props = {
 }
 
 export default function Portal({ target, clear, children }: Props) {
-  const [element, setElement] = useState<HTMLElement | null>(document.querySelector<HTMLElement>(target))
+  const [element, setElement] = useState<HTMLElement | null>(() => {
+    const el = document.querySelector<HTMLElement>(target)
+    if (el && clear) {
+      el.innerHTML = ""
+    }
+    return el
+  })
 
   useEffect(() => {
-    if (element) {
-      if (clear) {
-        element.innerHTML = ""
-      }
-      return
+    if (!element) {
+      waitForElement(target).then(el => {
+        if (clear) {
+          el.innerHTML = ""
+        }
+        setElement(el)
+      })
     }
-    waitForElement(target).then(el => {
-      setElement(el)
-    })
   }, [target, clear, element])
 
   return element ? createPortal(children, element) : null
