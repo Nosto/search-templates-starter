@@ -22,6 +22,11 @@ export const sortOptions = [
  */
 export const infiniteScroll = false
 
+/**
+ * Enable or disable skeleton loading state for search results
+ */
+export const skeletonLoading = true
+
 export const shopifyMode = !!window.Shopify
 
 /**

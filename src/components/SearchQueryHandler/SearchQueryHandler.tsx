@@ -1,10 +1,13 @@
-import { useEffect } from "preact/hooks"
-import { defaultSize } from "@/config"
+import { useContext, useEffect } from "preact/hooks"
+import { defaultSize, skeletonLoading } from "@/config"
 import { useActions, useNostoAppState } from "@nosto/search-js/preact/hooks"
 import { getQueryFromUrlState } from "@/mapping/url/getCurrentUrlState"
 import { updateUrlFromQuery } from "@/mapping/url/updateUrl"
+import { StoreContext } from "@nosto/search-js/preact/common"
+import { createSkeletonContent } from "./skeletonContent"
 
 export default function SearchQueryHandler() {
+  const store = useContext(StoreContext)
   const { newSearch } = useActions()
 
   // Get current query, pagination, filter, and sort state from app
@@ -20,9 +23,14 @@ export default function SearchQueryHandler() {
   useEffect(() => {
     const query = getQueryFromUrlState()
     if (query) {
+      if (skeletonLoading) {
+        // init store with skeleton content to avoid layout shift
+        store.updateState(createSkeletonContent())
+      }
+      // execute initial query
       newSearch(query)
     }
-  }, [newSearch])
+  }, [store, newSearch])
 
   // Update URL when app state changes
   useEffect(() => {
