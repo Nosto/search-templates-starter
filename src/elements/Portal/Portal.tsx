@@ -17,14 +17,15 @@ type Props = {
  * @param replace - If true, clears target element's existing content before rendering (default: false)
  */
 export default function Portal({ target, children, replace = false }: Props) {
+  const hasCleared = useRef(false)
   const [element, setElement] = useState<HTMLElement | null>(() => {
     const el = document.querySelector<HTMLElement>(target)
     if (el && replace) {
       el.innerHTML = ""
+      hasCleared.current = true
     }
     return el
   })
-  const hasCleared = useRef(element !== null && replace)
 
   useEffect(() => {
     if (element) {
