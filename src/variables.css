@@ -90,5 +90,5 @@
   --ns-facet-max-height: 500px;
 
   /* IMAGES */
-  --ns-aspect-ratio: 0.75;
+  --ns-aspect-ratio: auto;
 }
