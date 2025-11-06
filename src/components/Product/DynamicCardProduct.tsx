@@ -1,6 +1,5 @@
 import { Product } from "@/types"
 import { SerpElement } from "@nosto/search-js/preact/serp"
-import { cl } from "@nosto/search-js/utils"
 import styles from "./Product.module.css"
 import DynamicCard from "@/elements/DynamicCard/DynamicCard"
 import SkeletonProduct from "./SkeletonProduct"
@@ -22,7 +21,7 @@ export default function DynamicCardProduct({ product }: { product: Product }) {
       componentProps={{
         handle: product.handle!,
         template: "card",
-        className: cl(styles.container, isSkeleton && styles.skeleton)
+        className: styles.container
       }}
     />
   )
