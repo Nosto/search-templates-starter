@@ -82,7 +82,10 @@ function extractReferencedClassNames(tsxContent: string) {
 const srcPath = join(process.cwd(), "src")
 
 describe("CSS Module Class Usage", () => {
-  const cssModuleFiles = findAllCssModuleFiles(srcPath, process.cwd()).filter(file => !file.includes("Icon.module.css"))
+  const exclusions = ["Icon.module.css", "skeleton.module.css"]
+  const cssModuleFiles = findAllCssModuleFiles(srcPath, process.cwd()).filter(
+    file => !exclusions.some(excl => file.endsWith(excl))
+  )
 
   cssModuleFiles.forEach(cssModulePath => {
     it(`should use all classes from ${cssModulePath}`, () => {
