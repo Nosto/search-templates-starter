@@ -6,7 +6,8 @@ import {
   mockNewProduct,
   mockOldProduct,
   mockProductOnSale,
-  mockProductNoSalePrice
+  mockProductNoSalePrice,
+  createMockProduct
 } from "@mocks/products"
 import { withSearchContext } from ".storybook/decorators"
 
@@ -21,6 +22,22 @@ export default {
 } as Meta<typeof Product>
 
 type Story = StoryObj<typeof Product>
+
+const mockSkeletonProduct = createMockProduct({
+  productId: "skeleton-product",
+  name: "Loading Product Name",
+  url: "#",
+  imageUrl:
+    "data:image/svg+xml,%3Csvg width='300' height='400' fill='lightgrey' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='300' height='400'/%3E%3C/svg%3E",
+  price: 100,
+  priceText: "$100.00",
+  listPrice: 100,
+  listPriceText: "$100.00",
+  brand: "Brand Name",
+  tags1: ["skeleton"],
+  ratingValue: 5,
+  reviewCount: 100
+})
 
 export const Default: Story = {
   args: {
@@ -118,6 +135,20 @@ export const ProductNoSale: Story = {
     docs: {
       description: {
         story: "Product without 'Sale' ribbon because the price equals the list price."
+      }
+    }
+  }
+}
+
+export const SkeletonState: Story = {
+  args: {
+    product: mockSkeletonProduct
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Skeleton loader state displayed while the actual product content is being fetched. Features shimmer animation and disabled pointer events."
       }
     }
   }
