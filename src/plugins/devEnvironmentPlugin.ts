@@ -58,10 +58,13 @@ export function devEnvironmentPlugin(): Plugin {
           {
             tag: "script",
             injectTo: "head",
+            attrs: {
+              type: "module"
+            },
             children: `
-              (function() {
-                if (typeof window.nostojs === 'function') {
-                  window.nostojs(function(api) {
+              (async function() {
+                const { nostojs } = await import("@nosto/nosto-js");
+                  nostojs(function(api) {
                     var analyticsEvents = [
                       'searchimpression',
                       'searchclick',
@@ -70,16 +73,14 @@ export function devEnvironmentPlugin(): Plugin {
                       'categoryclick',
                       'categoryaddtocart'
                     ];
-                    
                     analyticsEvents.forEach(function(eventType) {
                       api.listen(eventType, function(eventData) {
-                        console.log('[Nosto Analytics] Event: ' + eventType);
-                        console.log('Payload:', eventData);
+                        console.log('[Nosto Analytics] Event: ' + eventType, eventData);
                       });
                     });
                   });
                 }
-              })();
+              )();
             `
           }
         ]
