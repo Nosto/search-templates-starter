@@ -11,7 +11,6 @@ type Props = {
 
 export default function Portal({ target, clear, children }: Props) {
   const [element, setElement] = useState<HTMLElement | null>(() => document.querySelector<HTMLElement>(target))
-  const isCleared = useRef(false)
 
   useEffect(() => {
     if (!element) {
@@ -19,6 +18,7 @@ export default function Portal({ target, clear, children }: Props) {
     }
   }, [target, element])
 
+  const isCleared = useRef(false)
   if (element && clear && !isCleared.current) {
     element.innerHTML = ""
     isCleared.current = true
