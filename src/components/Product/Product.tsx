@@ -1,6 +1,7 @@
 import { SerpElement } from "@nosto/search-js/preact/serp"
 import { cl } from "@nosto/search-js/utils"
 import styles from "./Product.module.css"
+import skeleton from "./skeleton.module.css"
 import type { Product } from "@/types"
 import { renderRatingStars } from "./renderRatingStars"
 import ProductImage from "./ProductImage"
@@ -27,7 +28,7 @@ export default function Product({ product, children, showAltOnHover = true }: Pr
       }}
       componentProps={{
         "aria-label": `Product ${product.name}`,
-        className: cl(styles.container, hasAlternateImage && styles.altContainer, isSkeleton && styles.skeleton),
+        className: cl(styles.container, hasAlternateImage && styles.altContainer, isSkeleton && skeleton.skeleton),
         href: product.url
       }}
     >
@@ -43,14 +44,17 @@ export default function Product({ product, children, showAltOnHover = true }: Pr
         </QuickAdd>
       </div>
       <div className={styles.info} data-nosto-element="product">
-        {product.brand && <div>{product.brand}</div>}
-        <div>{product.name}</div>
-        <div aria-label="Price">
+        {product.brand && <div className={skeleton.text}>{product.brand}</div>}
+        <div className={skeleton.text}>{product.name}</div>
+        <div className={skeleton.text} aria-label="Price">
           <span>{product.priceText}</span>
           {isOnSale && <span className={styles.specialPrice}>{product.listPriceText}</span>}
         </div>
         {product.ratingValue !== undefined && product.reviewCount ? (
-          <div aria-label={`${product.ratingValue} out of 5 stars, ${product.reviewCount} reviews`}>
+          <div
+            className={skeleton.text}
+            aria-label={`${product.ratingValue} out of 5 stars, ${product.reviewCount} reviews`}
+          >
             {renderRatingStars(product.ratingValue)} {product.ratingValue}
           </div>
         ) : null}
