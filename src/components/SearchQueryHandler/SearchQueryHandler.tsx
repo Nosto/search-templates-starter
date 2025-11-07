@@ -25,7 +25,7 @@ export default function SearchQueryHandler() {
     if (query) {
       if (skeletonLoading) {
         // init store with skeleton content to avoid layout shift
-        store.updateState(createSkeletonContent())
+        store.updateState(createSkeletonContent(query))
       }
       // execute initial query
       newSearch(query)

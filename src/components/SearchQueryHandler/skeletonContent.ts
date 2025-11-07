@@ -1,10 +1,11 @@
+import { SearchQuery } from "@nosto/nosto-js/client"
 import { defaultSize } from "@/config"
 import { Product } from "@/types"
 
-export function createSkeletonContent() {
+export function createSkeletonContent(query: SearchQuery) {
   return {
     initialized: true,
-    query: {},
+    query,
     response: {
       products: {
         facets: [],
