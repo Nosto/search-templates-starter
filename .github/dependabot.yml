@@ -8,9 +8,6 @@ updates:
       prefix: "deps"
     open-pull-requests-limit: 10
     groups:
-      nosto:
-        patterns:
-          - "@nosto/*"
       storybook:
         patterns:
           - "@storybook/*"
@@ -25,29 +22,11 @@ updates:
         patterns:
           - "@semantic-release/*"
           - "semantic-release"
-      testing:
+      vitest:
         patterns:
           - "@playwright/test"
-          - "@testing-library/*"
           - "vitest"
-          - "jsdom"
-      typescript:
-        patterns:
-          - "typescript"
-          - "typescript-*"
-          - "@types/*"
       stylelint:
         patterns:
           - "stylelint"
           - "stylelint-*"
-      vite:
-        patterns:
-          - "vite"
-          - "@preact/preset-vite"
-          - "rollup-*"
-      preact:
-        patterns:
-          - "preact"
-      commitlint:
-        patterns:
-          - "@commitlint/*"
