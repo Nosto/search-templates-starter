@@ -30,8 +30,10 @@
   opacity: 0;
 }
 
-.altContainer:hover .image > .img:nth-child(2) {
-  opacity: 1;
+@media (hover: hover) and (pointer: fine) {
+  .altContainer:hover .image > .img:nth-child(2) {
+    opacity: 1;
+  }
 }
 
 .info {
@@ -80,9 +82,15 @@
   left: 8px;
   border: none;
   cursor: pointer;
-  display: none;
+  display: block;
 }
 
-.container:hover .quickAdd {
-  display: block;
+@media (hover: hover) and (pointer: fine) {
+  .quickAdd {
+    display: none;
+  }
+
+  .container:hover .quickAdd {
+    display: block;
+  }
 }
