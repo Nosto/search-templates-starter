@@ -43,7 +43,7 @@
     "@playwright/test": "^1.56.1",
     "@preact/preset-vite": "^2.10.2",
     "@semantic-release/commit-analyzer": "^13.0.0",
-    "@semantic-release/github": "^12.0.1",
+    "@semantic-release/github": "^12.0.2",
     "@semantic-release/release-notes-generator": "^14.0.0",
     "@storybook/addon-docs": "^10.0.6",
     "@storybook/preact-vite": "^10.0.3",
