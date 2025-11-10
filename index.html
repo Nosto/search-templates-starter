@@ -22,6 +22,8 @@
     <meta name="twitter:title" content="Search Templates Starter - Nosto" />
     <meta name="twitter:description" content="A starter template for building Nosto search integrations using @nosto/search-js and Preact. Build powerful ecommerce search experiences with pre-configured components and utilities." />
     
+    <script src="./src/entries/dev.ts" type="module"></script>
+
     <title>Search Templates Starter - Nosto</title>
     <style>
       #dropdown {
@@ -49,74 +51,5 @@
       </header>
       <main id="serp"></main>
     </div>
-    <script type="module">
-      import "@nosto/web-components"
-      import { mockNostojs } from "@nosto/nosto-js/testing"
-      import { mockSearch } from "@mocks/search"
-      import { init, nostojs } from "@nosto/nosto-js"
-
-      if (import.meta.env.VITE_MERCHANT_ROOT) {
-        window.Shopify = {
-          routes: {
-            root: import.meta.env.VITE_MERCHANT_ROOT
-          }
-        }
-      }
-
-      function logAnalyticsEvents() {
-        const analyticsEvents = [
-          "searchimpression",
-          "searchclick",
-          "searchaddtocart",
-          "categoryimpression",
-          "categoryclick",
-          "categoryaddtocart",
-        ];
-        nostojs(api => {
-          analyticsEvents.forEach(eventType => {
-            api.listen(eventType, eventData => {
-              console.info(
-                `\x1b[32m[Nosto Analytics] Event: ${eventType}`,
-                eventData,
-              );
-            });
-          });
-        });
-      }
-
-      function renderApp() {
-        const mode = import.meta.env.MODE
-        if (mode === "injected" || mode === "mocked") {
-          import("/src/entries/injected.tsx")
-          return
-        }
-        document.querySelector("#app").innerHTML = ""
-        import("/src/entries/native.tsx")
-      }
-      
-      function setupNosto() {
-        const mode = import.meta.env.MODE
-        if (mode === "mocked") {
-          mockNostojs({ 
-            search: mockSearch,
-            recordSearchSubmit: () => Promise.resolve()
-          })
-          renderApp()
-          return
-        }
-        window.nostoab = {
-          settings: {
-            site: location.href,
-            searchTemplatesEnabled: false
-          }
-        }
-        init({
-          merchantId: import.meta.env.VITE_MERCHANT_ID
-        })
-        renderApp()
-        logAnalyticsEvents()
-      }
-      setupNosto()
-    </script>
   </body>
 </html>
