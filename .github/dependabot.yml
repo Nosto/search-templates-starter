@@ -7,3 +7,24 @@ updates:
     commit-message:
       prefix: "deps"
     open-pull-requests-limit: 10
+    groups:
+      storybook:
+        patterns:
+          - "@storybook/*"
+          - "storybook"
+      eslint:
+        patterns:
+          - "eslint"
+          - "eslint-*"
+          - "@types/eslint-*"
+      semantic-release:
+        patterns:
+          - "@semantic-release/*"
+          - "semantic-release"
+      vitest:
+        patterns:
+          - "vitest"
+      stylelint:
+        patterns:
+          - "stylelint"
+          - "stylelint-*"
