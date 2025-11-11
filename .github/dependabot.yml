@@ -17,7 +17,6 @@ updates:
           - "eslint"
           - "eslint-*"
           - "@types/eslint-*"
-          - "prettier"
       semantic-release:
         patterns:
           - "@semantic-release/*"
