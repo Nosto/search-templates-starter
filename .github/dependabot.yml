@@ -23,7 +23,6 @@ updates:
           - "semantic-release"
       vitest:
         patterns:
-          - "@playwright/test"
           - "vitest"
       stylelint:
         patterns:
