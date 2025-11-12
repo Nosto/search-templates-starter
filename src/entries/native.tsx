@@ -16,7 +16,7 @@ import Portal from "@/elements/Portal/Portal"
 function SerpApp() {
   return (
     <SearchPageProvider config={serpConfig}>
-      <SearchQueryHandler />
+      <SearchQueryHandler pageType="search" />
       <SidebarProvider>
         <Portal target="#app">
           <Search />
@@ -30,7 +30,7 @@ function SerpApp() {
 function CategoryApp() {
   return (
     <CategoryPageProvider config={categoryConfig}>
-      <SearchQueryHandler />
+      <SearchQueryHandler pageType="category" />
       <SidebarProvider>
         <Portal target="#app">
           <Category />

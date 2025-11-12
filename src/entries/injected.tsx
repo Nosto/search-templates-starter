@@ -29,7 +29,7 @@ function SerpApp() {
 
   return (
     <ErrorBoundary>
-      <SearchQueryHandler />
+      <SearchQueryHandler pageType="search" />
       <SidebarProvider>
         <AutocompletePageProvider config={autocompleteConfig}>
           <Portal target={selectors.dropdown}>
@@ -47,7 +47,7 @@ function SerpApp() {
 function CategoryApp() {
   return (
     <ErrorBoundary>
-      <SearchQueryHandler />
+      <SearchQueryHandler pageType="category" />
       <SidebarProvider>
         <Portal target={selectors.results} clear>
           <Category />
