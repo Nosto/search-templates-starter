@@ -70,7 +70,6 @@ async function init() {
       )
       break
     case "search":
-    default:
       render(
         <SearchPageProvider config={serpConfig}>
           <SerpApp />
