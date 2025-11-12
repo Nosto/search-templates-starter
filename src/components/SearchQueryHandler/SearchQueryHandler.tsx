@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "preact/hooks"
 import { defaultSize, skeletonLoading } from "@/config"
 import { useActions, useNostoAppState } from "@nosto/search-js/preact/hooks"
-import { getQueryFromUrlState } from "@/mapping/url/getCurrentUrlState"
+import { getQueryFromUrlState, getCurrentUrlState } from "@/mapping/url/getCurrentUrlState"
 import { updateUrlFromQuery } from "@/mapping/url/updateUrl"
 import { StoreContext } from "@nosto/search-js/preact/common"
 import { createSkeletonContent } from "./skeletonContent"
@@ -37,14 +37,22 @@ export default function SearchQueryHandler({ pageType }: SearchQueryHandlerProps
       // execute initial query
       newSearch(urlQuery)
     } else if (pageType === "category") {
-      // Create empty query for category pages
-      const emptyQuery = { products: {} }
+      // For category pages, create a query with URL params (filter, sort, pagination) if available
+      const urlState = getCurrentUrlState()
+      const categoryQuery = {
+        products: {
+          filter: urlState.filter,
+          sort: urlState.sort,
+          from: urlState.page ? (urlState.page - 1) * (urlState.size ?? defaultSize) : 0,
+          size: urlState.size ?? defaultSize
+        }
+      }
       if (skeletonLoading) {
         // init store with skeleton content to avoid layout shift
-        store.updateState(createSkeletonContent(emptyQuery))
+        store.updateState(createSkeletonContent(categoryQuery))
       }
-      // execute initial empty request (category metadata will be added by config)
-      newSearch(emptyQuery)
+      // execute initial request (category metadata will be added by config)
+      newSearch(categoryQuery)
     }
   }, [store, newSearch, pageType])
 
@@ -52,6 +60,9 @@ export default function SearchQueryHandler({ pageType }: SearchQueryHandlerProps
   useEffect(() => {
     if (pageType === "search") {
       updateUrlFromQuery({ from, size, query, filter, sort })
+    } else if (pageType === "category") {
+      // For category pages, update URL with filters/sort/pagination but no query
+      updateUrlFromQuery({ from, size, query: undefined, filter, sort })
     }
   }, [query, from, size, filter, sort, pageType])
 

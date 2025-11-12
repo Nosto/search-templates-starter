@@ -6,7 +6,8 @@ import { CategoryPageProvider } from "@nosto/search-js/preact/category"
 
 // Mock the URL state getter
 vi.mock("@/mapping/url/getCurrentUrlState", () => ({
-  getQueryFromUrlState: vi.fn()
+  getQueryFromUrlState: vi.fn(),
+  getCurrentUrlState: vi.fn()
 }))
 
 // Mock the URL updater
@@ -15,7 +16,7 @@ vi.mock("@/mapping/url/updateUrl", () => ({
 }))
 
 // Import the mocked functions
-import { getQueryFromUrlState } from "@/mapping/url/getCurrentUrlState"
+import { getQueryFromUrlState, getCurrentUrlState } from "@/mapping/url/getCurrentUrlState"
 import { updateUrlFromQuery } from "@/mapping/url/updateUrl"
 
 describe("SearchQueryHandler", () => {
@@ -77,6 +78,13 @@ describe("SearchQueryHandler", () => {
   describe("category page type", () => {
     it("fires initial empty request for category pages", () => {
       vi.mocked(getQueryFromUrlState).mockReturnValue(undefined)
+      vi.mocked(getCurrentUrlState).mockReturnValue({
+        query: undefined,
+        filter: undefined,
+        sort: undefined,
+        page: undefined,
+        size: undefined
+      })
 
       render(
         <CategoryPageProvider config={{ search: { hitDecorators: [] } }}>
@@ -85,10 +93,18 @@ describe("SearchQueryHandler", () => {
       )
 
       expect(getQueryFromUrlState).toHaveBeenCalled()
+      expect(getCurrentUrlState).toHaveBeenCalled()
     })
 
-    it("does not update URL on category pages", async () => {
+    it("updates URL on category pages with filter and sort", async () => {
       vi.mocked(getQueryFromUrlState).mockReturnValue(undefined)
+      vi.mocked(getCurrentUrlState).mockReturnValue({
+        query: undefined,
+        filter: undefined,
+        sort: undefined,
+        page: undefined,
+        size: undefined
+      })
 
       render(
         <CategoryPageProvider config={{ search: { hitDecorators: [] } }}>
@@ -99,10 +115,8 @@ describe("SearchQueryHandler", () => {
       // Give it a moment to run the effect
       await new Promise(resolve => setTimeout(resolve, 0))
 
-      // URL update should not be called for category pages
-      // or if it is called, it should be minimal
-      // The key point is category pages don't update URL with query params
-      expect(updateUrlFromQuery).not.toHaveBeenCalled()
+      // URL update should be called for category pages with filter/sort but no query
+      expect(updateUrlFromQuery).toHaveBeenCalled()
     })
   })
 })
