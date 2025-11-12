@@ -42,6 +42,8 @@ function renderApp() {
 }
 
 function setupNosto() {
+  nostojs(api => api.setTaggingProvider("pageType", "search"))
+
   if (MODE === "mocked") {
     mockNostojs({
       search: mockSearch,
