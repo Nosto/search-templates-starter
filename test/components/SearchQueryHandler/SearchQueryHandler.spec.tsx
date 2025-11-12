@@ -29,7 +29,9 @@ describe("SearchQueryHandler", () => {
         query: "test",
         products: {
           from: 0,
-          size: 24
+          size: 24,
+          filter: undefined,
+          sort: undefined
         }
       }
       vi.mocked(getQueryFromUrlState).mockReturnValue(mockQuery)
