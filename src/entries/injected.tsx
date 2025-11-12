@@ -76,6 +76,7 @@ async function init() {
         </SearchPageProvider>,
         dummy
       )
+      break
   }
 }
 init()
