@@ -24,8 +24,8 @@ export default function SearchQueryHandler() {
   // Initialize search from URL on first load
   useEffect(() => {
     const query = getQueryFromUrlState()
-    const serpPage = (pageType === "search" && query.query) || pageType === "category"
-    if (serpPage) {
+    const isResultsPage = (pageType === "search" && query.query) || pageType === "category"
+    if (isResultsPage) {
       if (skeletonLoading) {
         // init store with skeleton content to avoid layout shift
         store.updateState(createSkeletonContent(query))
