@@ -45,21 +45,21 @@ async function init() {
 
   switch (tagging.pageType()) {
     case "category":
-        render(
-    <ErrorBoundary>
-      <CategoryApp />
-    </ErrorBoundary>,
-    document.body
-  )      
-  break
-      case "search":
-        render(
-    <ErrorBoundary>
-      <SerpApp />
-    </ErrorBoundary>,
-    document.body
-  )      
-  break
-}
+      render(
+        <ErrorBoundary>
+          <CategoryApp />
+        </ErrorBoundary>,
+        document.body
+      )
+      break
+    case "search":
+      render(
+        <ErrorBoundary>
+          <SerpApp />
+        </ErrorBoundary>,
+        document.body
+      )
+      break
+  }
 }
 init()
