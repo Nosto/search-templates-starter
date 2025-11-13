@@ -44,12 +44,15 @@ function renderApp() {
 function setupNosto() {
   if (MODE === "mocked") {
     mockNostojs({
+      pageTagging: () => ({ pageType: "search" }),
       search: mockSearch,
       recordSearchSubmit: () => Promise.resolve()
     })
     renderApp()
     return
   }
+
+  nostojs(api => api.setTaggingProvider("pageType", "search"))
   Object.assign(window, {
     nostoab: {
       settings: {
