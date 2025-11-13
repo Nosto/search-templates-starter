@@ -23,15 +23,12 @@ function fromPageParameters(urlSize: number | undefined, page: number | undefine
 
 export function getQueryFromUrlState() {
   const { query, page, size: urlSize, filter, sort } = getCurrentUrlState()
-  if (query) {
-    return {
-      query,
-      products: {
-        ...fromPageParameters(urlSize, page),
-        filter,
-        sort
-      }
-    } satisfies SearchQuery
-  }
-  return undefined
+  return {
+    query,
+    products: {
+      ...fromPageParameters(urlSize, page),
+      filter,
+      sort
+    }
+  } satisfies SearchQuery
 }
