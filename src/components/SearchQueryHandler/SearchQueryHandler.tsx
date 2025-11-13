@@ -5,6 +5,7 @@ import { getQueryFromUrlState } from "@/mapping/url/getCurrentUrlState"
 import { updateUrlFromQuery } from "@/mapping/url/updateUrl"
 import { StoreContext } from "@nosto/search-js/preact/common"
 import { createSkeletonContent } from "./skeletonContent"
+import { tagging } from "@/mapping/tagging"
 
 export default function SearchQueryHandler() {
   const store = useContext(StoreContext)
@@ -19,16 +20,21 @@ export default function SearchQueryHandler() {
     sort: state.query?.products?.sort
   }))
 
+  const pageType = tagging.pageType()
+
   // Initialize search from URL on first load
   useEffect(() => {
     const query = getQueryFromUrlState()
-    if (skeletonLoading) {
-      // init store with skeleton content to avoid layout shift
-      store.updateState(createSkeletonContent(query))
+    const serpPage = (pageType === "search" && query.query) || pageType === "category"
+    if (serpPage) {
+      if (skeletonLoading) {
+        // init store with skeleton content to avoid layout shift
+        store.updateState(createSkeletonContent(query))
+      }
+      // execute initial query
+      newSearch(query)
     }
-    // execute initial query
-    newSearch(query)
-  }, [store, newSearch])
+  }, [store, newSearch, pageType])
 
   // Update URL when app state changes
   useEffect(() => {
