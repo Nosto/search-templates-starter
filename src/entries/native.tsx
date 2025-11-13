@@ -42,12 +42,24 @@ function CategoryApp() {
 
 async function init() {
   await new Promise(nostojs)
-  const App = tagging.pageType() === "category" ? CategoryApp : SerpApp
-  render(
-    <ErrorBoundary>
-      <App />
-    </ErrorBoundary>,
-    document.body
-  )
+
+  switch (tagging.pageType()) {
+    case "category":
+      render(
+        <ErrorBoundary>
+          <CategoryApp />
+        </ErrorBoundary>,
+        document.body
+      )
+      break
+    case "search":
+      render(
+        <ErrorBoundary>
+          <SerpApp />
+        </ErrorBoundary>,
+        document.body
+      )
+      break
+  }
 }
 init()
