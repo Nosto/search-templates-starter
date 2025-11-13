@@ -22,14 +22,12 @@ export default function SearchQueryHandler() {
   // Initialize search from URL on first load
   useEffect(() => {
     const query = getQueryFromUrlState()
-    if (query) {
-      if (skeletonLoading) {
-        // init store with skeleton content to avoid layout shift
-        store.updateState(createSkeletonContent(query))
-      }
-      // execute initial query
-      newSearch(query)
+    if (skeletonLoading) {
+      // init store with skeleton content to avoid layout shift
+      store.updateState(createSkeletonContent(query))
     }
+    // execute initial query
+    newSearch(query)
   }, [store, newSearch])
 
   // Update URL when app state changes
