@@ -30,7 +30,7 @@ function Batch({ sectionId, handles }: BatchProps) {
       setError(null)
 
       try {
-        const url = `/search?section_id=${encodeURIComponent(sectionId)}&q=${handles.join(":")}`
+        const url = `/search?section_id=${encodeURIComponent(sectionId)}&q=${encodeURIComponent(handles.join(":"))}`
         const response = await fetch(url)
 
         if (!response.ok) {
