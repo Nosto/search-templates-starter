@@ -1,16 +1,11 @@
 import { useEffect, useState } from "preact/hooks"
 
-export function useFetch(url: string | null) {
+export function useFetch(url: string) {
   const [html, setHtml] = useState<string>("")
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    if (!url) {
-      setHtml("")
-      return
-    }
-
     const fetchHtml = async () => {
       setLoading(true)
       setError(null)

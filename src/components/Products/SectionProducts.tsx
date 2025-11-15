@@ -14,10 +14,7 @@ interface BatchProps {
 }
 
 function Batch({ sectionId, handles }: BatchProps) {
-  const url =
-    handles && handles.length > 0
-      ? `/search?section_id=${encodeURIComponent(sectionId)}&q=${encodeURIComponent(handles.join(":"))}`
-      : null
+  const url = `/search?section_id=${encodeURIComponent(sectionId)}&q=${encodeURIComponent(handles.join(":"))}`
 
   const { html, loading, error } = useFetch(url)
 
@@ -39,10 +36,6 @@ export default function SectionProducts({ sectionId }: SectionProductsProps) {
   const handles = products?.hits
     ?.map(hit => (hit as { handle?: string }).handle)
     ?.filter((handle): handle is string => !!handle)
-
-  if (!handles || handles.length === 0) {
-    return <div className={style.container} />
-  }
 
   // Split handles into batches based on page size
   const batches: string[][] = []
