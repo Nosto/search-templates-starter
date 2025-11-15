@@ -3,9 +3,31 @@ import style from "./Products.module.css"
 import { cl } from "@nosto/search-js/utils"
 import { hitDecorators, defaultSize } from "@/config"
 import { useFetch } from "@/hooks/useFetch"
+import { Product } from "@/types"
 
 export interface SectionProductsProps {
   sectionId: string
+}
+
+export default function SectionProducts({ sectionId }: SectionProductsProps) {
+  const loading = useNostoAppState(state => state.loading)
+  const { products } = useDecoratedSearchResults<typeof hitDecorators>()
+
+  const handles = products.hits.map(hit => (hit as Product).handle!)
+
+  // Split handles into batches based on page size
+  const batches: string[][] = []
+  for (let i = 0; i < handles.length; i += defaultSize) {
+    batches.push(handles.slice(i, i + defaultSize))
+  }
+
+  return (
+    <div className={cl(style.container, loading && style.loading)}>
+      {batches.map((batch, index) => (
+        <Batch key={index} sectionId={sectionId} handles={batch} />
+      ))}
+    </div>
+  )
 }
 
 interface BatchProps {
@@ -27,27 +49,4 @@ function Batch({ sectionId, handles }: BatchProps) {
   }
 
   return <div dangerouslySetInnerHTML={{ __html: html }} />
-}
-
-export default function SectionProducts({ sectionId }: SectionProductsProps) {
-  const loading = useNostoAppState(state => state.loading)
-  const { products } = useDecoratedSearchResults<typeof hitDecorators>()
-
-  const handles = products?.hits
-    ?.map(hit => (hit as { handle?: string }).handle)
-    ?.filter((handle): handle is string => !!handle)
-
-  // Split handles into batches based on page size
-  const batches: string[][] = []
-  for (let i = 0; i < handles.length; i += defaultSize) {
-    batches.push(handles.slice(i, i + defaultSize))
-  }
-
-  return (
-    <div className={cl(style.container, loading && style.loading)}>
-      {batches.map((batch, index) => (
-        <Batch key={index} sectionId={sectionId} handles={batch} />
-      ))}
-    </div>
-  )
 }
