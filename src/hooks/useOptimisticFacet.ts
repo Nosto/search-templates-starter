@@ -4,7 +4,7 @@ import { useOptimistic } from "./useOptimistic"
 
 /**
  * A hook that combines useFacet with useOptimistic to provide immediate UI feedback
- * when toggling filters. This hook provides the same API as useFacet but with
+ * when toggling filters. This hook extends the same API as useFacet but with
  * optimistic updates built-in.
  *
  * @param facet The search terms facet to manage
