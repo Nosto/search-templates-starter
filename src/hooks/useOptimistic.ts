@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "preact/hooks"
+import { useState, useEffect } from "preact/hooks"
 
 const NO_OPTIMISTIC_UPDATE = Symbol("no-optimistic-update")
 
@@ -38,15 +38,12 @@ export function useOptimistic<T>(
   updateFn: (currentState: T, optimisticValue: unknown) => T
 ): [T, (optimisticValue: unknown) => void] {
   const [optimisticValue, setOptimisticValue] = useState<unknown | typeof NO_OPTIMISTIC_UPDATE>(NO_OPTIMISTIC_UPDATE)
-  const updateFnRef = useRef(updateFn)
-
-  updateFnRef.current = updateFn
 
   useEffect(() => {
     setOptimisticValue(NO_OPTIMISTIC_UPDATE)
   }, [state])
 
-  const currentState = optimisticValue !== NO_OPTIMISTIC_UPDATE ? updateFnRef.current(state, optimisticValue) : state
+  const currentState = optimisticValue !== NO_OPTIMISTIC_UPDATE ? updateFn(state, optimisticValue) : state
 
   return [currentState, setOptimisticValue]
 }
