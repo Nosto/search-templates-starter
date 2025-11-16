@@ -1,3 +1,4 @@
+import { useState, useEffect } from "preact/hooks"
 import { useFacet } from "@nosto/search-js/preact/hooks"
 import { SearchTermsFacet } from "@nosto/nosto-js/client"
 import { useOptimistic } from "./useOptimistic"
@@ -30,6 +31,7 @@ import { useOptimistic } from "./useOptimistic"
  */
 export function useOptimisticFacet(facet: SearchTermsFacet) {
   const facetHook = useFacet(facet)
+  const [pendingUpdates, setPendingUpdates] = useState<Array<{ value: string; selected: boolean }>>([])
 
   const [optimisticData, setOptimisticData] = useOptimistic(facet.data || [], (currentData, update) => {
     const typedUpdate = update as Array<{ value: string; selected: boolean }>
@@ -41,11 +43,18 @@ export function useOptimisticFacet(facet: SearchTermsFacet) {
     return updatedData
   })
 
+  // Clear pending updates when facet data changes (server update received)
+  useEffect(() => {
+    setPendingUpdates([])
+  }, [facet.data])
+
   const selectedFiltersCount = optimisticData.filter(item => item.selected).length
 
   const toggleProductFilter = (field: string, value: string, selected: boolean) => {
-    // Accumulate updates by passing an array with the new update
-    setOptimisticData([{ value, selected }])
+    // Accumulate updates using useState
+    const newUpdate = { value, selected }
+    setPendingUpdates(prev => [...prev, newUpdate])
+    setOptimisticData([...pendingUpdates, newUpdate])
     facetHook.toggleProductFilter(field, value, selected)
   }
 
