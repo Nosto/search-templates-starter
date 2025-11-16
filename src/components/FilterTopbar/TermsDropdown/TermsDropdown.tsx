@@ -3,6 +3,7 @@ import { useFacet } from "@nosto/search-js/preact/hooks"
 import { SearchTermsFacet } from "@nosto/nosto-js/client"
 import FilterTrigger from "../FilterTrigger/FilterTrigger"
 import Checkbox from "@/elements/Checkbox/Checkbox"
+import { useOptimistic } from "@/hooks/useOptimistic"
 import styles from "./TermsDropdown.module.css"
 
 type Props = {
@@ -14,8 +15,15 @@ export default function TermsDropdown({ facet }: Props) {
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
-  // Count selected terms
-  const selectedCount = facet.data?.filter(value => value.selected).length || 0
+  const [optimisticData, setOptimisticData] = useOptimistic(facet.data || [], (currentData, update) => {
+    const typedUpdate = update as { value: string; selected: boolean }
+    return currentData.map(item =>
+      item.value === typedUpdate.value ? { ...item, selected: typedUpdate.selected } : item
+    )
+  })
+
+  // Count selected terms using optimistic data
+  const selectedCount = optimisticData.filter(value => value.selected).length
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -60,13 +68,14 @@ export default function TermsDropdown({ facet }: Props) {
       {isOpen && (
         <div className={styles.menu} role="menu">
           <div className={styles.options}>
-            {facet.data?.map(value => (
+            {optimisticData.map(value => (
               <div key={value.value} className={styles.option} role="menuitem">
                 <Checkbox
                   value={`${value.value} (${value.count})`}
                   selected={value.selected}
                   onChange={e => {
                     e.preventDefault()
+                    setOptimisticData({ value: value.value, selected: !value.selected })
                     toggleProductFilter(facet.field, value.value, !value.selected)
                   }}
                 />
