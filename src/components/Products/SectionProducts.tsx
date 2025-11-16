@@ -16,7 +16,7 @@ import { Product } from "@/types"
  * {% endcomment %}
  *
  * {% liquid
- *   assign handles_string = request.params.q
+ *   assign handles_string = search.terms
  *   assign handles = handles_string | split: ':'
  * %}
  *
