@@ -32,21 +32,26 @@ export function useOptimisticFacet(facet: SearchTermsFacet) {
   const facetHook = useFacet(facet)
 
   const [optimisticData, setOptimisticData] = useOptimistic(facet.data || [], (currentData, update) => {
-    const typedUpdate = update as { value: string; selected: boolean }
-    return currentData.map(item =>
-      item.value === typedUpdate.value ? { ...item, selected: typedUpdate.selected } : item
-    )
+    const typedUpdate = update as Array<{ value: string; selected: boolean }>
+    let updatedData = currentData
+    // Apply all accumulated updates
+    typedUpdate.forEach(({ value, selected }) => {
+      updatedData = updatedData.map(item => (item.value === value ? { ...item, selected } : item))
+    })
+    return updatedData
   })
 
   const selectedFiltersCount = optimisticData.filter(item => item.selected).length
 
   const toggleProductFilter = (field: string, value: string, selected: boolean) => {
-    setOptimisticData({ value, selected })
+    // Accumulate updates by passing an array with the new update
+    setOptimisticData([{ value, selected }])
     facetHook.toggleProductFilter(field, value, selected)
   }
 
   return {
-    ...facetHook,
+    active: facetHook.active,
+    toggleActive: facetHook.toggleActive,
     optimisticData,
     selectedFiltersCount,
     toggleProductFilter
