@@ -1,9 +1,11 @@
-import { useState, useRef } from "preact/hooks"
+import { useState, useRef, useEffect } from "preact/hooks"
+
+const NO_OPTIMISTIC_UPDATE = Symbol("no-optimistic-update")
 
 /**
- * A hook that manages optimistic updates with automatic rollback support.
- * This provides React-compatible semantics for managing optimistic state changes
- * that can be rolled back if the operation fails.
+ * A hook that manages optimistic updates with React-compatible semantics.
+ * When the parent state changes, the optimistic update is automatically cleared
+ * and the hook returns the new base state.
  *
  * @template T The type of the state being managed
  * @param state The current state value
@@ -35,14 +37,16 @@ export function useOptimistic<T>(
   state: T,
   updateFn: (currentState: T, optimisticValue: unknown) => T
 ): [T, (optimisticValue: unknown) => void] {
-  const [optimisticValue, setOptimisticValue] = useState<unknown | null>(null)
+  const [optimisticValue, setOptimisticValue] = useState<unknown | typeof NO_OPTIMISTIC_UPDATE>(NO_OPTIMISTIC_UPDATE)
   const updateFnRef = useRef(updateFn)
-  const stateRef = useRef(state)
 
   updateFnRef.current = updateFn
-  stateRef.current = state
 
-  const currentState = optimisticValue !== null ? updateFnRef.current(state, optimisticValue) : state
+  useEffect(() => {
+    setOptimisticValue(NO_OPTIMISTIC_UPDATE)
+  }, [state])
+
+  const currentState = optimisticValue !== NO_OPTIMISTIC_UPDATE ? updateFnRef.current(state, optimisticValue) : state
 
   return [currentState, setOptimisticValue]
 }

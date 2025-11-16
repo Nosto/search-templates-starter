@@ -84,7 +84,7 @@ describe("useOptimistic", () => {
       expect(result.current[0]).toBe(15)
     })
 
-    it("applies optimistic update on top of new parent state", () => {
+    it("clears optimistic update when parent state changes", () => {
       const { result, rerender } = renderHook(
         ({ state }) => useOptimistic(state, (s, value) => s + (value as number)),
         { initialProps: { state: 5 } }
@@ -100,7 +100,7 @@ describe("useOptimistic", () => {
         rerender({ state: 20 })
       })
 
-      expect(result.current[0]).toBe(23)
+      expect(result.current[0]).toBe(20)
     })
   })
 
@@ -117,8 +117,9 @@ describe("useOptimistic", () => {
     })
 
     it("handles different update function implementations", () => {
+      const initialState = { count: 0 }
       const { result } = renderHook(() =>
-        useOptimistic({ count: 0 }, (state, action) => {
+        useOptimistic(initialState, (state, action) => {
           const typedAction = action as { type: string; value: number }
           if (typedAction.type === "increment") {
             return { count: state.count + typedAction.value }
@@ -138,20 +139,19 @@ describe("useOptimistic", () => {
       type Todo = { id: number; text: string; completed: boolean }
       type State = Todo[]
 
+      const initialState: State = [
+        { id: 1, text: "Task 1", completed: false },
+        { id: 2, text: "Task 2", completed: false }
+      ]
+
       const { result } = renderHook(() =>
-        useOptimistic<State>(
-          [
-            { id: 1, text: "Task 1", completed: false },
-            { id: 2, text: "Task 2", completed: false }
-          ],
-          (state, action) => {
-            const typedAction = action as { type: string; id: number }
-            if (typedAction.type === "toggle") {
-              return state.map(todo => (todo.id === typedAction.id ? { ...todo, completed: !todo.completed } : todo))
-            }
-            return state
+        useOptimistic<State>(initialState, (state, action) => {
+          const typedAction = action as { type: string; id: number }
+          if (typedAction.type === "toggle") {
+            return state.map(todo => (todo.id === typedAction.id ? { ...todo, completed: !todo.completed } : todo))
           }
-        )
+          return state
+        })
       )
 
       act(() => {
@@ -225,7 +225,8 @@ describe("useOptimistic", () => {
     })
 
     it("handles array state", () => {
-      const { result } = renderHook(() => useOptimistic([1, 2, 3], (state, value) => [...state, value as number]))
+      const initialState = [1, 2, 3]
+      const { result } = renderHook(() => useOptimistic(initialState, (state, value) => [...state, value as number]))
 
       expect(result.current[0]).toEqual([1, 2, 3])
 
@@ -237,8 +238,9 @@ describe("useOptimistic", () => {
     })
 
     it("handles object state", () => {
+      const initialState = { name: "John", age: 30 }
       const { result } = renderHook(() =>
-        useOptimistic({ name: "John", age: 30 }, (state, update) => ({
+        useOptimistic(initialState, (state, update) => ({
           ...state,
           ...(update as Partial<{ name: string; age: number }>)
         }))
@@ -257,8 +259,9 @@ describe("useOptimistic", () => {
   describe("type safety", () => {
     it("maintains type safety with generics", () => {
       type State = { count: number }
+      const initialState: State = { count: 0 }
       const { result } = renderHook(() =>
-        useOptimistic<State>({ count: 0 }, (state, value) => ({ count: state.count + (value as number) }))
+        useOptimistic<State>(initialState, (state, value) => ({ count: state.count + (value as number) }))
       )
 
       expect(result.current[0]).toEqual({ count: 0 })
