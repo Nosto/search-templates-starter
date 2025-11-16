@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from "preact/hooks"
+import { useState, useRef } from "preact/hooks"
 
 /**
  * A hook that manages optimistic updates with automatic rollback support.
@@ -44,9 +44,5 @@ export function useOptimistic<T>(
 
   const currentState = optimisticValue !== null ? updateFnRef.current(state, optimisticValue) : state
 
-  const addOptimistic = useCallback((value: unknown) => {
-    setOptimisticValue(value)
-  }, [])
-
-  return [currentState, addOptimistic]
+  return [currentState, setOptimisticValue]
 }
