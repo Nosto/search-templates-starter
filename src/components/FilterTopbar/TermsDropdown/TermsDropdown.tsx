@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "preact/hooks"
-import { useFacet } from "@nosto/search-js/preact/hooks"
 import { SearchTermsFacet } from "@nosto/nosto-js/client"
 import FilterTrigger from "../FilterTrigger/FilterTrigger"
 import Checkbox from "@/elements/Checkbox/Checkbox"
+import { useOptimisticFacet } from "@/hooks/useOptimisticFacet"
 import styles from "./TermsDropdown.module.css"
 
 type Props = {
@@ -10,12 +10,9 @@ type Props = {
 }
 
 export default function TermsDropdown({ facet }: Props) {
-  const { toggleProductFilter } = useFacet(facet)
+  const { optimisticData, selectedFiltersCount, toggleProductFilter } = useOptimisticFacet(facet)
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
-
-  // Count selected terms
-  const selectedCount = facet.data?.filter(value => value.selected).length || 0
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -50,7 +47,7 @@ export default function TermsDropdown({ facet }: Props) {
   return (
     <div className={styles.dropdown} ref={dropdownRef}>
       <FilterTrigger
-        value={selectedCount > 0 ? `${facet.name} (${selectedCount})` : facet.name}
+        value={selectedFiltersCount > 0 ? `${facet.name} (${selectedFiltersCount})` : facet.name}
         isOpen={isOpen}
         onClick={toggleDropdown}
         onKeyDown={handleKeyDown}
@@ -60,7 +57,7 @@ export default function TermsDropdown({ facet }: Props) {
       {isOpen && (
         <div className={styles.menu} role="menu">
           <div className={styles.options}>
-            {facet.data?.map(value => (
+            {optimisticData.map(value => (
               <div key={value.value} className={styles.option} role="menuitem">
                 <Checkbox
                   value={`${value.value} (${value.count})`}

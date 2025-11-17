@@ -1,7 +1,7 @@
-import { useFacet } from "@nosto/search-js/preact/hooks"
 import Icon from "@/elements/Icon/Icon"
 import { SearchTermsFacet } from "@nosto/nosto-js/client"
 import Pill from "@/elements/Pill/Pill"
+import { useOptimisticFacet } from "@/hooks/useOptimisticFacet"
 import styles from "./TermsFacet.module.css"
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
 }
 
 export default function TermsFacet({ facet }: Props) {
-  const { active, selectedFiltersCount, toggleActive, toggleProductFilter } = useFacet(facet)
+  const { active, toggleActive, optimisticData, selectedFiltersCount, toggleProductFilter } = useOptimisticFacet(facet)
 
   return (
     <li className={`${styles.dropdown} ${active ? styles.active : ""}`}>
@@ -36,7 +36,7 @@ export default function TermsFacet({ facet }: Props) {
       </button>
       <div className={styles.menu} id={`${facet.id}-sub-menu`}>
         <div className={styles.pillContainer} role="menu">
-          {facet.data?.map(value => (
+          {optimisticData.map(value => (
             <Pill
               key={value.value}
               selected={value.selected}
