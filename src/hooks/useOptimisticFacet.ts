@@ -1,4 +1,4 @@
-import { useState, useEffect } from "preact/hooks"
+import { useCallback } from "preact/hooks"
 import { useFacet } from "@nosto/search-js/preact/hooks"
 import { SearchFacetTerm, SearchTermsFacet } from "@nosto/nosto-js/client"
 import { useOptimistic } from "./useOptimistic"
@@ -41,12 +41,15 @@ export function useOptimisticFacet(facet: SearchTermsFacet) {
 
   const selectedFiltersCount = optimisticData.filter(item => item.selected).length
 
-  function toggleProductFilter(field: string, value: string, selected: boolean) {
-    setOptimisticData(prev => {
-      return typeof prev === "symbol" ? { [value]: selected } : { ...prev, [value]: selected }
-    })
-    facetHook.toggleProductFilter(field, value, selected)
-  }
+  const toggleProductFilter = useCallback(
+    (field: string, value: string, selected: boolean) => {
+      setOptimisticData(prev => {
+        return typeof prev === "symbol" ? { [value]: selected } : { ...prev, [value]: selected }
+      })
+      facetHook.toggleProductFilter(field, value, selected)
+    },
+    [facetHook, setOptimisticData]
+  )
 
   return {
     active: facetHook.active,
