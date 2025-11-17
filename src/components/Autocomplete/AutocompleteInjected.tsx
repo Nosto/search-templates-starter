@@ -4,20 +4,27 @@ import { selectors } from "@/config"
 import { useAutocomplete } from "./useAutocomplete"
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 import { OnSubmitProvider } from "./OnSubmitContext"
+import { useRef, useEffect } from "preact/hooks"
 
 type Props = {
   onSubmit: (input: string, options?: SearchAnalyticsOptions) => void
 }
 
 export default function AutocompleteInjected({ onSubmit }: Props) {
-  const dropdownElement = document.querySelector<HTMLElement>(selectors.dropdown)!
+  const searchInputRef = useRef<HTMLInputElement>(null)
+  const dropdownRef = useRef<HTMLElement>(null)
   const searchInput = document.querySelector<HTMLInputElement>(selectors.searchInput)!
   const searchForm = document.querySelector<HTMLFormElement>(selectors.searchForm)!
 
+  useEffect(() => {
+    searchInputRef.current = searchInput
+    dropdownRef.current = document.querySelector<HTMLElement>(selectors.dropdown)!
+  }, [searchInput])
+
   const { input, showAutocomplete, setInput, setShowAutocomplete, onSearchSubmit, onKeyDown } = useAutocomplete({
     onSubmit,
-    searchInputElement: searchInput,
-    clickOutsideTarget: dropdownElement,
+    searchInputRef,
+    clickOutsideTargetRef: dropdownRef,
     isInjected: true
   })
 

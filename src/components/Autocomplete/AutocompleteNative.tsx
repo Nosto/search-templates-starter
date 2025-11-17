@@ -16,8 +16,8 @@ export default function AutocompleteNative({ onSubmit }: Props) {
 
   const { input, showAutocomplete, setInput, setShowAutocomplete, onSearchSubmit, onKeyDown } = useAutocomplete({
     onSubmit,
-    searchInputElement: searchInputRef.current,
-    clickOutsideTarget: autocompleteRef.current
+    searchInputRef,
+    clickOutsideTargetRef: autocompleteRef
   })
 
   return (
