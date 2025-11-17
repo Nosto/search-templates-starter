@@ -33,24 +33,30 @@ export function useOptimisticFacet(facet: SearchTermsFacet) {
   const facetHook = useFacet(facet)
   const [pendingUpdates, setPendingUpdates] = useState<Array<{ value: string; selected: boolean }>>([])
 
-  const [optimisticData, setOptimisticData] = useOptimistic(facet.data || [], (currentData, update) => {
-    const typedUpdate = update as Array<{ value: string; selected: boolean }>
-    let updatedData = currentData
-    // Apply all accumulated updates
-    typedUpdate.forEach(({ value, selected }) => {
-      updatedData = updatedData.map(item => (item.value === value ? { ...item, selected } : item))
-    })
-    return updatedData
+  const [optimisticData, setOptimisticData] = useOptimistic<
+    Array<{ value: string; count: number; selected?: boolean }>,
+    Array<{ value: string; selected: boolean }>
+  >(facet.data || [], (currentData, updates) => {
+    // Apply all accumulated updates using reduce
+    return updates.reduce((data, { value, selected }) => {
+      return data.map(item => (item.value === value ? { ...item, selected } : item))
+    }, currentData)
   })
+
+  // Ensure selected is always a boolean
+  const normalizedData = optimisticData.map(item => ({
+    ...item,
+    selected: item.selected ?? false
+  }))
 
   // Clear pending updates when facet data changes (server update received)
   useEffect(() => {
     setPendingUpdates([])
   }, [facet.data])
 
-  const selectedFiltersCount = optimisticData.filter(item => item.selected).length
+  const selectedFiltersCount = normalizedData.filter(item => item.selected).length
 
-  function toggleProductFilter(field: string, value: string, selected: boolean) {
+  const toggleProductFilter = (field: string, value: string, selected: boolean) => {
     // Accumulate updates using useState
     const newUpdate = { value, selected }
     setPendingUpdates(prev => [...prev, newUpdate])
@@ -61,7 +67,7 @@ export function useOptimisticFacet(facet: SearchTermsFacet) {
   return {
     active: facetHook.active,
     toggleActive: facetHook.toggleActive,
-    optimisticData,
+    optimisticData: normalizedData,
     selectedFiltersCount,
     toggleProductFilter
   }

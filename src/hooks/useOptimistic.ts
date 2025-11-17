@@ -29,7 +29,7 @@ const NO_OPTIMISTIC_UPDATE = Symbol("no-optimistic-update")
  *     }
  *   }
  *
- *   return <button onClick={handleLike}>❤️ {optimisticLikes}</button>
+ *   return <button onClick={handleLike}>{optimisticLikes} Likes</button>
  * }
  * ```
  */
@@ -37,7 +37,9 @@ export function useOptimistic<T, OptimisticT = unknown>(
   state: T,
   updateFn: (currentState: T, optimisticValue: OptimisticT) => T
 ): [T, (optimisticValue: OptimisticT) => void] {
-  const [optimisticValue, setOptimisticValue] = useState<unknown | typeof NO_OPTIMISTIC_UPDATE>(NO_OPTIMISTIC_UPDATE)
+  const [optimisticValue, setOptimisticValue] = useState<OptimisticT | typeof NO_OPTIMISTIC_UPDATE>(
+    NO_OPTIMISTIC_UPDATE
+  )
 
   useEffect(() => {
     setOptimisticValue(NO_OPTIMISTIC_UPDATE)
