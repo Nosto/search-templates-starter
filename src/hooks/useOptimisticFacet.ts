@@ -32,17 +32,19 @@ import { useOptimistic } from "./useOptimistic"
 export function useOptimisticFacet(facet: SearchTermsFacet) {
   const facetHook = useFacet(facet)
 
-  const [optimisticData, setOptimisticData] = useOptimistic<
-    SearchFacetTerm[],
-    Pick<SearchFacetTerm, "value" | "selected">
-  >(facet.data || [], (data, { value, selected }) => {
-    return data.map(item => (item.value === value ? { ...item, selected } : item))
-  })
+  const [optimisticData, setOptimisticData] = useOptimistic<SearchFacetTerm[], Record<string, boolean>>(
+    facet.data || [],
+    (data, updates) => {
+      return data.map(item => (updates[item.value] ? { ...item, selected: updates[item.value] } : item))
+    }
+  )
 
   const selectedFiltersCount = optimisticData.filter(item => item.selected).length
 
-  const toggleProductFilter = (field: string, value: string, selected: boolean) => {
-    setOptimisticData({ value, selected })
+  function toggleProductFilter(field: string, value: string, selected: boolean) {
+    setOptimisticData(prev => {
+      return typeof prev === "symbol" ? { [value]: selected } : { ...prev, [value]: selected }
+    })
     facetHook.toggleProductFilter(field, value, selected)
   }
 
