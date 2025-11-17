@@ -50,7 +50,7 @@ export function useOptimisticFacet(facet: SearchTermsFacet) {
 
   const selectedFiltersCount = optimisticData.filter(item => item.selected).length
 
-  const toggleProductFilter = (field: string, value: string, selected: boolean) => {
+  function toggleProductFilter(field: string, value: string, selected: boolean) {
     // Accumulate updates using useState
     const newUpdate = { value, selected }
     setPendingUpdates(prev => [...prev, newUpdate])
