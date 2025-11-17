@@ -33,10 +33,10 @@ const NO_OPTIMISTIC_UPDATE = Symbol("no-optimistic-update")
  * }
  * ```
  */
-export function useOptimistic<T>(
+export function useOptimistic<T, OptimisticT = unknown>(
   state: T,
-  updateFn: (currentState: T, optimisticValue: unknown) => T
-): [T, (optimisticValue: unknown) => void] {
+  updateFn: (currentState: T, optimisticValue: OptimisticT) => T
+): [T, (optimisticValue: OptimisticT) => void] {
   const [optimisticValue, setOptimisticValue] = useState<unknown | typeof NO_OPTIMISTIC_UPDATE>(NO_OPTIMISTIC_UPDATE)
 
   useEffect(() => {
