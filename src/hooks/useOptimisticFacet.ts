@@ -1,6 +1,6 @@
 import { useState, useEffect } from "preact/hooks"
 import { useFacet } from "@nosto/search-js/preact/hooks"
-import { SearchTermsFacet } from "@nosto/nosto-js/client"
+import { SearchFacetTerm, SearchTermsFacet } from "@nosto/nosto-js/client"
 import { useOptimistic } from "./useOptimistic"
 
 /**
@@ -31,43 +31,25 @@ import { useOptimistic } from "./useOptimistic"
  */
 export function useOptimisticFacet(facet: SearchTermsFacet) {
   const facetHook = useFacet(facet)
-  const [pendingUpdates, setPendingUpdates] = useState<Array<{ value: string; selected: boolean }>>([])
 
   const [optimisticData, setOptimisticData] = useOptimistic<
-    Array<{ value: string; count: number; selected?: boolean }>,
-    Array<{ value: string; selected: boolean }>
-  >(facet.data || [], (currentData, updates) => {
-    // Apply all accumulated updates using reduce
-    return updates.reduce((data, { value, selected }) => {
-      return data.map(item => (item.value === value ? { ...item, selected } : item))
-    }, currentData)
+    SearchFacetTerm[],
+    Pick<SearchFacetTerm, "value" | "selected">
+  >(facet.data || [], (data, { value, selected }) => {
+    return data.map(item => (item.value === value ? { ...item, selected } : item))
   })
 
-  // Ensure selected is always a boolean
-  const normalizedData = optimisticData.map(item => ({
-    ...item,
-    selected: item.selected ?? false
-  }))
-
-  // Clear pending updates when facet data changes (server update received)
-  useEffect(() => {
-    setPendingUpdates([])
-  }, [facet.data])
-
-  const selectedFiltersCount = normalizedData.filter(item => item.selected).length
+  const selectedFiltersCount = optimisticData.filter(item => item.selected).length
 
   const toggleProductFilter = (field: string, value: string, selected: boolean) => {
-    // Accumulate updates using useState
-    const newUpdate = { value, selected }
-    setPendingUpdates(prev => [...prev, newUpdate])
-    setOptimisticData([...pendingUpdates, newUpdate])
+    setOptimisticData({ value, selected })
     facetHook.toggleProductFilter(field, value, selected)
   }
 
   return {
     active: facetHook.active,
     toggleActive: facetHook.toggleActive,
-    optimisticData: normalizedData,
+    optimisticData,
     selectedFiltersCount,
     toggleProductFilter
   }
