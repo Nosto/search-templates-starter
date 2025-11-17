@@ -1,7 +1,7 @@
 import { useCallback } from "preact/hooks"
 import { useFacet } from "@nosto/search-js/preact/hooks"
 import { SearchFacetTerm, SearchTermsFacet } from "@nosto/nosto-js/client"
-import { useOptimistic } from "./useOptimistic"
+import { useOptimistic, NO_OPTIMISTIC_UPDATE } from "./useOptimistic"
 
 /**
  * A hook that combines useFacet with useOptimistic to provide immediate UI feedback
@@ -44,7 +44,7 @@ export function useOptimisticFacet(facet: SearchTermsFacet) {
   const toggleProductFilter = useCallback(
     (field: string, value: string, selected: boolean) => {
       setOptimisticData(prev => {
-        return typeof prev === "symbol" ? { [value]: selected } : { ...prev, [value]: selected }
+        return prev === NO_OPTIMISTIC_UPDATE ? { [value]: selected } : { ...prev, [value]: selected }
       })
       facetHook.toggleProductFilter(field, value, selected)
     },

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "preact/hooks"
 
-const NO_OPTIMISTIC_UPDATE = Symbol("no-optimistic-update")
+export const NO_OPTIMISTIC_UPDATE = Symbol("no-optimistic-update")
 
 /**
  * A hook that manages optimistic updates with React-compatible semantics.
