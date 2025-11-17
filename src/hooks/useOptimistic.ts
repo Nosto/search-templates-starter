@@ -8,6 +8,7 @@ const NO_OPTIMISTIC_UPDATE = Symbol("no-optimistic-update")
  * and the hook returns the new base state.
  *
  * @template T The type of the state being managed
+ * @template O The type of the optimistic value (defaults to unknown)
  * @param state The current state value
  * @param updateFn Function that applies optimistic updates to the current state
  * @returns A tuple containing the optimistic state and a function to add optimistic updates
