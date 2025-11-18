@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from "preact/hooks"
+import type { RefObject } from "preact"
 import { useDebouncedSearch } from "@/hooks/useDebouncedSearch"
 import { useDomEvents } from "@/hooks/useDomEvents"
 import { useHistory } from "@nosto/search-js/preact/hooks"
@@ -8,8 +9,8 @@ import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 
 type UseAutocompleteOptions = {
   onSubmit: (input: string, options?: SearchAnalyticsOptions) => void
-  searchInputRef?: { current: HTMLInputElement | null }
-  clickOutsideTargetRef?: { current: HTMLElement | Node | null }
+  searchInputRef?: RefObject<HTMLInputElement>
+  clickOutsideTargetRef?: RefObject<HTMLElement | Node>
   isInjected?: boolean
 }
 
