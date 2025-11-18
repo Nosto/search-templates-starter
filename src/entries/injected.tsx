@@ -16,7 +16,7 @@ import Portal from "@/elements/Portal/Portal"
 import AutocompleteInjected from "@/components/Autocomplete/AutocompleteInjected"
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 
-function SerpApp() {
+function AutocompleteWrapper() {
   const { newSearch } = useActions()
 
   const onSubmit = useCallback(
@@ -28,14 +28,20 @@ function SerpApp() {
   )
 
   return (
+    <AutocompletePageProvider config={autocompleteConfig}>
+      <Portal target={selectors.dropdown}>
+        <AutocompleteInjected onSubmit={onSubmit} />
+      </Portal>
+    </AutocompletePageProvider>
+  )
+}
+
+function SerpApp() {
+  return (
     <ErrorBoundary>
       <SearchQueryHandler />
       <SidebarProvider>
-        <AutocompletePageProvider config={autocompleteConfig}>
-          <Portal target={selectors.dropdown}>
-            <AutocompleteInjected onSubmit={onSubmit} />
-          </Portal>
-        </AutocompletePageProvider>
+        <AutocompleteWrapper />
         <Portal target={selectors.results} clear>
           <Serp />
         </Portal>
@@ -49,6 +55,7 @@ function CategoryApp() {
     <ErrorBoundary>
       <SearchQueryHandler />
       <SidebarProvider>
+        <AutocompleteWrapper />
         <Portal target={selectors.results} clear>
           <Category />
         </Portal>
@@ -60,23 +67,19 @@ function CategoryApp() {
 async function init() {
   await new Promise(nostojs)
   const dummy = document.createElement("div")
-  switch (tagging.pageType()) {
-    case "category":
-      render(
+  const pageType = tagging.pageType()
+
+  render(
+    <SearchPageProvider config={serpConfig}>
+      {pageType === "category" ? (
         <CategoryPageProvider config={categoryConfig}>
           <CategoryApp />
-        </CategoryPageProvider>,
-        dummy
-      )
-      break
-    case "search":
-      render(
-        <SearchPageProvider config={serpConfig}>
-          <SerpApp />
-        </SearchPageProvider>,
-        dummy
-      )
-      break
-  }
+        </CategoryPageProvider>
+      ) : (
+        <SerpApp />
+      )}
+    </SearchPageProvider>,
+    dummy
+  )
 }
 init()
