@@ -1,9 +1,8 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest"
+import { describe, it, expect, beforeEach, afterEach } from "vitest"
 import { redirectToSearch } from "@/utils/searchRedirect"
 
 describe("redirectToSearch", () => {
   let originalLocation: Location
-  const mockAssign = vi.fn()
 
   beforeEach(() => {
     originalLocation = window.location
