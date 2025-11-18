@@ -12,16 +12,19 @@ type Events = {
 
 type MaybeRef<T extends HTMLElement = HTMLElement> = T | null | RefObject<T | null>
 
-function isRef<T extends HTMLElement>(maybeRef: MaybeRef<T>): maybeRef is RefObject<T | null> {
-  return maybeRef !== null && typeof maybeRef === "object" && "current" in maybeRef
+function unwrap<T extends HTMLElement>(elementRef: MaybeRef<T>): T | null {
+  if (elementRef !== null && typeof elementRef === "object" && "current" in elementRef) {
+    return elementRef.current
+  }
+  return elementRef
 }
 
 export function useDomEvents<T extends HTMLElement = HTMLElement>(
-  maybeRef: MaybeRef<T>,
+  elementRef: MaybeRef<T>,
   { onClick, onInput, onFocus, onKeyDown, onBlur, onSubmit }: Partial<Events>
 ) {
   useEffect(() => {
-    const el = isRef(maybeRef) ? maybeRef.current : maybeRef
+    const el = unwrap(elementRef)
     if (!el) return
     if (onClick) {
       el.addEventListener("click", onClick)
@@ -49,5 +52,5 @@ export function useDomEvents<T extends HTMLElement = HTMLElement>(
       if (onBlur) el.removeEventListener("blur", onBlur)
       if (onSubmit) el.removeEventListener("submit", onSubmit)
     }
-  }, [maybeRef, onClick, onInput, onFocus, onKeyDown, onBlur, onSubmit])
+  }, [elementRef, onClick, onInput, onFocus, onKeyDown, onBlur, onSubmit])
 }
