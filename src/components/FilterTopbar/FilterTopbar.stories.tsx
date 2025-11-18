@@ -22,7 +22,6 @@ export default meta
 type Story = StoryObj<typeof FilterTopbar>
 
 export const Default: Story = {
-  name: "Default",
   parameters: {
     docs: {
       description: {
