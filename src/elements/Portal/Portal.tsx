@@ -11,6 +11,7 @@ type Props = {
 
 export default function Portal({ target, clear, children }: Props) {
   const [element, setElement] = useState<HTMLElement | null>(() => document.querySelector<HTMLElement>(target))
+  const isClearedRef = useRef(false)
 
   useEffect(() => {
     if (!element) {
@@ -18,11 +19,14 @@ export default function Portal({ target, clear, children }: Props) {
     }
   }, [target, element])
 
-  const isCleared = useRef(false)
-  if (element && clear && !isCleared.current) {
-    element.innerHTML = ""
-    isCleared.current = true
-  }
+  useEffect(() => {
+    if (element && clear && !isClearedRef.current) {
+      const targetElement = element
+      // eslint-disable-next-line react-hooks/immutability -- Intentional DOM manipulation to clear portal target
+      targetElement.innerHTML = ""
+      isClearedRef.current = true
+    }
+  }, [element, clear])
 
   return element ? createPortal(children, element) : null
 }
