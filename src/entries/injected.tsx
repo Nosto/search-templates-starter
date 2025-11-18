@@ -13,8 +13,9 @@ import { tagging } from "@/mapping/tagging"
 import { nostojs } from "@nosto/nosto-js"
 import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import Portal from "@/elements/Portal/Portal"
-import AutocompleteInjected from "@/components/Autocomplete/AutocompleteInjected"
+import AutocompleteApp from "@/components/Autocomplete/AutocompleteApp"
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
+import { redirectToSearch } from "@/utils/searchRedirect"
 
 function SerpApp() {
   const { newSearch } = useActions()
@@ -33,7 +34,7 @@ function SerpApp() {
       <SidebarProvider>
         <AutocompletePageProvider config={autocompleteConfig}>
           <Portal target={selectors.dropdown}>
-            <AutocompleteInjected onSubmit={onSubmit} />
+            <AutocompleteApp onSubmit={onSubmit} />
           </Portal>
         </AutocompletePageProvider>
         <Portal target={selectors.results} clear>
@@ -45,14 +46,41 @@ function SerpApp() {
 }
 
 function CategoryApp() {
+  const onSubmit = useCallback((query: string) => {
+    nostojs(api => api.recordSearchSubmit(query))
+    redirectToSearch(query)
+  }, [])
+
   return (
     <ErrorBoundary>
       <SearchQueryHandler />
       <SidebarProvider>
+        <AutocompletePageProvider config={autocompleteConfig}>
+          <Portal target={selectors.dropdown}>
+            <AutocompleteApp onSubmit={onSubmit} />
+          </Portal>
+        </AutocompletePageProvider>
         <Portal target={selectors.results} clear>
           <Category />
         </Portal>
       </SidebarProvider>
+    </ErrorBoundary>
+  )
+}
+
+function DefaultApp() {
+  const onSubmit = useCallback((query: string) => {
+    nostojs(api => api.recordSearchSubmit(query))
+    redirectToSearch(query)
+  }, [])
+
+  return (
+    <ErrorBoundary>
+      <AutocompletePageProvider config={autocompleteConfig}>
+        <Portal target={selectors.dropdown}>
+          <AutocompleteApp onSubmit={onSubmit} />
+        </Portal>
+      </AutocompletePageProvider>
     </ErrorBoundary>
   )
 }
@@ -76,6 +104,9 @@ async function init() {
         </SearchPageProvider>,
         dummy
       )
+      break
+    default:
+      render(<DefaultApp />, dummy)
       break
   }
 }
