@@ -6,6 +6,7 @@ import type { Product } from "@/types"
 import { renderRatingStars } from "./renderRatingStars"
 import ProductImage from "./ProductImage"
 import QuickAdd from "../QuickAdd/QuickAdd"
+import { useMemo } from "preact/hooks"
 
 type Props = {
   product: Product
@@ -15,7 +16,10 @@ type Props = {
 
 export default function Product({ product, children, showAltOnHover = true }: Props) {
   const hasAlternateImage = showAltOnHover && product.alternateImageUrls && product.alternateImageUrls.length > 0
-  const isNew = product.datePublished && product.datePublished >= Date.now() - 14 * 24 * 60 * 60 * 1000
+  const isNew = useMemo(
+    () => product.datePublished && product.datePublished >= Date.now() - 14 * 24 * 60 * 60 * 1000,
+    [product.datePublished]
+  )
   const isOnSale = product.listPrice && product.price && product.listPrice > product.price
   const isSkeleton = product.tags1?.includes("skeleton")
 

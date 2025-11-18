@@ -1,38 +1,69 @@
 import Results from "@/components/Autocomplete/Results/Results"
-import { useDomEvents } from "@/hooks/useDomEvents"
 import { selectors } from "@/config"
 import { useAutocomplete } from "./useAutocomplete"
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 import { OnSubmitProvider } from "./OnSubmitContext"
+import { useRef, useEffect } from "preact/hooks"
 
 type Props = {
   onSubmit: (input: string, options?: SearchAnalyticsOptions) => void
 }
 
 export default function AutocompleteInjected({ onSubmit }: Props) {
-  const dropdownElement = document.querySelector<HTMLElement>(selectors.dropdown)!
-  const searchInput = document.querySelector<HTMLInputElement>(selectors.searchInput)!
-  const searchForm = document.querySelector<HTMLFormElement>(selectors.searchForm)!
+  const dropdownRef = useRef<HTMLElement | null>(null)
+  const searchInputRef = useRef<HTMLInputElement | null>(null)
+  const searchFormRef = useRef<HTMLFormElement | null>(null)
+
+  useEffect(() => {
+    dropdownRef.current = document.querySelector<HTMLElement>(selectors.dropdown)
+    searchInputRef.current = document.querySelector<HTMLInputElement>(selectors.searchInput)
+    searchFormRef.current = document.querySelector<HTMLFormElement>(selectors.searchForm)
+  }, [])
 
   const { input, showAutocomplete, setInput, setShowAutocomplete, onSearchSubmit, onKeyDown } = useAutocomplete({
     onSubmit,
-    searchInputElement: searchInput,
-    clickOutsideTarget: dropdownElement,
+    searchInputRef,
+    clickOutsideTargetRef: dropdownRef,
     isInjected: true
   })
 
-  useDomEvents(searchInput, {
-    onInput: () => setInput(searchInput.value),
-    onFocus: () => setShowAutocomplete(true),
-    onKeyDown
-  })
+  useEffect(() => {
+    const handleInput = () => setInput(searchInputRef.current?.value || "")
+    const handleFocus = () => setShowAutocomplete(true)
+    const searchInput = searchInputRef.current
 
-  useDomEvents(searchForm, {
-    onSubmit: e => {
+    if (searchInput) {
+      searchInput.addEventListener("input", handleInput)
+      searchInput.addEventListener("focus", handleFocus)
+      searchInput.addEventListener("keydown", onKeyDown)
+    }
+
+    return () => {
+      if (searchInput) {
+        searchInput.removeEventListener("input", handleInput)
+        searchInput.removeEventListener("focus", handleFocus)
+        searchInput.removeEventListener("keydown", onKeyDown)
+      }
+    }
+  }, [setInput, setShowAutocomplete, onKeyDown])
+
+  useEffect(() => {
+    const handleSubmit = (e: Event) => {
       e.preventDefault()
       onSearchSubmit(input)
     }
-  })
+    const searchForm = searchFormRef.current
+
+    if (searchForm) {
+      searchForm.addEventListener("submit", handleSubmit)
+    }
+
+    return () => {
+      if (searchForm) {
+        searchForm.removeEventListener("submit", handleSubmit)
+      }
+    }
+  }, [input, onSearchSubmit])
 
   return showAutocomplete ? (
     <OnSubmitProvider onSubmit={onSearchSubmit}>

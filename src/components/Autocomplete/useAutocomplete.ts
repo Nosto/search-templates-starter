@@ -8,15 +8,15 @@ import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 
 type UseAutocompleteOptions = {
   onSubmit: (input: string, options?: SearchAnalyticsOptions) => void
-  searchInputElement?: HTMLInputElement | null
-  clickOutsideTarget?: HTMLElement | Node | null
+  searchInputRef?: { current: HTMLInputElement | null }
+  clickOutsideTargetRef?: { current: HTMLElement | Node | null }
   isInjected?: boolean
 }
 
 export function useAutocomplete({
   onSubmit,
-  searchInputElement,
-  clickOutsideTarget,
+  searchInputRef,
+  clickOutsideTargetRef,
   isInjected = false
 }: UseAutocompleteOptions) {
   const [input, setInput] = useState<string>(getInitialQuery())
@@ -28,16 +28,21 @@ export function useAutocomplete({
 
   // Disable native autocomplete when search input element is available
   useEffect(() => {
-    if (searchInputElement) {
+    const element = searchInputRef?.current
+    if (element) {
       if (isInjected) {
-        searchInputElement.value = getInitialQuery()
+        const initialQuery = getInitialQuery()
+        // eslint-disable-next-line react-hooks/immutability -- Intentional DOM manipulation for injected mode
+        element.value = initialQuery
       }
-      disableNativeAutocomplete(searchInputElement)
+      disableNativeAutocomplete(element)
     }
-  }, [searchInputElement, isInjected])
+  }, [searchInputRef, isInjected])
 
   const onClickOutside = useCallback(
     (event: Event) => {
+      const searchInputElement = searchInputRef?.current
+      const clickOutsideTarget = clickOutsideTargetRef?.current
       if (isInjected && searchInputElement && event.target === searchInputElement) {
         return
       }
@@ -45,7 +50,7 @@ export function useAutocomplete({
         setShowAutocomplete(false)
       }
     },
-    [clickOutsideTarget, searchInputElement, isInjected]
+    [clickOutsideTargetRef, searchInputRef, isInjected]
   )
 
   useDomEvents(showAutocomplete ? document.body : null, {
@@ -54,29 +59,32 @@ export function useAutocomplete({
 
   const onSearchSubmit = useCallback(
     (query: string, options?: SearchAnalyticsOptions) => {
-      if (query.trim()) {
+      const element = searchInputRef?.current
+      const trimmedQuery = query.trim()
+      if (trimmedQuery) {
         addQuery(query)
-        if (isInjected && searchInputElement) {
-          searchInputElement.value = query.trim()
+        if (isInjected && element) {
+          // eslint-disable-next-line react-hooks/immutability -- Intentional DOM manipulation for injected mode
+          element.value = trimmedQuery
         } else {
-          setInput(query.trim())
+          setInput(trimmedQuery)
         }
         onSubmit(query, options)
       }
-      searchInputElement?.blur()
+      element?.blur()
       setShowAutocomplete(false)
     },
-    [addQuery, onSubmit, searchInputElement, isInjected]
+    [addQuery, onSubmit, searchInputRef, isInjected]
   )
 
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        searchInputElement?.blur()
+        searchInputRef?.current?.blur()
         setShowAutocomplete(false)
       }
     },
-    [searchInputElement]
+    [searchInputRef]
   )
 
   return {

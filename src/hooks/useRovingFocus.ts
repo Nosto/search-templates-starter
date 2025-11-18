@@ -10,13 +10,13 @@ const keyToDirection: Record<string, "back" | "front"> = {
 type Cleanup = () => void
 
 export function useRovingFocus<T extends HTMLElement>(selector: string) {
-  const cleanup = useRef<Cleanup>()
+  const cleanupRef = useRef<Cleanup>()
 
   const setRef = useCallback(
     (parentElement: T | null) => {
-      if (cleanup.current) {
-        cleanup.current()
-        cleanup.current = undefined
+      if (cleanupRef.current) {
+        cleanupRef.current()
+        cleanupRef.current = undefined
       }
       if (!parentElement) return
 
@@ -96,7 +96,7 @@ export function useRovingFocus<T extends HTMLElement>(selector: string) {
         subtree: true
       })
 
-      cleanup.current = () => {
+      cleanupRef.current = () => {
         parentElement.removeEventListener("keydown", handleParentKeyDown)
         observer.disconnect()
       }
