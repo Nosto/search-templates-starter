@@ -1,4 +1,5 @@
 import Results from "@/components/Autocomplete/Results/Results"
+import { useDomEvents } from "@/hooks/useDomEvents"
 import { selectors } from "@/config"
 import { useAutocomplete } from "./useAutocomplete"
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
@@ -27,43 +28,18 @@ export default function AutocompleteInjected({ onSubmit }: Props) {
     isInjected: true
   })
 
-  useEffect(() => {
-    const handleInput = () => setInput(searchInputRef.current?.value || "")
-    const handleFocus = () => setShowAutocomplete(true)
-    const searchInput = searchInputRef.current
+  useDomEvents(searchInputRef, {
+    onInput: () => setInput(searchInputRef.current?.value || ""),
+    onFocus: () => setShowAutocomplete(true),
+    onKeyDown
+  })
 
-    if (searchInput) {
-      searchInput.addEventListener("input", handleInput)
-      searchInput.addEventListener("focus", handleFocus)
-      searchInput.addEventListener("keydown", onKeyDown)
-    }
-
-    return () => {
-      if (searchInput) {
-        searchInput.removeEventListener("input", handleInput)
-        searchInput.removeEventListener("focus", handleFocus)
-        searchInput.removeEventListener("keydown", onKeyDown)
-      }
-    }
-  }, [setInput, setShowAutocomplete, onKeyDown])
-
-  useEffect(() => {
-    const handleSubmit = (e: Event) => {
+  useDomEvents(searchFormRef, {
+    onSubmit: e => {
       e.preventDefault()
       onSearchSubmit(input)
     }
-    const searchForm = searchFormRef.current
-
-    if (searchForm) {
-      searchForm.addEventListener("submit", handleSubmit)
-    }
-
-    return () => {
-      if (searchForm) {
-        searchForm.removeEventListener("submit", handleSubmit)
-      }
-    }
-  }, [input, onSearchSubmit])
+  })
 
   return showAutocomplete ? (
     <OnSubmitProvider onSubmit={onSearchSubmit}>

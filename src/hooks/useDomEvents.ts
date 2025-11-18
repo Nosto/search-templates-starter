@@ -1,4 +1,5 @@
 import { useEffect } from "preact/hooks"
+import type { RefObject } from "preact"
 
 type Events = {
   onClick: (e: MouseEvent) => void
@@ -9,11 +10,18 @@ type Events = {
   onSubmit: (e: SubmitEvent) => void
 }
 
-export function useDomEvents(
-  el: HTMLElement | null,
+type ElementOrRef<T extends HTMLElement = HTMLElement> = T | null | RefObject<T | null>
+
+function isRef<T extends HTMLElement>(elementOrRef: ElementOrRef<T>): elementOrRef is RefObject<T | null> {
+  return elementOrRef !== null && typeof elementOrRef === "object" && "current" in elementOrRef
+}
+
+export function useDomEvents<T extends HTMLElement = HTMLElement>(
+  elementOrRef: ElementOrRef<T>,
   { onClick, onInput, onFocus, onKeyDown, onBlur, onSubmit }: Partial<Events>
 ) {
   useEffect(() => {
+    const el = isRef(elementOrRef) ? elementOrRef.current : elementOrRef
     if (!el) return
     if (onClick) {
       el.addEventListener("click", onClick)
@@ -41,5 +49,5 @@ export function useDomEvents(
       if (onBlur) el.removeEventListener("blur", onBlur)
       if (onSubmit) el.removeEventListener("submit", onSubmit)
     }
-  }, [el, onClick, onInput, onFocus, onKeyDown, onBlur, onSubmit])
+  }, [elementOrRef, onClick, onInput, onFocus, onKeyDown, onBlur, onSubmit])
 }
