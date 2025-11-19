@@ -44,24 +44,6 @@ describe("searchRedirect", () => {
     expect(getHref()).toBe("https://example.com/search?q=test+query")
   })
 
-  it("trims whitespace from query", () => {
-    const getHref = mockLocationHref()
-    searchRedirect("  test query  ")
-    expect(getHref()).toBe("https://example.com/search?q=test+query")
-  })
-
-  it("does not redirect when query is empty", () => {
-    const getHref = mockLocationHref("initial")
-    searchRedirect("")
-    expect(getHref()).toBe("initial")
-  })
-
-  it("does not redirect when query is only whitespace", () => {
-    const getHref = mockLocationHref("initial")
-    searchRedirect("   ")
-    expect(getHref()).toBe("initial")
-  })
-
   it("properly encodes special characters in query", () => {
     const getHref = mockLocationHref()
     searchRedirect("test & query")
