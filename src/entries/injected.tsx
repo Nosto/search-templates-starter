@@ -17,26 +17,36 @@ import AutocompleteApp from "@/components/Autocomplete/AutocompleteApp"
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 import { redirectToSearch } from "@/utils/searchRedirect"
 
-function SerpApp() {
-  const { newSearch } = useActions()
+type AutocompleteWithDropdownProps = {
+  searchAction: (query: string, options?: SearchAnalyticsOptions) => void
+}
 
+function AutocompleteWithDropdown({ searchAction }: AutocompleteWithDropdownProps) {
   const onSubmit = useCallback(
     (query: string, options?: SearchAnalyticsOptions) => {
       nostojs(api => api.recordSearchSubmit(query))
-      newSearch({ query }, options)
+      searchAction(query, options)
     },
-    [newSearch]
+    [searchAction]
   )
+
+  return (
+    <AutocompletePageProvider config={autocompleteConfig}>
+      <Portal target={selectors.dropdown}>
+        <AutocompleteApp onSubmit={onSubmit} />
+      </Portal>
+    </AutocompletePageProvider>
+  )
+}
+
+function SerpApp() {
+  const { newSearch } = useActions()
 
   return (
     <ErrorBoundary>
       <SearchQueryHandler />
       <SidebarProvider>
-        <AutocompletePageProvider config={autocompleteConfig}>
-          <Portal target={selectors.dropdown}>
-            <AutocompleteApp onSubmit={onSubmit} />
-          </Portal>
-        </AutocompletePageProvider>
+        <AutocompleteWithDropdown searchAction={(query, options) => newSearch({ query }, options)} />
         <Portal target={selectors.results} clear>
           <Serp />
         </Portal>
@@ -46,20 +56,11 @@ function SerpApp() {
 }
 
 function CategoryApp() {
-  const onSubmit = useCallback((query: string) => {
-    nostojs(api => api.recordSearchSubmit(query))
-    redirectToSearch(query)
-  }, [])
-
   return (
     <ErrorBoundary>
       <SearchQueryHandler />
       <SidebarProvider>
-        <AutocompletePageProvider config={autocompleteConfig}>
-          <Portal target={selectors.dropdown}>
-            <AutocompleteApp onSubmit={onSubmit} />
-          </Portal>
-        </AutocompletePageProvider>
+        <AutocompleteWithDropdown searchAction={redirectToSearch} />
         <Portal target={selectors.results} clear>
           <Category />
         </Portal>
@@ -69,18 +70,9 @@ function CategoryApp() {
 }
 
 function DefaultApp() {
-  const onSubmit = useCallback((query: string) => {
-    nostojs(api => api.recordSearchSubmit(query))
-    redirectToSearch(query)
-  }, [])
-
   return (
     <ErrorBoundary>
-      <AutocompletePageProvider config={autocompleteConfig}>
-        <Portal target={selectors.dropdown}>
-          <AutocompleteApp onSubmit={onSubmit} />
-        </Portal>
-      </AutocompletePageProvider>
+      <AutocompleteWithDropdown searchAction={redirectToSearch} />
     </ErrorBoundary>
   )
 }
