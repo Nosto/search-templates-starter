@@ -24,8 +24,12 @@ type AutocompleteProps = {
 function Autocomplete({ onSubmit }: AutocompleteProps) {
   const handleSubmit = useCallback(
     (query: string, options?: SearchAnalyticsOptions) => {
-      nostojs(api => api.recordSearchSubmit(query))
-      onSubmit(query, options)
+      const trimmedQuery = query.trim()
+      if (!trimmedQuery) {
+        return
+      }
+      nostojs(api => api.recordSearchSubmit(trimmedQuery))
+      onSubmit(trimmedQuery, options)
     },
     [onSubmit]
   )
