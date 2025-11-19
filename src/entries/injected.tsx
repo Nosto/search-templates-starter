@@ -13,7 +13,7 @@ import { tagging } from "@/mapping/tagging"
 import { nostojs } from "@nosto/nosto-js"
 import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import Portal from "@/elements/Portal/Portal"
-import AutocompleteDropdown from "@/components/Autocomplete/AutocompleteDropdown"
+import AutocompleteInjected from "@/components/Autocomplete/AutocompleteInjected"
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 import { redirectToSearch } from "@/utils/searchRedirect"
 
@@ -33,7 +33,7 @@ function AutocompleteApp({ searchAction }: AutocompleteAppProps) {
   return (
     <AutocompletePageProvider config={autocompleteConfig}>
       <Portal target={selectors.dropdown}>
-        <AutocompleteDropdown onSubmit={onSubmit} />
+        <AutocompleteInjected onSubmit={onSubmit} />
       </Portal>
     </AutocompletePageProvider>
   )
