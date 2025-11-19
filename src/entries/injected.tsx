@@ -17,23 +17,23 @@ import AutocompleteInjected from "@/components/Autocomplete/AutocompleteInjected
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 import { redirectToSearch } from "@/utils/searchRedirect"
 
-type AutocompleteAppProps = {
-  searchAction: (query: string, options?: SearchAnalyticsOptions) => void
+type AutocompleteProps = {
+  onSubmit: (query: string, options?: SearchAnalyticsOptions) => void
 }
 
-function AutocompleteApp({ searchAction }: AutocompleteAppProps) {
-  const onSubmit = useCallback(
+function Autocomplete({ onSubmit }: AutocompleteProps) {
+  const handleSubmit = useCallback(
     (query: string, options?: SearchAnalyticsOptions) => {
       nostojs(api => api.recordSearchSubmit(query))
-      searchAction(query, options)
+      onSubmit(query, options)
     },
-    [searchAction]
+    [onSubmit]
   )
 
   return (
     <AutocompletePageProvider config={autocompleteConfig}>
       <Portal target={selectors.dropdown}>
-        <AutocompleteInjected onSubmit={onSubmit} />
+        <AutocompleteInjected onSubmit={handleSubmit} />
       </Portal>
     </AutocompletePageProvider>
   )
@@ -46,7 +46,7 @@ function SerpApp() {
     <ErrorBoundary>
       <SearchQueryHandler />
       <SidebarProvider>
-        <AutocompleteApp searchAction={(query, options) => newSearch({ query }, options)} />
+        <Autocomplete onSubmit={(query, options) => newSearch({ query }, options)} />
         <Portal target={selectors.results} clear>
           <Serp />
         </Portal>
@@ -60,7 +60,7 @@ function CategoryApp() {
     <ErrorBoundary>
       <SearchQueryHandler />
       <SidebarProvider>
-        <AutocompleteApp searchAction={redirectToSearch} />
+        <Autocomplete onSubmit={redirectToSearch} />
         <Portal target={selectors.results} clear>
           <Category />
         </Portal>
@@ -72,7 +72,7 @@ function CategoryApp() {
 function DefaultApp() {
   return (
     <ErrorBoundary>
-      <AutocompleteApp searchAction={redirectToSearch} />
+      <Autocomplete onSubmit={redirectToSearch} />
     </ErrorBoundary>
   )
 }

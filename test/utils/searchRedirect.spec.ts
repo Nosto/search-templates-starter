@@ -41,13 +41,13 @@ describe("redirectToSearch", () => {
   it("sets location.href with query parameter", () => {
     const getHref = mockLocationHref()
     redirectToSearch("test query")
-    expect(getHref()).toBe("https://example.com/?q=test+query")
+    expect(getHref()).toBe("https://example.com/search?q=test+query")
   })
 
   it("trims whitespace from query", () => {
     const getHref = mockLocationHref()
     redirectToSearch("  test query  ")
-    expect(getHref()).toBe("https://example.com/?q=test+query")
+    expect(getHref()).toBe("https://example.com/search?q=test+query")
   })
 
   it("does not redirect when query is empty", () => {
@@ -65,6 +65,6 @@ describe("redirectToSearch", () => {
   it("properly encodes special characters in query", () => {
     const getHref = mockLocationHref()
     redirectToSearch("test & query")
-    expect(getHref()).toBe("https://example.com/?q=test+%26+query")
+    expect(getHref()).toBe("https://example.com/search?q=test+%26+query")
   })
 })

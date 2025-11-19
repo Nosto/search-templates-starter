@@ -42,7 +42,7 @@ export const defaultSize = sizes[0]
 /**
  * Path to the search page
  */
-export const searchPath = "/"
+export const searchPath = "/search"
 
 /**
  * CSS selectors for the Injected mode
