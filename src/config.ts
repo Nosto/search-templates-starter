@@ -40,6 +40,11 @@ export const defaultSort = sortOptions[0]
 export const defaultSize = sizes[0]
 
 /**
+ * Path to the search page
+ */
+export const searchPath = "/search"
+
+/**
  * CSS selectors for the Injected mode
  */
 export const selectors = {

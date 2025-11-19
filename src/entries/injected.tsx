@@ -15,27 +15,42 @@ import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import Portal from "@/elements/Portal/Portal"
 import AutocompleteInjected from "@/components/Autocomplete/AutocompleteInjected"
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
+import { searchRedirect } from "./searchRedirect"
+
+type AutocompleteProps = {
+  onSubmit: (query: string, options?: SearchAnalyticsOptions) => void
+}
+
+function Autocomplete({ onSubmit }: AutocompleteProps) {
+  const handleSubmit = useCallback(
+    (query: string, options?: SearchAnalyticsOptions) => {
+      const trimmedQuery = query.trim()
+      if (!trimmedQuery) {
+        return
+      }
+      nostojs(api => api.recordSearchSubmit(trimmedQuery))
+      onSubmit(trimmedQuery, options)
+    },
+    [onSubmit]
+  )
+
+  return (
+    <AutocompletePageProvider config={autocompleteConfig}>
+      <Portal target={selectors.dropdown}>
+        <AutocompleteInjected onSubmit={handleSubmit} />
+      </Portal>
+    </AutocompletePageProvider>
+  )
+}
 
 function SerpApp() {
   const { newSearch } = useActions()
-
-  const onSubmit = useCallback(
-    (query: string, options?: SearchAnalyticsOptions) => {
-      nostojs(api => api.recordSearchSubmit(query))
-      newSearch({ query }, options)
-    },
-    [newSearch]
-  )
 
   return (
     <ErrorBoundary>
       <SearchQueryHandler />
       <SidebarProvider>
-        <AutocompletePageProvider config={autocompleteConfig}>
-          <Portal target={selectors.dropdown}>
-            <AutocompleteInjected onSubmit={onSubmit} />
-          </Portal>
-        </AutocompletePageProvider>
+        <Autocomplete onSubmit={(query, options) => newSearch({ query }, options)} />
         <Portal target={selectors.results} clear>
           <Serp />
         </Portal>
@@ -49,10 +64,19 @@ function CategoryApp() {
     <ErrorBoundary>
       <SearchQueryHandler />
       <SidebarProvider>
+        <Autocomplete onSubmit={searchRedirect} />
         <Portal target={selectors.results} clear>
           <Category />
         </Portal>
       </SidebarProvider>
+    </ErrorBoundary>
+  )
+}
+
+function DefaultApp() {
+  return (
+    <ErrorBoundary>
+      <Autocomplete onSubmit={searchRedirect} />
     </ErrorBoundary>
   )
 }
@@ -76,6 +100,9 @@ async function init() {
         </SearchPageProvider>,
         dummy
       )
+      break
+    default:
+      render(<DefaultApp />, dummy)
       break
   }
 }
