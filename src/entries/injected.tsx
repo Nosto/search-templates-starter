@@ -13,15 +13,15 @@ import { tagging } from "@/mapping/tagging"
 import { nostojs } from "@nosto/nosto-js"
 import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import Portal from "@/elements/Portal/Portal"
-import AutocompleteApp from "@/components/Autocomplete/AutocompleteApp"
+import AutocompleteDropdown from "@/components/Autocomplete/AutocompleteDropdown"
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 import { redirectToSearch } from "@/utils/searchRedirect"
 
-type AutocompleteWithDropdownProps = {
+type AutocompleteAppProps = {
   searchAction: (query: string, options?: SearchAnalyticsOptions) => void
 }
 
-function AutocompleteWithDropdown({ searchAction }: AutocompleteWithDropdownProps) {
+function AutocompleteApp({ searchAction }: AutocompleteAppProps) {
   const onSubmit = useCallback(
     (query: string, options?: SearchAnalyticsOptions) => {
       nostojs(api => api.recordSearchSubmit(query))
@@ -33,7 +33,7 @@ function AutocompleteWithDropdown({ searchAction }: AutocompleteWithDropdownProp
   return (
     <AutocompletePageProvider config={autocompleteConfig}>
       <Portal target={selectors.dropdown}>
-        <AutocompleteApp onSubmit={onSubmit} />
+        <AutocompleteDropdown onSubmit={onSubmit} />
       </Portal>
     </AutocompletePageProvider>
   )
@@ -46,7 +46,7 @@ function SerpApp() {
     <ErrorBoundary>
       <SearchQueryHandler />
       <SidebarProvider>
-        <AutocompleteWithDropdown searchAction={(query, options) => newSearch({ query }, options)} />
+        <AutocompleteApp searchAction={(query, options) => newSearch({ query }, options)} />
         <Portal target={selectors.results} clear>
           <Serp />
         </Portal>
@@ -60,7 +60,7 @@ function CategoryApp() {
     <ErrorBoundary>
       <SearchQueryHandler />
       <SidebarProvider>
-        <AutocompleteWithDropdown searchAction={redirectToSearch} />
+        <AutocompleteApp searchAction={redirectToSearch} />
         <Portal target={selectors.results} clear>
           <Category />
         </Portal>
@@ -72,7 +72,7 @@ function CategoryApp() {
 function DefaultApp() {
   return (
     <ErrorBoundary>
-      <AutocompleteWithDropdown searchAction={redirectToSearch} />
+      <AutocompleteApp searchAction={redirectToSearch} />
     </ErrorBoundary>
   )
 }

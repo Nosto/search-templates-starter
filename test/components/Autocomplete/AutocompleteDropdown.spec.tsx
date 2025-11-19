@@ -1,12 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from "vitest"
 import { render } from "@testing-library/preact"
-import AutocompleteApp from "@/components/Autocomplete/AutocompleteApp"
+import AutocompleteDropdown from "@/components/Autocomplete/AutocompleteDropdown"
 import { AutocompletePageProvider } from "@nosto/search-js/preact/autocomplete"
 import { autocompleteConfig, selectors } from "@/config"
 
-describe("AutocompleteApp", () => {
+describe("AutocompleteDropdown", () => {
   beforeEach(() => {
-    // Setup DOM elements that AutocompleteApp expects
+    // Setup DOM elements that AutocompleteDropdown expects
     document.body.innerHTML = `
       <div id="dropdown"></div>
       <form id="search-form">
@@ -21,7 +21,7 @@ describe("AutocompleteApp", () => {
     expect(() => {
       render(
         <AutocompletePageProvider config={autocompleteConfig}>
-          <AutocompleteApp onSubmit={mockOnSubmit} />
+          <AutocompleteDropdown onSubmit={mockOnSubmit} />
         </AutocompletePageProvider>
       )
     }).not.toThrow()
@@ -32,11 +32,11 @@ describe("AutocompleteApp", () => {
 
     const { container } = render(
       <AutocompletePageProvider config={autocompleteConfig}>
-        <AutocompleteApp onSubmit={mockOnSubmit} />
+        <AutocompleteDropdown onSubmit={mockOnSubmit} />
       </AutocompletePageProvider>
     )
 
-    // AutocompleteApp should return null when showAutocomplete is false
+    // AutocompleteDropdown should return null when showAutocomplete is false
     expect(container.querySelector("[data-testid]")).toBeNull()
   })
 
@@ -45,7 +45,7 @@ describe("AutocompleteApp", () => {
 
     render(
       <AutocompletePageProvider config={autocompleteConfig}>
-        <AutocompleteApp onSubmit={mockOnSubmit} />
+        <AutocompleteDropdown onSubmit={mockOnSubmit} />
       </AutocompletePageProvider>
     )
 

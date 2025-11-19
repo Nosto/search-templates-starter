@@ -11,10 +11,10 @@ type Props = {
 }
 
 /**
- * Reusable autocomplete component that can be injected on any page type.
- * Handles analytics, form submission, and dropdown display.
+ * Autocomplete dropdown component that handles search input events and displays results.
+ * Works in injected mode by querying DOM elements.
  */
-export default function AutocompleteApp({ onSubmit }: Props) {
+export default function AutocompleteDropdown({ onSubmit }: Props) {
   const dropdownRef = useRef<HTMLElement | null>(null)
   const searchInputRef = useRef<HTMLInputElement | null>(null)
   const searchFormRef = useRef<HTMLFormElement | null>(null)
