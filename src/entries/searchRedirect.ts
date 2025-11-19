@@ -4,7 +4,7 @@ import { searchPath } from "@/config"
  * Redirects to the search page with the given query
  * @param query - The search query to redirect with
  */
-export function redirectToSearch(query: string): void {
+export function searchRedirect(query: string): void {
   const trimmedQuery = query.trim()
   if (!trimmedQuery) {
     return

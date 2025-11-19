@@ -15,7 +15,7 @@ import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import Portal from "@/elements/Portal/Portal"
 import AutocompleteInjected from "@/components/Autocomplete/AutocompleteInjected"
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
-import { redirectToSearch } from "@/utils/searchRedirect"
+import { searchRedirect } from "./searchRedirect"
 
 type AutocompleteProps = {
   onSubmit: (query: string, options?: SearchAnalyticsOptions) => void
@@ -60,7 +60,7 @@ function CategoryApp() {
     <ErrorBoundary>
       <SearchQueryHandler />
       <SidebarProvider>
-        <Autocomplete onSubmit={redirectToSearch} />
+        <Autocomplete onSubmit={searchRedirect} />
         <Portal target={selectors.results} clear>
           <Category />
         </Portal>
@@ -72,7 +72,7 @@ function CategoryApp() {
 function DefaultApp() {
   return (
     <ErrorBoundary>
-      <Autocomplete onSubmit={redirectToSearch} />
+      <Autocomplete onSubmit={searchRedirect} />
     </ErrorBoundary>
   )
 }

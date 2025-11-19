@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest"
-import { redirectToSearch } from "@/utils/searchRedirect"
+import { searchRedirect } from "@/entries/searchRedirect"
 
-describe("redirectToSearch", () => {
+describe("searchRedirect", () => {
   let originalLocation: Location
 
   beforeEach(() => {
@@ -40,31 +40,31 @@ describe("redirectToSearch", () => {
 
   it("sets location.href with query parameter", () => {
     const getHref = mockLocationHref()
-    redirectToSearch("test query")
+    searchRedirect("test query")
     expect(getHref()).toBe("https://example.com/search?q=test+query")
   })
 
   it("trims whitespace from query", () => {
     const getHref = mockLocationHref()
-    redirectToSearch("  test query  ")
+    searchRedirect("  test query  ")
     expect(getHref()).toBe("https://example.com/search?q=test+query")
   })
 
   it("does not redirect when query is empty", () => {
     const getHref = mockLocationHref("initial")
-    redirectToSearch("")
+    searchRedirect("")
     expect(getHref()).toBe("initial")
   })
 
   it("does not redirect when query is only whitespace", () => {
     const getHref = mockLocationHref("initial")
-    redirectToSearch("   ")
+    searchRedirect("   ")
     expect(getHref()).toBe("initial")
   })
 
   it("properly encodes special characters in query", () => {
     const getHref = mockLocationHref()
-    redirectToSearch("test & query")
+    searchRedirect("test & query")
     expect(getHref()).toBe("https://example.com/search?q=test+%26+query")
   })
 })
