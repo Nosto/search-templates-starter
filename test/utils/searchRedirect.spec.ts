@@ -27,68 +27,44 @@ describe("redirectToSearch", () => {
     })
   })
 
-  it("sets location.href with query parameter", () => {
-    let hrefValue = ""
+  function mockLocationHref(initialValue = "") {
+    let hrefValue = initialValue
     Object.defineProperty(window.location, "href", {
       set: (value: string) => {
         hrefValue = value
       },
       get: () => hrefValue
     })
+    return () => hrefValue
+  }
 
+  it("sets location.href with query parameter", () => {
+    const getHref = mockLocationHref()
     redirectToSearch("test query")
-    expect(hrefValue).toBe("https://example.com/?q=test+query")
+    expect(getHref()).toBe("https://example.com/?q=test+query")
   })
 
   it("trims whitespace from query", () => {
-    let hrefValue = ""
-    Object.defineProperty(window.location, "href", {
-      set: (value: string) => {
-        hrefValue = value
-      },
-      get: () => hrefValue
-    })
-
+    const getHref = mockLocationHref()
     redirectToSearch("  test query  ")
-    expect(hrefValue).toBe("https://example.com/?q=test+query")
+    expect(getHref()).toBe("https://example.com/?q=test+query")
   })
 
   it("does not redirect when query is empty", () => {
-    let hrefValue = "initial"
-    Object.defineProperty(window.location, "href", {
-      set: (value: string) => {
-        hrefValue = value
-      },
-      get: () => hrefValue
-    })
-
+    const getHref = mockLocationHref("initial")
     redirectToSearch("")
-    expect(hrefValue).toBe("initial")
+    expect(getHref()).toBe("initial")
   })
 
   it("does not redirect when query is only whitespace", () => {
-    let hrefValue = "initial"
-    Object.defineProperty(window.location, "href", {
-      set: (value: string) => {
-        hrefValue = value
-      },
-      get: () => hrefValue
-    })
-
+    const getHref = mockLocationHref("initial")
     redirectToSearch("   ")
-    expect(hrefValue).toBe("initial")
+    expect(getHref()).toBe("initial")
   })
 
   it("properly encodes special characters in query", () => {
-    let hrefValue = ""
-    Object.defineProperty(window.location, "href", {
-      set: (value: string) => {
-        hrefValue = value
-      },
-      get: () => hrefValue
-    })
-
+    const getHref = mockLocationHref()
     redirectToSearch("test & query")
-    expect(hrefValue).toBe("https://example.com/?q=test+%26+query")
+    expect(getHref()).toBe("https://example.com/?q=test+%26+query")
   })
 })
