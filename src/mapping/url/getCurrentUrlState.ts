@@ -1,6 +1,6 @@
 import { SearchQuery } from "@nosto/nosto-js/client"
 import { deserializeQueryState } from "./deserializeQueryState"
-import { defaultSize, infiniteScroll } from "@/config"
+import { config } from "@/config"
 
 export function getCurrentUrlState() {
   const searchParams = new URLSearchParams(window.location.search)
@@ -8,8 +8,8 @@ export function getCurrentUrlState() {
 }
 
 function fromPageParameters(urlSize: number | undefined, page: number | undefined) {
-  const size = urlSize ?? defaultSize
-  if (infiniteScroll) {
+  const size = urlSize ?? config.defaultSize
+  if (config.infiniteScroll) {
     return {
       from: 0,
       size: (page ?? 1) * size

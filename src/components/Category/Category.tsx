@@ -4,7 +4,7 @@ import BottomToolbar from "@/components/BottomToolbar/BottomToolbar"
 import { ContentChildrenProps, wrapContent } from "@/components/ContentWrapper/ContentWrapper"
 import { InfiniteScroll } from "@nosto/search-js/preact/common"
 import NoResults from "@/components/NoResults/NoResults"
-import { infiniteScroll } from "@/config"
+import { config } from "@/config"
 
 export function CategoryBody({ foundProducts, loading }: ContentChildrenProps) {
   if (!foundProducts && !loading) return <NoResults />
@@ -33,5 +33,5 @@ export function CategoryBodyInfiniteScroll({ foundProducts, loading }: ContentCh
   )
 }
 
-const Component = infiniteScroll ? CategoryBodyInfiniteScroll : CategoryBody
+const Component = config.infiniteScroll ? CategoryBodyInfiniteScroll : CategoryBody
 export default wrapContent("category", Component)

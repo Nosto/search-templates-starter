@@ -18,31 +18,31 @@ export const sortOptions = [
 ]
 
 /**
- * Enable or disable infinite scroll for search results
+ * Main configuration object for search templates
  */
-export const infiniteScroll = false
-
-/**
- * Enable or disable skeleton loading state for search results
- */
-export const skeletonLoading = true
-
-export const shopifyMode = !!window.Shopify
-
-/**
- * Default sort option for search results and categories
- */
-export const defaultSort = sortOptions[0]
-
-/**
- * Default page size for search results and categories
- */
-export const defaultSize = sizes[0]
-
-/**
- * Path to the search page
- */
-export const searchPath = "/search"
+export const config = {
+  /**
+   * Enable or disable infinite scroll for search results
+   */
+  infiniteScroll: false,
+  /**
+   * Enable or disable skeleton loading state for search results
+   */
+  skeletonLoading: true,
+  shopifyMode: !!window.Shopify,
+  /**
+   * Default sort option for search results and categories
+   */
+  defaultSort: sortOptions[0],
+  /**
+   * Default page size for search results and categories
+   */
+  defaultSize: sizes[0],
+  /**
+   * Path to the search page
+   */
+  searchPath: "/search"
+} as const
 
 /**
  * CSS selectors for the Injected mode
@@ -82,7 +82,7 @@ function withBaseConfig(query: SearchQuery) {
   return {
     ...query,
     products: {
-      size: defaultSize,
+      size: config.defaultSize,
       ...query.products
       // uncomment for exchange rates based multi-currency support
       //currency: tagging.variation() ?? defaultCurrency

@@ -1,5 +1,5 @@
 import { SearchQuery } from "@nosto/nosto-js/client"
-import { defaultSize } from "@/config"
+import { config } from "@/config"
 import { Product } from "@/types"
 
 export function createSkeletonContent(query: SearchQuery) {
@@ -9,10 +9,10 @@ export function createSkeletonContent(query: SearchQuery) {
     response: {
       products: {
         facets: [],
-        hits: Array.from({ length: defaultSize }, () => mockProduct),
+        hits: Array.from({ length: config.defaultSize }, () => mockProduct),
         from: 0,
-        size: defaultSize,
-        total: defaultSize
+        size: config.defaultSize,
+        total: config.defaultSize
       }
     }
   }

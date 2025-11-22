@@ -1,6 +1,6 @@
 import { SimpleQuery, UrlQueryState } from "./types"
 import { getUrlFromState } from "./getUrlFromState"
-import { defaultSize, infiniteScroll } from "@/config"
+import { config } from "@/config"
 
 export function updateUrl(state: UrlQueryState) {
   const url = getUrlFromState(state)
@@ -8,9 +8,9 @@ export function updateUrl(state: UrlQueryState) {
 }
 
 function toPageParameters(from: number | undefined, size: number) {
-  if (infiniteScroll) {
+  if (config.infiniteScroll) {
     return {
-      page: Math.floor(size / defaultSize)
+      page: Math.floor(size / config.defaultSize)
     }
   }
   return {

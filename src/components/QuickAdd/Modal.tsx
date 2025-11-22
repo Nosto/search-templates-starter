@@ -9,7 +9,7 @@ import Heading from "@/elements/Heading/Heading"
 import ProductImage from "../Product/ProductImage"
 import SimpleSelector from "./SimpleSelector"
 import VariantSelector from "@/elements/VariantSelector/VariantSelector"
-import { shopifyMode } from "@/config"
+import { config } from "@/config"
 
 type Props = {
   product: Product
@@ -30,9 +30,9 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null)
   const hasMultipleSkus = !!product.skus?.length
   // shopify variant selector based on Product API option data
-  const renderShopifySelector = shopifyMode && hasMultipleSkus
+  const renderShopifySelector = config.shopifyMode && hasMultipleSkus
   // simple generic variant selector for non-shopify mode
-  const renderSimpleSelector = !shopifyMode && hasMultipleSkus
+  const renderSimpleSelector = !config.shopifyMode && hasMultipleSkus
 
   const data = useMemo(() => {
     if (selectedSkuId) {
