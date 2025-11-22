@@ -29,6 +29,9 @@ export const config = {
    * Enable or disable skeleton loading state for search results
    */
   skeletonLoading: true,
+  /**
+   * Detect if running in Shopify environment
+   */
   shopifyMode: !!window.Shopify,
   /**
    * Default sort option for search results and categories
