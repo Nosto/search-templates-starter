@@ -9,6 +9,8 @@ jobs:
   deploy-storybook:
     name: Deploy Storybook
     runs-on: ubuntu-latest
+    # Only run if ENABLE_STORYBOOK_DEPLOY is set to 'true'
+    if: ${{ vars.ENABLE_STORYBOOK_DEPLOY == 'true' }}
     permissions:
       pages: write
       id-token: write
