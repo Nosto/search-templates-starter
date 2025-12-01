@@ -4,13 +4,11 @@ import { mockSearch } from "@mocks/search"
 import { init, nostojs } from "@nosto/nosto-js"
 
 // @ts-expect-error -- ENV VARIABLES --
-const { MODE, VITE_MERCHANT_ID, VITE_MERCHANT_ROOT } = import.meta.env
+const { MODE, VITE_MERCHANT_ID, VITE_MERCHANT_DOMAIN } = import.meta.env
 
-if (VITE_MERCHANT_ROOT) {
+if (VITE_MERCHANT_DOMAIN) {
   window.Shopify = {
-    routes: {
-      root: VITE_MERCHANT_ROOT
-    }
+    shop: VITE_MERCHANT_DOMAIN
   }
 }
 
