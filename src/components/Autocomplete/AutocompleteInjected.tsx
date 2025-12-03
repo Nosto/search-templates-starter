@@ -41,6 +41,7 @@ export default function AutocompleteInjected({ onSubmit }: Props) {
     onSubmit: e => {
       e.preventDefault()
       if (state.response?.redirect) {
+        // Direct navigation is intentional for redirect rules (can be external URLs)
         window.location.href = state.response?.redirect
       } else {
         onSearchSubmit(input)

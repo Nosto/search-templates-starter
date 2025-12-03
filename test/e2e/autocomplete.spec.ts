@@ -110,19 +110,8 @@ test.describe("Autocomplete", () => {
     // Wait for the autocomplete search to complete and state to update
     await page.waitForTimeout(1500)
 
-    // Set up navigation promise before pressing Enter
-    const navigationPromise = page.waitForNavigation({ waitUntil: "commit", timeout: 5000 })
-
-    // Submit the form by pressing Enter
-    await searchInput.press("Enter")
-
-    // Wait for navigation
-    try {
-      await navigationPromise
-    } catch (error) {
-      console.log("Navigation error:", error)
-      // Check current URL anyway
-    }
+    // Submit the form by pressing Enter and wait for navigation
+    await Promise.all([page.waitForNavigation({ waitUntil: "commit", timeout: 5000 }), searchInput.press("Enter")])
 
     // Verify we navigated to the redirect URL
     expect(page.url()).toBe("https://example.com/redirected-page")
