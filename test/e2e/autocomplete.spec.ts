@@ -108,7 +108,7 @@ test.describe("Autocomplete", () => {
     await searchInput.fill("redirect-test")
 
     // Wait for the autocomplete search to complete and state to update
-    await page.waitForTimeout(1500)
+    await expect(page.getByRole("button", { name: "See all search results" })).toBeVisible({ timeout: dropdownTimeout })
 
     // Submit the form by pressing Enter and wait for navigation
     await Promise.all([page.waitForNavigation({ waitUntil: "commit", timeout: 5000 }), searchInput.press("Enter")])
