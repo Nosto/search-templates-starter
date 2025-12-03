@@ -2,6 +2,9 @@ import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 import { mockKeywords } from "./keywords"
 import { generateMockProducts } from "./products"
 
+/**
+ * Creates a search result with optional redirect
+ */
 function createSearchResult(searchQuery: string, from: number, size: number, redirect?: string): SearchResult {
   return {
     query: searchQuery,
