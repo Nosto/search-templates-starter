@@ -21,6 +21,20 @@ export const Default: Story = {
   }
 }
 
+export const DefaultActive: Story = {
+  args: {
+    facet: mockPriceFacet,
+    defaultActive: true
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Range selector that is initially expanded."
+      }
+    }
+  }
+}
+
 export const WithCustomRangeSize: Story = {
   args: {
     facet: mockPriceFacet,

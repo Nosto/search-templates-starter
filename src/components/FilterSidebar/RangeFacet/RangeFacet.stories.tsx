@@ -21,6 +21,20 @@ export const Default: Story = {
   }
 }
 
+export const DefaultActive: Story = {
+  args: {
+    facet: mockPriceFacet,
+    defaultActive: true
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Range facet that is initially expanded."
+      }
+    }
+  }
+}
+
 export const LargeRange: Story = {
   args: {
     facet: mockRatingFacet
