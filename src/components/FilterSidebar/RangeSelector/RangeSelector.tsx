@@ -16,11 +16,7 @@ type Props = {
 }
 
 export default function RangeSelector({ facet, rangeSize = 100, defaultActive = false }: Props) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { min, max, range, ranges, updateRange, handleMinChange, handleMaxChange, isSelected } = useRangeSelector(
-    facet.id,
-    rangeSize
-  )
+  const { ranges, updateRange } = useRangeSelector(facet.id, rangeSize)
   const [active, setActive] = useState(defaultActive)
 
   const toggleActive = () => {
