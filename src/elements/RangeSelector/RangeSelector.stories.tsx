@@ -4,7 +4,7 @@ import { mockPriceFacet, mockWeightFacet } from "@mocks/facets"
 import { withContainer, withSearchContext } from ".storybook/decorators"
 
 export default {
-  title: "Components/FilterSidebar/RangeSelector",
+  title: "Elements/RangeSelector",
   component: RangeSelector,
   parameters: {
     layout: "centered"

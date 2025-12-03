@@ -1,10 +1,10 @@
 import { render, fireEvent } from "@testing-library/preact"
 import { describe, it, expect, vi, beforeEach } from "vitest"
-import RangeSelector from "@/components/FilterSidebar/RangeSelector/RangeSelector"
+import RangeSelector from "@/elements/RangeSelector/RangeSelector"
 import * as hooks from "@nosto/search-js/preact/hooks"
 
 vi.mock("@nosto/search-js/preact/hooks", () => ({
-  useRange: vi.fn()
+  useRangeSelector: vi.fn()
 }))
 
 describe("RangeSelector", () => {
@@ -21,13 +21,22 @@ describe("RangeSelector", () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
-    vi.mocked(hooks.useRange).mockReturnValue({
+    vi.mocked(hooks.useRangeSelector).mockReturnValue({
       min: 0,
       max: 500,
       range: [0, 500],
       updateRange: mockUpdateRange,
-      active: false,
-      toggleActive: vi.fn()
+      ranges: [
+        { min: 0, max: 83, selected: false },
+        { min: 83, max: 166, selected: false },
+        { min: 166, max: 249, selected: false },
+        { min: 249, max: 332, selected: false },
+        { min: 332, max: 415, selected: false },
+        { min: 415, max: 500, selected: false }
+      ],
+      handleMinChange: vi.fn(),
+      handleMaxChange: vi.fn(),
+      isSelected: false
     })
   })
 
@@ -76,13 +85,15 @@ describe("RangeSelector", () => {
   })
 
   it("shows selected count when a bucket is selected", () => {
-    vi.mocked(hooks.useRange).mockReturnValue({
+    vi.mocked(hooks.useRangeSelector).mockReturnValue({
       min: 0,
       max: 500,
       range: [0, 100],
       updateRange: mockUpdateRange,
-      active: false,
-      toggleActive: vi.fn()
+      ranges: [{ min: 0, max: 100, selected: true }],
+      handleMinChange: vi.fn(),
+      handleMaxChange: vi.fn(),
+      isSelected: true
     })
 
     const customBuckets = [{ min: 0, max: 100, label: "£0 - £100" }]
@@ -92,13 +103,15 @@ describe("RangeSelector", () => {
   })
 
   it("deselects bucket when clicking a selected bucket", () => {
-    vi.mocked(hooks.useRange).mockReturnValue({
+    vi.mocked(hooks.useRangeSelector).mockReturnValue({
       min: 0,
       max: 500,
       range: [0, 100],
       updateRange: mockUpdateRange,
-      active: false,
-      toggleActive: vi.fn()
+      ranges: [{ min: 0, max: 100, selected: true }],
+      handleMinChange: vi.fn(),
+      handleMaxChange: vi.fn(),
+      isSelected: true
     })
 
     const customBuckets = [{ min: 0, max: 100, label: "£0 - £100" }]
