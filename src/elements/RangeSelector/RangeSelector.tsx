@@ -25,14 +25,6 @@ export default function RangeSelector({ facet, rangeSize = 100 }: Props) {
     setActive(!active)
   }
 
-  const handleRangeToggle = (rangeItem: (typeof ranges)[0]) => {
-    if (rangeItem.selected) {
-      updateRange([undefined, undefined])
-    } else {
-      updateRange([rangeItem.min, rangeItem.max])
-    }
-  }
-
   const selectedCount = ranges.filter(r => r.selected).length
 
   return (
@@ -64,7 +56,9 @@ export default function RangeSelector({ facet, rangeSize = 100 }: Props) {
               key={`${rangeItem.min}-${rangeItem.max}`}
               value={`${rangeItem.min} - ${rangeItem.max}`}
               selected={rangeItem.selected ?? false}
-              onChange={() => handleRangeToggle(rangeItem)}
+              onChange={() =>
+                rangeItem.selected ? updateRange([undefined, undefined]) : updateRange([rangeItem.min, rangeItem.max])
+              }
               className={styles.bucketItem}
             />
           ))}
