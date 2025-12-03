@@ -1,8 +1,9 @@
 .radioButton {
-  display: block;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   color: var(--ns-color-black);
   position: relative;
-  padding-left: var(--ns-space-5);
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -19,9 +20,8 @@
 }
 
 .checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
+  flex-shrink: 0;
   height: var(--ns-height-input-checkbox);
   width: var(--ns-height-input-checkbox);
   background-color: var(--ns-color-grey-light);
