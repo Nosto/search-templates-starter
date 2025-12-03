@@ -25,6 +25,8 @@ export default function RangeSelector({ facet, rangeSize = 100, defaultActive = 
 
   const selectedCount = ranges.filter(r => r.selected).length
 
+  // TODO currency formatting for price ranges
+
   return (
     <li className={cl(styles.dropdown, active && styles.active)}>
       <button
