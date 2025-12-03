@@ -11,3 +11,4 @@ applyTo: "**/*.tsx"
 - Utilize memoization (useMemo, useCallback) to prevent unnecessary re-renders
 - Avoid inline functions in JSX props to maintain performance and readability
 - Ensure accessibility by using semantic HTML and proper aria attributes
+- Always use the most specific selector function for `useNostoAppState` to avoid unnecessary re-renders (e.g., `state => state.response?.redirect` instead of `state => state`)
