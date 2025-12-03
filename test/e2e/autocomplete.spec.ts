@@ -111,7 +111,9 @@ test.describe("Autocomplete", () => {
     await expect(page.getByRole("button", { name: "See all search results" })).toBeVisible({ timeout: dropdownTimeout })
 
     // Submit the form by pressing Enter and wait for navigation
-    await Promise.all([page.waitForNavigation({ waitUntil: "commit", timeout: 5000 }), searchInput.press("Enter")])
+    const navigationPromise = page.waitForURL("https://example.com/redirected-page", { timeout: 5000 })
+    await searchInput.press("Enter")
+    await navigationPromise
 
     // Verify we navigated to the redirect URL
     expect(page.url()).toBe("https://example.com/redirected-page")
