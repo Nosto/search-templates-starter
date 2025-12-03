@@ -52,5 +52,12 @@ export const WeightBuckets: Story = {
       { min: 15, max: 20, label: "15kg - 20kg" },
       { min: 20, max: 25, label: "20kg - 25kg" }
     ]
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Range selector with weight buckets demonstrating decimal ranges for product weights."
+      }
+    }
   }
 }

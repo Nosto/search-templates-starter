@@ -13,13 +13,20 @@ type RangeBucket = {
 }
 
 type Props = {
+  /** The stats facet to display range options for */
   facet: SearchStatsFacet
+  /** Optional custom bucket definitions. If not provided, buckets are auto-generated using rangeSize */
   buckets?: RangeBucket[]
+  /** Size of auto-generated buckets (default: 100). Ignored if custom buckets are provided */
   rangeSize?: number
 }
 
 export default function RangeSelector({ facet, buckets: customBuckets, rangeSize = 100 }: Props) {
-  const { ranges, updateRange } = useRangeSelector(facet.id, rangeSize)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { min, max, range, ranges, updateRange, handleMinChange, handleMaxChange, isSelected } = useRangeSelector(
+    facet.id,
+    rangeSize
+  )
   const [active, setActive] = useState(false)
 
   const buckets =
