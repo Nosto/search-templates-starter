@@ -8,8 +8,30 @@ import { generateMockProducts } from "./products"
 export async function mockSearch(query: SearchQuery) {
   const from = query.products?.from || 0
   const size = query.products?.size || 24
+  const searchQuery = query.query || "shoes"
+
+  // Return redirect for specific test query
+  if (searchQuery === "redirect-test") {
+    return {
+      query: searchQuery,
+      redirect: "https://example.com/redirected-page",
+      products: {
+        from,
+        size,
+        total: 0,
+        hits: []
+      },
+      keywords: {
+        from: 0,
+        size: 0,
+        total: 0,
+        hits: []
+      }
+    } satisfies SearchResult
+  }
+
   return {
-    query: query.query || "shoes",
+    query: searchQuery,
     products: {
       from,
       size,

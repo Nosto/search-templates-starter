@@ -91,4 +91,63 @@ test.describe("Autocomplete", () => {
     // Dropdown should close after clicking outside
     await expect(dropdown).toBeEmpty()
   })
+
+  test("form submission redirects when response has redirect URL", async ({ page }) => {
+    const searchInput = page.locator(searchSelector)
+
+    // Intercept all navigation attempts to external URLs and fulfill them
+    await page.route("https://example.com/**", async route => {
+      await route.fulfill({
+        status: 200,
+        contentType: "text/html",
+        body: "<html><body>Redirected successfully</body></html>"
+      })
+    })
+
+    // Type the special test query that triggers a redirect in mock search
+    await searchInput.fill("redirect-test")
+
+    // Wait for the autocomplete search to complete and state to update
+    await page.waitForTimeout(1500)
+
+    // Set up navigation promise before pressing Enter
+    const navigationPromise = page.waitForNavigation({ waitUntil: "commit", timeout: 5000 })
+
+    // Submit the form by pressing Enter
+    await searchInput.press("Enter")
+
+    // Wait for navigation
+    try {
+      await navigationPromise
+    } catch (error) {
+      console.log("Navigation error:", error)
+      // Check current URL anyway
+    }
+
+    // Verify we navigated to the redirect URL
+    expect(page.url()).toBe("https://example.com/redirected-page")
+  })
+
+  test("form submission navigates normally when response has no redirect", async ({ page }) => {
+    const searchInput = page.locator(searchSelector)
+    const dropdown = page.locator(dropdownSelector)
+    const dropdownContent = page.locator(`${dropdownSelector} > div`)
+
+    await searchInput.fill("running")
+
+    // Wait for autocomplete to appear
+    await expect(dropdownContent).toContainText("running shoes", { timeout: dropdownTimeout })
+
+    // Submit the form by pressing Enter
+    await searchInput.press("Enter")
+
+    // Should navigate to search results page, not redirect externally
+    await expect(page).toHaveURL(/\?q=running/, { timeout: 2000 })
+
+    // Verify we're still on the same domain
+    expect(page.url()).toContain("localhost:8000")
+
+    // Dropdown should be empty after navigation
+    await expect(dropdown).toBeEmpty()
+  })
 })
