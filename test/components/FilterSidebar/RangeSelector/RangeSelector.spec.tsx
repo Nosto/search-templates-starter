@@ -24,7 +24,7 @@ describe("RangeSelector", () => {
     vi.mocked(hooks.useRange).mockReturnValue({
       min: 0,
       max: 500,
-      range: [undefined, undefined],
+      range: [0, 500],
       updateRange: mockUpdateRange,
       active: false,
       toggleActive: vi.fn()
