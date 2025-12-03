@@ -22,7 +22,7 @@ export default function AutocompleteInjected({ onSubmit }: Props) {
     searchFormRef.current = document.querySelector<HTMLFormElement>(selectors.searchForm)
   }, [])
 
-  const state = useNostoAppState(state => state)
+  const redirect = useNostoAppState(state => state.response?.redirect)
 
   const { input, showAutocomplete, setInput, setShowAutocomplete, onSearchSubmit, onKeyDown } = useAutocomplete({
     onSubmit,
@@ -40,9 +40,9 @@ export default function AutocompleteInjected({ onSubmit }: Props) {
   useDomEvents(searchFormRef, {
     onSubmit: e => {
       e.preventDefault()
-      if (state.response?.redirect) {
+      if (redirect) {
         // Direct navigation is intentional for redirect rules (can be external URLs)
-        window.location.href = state.response?.redirect
+        window.location.href = redirect
       } else {
         onSearchSubmit(input)
       }

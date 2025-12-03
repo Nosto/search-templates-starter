@@ -15,7 +15,7 @@ export default function AutocompleteNative({ onSubmit }: Props) {
   const autocompleteRef = useRef<HTMLFormElement>(null)
   const searchInputRef = useRef<HTMLInputElement>(null)
 
-  const state = useNostoAppState(state => state)
+  const redirect = useNostoAppState(state => state.response?.redirect)
 
   const { input, showAutocomplete, setInput, setShowAutocomplete, onSearchSubmit, onKeyDown } = useAutocomplete({
     onSubmit,
@@ -28,9 +28,9 @@ export default function AutocompleteNative({ onSubmit }: Props) {
       ref={autocompleteRef}
       onSubmit={e => {
         e.preventDefault()
-        if (state.response?.redirect) {
+        if (redirect) {
           // Direct navigation is intentional for redirect rules (can be external URLs)
-          window.location.href = state.response?.redirect
+          window.location.href = redirect
         } else {
           onSearchSubmit(input)
         }
