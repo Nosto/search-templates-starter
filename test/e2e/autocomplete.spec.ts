@@ -94,6 +94,7 @@ test.describe("Autocomplete", () => {
 
   test("form submission redirects when response has redirect URL", async ({ page }) => {
     const searchInput = page.locator(searchSelector)
+    const dropdown = page.locator(dropdownSelector)
 
     // Intercept all navigation attempts to external URLs and fulfill them
     await page.route("https://example.com/**", async route => {

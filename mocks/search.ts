@@ -3,27 +3,22 @@ import { mockKeywords } from "./keywords"
 import { generateMockProducts } from "./products"
 
 function createSearchResult(searchQuery: string, from: number, size: number, redirect?: string): SearchResult {
-  const baseResult = {
+  return {
     query: searchQuery,
+    redirect,
     products: {
       from,
       size,
-      total: redirect ? 0 : 10 * size,
-      hits: redirect ? [] : generateMockProducts(size)
+      total: 10 * size,
+      hits: generateMockProducts(size)
     },
     keywords: {
       from: 0,
-      size: redirect ? 0 : mockKeywords.hits.length,
-      total: redirect ? 0 : mockKeywords.hits.length,
-      hits: redirect ? [] : mockKeywords.hits
+      size: mockKeywords.hits.length,
+      total: mockKeywords.hits.length,
+      hits: mockKeywords.hits
     }
-  }
-
-  if (redirect) {
-    return { ...baseResult, redirect } satisfies SearchResult
-  }
-
-  return baseResult satisfies SearchResult
+  } satisfies SearchResult
 }
 
 /**
