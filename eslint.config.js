@@ -31,6 +31,9 @@ export default tseslint.config(
       react: {
         version: "19.0"
       }
+    },
+    rules: {
+      "react-hooks/exhaustive-deps": "error"
     }
   },
   {
