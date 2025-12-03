@@ -65,12 +65,12 @@
   margin-left: var(--ns-space-1);
 }
 
-.bucketContainer {
+.rangeContainer {
   display: flex;
   flex-direction: column;
   gap: var(--ns-space-2);
 }
 
-.bucketItem {
+.rangeItem {
   padding: var(--ns-space-2) 0;
 }

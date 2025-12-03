@@ -1,6 +1,6 @@
 import { useState } from "preact/hooks"
 import Icon from "@/elements/Icon/Icon"
-import Checkbox from "@/elements/Checkbox/Checkbox"
+import RadioButton from "@/elements/RadioButton/RadioButton"
 import { SearchStatsFacet } from "@nosto/nosto-js/client"
 import { useRangeSelector } from "@nosto/search-js/preact/hooks"
 import styles from "./RangeSelector.module.css"
@@ -50,16 +50,17 @@ export default function RangeSelector({ facet, rangeSize = 100 }: Props) {
         </span>
       </button>
       <div className={styles.menu} id={`${facet.id}-range-menu`} aria-expanded={active}>
-        <div className={styles.bucketContainer}>
+        <div className={styles.rangeContainer}>
           {ranges.map(rangeItem => (
-            <Checkbox
+            <RadioButton
               key={`${rangeItem.min}-${rangeItem.max}`}
+              name={`${facet.id}-range`}
               value={`${rangeItem.min} - ${rangeItem.max}`}
               selected={rangeItem.selected ?? false}
               onChange={() =>
                 rangeItem.selected ? updateRange([undefined, undefined]) : updateRange([rangeItem.min, rangeItem.max])
               }
-              className={styles.bucketItem}
+              className={styles.rangeItem}
             />
           ))}
         </div>

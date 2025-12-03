@@ -1,0 +1,50 @@
+.radioButton {
+  display: block;
+  color: var(--ns-color-black);
+  position: relative;
+  padding-left: var(--ns-space-5);
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.radioButton > input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: var(--ns-height-input-checkbox);
+  width: var(--ns-height-input-checkbox);
+  background-color: var(--ns-color-grey-light);
+  border-radius: 50%;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(var(--ns-height-input-checkbox) * 0.5);
+  height: calc(var(--ns-height-input-checkbox) * 0.5);
+  border-radius: 50%;
+  background: var(--ns-color-white);
+}
+
+.radioButton > input:checked ~ .checkmark {
+  background-color: var(--ns-color-primary);
+}
+
+.radioButton > input:checked ~ .checkmark:after {
+  display: block;
+}
