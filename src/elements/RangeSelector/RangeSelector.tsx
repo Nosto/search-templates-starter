@@ -6,22 +6,14 @@ import { useRangeSelector } from "@nosto/search-js/preact/hooks"
 import styles from "./RangeSelector.module.css"
 import { cl } from "@nosto/search-js/utils"
 
-type RangeBucket = {
-  min: number
-  max: number
-  label: string
-}
-
 type Props = {
   /** The stats facet to display range options for */
   facet: SearchStatsFacet
-  /** Optional custom bucket definitions. If not provided, buckets are auto-generated using rangeSize */
-  buckets?: RangeBucket[]
-  /** Size of auto-generated buckets (default: 100). Ignored if custom buckets are provided */
+  /** Size of auto-generated buckets (default: 100) */
   rangeSize?: number
 }
 
-export default function RangeSelector({ facet, buckets: customBuckets, rangeSize = 100 }: Props) {
+export default function RangeSelector({ facet, rangeSize = 100 }: Props) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { min, max, range, ranges, updateRange, handleMinChange, handleMaxChange, isSelected } = useRangeSelector(
     facet.id,
@@ -29,32 +21,19 @@ export default function RangeSelector({ facet, buckets: customBuckets, rangeSize
   )
   const [active, setActive] = useState(false)
 
-  const buckets =
-    customBuckets ||
-    ranges.map(r => ({
-      min: r.min,
-      max: r.max,
-      label: `${r.min} - ${r.max}`
-    }))
-
   const toggleActive = () => {
     setActive(!active)
   }
 
-  const isBucketSelected = (bucket: RangeBucket) => {
-    const matchingRange = ranges.find(r => r.min === bucket.min && r.max === bucket.max)
-    return matchingRange?.selected ?? false
-  }
-
-  const handleBucketToggle = (bucket: RangeBucket) => {
-    if (isBucketSelected(bucket)) {
+  const handleRangeToggle = (rangeItem: (typeof ranges)[0]) => {
+    if (rangeItem.selected) {
       updateRange([undefined, undefined])
     } else {
-      updateRange([bucket.min, bucket.max])
+      updateRange([rangeItem.min, rangeItem.max])
     }
   }
 
-  const selectedCount = buckets.filter(isBucketSelected).length
+  const selectedCount = ranges.filter(r => r.selected).length
 
   return (
     <li className={cl(styles.dropdown, active && styles.active)}>
@@ -80,12 +59,12 @@ export default function RangeSelector({ facet, buckets: customBuckets, rangeSize
       </button>
       <div className={styles.menu} id={`${facet.id}-range-menu`} aria-expanded={active}>
         <div className={styles.bucketContainer}>
-          {buckets.map(bucket => (
+          {ranges.map(rangeItem => (
             <Checkbox
-              key={`${bucket.min}-${bucket.max}`}
-              value={bucket.label}
-              selected={isBucketSelected(bucket)}
-              onChange={() => handleBucketToggle(bucket)}
+              key={`${rangeItem.min}-${rangeItem.max}`}
+              value={`${rangeItem.min} - ${rangeItem.max}`}
+              selected={rangeItem.selected ?? false}
+              onChange={() => handleRangeToggle(rangeItem)}
               className={styles.bucketItem}
             />
           ))}

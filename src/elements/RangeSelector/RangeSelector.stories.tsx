@@ -21,42 +21,29 @@ export const Default: Story = {
   }
 }
 
-export const CustomBuckets: Story = {
+export const WithCustomRangeSize: Story = {
   args: {
     facet: mockPriceFacet,
-    buckets: [
-      { min: 0, max: 250, label: "£0 - £250" },
-      { min: 250, max: 500, label: "£250 - £500" },
-      { min: 500, max: 750, label: "£500 - £750" },
-      { min: 750, max: 1000, label: "£750 - £1,000" },
-      { min: 1000, max: 1250, label: "£1,000 - £1,250" },
-      { min: 1250, max: 7992, label: "£1,250 - £7,992" }
-    ]
+    rangeSize: 250
   },
   parameters: {
     docs: {
       description: {
-        story: "Range selector with custom price buckets matching the Holloways example."
+        story: "Range selector with custom range size for larger bucket intervals."
       }
     }
   }
 }
 
-export const WeightBuckets: Story = {
+export const WeightRanges: Story = {
   args: {
     facet: mockWeightFacet,
-    buckets: [
-      { min: 0.1, max: 5, label: "0.1kg - 5kg" },
-      { min: 5, max: 10, label: "5kg - 10kg" },
-      { min: 10, max: 15, label: "10kg - 15kg" },
-      { min: 15, max: 20, label: "15kg - 20kg" },
-      { min: 20, max: 25, label: "20kg - 25kg" }
-    ]
+    rangeSize: 5
   },
   parameters: {
     docs: {
       description: {
-        story: "Range selector with weight buckets demonstrating decimal ranges for product weights."
+        story: "Range selector with weight ranges demonstrating smaller bucket intervals."
       }
     }
   }
