@@ -55,4 +55,18 @@ describe("Campaign", () => {
       '<nosto-campaign placement="home-top" loading=""><div>Custom template content</div></nosto-campaign>'
     )
   })
+
+  it("renders with id prop", () => {
+    const { container } = render(<Campaign id="campaign-123" />)
+    const el = container.querySelector("nosto-campaign") as HTMLElement
+    expect(el).toBeTruthy()
+    expect(el.outerHTML).toBe('<nosto-campaign id="campaign-123" loading=""></nosto-campaign>')
+  })
+
+  it("renders with both id and placement props", () => {
+    const { container } = render(<Campaign id="campaign-123" placement="home-top" />)
+    const el = container.querySelector("nosto-campaign") as HTMLElement
+    expect(el).toBeTruthy()
+    expect(el.outerHTML).toBe('<nosto-campaign id="campaign-123" placement="home-top" loading=""></nosto-campaign>')
+  })
 })
