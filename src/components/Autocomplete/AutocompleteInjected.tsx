@@ -5,6 +5,7 @@ import { useAutocomplete } from "./useAutocomplete"
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 import { OnSubmitProvider } from "./OnSubmitContext"
 import { useRef, useEffect } from "preact/hooks"
+import { useNostoAppState } from "@nosto/search-js/preact/hooks"
 
 type Props = {
   onSubmit: (input: string, options?: SearchAnalyticsOptions) => void
@@ -20,6 +21,8 @@ export default function AutocompleteInjected({ onSubmit }: Props) {
     searchInputRef.current = document.querySelector<HTMLInputElement>(selectors.searchInput)
     searchFormRef.current = document.querySelector<HTMLFormElement>(selectors.searchForm)
   }, [])
+
+  const redirect = useNostoAppState(state => state.response?.redirect)
 
   const { input, showAutocomplete, setInput, setShowAutocomplete, onSearchSubmit, onKeyDown } = useAutocomplete({
     onSubmit,
@@ -37,7 +40,12 @@ export default function AutocompleteInjected({ onSubmit }: Props) {
   useDomEvents(searchFormRef, {
     onSubmit: e => {
       e.preventDefault()
-      onSearchSubmit(input)
+      if (redirect) {
+        // Direct navigation is intentional for redirect rules (can be external URLs)
+        window.location.href = redirect
+      } else {
+        onSearchSubmit(input)
+      }
     }
   })
 

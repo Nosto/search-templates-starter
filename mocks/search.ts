@@ -3,13 +3,12 @@ import { mockKeywords } from "./keywords"
 import { generateMockProducts } from "./products"
 
 /**
- * Mock search function that returns mock data for testing purposes
+ * Creates a search result with optional redirect
  */
-export async function mockSearch(query: SearchQuery) {
-  const from = query.products?.from || 0
-  const size = query.products?.size || 24
+function createSearchResult(searchQuery: string, from: number, size: number, redirect?: string): SearchResult {
   return {
-    query: query.query || "shoes",
+    query: searchQuery,
+    redirect,
     products: {
       from,
       size,
@@ -23,4 +22,20 @@ export async function mockSearch(query: SearchQuery) {
       hits: mockKeywords.hits
     }
   } satisfies SearchResult
+}
+
+/**
+ * Mock search function that returns mock data for testing purposes
+ */
+export async function mockSearch(query: SearchQuery) {
+  const from = query.products?.from || 0
+  const size = query.products?.size || 24
+  const searchQuery = query.query || "shoes"
+
+  // Return redirect for specific test query
+  if (searchQuery === "redirect-test") {
+    return createSearchResult(searchQuery, from, size, "https://example.com/redirected-page")
+  }
+
+  return createSearchResult(searchQuery, from, size)
 }

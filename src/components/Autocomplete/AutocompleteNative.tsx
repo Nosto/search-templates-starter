@@ -5,6 +5,7 @@ import { useAutocomplete } from "./useAutocomplete"
 import SpeechToTextButton from "./SpeechToText/SpeechToText"
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 import { OnSubmitProvider } from "./OnSubmitContext"
+import { useNostoAppState } from "@nosto/search-js/preact/hooks"
 
 type Props = {
   onSubmit: (input: string, options?: SearchAnalyticsOptions) => void
@@ -13,6 +14,8 @@ type Props = {
 export default function AutocompleteNative({ onSubmit }: Props) {
   const autocompleteRef = useRef<HTMLFormElement>(null)
   const searchInputRef = useRef<HTMLInputElement>(null)
+
+  const redirect = useNostoAppState(state => state.response?.redirect)
 
   const { input, showAutocomplete, setInput, setShowAutocomplete, onSearchSubmit, onKeyDown } = useAutocomplete({
     onSubmit,
@@ -25,7 +28,12 @@ export default function AutocompleteNative({ onSubmit }: Props) {
       ref={autocompleteRef}
       onSubmit={e => {
         e.preventDefault()
-        onSearchSubmit(input)
+        if (redirect) {
+          // Direct navigation is intentional for redirect rules (can be external URLs)
+          window.location.href = redirect
+        } else {
+          onSearchSubmit(input)
+        }
       }}
     >
       <OnSubmitProvider onSubmit={onSearchSubmit}>
