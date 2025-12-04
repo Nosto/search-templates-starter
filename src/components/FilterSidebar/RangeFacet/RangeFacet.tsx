@@ -1,3 +1,4 @@
+import { useState } from "preact/hooks"
 import { useRange } from "@nosto/search-js/preact/hooks"
 import DualRange from "@/elements/DualRange/DualRange"
 import Icon from "@/elements/Icon/Icon"
@@ -7,11 +8,18 @@ import { cl } from "@nosto/search-js/utils"
 
 type Props = {
   facet: SearchStatsFacet
+  /** Whether the facet is initially expanded (default: false) */
+  defaultActive?: boolean
 }
 
-export default function RangeFacet({ facet }: Props) {
-  const { min, max, range, updateRange, active, toggleActive } = useRange(facet.id)
+export default function RangeFacet({ facet, defaultActive = false }: Props) {
+  const { min, max, range, updateRange } = useRange(facet.id)
+  const [active, setActive] = useState(defaultActive)
   const isSelected = min !== range[0] || max !== range[1]
+
+  const toggleActive = () => {
+    setActive(!active)
+  }
 
   return (
     <li className={cl(styles.dropdown, active && styles.active)}>

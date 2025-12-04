@@ -17,7 +17,8 @@ type Story = StoryObj<typeof RangeFacet>
 
 export const Default: Story = {
   args: {
-    facet: mockPriceFacet
+    facet: mockPriceFacet,
+    defaultActive: true
   }
 }
 
