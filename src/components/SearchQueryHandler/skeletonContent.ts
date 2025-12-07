@@ -9,7 +9,7 @@ export function createSkeletonContent(query: SearchQuery) {
     response: {
       products: {
         facets: [],
-        hits: Array.from({ length: defaultSize }, () => mockProduct),
+        hits: Array.from({ length: defaultSize }, (_, i) => ({ ...mockProduct, productId: `skeleton-product-${i}` })),
         from: 0,
         size: defaultSize,
         total: defaultSize
