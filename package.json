@@ -36,7 +36,7 @@
   "devDependencies": {
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
-    "@nosto/nosto-cli": "^1.1.1",
+    "@nosto/nosto-cli": "^1.2.1",
     "@nosto/nosto-js": "^2.9.3",
     "@nosto/search-js": "^3.24.1",
     "@nosto/web-components": "^10.7.1",
