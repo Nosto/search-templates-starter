@@ -3,14 +3,14 @@ import { useState } from "preact/hooks"
 import DualRange from "./DualRange"
 import { withContainer } from ".storybook/decorators"
 
-const DualRangeWithState = (props: {
+function DualRangeWithState(props: {
   min: number
   max: number
   value: [number | undefined, number | undefined]
   onChange?: (value: [number | undefined, number | undefined]) => void
   className?: string
   id?: string
-}) => {
+}) {
   const [internalValue, setInternalValue] = useState<[number | undefined, number | undefined]>(props.value)
 
   const handleChange = (newValue: [number | undefined, number | undefined]) => {
