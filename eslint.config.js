@@ -42,6 +42,7 @@ export default tseslint.config(
     },
     files: ["**/*.{js,ts,tsx}"]
   },
+  eslintConfigPrettier,
   {
     files: ["**/*.{js,ts,tsx}"],
     rules: {
@@ -58,7 +59,6 @@ export default tseslint.config(
       ]
     }
   },
-  eslintConfigPrettier,
   eslintPluginPrettierRecommended,
   storybook.configs["flat/recommended"]
 )
