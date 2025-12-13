@@ -6,6 +6,14 @@ import { visualizer } from "rollup-plugin-visualizer"
 
 const dirname = import.meta.dirname
 
+// Shared configuration
+const SERVER_PORT = 8000
+const RESOLVE_ALIASES = {
+  "@": resolve(dirname, "src"),
+  "@mocks": resolve(dirname, "mocks"),
+  ".storybook": resolve(dirname, ".storybook")
+}
+
 export default defineConfig(({ mode = "injected" }) => {
   const plugins = [preact(), devEnvironmentPlugin()]
 
@@ -32,14 +40,10 @@ export default defineConfig(({ mode = "injected" }) => {
       },
       plugins,
       server: {
-        port: 8000
+        port: SERVER_PORT
       },
       resolve: {
-        alias: {
-          "@": resolve(dirname, "src"),
-          "@mocks": resolve(dirname, "mocks"),
-          ".storybook": resolve(dirname, ".storybook")
-        }
+        alias: RESOLVE_ALIASES
       }
     }
   }
@@ -61,7 +65,7 @@ export default defineConfig(({ mode = "injected" }) => {
     },
     plugins,
     server: {
-      port: 8000
+      port: SERVER_PORT
     },
     test: {
       globals: true,
@@ -70,11 +74,7 @@ export default defineConfig(({ mode = "injected" }) => {
       exclude: ["node_modules/**", "test/e2e/**"]
     },
     resolve: {
-      alias: {
-        "@": resolve(dirname, "src"),
-        "@mocks": resolve(dirname, "mocks"),
-        ".storybook": resolve(dirname, ".storybook")
-      }
+      alias: RESOLVE_ALIASES
     }
   }
 })
