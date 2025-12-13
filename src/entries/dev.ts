@@ -3,12 +3,39 @@ import { mockNostojs } from "@nosto/nosto-js/testing"
 import { mockSearch } from "@mocks/search"
 import { init, nostojs } from "@nosto/nosto-js"
 
-// @ts-expect-error -- ENV VARIABLES --
-const { MODE, VITE_MERCHANT_ID, VITE_MERCHANT_DOMAIN } = import.meta.env
+const { merchantId, domain, category, mode } = getContext()
 
-if (VITE_MERCHANT_DOMAIN) {
+type Context = {
+  mode: string
+  merchantId: string
+  domain?: string
+  category?: string
+}
+
+function getContext(): Context {
+  // @ts-expect-error -- ENV VARIABLES --
+  const { MODE, VITE_MERCHANT_ID, VITE_MERCHANT_DOMAIN } = import.meta.env
+  if (MODE === "demo") {
+    // get context from URL params in demo mode
+    const url = new URL(window.location.href)
+    return {
+      mode: "demo",
+      merchantId: url.searchParams.get("merchant")!,
+      domain: url.searchParams.get("domain") ?? undefined,
+      category: url.searchParams.get("category") ?? undefined
+    }
+  }
+  // get context from env variables in other modes
+  return {
+    mode: MODE,
+    merchantId: VITE_MERCHANT_ID,
+    domain: VITE_MERCHANT_DOMAIN
+  }
+}
+
+if (domain) {
   window.Shopify = {
-    shop: VITE_MERCHANT_DOMAIN
+    shop: domain
   }
 }
 
@@ -31,7 +58,7 @@ function logAnalyticsEvents() {
 }
 
 function renderApp() {
-  if (MODE === "injected" || MODE === "mocked") {
+  if (mode !== "native") {
     import("@/entries/injected.tsx")
     return
   }
@@ -40,7 +67,7 @@ function renderApp() {
 }
 
 function setupNosto() {
-  if (MODE === "mocked") {
+  if (mode === "mocked") {
     mockNostojs({
       pageTagging: () => ({ pageType: "search" }),
       search: mockSearch,
@@ -50,7 +77,15 @@ function setupNosto() {
     return
   }
 
-  nostojs(api => api.setTaggingProvider("pageType", "search"))
+  if (category) {
+    nostojs(api => {
+      api.setTaggingProvider("pageType", "category")
+      api.setTaggingProvider("categories", [category])
+    })
+  } else {
+    nostojs(api => api.setTaggingProvider("pageType", "search"))
+  }
+
   Object.assign(window, {
     nostoab: {
       settings: {
@@ -60,7 +95,7 @@ function setupNosto() {
     }
   })
   init({
-    merchantId: VITE_MERCHANT_ID
+    merchantId
   })
   renderApp()
   logAnalyticsEvents()

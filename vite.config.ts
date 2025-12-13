@@ -22,6 +22,28 @@ export default defineConfig(({ mode = "injected" }) => {
     )
   }
 
+  if (mode === "demo") {
+    return {
+      build: {
+        outDir: "build",
+        rollupOptions: {
+          input: resolve(dirname, "./index.html")
+        }
+      },
+      plugins,
+      server: {
+        port: 8000
+      },
+      resolve: {
+        alias: {
+          "@": resolve(dirname, "src"),
+          "@mocks": resolve(dirname, "mocks"),
+          ".storybook": resolve(dirname, ".storybook")
+        }
+      }
+    }
+  }
+
   return {
     build: {
       outDir: "build",
