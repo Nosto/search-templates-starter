@@ -20,6 +20,7 @@
     "dev:mocked": "vite --mode mocked",
     "build": "npm run typecheck && vite build --mode injected",
     "build:native": "npm run typecheck && vite build --mode native",
+    "build:demo": "npm run typecheck && vite build --mode demo",
     "test": "vitest --run",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",

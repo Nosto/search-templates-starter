@@ -1,4 +1,4 @@
-name: Deploy Storybook to GitHub Pages
+name: Deploy content to GitHub Pages
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy-storybook:
-    name: Deploy Storybook
+    name: Deploy Pages content
     runs-on: ubuntu-latest
     # Only run if ENABLE_STORYBOOK_DEPLOY is set to 'true'
     if: vars.ENABLE_STORYBOOK_DEPLOY == 'true'
@@ -36,11 +36,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Build demo app
+        run: npm run build:demo
+
       - name: Build Storybook
         run: npm run storybook:build
 
       - name: Create pages structure
         run: |
+          mkdir -p pages/demo
+          cp -r build/* pages/demo/
           mkdir -p pages/storybook
           cp -r storybook-static/* pages/storybook/
 
