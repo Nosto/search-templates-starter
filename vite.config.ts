@@ -1,6 +1,7 @@
 import { resolve } from "path"
 import { defineConfig } from "vitest/config"
 import { devEnvironmentPlugin } from "./src/plugins/devEnvironmentPlugin"
+import { demoBasePlugin } from "./src/plugins/demoBasePlugin"
 import preact from "@preact/preset-vite"
 import { visualizer } from "rollup-plugin-visualizer"
 
@@ -30,7 +31,7 @@ export default defineConfig(({ mode = "injected" }) => {
           input: resolve(dirname, "./index.html")
         }
       },
-      plugins,
+      plugins: [...plugins, demoBasePlugin()],
       server: {
         port: 8000
       },
