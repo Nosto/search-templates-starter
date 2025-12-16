@@ -28,3 +28,6 @@ jobs:
 
       - name: Install JavaScript dependencies
         run: npm ci
+
+      - name: Audit dependencies
+        run: npm audit --audit-level=critical
