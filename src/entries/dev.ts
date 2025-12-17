@@ -70,6 +70,8 @@ function setupNosto() {
   if (mode === "mocked") {
     mockNostojs({
       pageTagging: () => ({ pageType: "search" }),
+      // @ts-expect-error partial mock
+      pageTaggingAsync: async () => ({ pageType: "search" }),
       search: mockSearch,
       recordSearchSubmit: () => Promise.resolve()
     })
