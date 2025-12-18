@@ -82,7 +82,9 @@ function DefaultApp() {
 }
 
 async function init() {
-  await new Promise(nostojs)
+  const api = await new Promise(nostojs)
+  // wait for tagging to be available
+  await api.pageTaggingAsync()
   const dummy = document.createElement("div")
   switch (tagging.pageType()) {
     case "category":
