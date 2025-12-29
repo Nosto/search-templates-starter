@@ -63,7 +63,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-storybook": "10.1.11",
     "husky": "^9.1.7",
-    "jsdom": "^27.3.0",
+    "jsdom": "^27.4.0",
     "preact": "^10.28.1",
     "prettier": "^3.7.4",
     "rollup-plugin-visualizer": "^6.0.5",
