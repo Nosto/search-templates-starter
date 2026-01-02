@@ -20,8 +20,8 @@ export default function DualRange({ min, max, value, onChange, className, id }: 
 
   // Use drag values during dragging, otherwise use the prop values
   const currentValues = isDragging ? dragValues : value
-  const minValue = currentValues[0] ?? min
-  const maxValue = currentValues[1] ?? max
+  const minValue = Math.max(currentValues[0] ?? min, min)
+  const maxValue = Math.min(currentValues[1] ?? max, max)
 
   const getPercentage = useCallback(
     (val: number) => {
