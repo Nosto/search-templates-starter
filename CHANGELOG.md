@@ -1,3 +1,11 @@
+## [1.7.1](https://github.com/Nosto/search-templates-starter/compare/v1.7.0...v1.7.1) (2026-01-07)
+
+
+### Bug Fixes
+
+* add repository entry in package.json ([80bb5cd](https://github.com/Nosto/search-templates-starter/commit/80bb5cd7219ac69f0006d16fb8c44e60b3ba2b59))
+* use correct repo URL ([8deb635](https://github.com/Nosto/search-templates-starter/commit/8deb6355ad049b6df75b0da948f4877441dabcdf))
+
 # [1.7.0](https://github.com/Nosto/search-templates-starter/compare/v1.6.0...v1.7.0) (2026-01-07)
 
 
