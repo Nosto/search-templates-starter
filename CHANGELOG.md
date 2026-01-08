@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/Nosto/search-templates-starter/compare/v1.7.1...v1.8.0) (2026-01-08)
+
+
+### Features
+
+* extend autocomplete sections ([e2336e2](https://github.com/Nosto/search-templates-starter/commit/e2336e2914d72af949192b859481741531e90e20))
+
 ## [1.7.1](https://github.com/Nosto/search-templates-starter/compare/v1.7.0...v1.7.1) (2026-01-07)
 
 
