@@ -40,5 +40,20 @@ export default function SearchQueryHandler() {
     updateUrlFromQuery({ from, size, query, filter, sort })
   }, [query, from, size, filter, sort])
 
+  // Handle browser back/forward navigation
+  useEffect(() => {
+    function handlePopState() {
+      const query = getQueryFromUrlState()
+      // execute search with new URL state
+      newSearch(query)
+    }
+
+    window.addEventListener("popstate", handlePopState)
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState)
+    }
+  }, [newSearch])
+
   return null
 }
