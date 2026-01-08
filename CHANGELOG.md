@@ -1,3 +1,15 @@
+# [1.11.0](https://github.com/Nosto/search-templates-starter/compare/v1.10.0...v1.11.0) (2026-01-08)
+
+
+### Bug Fixes
+
+* add setInput to dependency array to satisfy exhaustive-deps ([dcb8c93](https://github.com/Nosto/search-templates-starter/commit/dcb8c9302622e86fd7c93063cc9d2ed8c6ccfe52))
+
+
+### Features
+
+* add popstate event listener to sync URL query with search input ([ab03a9a](https://github.com/Nosto/search-templates-starter/commit/ab03a9ae425287009a54fbb97ce81dc5ee17657c))
+
 # [1.10.0](https://github.com/Nosto/search-templates-starter/compare/v1.9.0...v1.10.0) (2026-01-08)
 
 
