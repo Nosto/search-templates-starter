@@ -44,13 +44,8 @@ export default function SearchQueryHandler() {
   useEffect(() => {
     function handlePopState() {
       const query = getQueryFromUrlState()
-      const isResultsPage = (pageType === "search" && query.query) || pageType === "category"
-      if (isResultsPage) {
-        // init store with skeleton content to avoid layout shift
-        store.updateState(createSkeletonContent(query))
-        // execute search with new URL state
-        newSearch(query)
-      }
+      // execute search with new URL state
+      newSearch(query)
     }
 
     window.addEventListener("popstate", handlePopState)
@@ -58,7 +53,7 @@ export default function SearchQueryHandler() {
     return () => {
       window.removeEventListener("popstate", handlePopState)
     }
-  }, [store, newSearch, pageType])
+  }, [newSearch])
 
   return null
 }
