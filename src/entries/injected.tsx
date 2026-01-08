@@ -15,7 +15,6 @@ import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import Portal from "@/elements/Portal/Portal"
 import AutocompleteInjected from "@/components/Autocomplete/AutocompleteInjected"
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
-import { searchRedirect } from "./searchRedirect"
 import { searchNavigate } from "./searchNavigate"
 
 type AutocompleteProps = {
@@ -91,9 +90,9 @@ function App() {
 
   function onSearch(query: string) {
     if (redirectOnSearch) {
-      searchRedirect(query)
-    } else {
       searchNavigate(query)
+    } else {
+      searchNavigate(query, "history")
       setPageType("search")
     }
   }
