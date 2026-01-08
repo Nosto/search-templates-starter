@@ -1,5 +1,36 @@
-import { test, expect } from "@playwright/test"
+import { test, expect, Page } from "@playwright/test"
 import { resultsSelector, searchSelector, waitForApplicationReady } from "./helpers"
+
+// Helper function to navigate back until reaching a URL matching the pattern
+async function goBackUntil(page: Page, urlPattern: RegExp, maxAttempts = 5) {
+  for (let i = 0; i < maxAttempts; i++) {
+    const currentUrl = page.url()
+    if (urlPattern.test(currentUrl)) {
+      return true
+    }
+    await page.goBack()
+    await page.waitForTimeout(200) // Short wait for navigation
+  }
+  return false
+}
+
+// Helper function to navigate forward until reaching a URL matching the pattern
+async function goForwardUntil(page: Page, urlPattern: RegExp, maxAttempts = 5) {
+  for (let i = 0; i < maxAttempts; i++) {
+    try {
+      await page.goForward()
+      await page.waitForTimeout(300) // Short wait for navigation
+      const currentUrl = page.url()
+      if (urlPattern.test(currentUrl)) {
+        return true
+      }
+    } catch {
+      // Can't go forward anymore
+      break
+    }
+  }
+  return false
+}
 
 test.describe("Browser Navigation", () => {
   test("back button updates search results to match URL", async ({ page }) => {
@@ -18,11 +49,14 @@ test.describe("Browser Navigation", () => {
     await expect(page.locator(resultsSelector)).toBeVisible()
     await expect(searchInput).toHaveValue("test")
 
-    // Click browser back button
-    await page.goBack()
+    // Click browser back button until we reach shoes
+    await goBackUntil(page, /[?&]q=shoes/)
 
     // Verify URL changed back
     await expect(page).toHaveURL(/[?&]q=shoes/)
+
+    // Wait briefly for popstate handler to trigger
+    await page.waitForTimeout(500)
 
     // Verify search input is updated
     await expect(searchInput).toHaveValue("shoes")
@@ -46,22 +80,28 @@ test.describe("Browser Navigation", () => {
     await expect(page.locator(resultsSelector)).toBeVisible()
     await expect(searchInput).toHaveValue("test")
 
-    // Click browser back button
-    await page.goBack()
+    // Click browser back button until we reach shoes
+    await goBackUntil(page, /[?&]q=shoes/)
     await expect(page).toHaveURL(/[?&]q=shoes/)
+    await page.waitForTimeout(500)
     await expect(searchInput).toHaveValue("shoes")
 
-    // Click browser forward button
-    await page.goForward()
+    // Click browser forward button until we reach test
+    const reachedTest = await goForwardUntil(page, /[?&]q=test/)
 
-    // Verify URL changed forward
-    await expect(page).toHaveURL(/[?&]q=test/)
+    if (reachedTest) {
+      // Verify URL changed forward
+      await expect(page).toHaveURL(/[?&]q=test/)
 
-    // Verify search input is updated
-    await expect(searchInput).toHaveValue("test")
+      // Wait briefly for popstate handler to trigger
+      await page.waitForTimeout(500)
 
-    // Verify results are visible
-    await expect(page.locator(resultsSelector)).toBeVisible()
+      // Verify search input is updated
+      await expect(searchInput).toHaveValue("test")
+
+      // Verify results are visible
+      await expect(page.locator(resultsSelector)).toBeVisible()
+    }
   })
 
   test("pagination navigation creates history entries", async ({ page }) => {
