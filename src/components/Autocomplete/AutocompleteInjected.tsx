@@ -47,6 +47,7 @@ export default function AutocompleteInjected({ onSubmit }: Props) {
     return () => {
       window.removeEventListener("popstate", handlePopState)
     }
+    // setInput is stable but included to satisfy exhaustive-deps
   }, [setInput])
 
   useDomEvents(searchInputRef, {
