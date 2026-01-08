@@ -98,10 +98,11 @@ function DefaultApp({
 function SearchModeWrapper({ query, options }: SearchTriggerDetail) {
   const { newSearch } = useActions()
 
-  // Trigger search when mounted
+  // Trigger search only once when mounted with this query
   useEffect(() => {
     newSearch({ query }, options)
-  }, [newSearch, query, options])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return <SerpApp />
 }
@@ -137,7 +138,8 @@ async function init() {
   const api = await new Promise(nostojs)
   // wait for tagging to be available
   await api.pageTaggingAsync()
-  const initialMode = (tagging.pageType() || "default") as PageMode
+  const pageType = tagging.pageType()
+  const initialMode: PageMode = pageType === "search" || pageType === "category" ? pageType : "default"
   const dummy = document.createElement("div")
   render(<App initialMode={initialMode} />, dummy)
 }
