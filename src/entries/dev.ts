@@ -15,21 +15,12 @@ type Context = {
 function getContext(): Context {
   // @ts-expect-error -- ENV VARIABLES --
   const { MODE, VITE_MERCHANT_ID, VITE_MERCHANT_DOMAIN } = import.meta.env
-  if (MODE === "demo") {
-    // get context from URL params in demo mode
-    const url = new URL(window.location.href)
-    return {
-      mode: "demo",
-      merchantId: url.searchParams.get("merchant")!,
-      domain: url.searchParams.get("domain") ?? undefined,
-      category: url.searchParams.get("category") ?? undefined
-    }
-  }
-  // get context from env variables in other modes
+  const url = new URL(window.location.href)
   return {
     mode: MODE,
-    merchantId: VITE_MERCHANT_ID,
-    domain: VITE_MERCHANT_DOMAIN
+    merchantId: url.searchParams.get("merchant") ?? VITE_MERCHANT_ID,
+    domain: url.searchParams.get("domain") ?? VITE_MERCHANT_DOMAIN,
+    category: url.searchParams.get("category") ?? undefined
   }
 }
 
