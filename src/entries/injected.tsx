@@ -1,6 +1,6 @@
 import { SearchPageProvider } from "@nosto/search-js/preact/serp"
 import { AutocompletePageProvider } from "@nosto/search-js/preact/autocomplete"
-import { render, useCallback } from "preact/compat"
+import { render, useCallback, useEffect, useState } from "preact/compat"
 import Serp from "@/components/Serp/Serp"
 import "@/variables.css"
 import SearchQueryHandler from "@/components/SearchQueryHandler/SearchQueryHandler"
@@ -15,7 +15,13 @@ import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import Portal from "@/elements/Portal/Portal"
 import AutocompleteInjected from "@/components/Autocomplete/AutocompleteInjected"
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
-import { searchRedirect } from "./searchRedirect"
+
+type PageMode = "search" | "category" | "default"
+
+type SearchTriggerDetail = {
+  query: string
+  options?: SearchAnalyticsOptions
+}
 
 type AutocompleteProps = {
   onSubmit: (query: string, options?: SearchAnalyticsOptions) => void
@@ -59,12 +65,16 @@ function SerpApp() {
   )
 }
 
-function CategoryApp() {
+function CategoryApp({
+  onSwitchToSearch
+}: {
+  onSwitchToSearch: (query: string, options?: SearchAnalyticsOptions) => void
+}) {
   return (
     <ErrorBoundary>
       <SearchQueryHandler />
       <SidebarProvider>
-        <Autocomplete onSubmit={searchRedirect} />
+        <Autocomplete onSubmit={onSwitchToSearch} />
         <Portal target={selectors.results} clear>
           <Category />
         </Portal>
@@ -73,39 +83,62 @@ function CategoryApp() {
   )
 }
 
-function DefaultApp() {
+function DefaultApp({
+  onSwitchToSearch
+}: {
+  onSwitchToSearch: (query: string, options?: SearchAnalyticsOptions) => void
+}) {
   return (
     <ErrorBoundary>
-      <Autocomplete onSubmit={searchRedirect} />
+      <Autocomplete onSubmit={onSwitchToSearch} />
     </ErrorBoundary>
   )
+}
+
+function SearchModeWrapper({ query, options }: SearchTriggerDetail) {
+  const { newSearch } = useActions()
+
+  // Trigger search when mounted
+  useEffect(() => {
+    newSearch({ query }, options)
+  }, [newSearch, query, options])
+
+  return <SerpApp />
+}
+
+function App({ initialMode }: { initialMode: PageMode }) {
+  const [mode, setMode] = useState<PageMode>(initialMode)
+  const [searchTrigger, setSearchTrigger] = useState<SearchTriggerDetail | null>(null)
+
+  const switchToSearch = useCallback((query: string, options?: SearchAnalyticsOptions) => {
+    setSearchTrigger({ query, options })
+    setMode("search")
+  }, [])
+
+  switch (mode) {
+    case "search":
+      return (
+        <SearchPageProvider config={serpConfig}>
+          {searchTrigger ? <SearchModeWrapper {...searchTrigger} /> : <SerpApp />}
+        </SearchPageProvider>
+      )
+    case "category":
+      return (
+        <CategoryPageProvider config={categoryConfig}>
+          <CategoryApp onSwitchToSearch={switchToSearch} />
+        </CategoryPageProvider>
+      )
+    default:
+      return <DefaultApp onSwitchToSearch={switchToSearch} />
+  }
 }
 
 async function init() {
   const api = await new Promise(nostojs)
   // wait for tagging to be available
   await api.pageTaggingAsync()
+  const initialMode = (tagging.pageType() || "default") as PageMode
   const dummy = document.createElement("div")
-  switch (tagging.pageType()) {
-    case "category":
-      render(
-        <CategoryPageProvider config={categoryConfig}>
-          <CategoryApp />
-        </CategoryPageProvider>,
-        dummy
-      )
-      break
-    case "search":
-      render(
-        <SearchPageProvider config={serpConfig}>
-          <SerpApp />
-        </SearchPageProvider>,
-        dummy
-      )
-      break
-    default:
-      render(<DefaultApp />, dummy)
-      break
-  }
+  render(<App initialMode={initialMode} />, dummy)
 }
 init()
