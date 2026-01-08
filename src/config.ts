@@ -27,6 +27,11 @@ export const infiniteScroll = false
  */
 export const skeletonLoading = true
 
+/**
+ * Enable or disable search redirect on search form submit
+ */
+export const redirectOnSearch = true
+
 export const shopifyMode = !!window.Shopify
 
 /**

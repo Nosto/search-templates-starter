@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest"
-import { searchRedirect } from "@/entries/searchRedirect"
+import { searchNavigate } from "@/entries/searchNavigate"
 
-describe("searchRedirect", () => {
+describe("searchNavigate", () => {
   let originalLocation: Location
 
   beforeEach(() => {
@@ -40,13 +40,13 @@ describe("searchRedirect", () => {
 
   it("sets location.href with query parameter", () => {
     const getHref = mockLocationHref()
-    searchRedirect("test query")
+    searchNavigate("test query")
     expect(getHref()).toBe("https://example.com/search?q=test+query")
   })
 
   it("properly encodes special characters in query", () => {
     const getHref = mockLocationHref()
-    searchRedirect("test & query")
+    searchNavigate("test & query")
     expect(getHref()).toBe("https://example.com/search?q=test+%26+query")
   })
 })

@@ -1,11 +1,11 @@
 import { SearchPageProvider } from "@nosto/search-js/preact/serp"
 import { AutocompletePageProvider } from "@nosto/search-js/preact/autocomplete"
-import { render, useCallback } from "preact/compat"
+import { render, useCallback, useState } from "preact/compat"
 import Serp from "@/components/Serp/Serp"
 import "@/variables.css"
 import SearchQueryHandler from "@/components/SearchQueryHandler/SearchQueryHandler"
 import { SidebarProvider } from "@/contexts/SidebarContext"
-import { autocompleteConfig, categoryConfig, selectors, serpConfig } from "@/config"
+import { autocompleteConfig, categoryConfig, redirectOnSearch, selectors, serpConfig } from "@/config"
 import { useActions } from "@nosto/search-js/preact/hooks"
 import Category from "@/components/Category/Category"
 import { CategoryPageProvider } from "@nosto/search-js/preact/category"
@@ -15,7 +15,7 @@ import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import Portal from "@/elements/Portal/Portal"
 import AutocompleteInjected from "@/components/Autocomplete/AutocompleteInjected"
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
-import { searchRedirect } from "./searchRedirect"
+import { searchNavigate } from "./searchNavigate"
 
 type AutocompleteProps = {
   onSubmit: (query: string, options?: SearchAnalyticsOptions) => void
@@ -43,6 +43,10 @@ function Autocomplete({ onSubmit }: AutocompleteProps) {
   )
 }
 
+type AppProps = {
+  onSearch: (query: string, options?: SearchAnalyticsOptions) => void
+}
+
 function SerpApp() {
   const { newSearch } = useActions()
 
@@ -59,12 +63,12 @@ function SerpApp() {
   )
 }
 
-function CategoryApp() {
+function CategoryApp({ onSearch }: AppProps) {
   return (
     <ErrorBoundary>
       <SearchQueryHandler />
       <SidebarProvider>
-        <Autocomplete onSubmit={searchRedirect} />
+        <Autocomplete onSubmit={onSearch} />
         <Portal target={selectors.results} clear>
           <Category />
         </Portal>
@@ -73,12 +77,42 @@ function CategoryApp() {
   )
 }
 
-function DefaultApp() {
+function DefaultApp({ onSearch }: AppProps) {
   return (
     <ErrorBoundary>
-      <Autocomplete onSubmit={searchRedirect} />
+      <Autocomplete onSubmit={onSearch} />
     </ErrorBoundary>
   )
+}
+
+function App() {
+  const [pageType, setPageType] = useState(() => tagging.pageType())
+
+  function onSearch(query: string) {
+    if (redirectOnSearch) {
+      searchNavigate(query)
+    } else {
+      searchNavigate(query, "history")
+      setPageType("search")
+    }
+  }
+
+  switch (pageType) {
+    case "category":
+      return (
+        <CategoryPageProvider config={categoryConfig}>
+          <CategoryApp onSearch={onSearch} />
+        </CategoryPageProvider>
+      )
+    case "search":
+      return (
+        <SearchPageProvider config={serpConfig}>
+          <SerpApp />
+        </SearchPageProvider>
+      )
+    default:
+      return <DefaultApp onSearch={onSearch} />
+  }
 }
 
 async function init() {
@@ -86,26 +120,6 @@ async function init() {
   // wait for tagging to be available
   await api.pageTaggingAsync()
   const dummy = document.createElement("div")
-  switch (tagging.pageType()) {
-    case "category":
-      render(
-        <CategoryPageProvider config={categoryConfig}>
-          <CategoryApp />
-        </CategoryPageProvider>,
-        dummy
-      )
-      break
-    case "search":
-      render(
-        <SearchPageProvider config={serpConfig}>
-          <SerpApp />
-        </SearchPageProvider>,
-        dummy
-      )
-      break
-    default:
-      render(<DefaultApp />, dummy)
-      break
-  }
+  render(<App />, dummy)
 }
 init()
