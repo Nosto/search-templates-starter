@@ -6,6 +6,7 @@ import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 import { OnSubmitProvider } from "./OnSubmitContext"
 import { useRef, useEffect } from "preact/hooks"
 import { useNostoAppState } from "@nosto/search-js/preact/hooks"
+import { QUERY_PARAM } from "@/mapping/url/constants"
 
 type Props = {
   onSubmit: (input: string, options?: SearchAnalyticsOptions) => void
@@ -30,6 +31,23 @@ export default function AutocompleteInjected({ onSubmit }: Props) {
     clickOutsideTargetRef: dropdownRef,
     isInjected: true
   })
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const searchParams = new URLSearchParams(window.location.search)
+      const query = searchParams.get(QUERY_PARAM) || ""
+      if (searchInputRef.current) {
+        searchInputRef.current.value = query
+        setInput(query)
+      }
+    }
+
+    window.addEventListener("popstate", handlePopState)
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState)
+    }
+  }, [setInput])
 
   useDomEvents(searchInputRef, {
     onInput: () => setInput(searchInputRef.current?.value || ""),
