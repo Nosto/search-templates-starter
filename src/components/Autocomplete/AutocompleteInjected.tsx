@@ -33,12 +33,11 @@ export default function AutocompleteInjected({ onSubmit }: Props) {
   })
 
   useEffect(() => {
-    const handlePopState = () => {
+    function handlePopState() {
       const searchParams = new URLSearchParams(window.location.search)
       const query = searchParams.get(QUERY_PARAM) || ""
-      if (searchInputRef.current) {
+      if (searchInputRef.current && query) {
         searchInputRef.current.value = query
-        setInput(query)
       }
     }
 
@@ -47,8 +46,7 @@ export default function AutocompleteInjected({ onSubmit }: Props) {
     return () => {
       window.removeEventListener("popstate", handlePopState)
     }
-    // setInput is stable but included to satisfy exhaustive-deps
-  }, [setInput])
+  }, [])
 
   useDomEvents(searchInputRef, {
     onInput: () => setInput(searchInputRef.current?.value || ""),
