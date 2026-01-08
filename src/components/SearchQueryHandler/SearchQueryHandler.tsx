@@ -42,14 +42,12 @@ export default function SearchQueryHandler() {
 
   // Handle browser back/forward navigation
   useEffect(() => {
-    const handlePopState = () => {
+    function handlePopState() {
       const query = getQueryFromUrlState()
       const isResultsPage = (pageType === "search" && query.query) || pageType === "category"
       if (isResultsPage) {
-        if (skeletonLoading) {
-          // init store with skeleton content to avoid layout shift
-          store.updateState(createSkeletonContent(query))
-        }
+        // init store with skeleton content to avoid layout shift
+        store.updateState(createSkeletonContent(query))
         // execute search with new URL state
         newSearch(query)
       }
