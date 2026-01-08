@@ -348,7 +348,7 @@ describe("URL utilities", () => {
 
       Object.defineProperty(window, "history", {
         value: {
-          replaceState: vi.fn()
+          pushState: vi.fn()
         },
         writable: true
       })
@@ -357,20 +357,20 @@ describe("URL utilities", () => {
     it("updates URL with query parameters", () => {
       const state = { query: "test search", page: 2 }
       updateUrl(state)
-      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?q=test+search&p=2")
+      expect(window.history.pushState).toHaveBeenCalledWith(null, "", "/?q=test+search&p=2")
     })
 
     it("updates URL without parameters when state is empty", () => {
       const state = {}
       updateUrl(state)
-      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/")
+      expect(window.history.pushState).toHaveBeenCalledWith(null, "", "/")
     })
 
     it("preserves pathname", () => {
       window.location.pathname = "/some/path"
       const state = { query: "test" }
       updateUrl(state)
-      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/some/path?q=test")
+      expect(window.history.pushState).toHaveBeenCalledWith(null, "", "/some/path?q=test")
     })
 
     it("updates URL with filter parameters", () => {
@@ -382,7 +382,7 @@ describe("URL utilities", () => {
         ]
       }
       updateUrl(state)
-      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?q=shoes&filter.brand=Nike&filter.color=Red")
+      expect(window.history.pushState).toHaveBeenCalledWith(null, "", "/?q=shoes&filter.brand=Nike&filter.color=Red")
     })
 
     it("updates URL with query, page, and filter parameters", () => {
@@ -392,13 +392,13 @@ describe("URL utilities", () => {
         filter: [{ field: "category", value: ["sports"] }]
       }
       updateUrl(state)
-      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?q=sneakers&p=3&filter.category=sports")
+      expect(window.history.pushState).toHaveBeenCalledWith(null, "", "/?q=sneakers&p=3&filter.category=sports")
     })
 
     it("updates URL with only filter parameters", () => {
       const state = { filter: [{ field: "brand", value: ["Adidas"] }] }
       updateUrl(state)
-      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?filter.brand=Adidas")
+      expect(window.history.pushState).toHaveBeenCalledWith(null, "", "/?filter.brand=Adidas")
     })
 
     it("updates URL with array filter parameters", () => {
@@ -406,7 +406,7 @@ describe("URL utilities", () => {
         filter: [{ field: "brand", value: ["Nike", "Adidas", "Puma"] }]
       }
       updateUrl(state)
-      expect(window.history.replaceState).toHaveBeenCalledWith(
+      expect(window.history.pushState).toHaveBeenCalledWith(
         null,
         "",
         "/?filter.brand=Nike&filter.brand=Adidas&filter.brand=Puma"
@@ -417,7 +417,7 @@ describe("URL utilities", () => {
       window.location.search = "?q=shoes&utm_source=email&analytics=true"
       const state = { query: "sneakers", page: 2 }
       updateUrl(state)
-      expect(window.history.replaceState).toHaveBeenCalledWith(
+      expect(window.history.pushState).toHaveBeenCalledWith(
         null,
         "",
         "/?utm_source=email&analytics=true&q=sneakers&p=2"
@@ -431,7 +431,7 @@ describe("URL utilities", () => {
         filter: [{ field: "brand", value: ["Nike"] }]
       }
       updateUrl(state)
-      expect(window.history.replaceState).toHaveBeenCalledWith(
+      expect(window.history.pushState).toHaveBeenCalledWith(
         null,
         "",
         "/?utm_campaign=summer&ref=homepage&q=shoes&filter.brand=Nike"
@@ -442,14 +442,14 @@ describe("URL utilities", () => {
       window.location.search = "?tracking=abc123&source=direct"
       const state = {}
       updateUrl(state)
-      expect(window.history.replaceState).toHaveBeenCalledWith(null, "", "/?tracking=abc123&source=direct")
+      expect(window.history.pushState).toHaveBeenCalledWith(null, "", "/?tracking=abc123&source=direct")
     })
 
     it("handles unmapped parameters with special characters", () => {
       window.location.search = "?custom=value%20with%20spaces&other=test%26more"
       const state = { query: "test" }
       updateUrl(state)
-      expect(window.history.replaceState).toHaveBeenCalledWith(
+      expect(window.history.pushState).toHaveBeenCalledWith(
         null,
         "",
         "/?custom=value+with+spaces&other=test%26more&q=test"

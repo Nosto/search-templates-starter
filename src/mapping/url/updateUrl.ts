@@ -4,7 +4,7 @@ import { defaultSize, infiniteScroll } from "@/config"
 
 export function updateUrl(state: UrlQueryState) {
   const url = getUrlFromState(state)
-  window.history.replaceState(null, "", url)
+  window.history.pushState(null, "", url)
 }
 
 function toPageParameters(from: number | undefined, size: number) {
