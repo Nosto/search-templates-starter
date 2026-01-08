@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/Nosto/search-templates-starter/compare/v1.9.0...v1.10.0) (2026-01-08)
+
+
+### Features
+
+* add simple SPA mode for top level rendering ([a46d464](https://github.com/Nosto/search-templates-starter/commit/a46d464a190043b06a7df1d4836d2b4f70614c98))
+
 # [1.9.0](https://github.com/Nosto/search-templates-starter/compare/v1.8.0...v1.9.0) (2026-01-08)
 
 
