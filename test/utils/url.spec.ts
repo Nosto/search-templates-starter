@@ -339,6 +339,7 @@ describe("URL utilities", () => {
       // Mock window.location and window.history
       Object.defineProperty(window, "location", {
         value: {
+          href: "http://localhost:3000/",
           pathname: "/",
           search: "",
           origin: "http://localhost:3000"
@@ -360,10 +361,10 @@ describe("URL utilities", () => {
       expect(window.history.pushState).toHaveBeenCalledWith(null, "", "/?q=test+search&p=2")
     })
 
-    it("updates URL without parameters when state is empty", () => {
+    it("skips update URL without parameters when state is empty", () => {
       const state = {}
       updateUrl(state)
-      expect(window.history.pushState).toHaveBeenCalledWith(null, "", "/")
+      expect(window.history.pushState).not.toHaveBeenCalledWith(null, "", "/")
     })
 
     it("preserves pathname", () => {

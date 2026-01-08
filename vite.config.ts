@@ -67,6 +67,11 @@ export default defineConfig(({ mode = "injected" }) => {
     test: {
       globals: true,
       environment: "jsdom",
+      environmentOptions: {
+        jsdom: {
+          url: "http://localhost:3000"
+        }
+      },
       setupFiles: ["./test/vitest.setup.ts", "./test/msw.setup.ts"],
       exclude: ["node_modules/**", "test/e2e/**"]
     },

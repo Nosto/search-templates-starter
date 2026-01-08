@@ -4,6 +4,10 @@ import { defaultSize, infiniteScroll } from "@/config"
 
 export function updateUrl(state: UrlQueryState) {
   const url = getUrlFromState(state)
+  const absolute = new URL(url, window.location.href).toString()
+  if (window.location.href === absolute) {
+    return
+  }
   window.history.pushState(null, "", url)
 }
 
