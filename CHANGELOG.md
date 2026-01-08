@@ -1,3 +1,21 @@
+# [1.9.0](https://github.com/Nosto/search-templates-starter/compare/v1.8.0...v1.9.0) (2026-01-08)
+
+
+### Bug Fixes
+
+* update e2e tests to handle pushState history entries ([fa293ea](https://github.com/Nosto/search-templates-starter/commit/fa293eaf15b946d5969291c3826a510e54e2e5dd))
+* update e2e tests to handle pushState history entries ([f1bd1c9](https://github.com/Nosto/search-templates-starter/commit/f1bd1c9df657638da42a720560456bbff8752324))
+
+
+### Features
+
+* handle browser navigation (back/forward) in SearchQueryHandler ([58a88d7](https://github.com/Nosto/search-templates-starter/commit/58a88d717c18fd85ffd516fb0f77049c1f1b027e))
+
+
+### Reverts
+
+* undo e2e test changes from f1bd1c9 ([c5a0bf9](https://github.com/Nosto/search-templates-starter/commit/c5a0bf931784d4d632c3070960027f23c1feb8b4))
+
 # [1.8.0](https://github.com/Nosto/search-templates-starter/compare/v1.7.1...v1.8.0) (2026-01-08)
 
 
