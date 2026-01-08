@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test"
-import { resultsSelector, waitForApplicationReady } from "./helpers"
+import { resultsSelector, searchSelector, waitForApplicationReady } from "./helpers"
 
 test.describe("Browser Navigation", () => {
   test("back button updates search results to match URL", async ({ page }) => {
@@ -9,7 +9,7 @@ test.describe("Browser Navigation", () => {
     await expect(page.locator(resultsSelector)).toBeVisible()
 
     // Get the first search term from input to verify later
-    const searchInput = page.locator("#search")
+    const searchInput = page.locator(searchSelector)
     await expect(searchInput).toHaveValue("shoes")
 
     // Navigate to second search
@@ -37,7 +37,7 @@ test.describe("Browser Navigation", () => {
     await waitForApplicationReady(page)
     await expect(page.locator(resultsSelector)).toBeVisible()
 
-    const searchInput = page.locator("#search")
+    const searchInput = page.locator(searchSelector)
     await expect(searchInput).toHaveValue("shoes")
 
     // Navigate to second search
