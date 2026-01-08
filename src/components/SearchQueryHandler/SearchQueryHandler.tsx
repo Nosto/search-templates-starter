@@ -40,5 +40,27 @@ export default function SearchQueryHandler() {
     updateUrlFromQuery({ from, size, query, filter, sort })
   }, [query, from, size, filter, sort])
 
+  // Handle browser back/forward navigation
+  useEffect(() => {
+    const handlePopState = () => {
+      const query = getQueryFromUrlState()
+      const isResultsPage = (pageType === "search" && query.query) || pageType === "category"
+      if (isResultsPage) {
+        if (skeletonLoading) {
+          // init store with skeleton content to avoid layout shift
+          store.updateState(createSkeletonContent(query))
+        }
+        // execute search with new URL state
+        newSearch(query)
+      }
+    }
+
+    window.addEventListener("popstate", handlePopState)
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState)
+    }
+  }, [store, newSearch, pageType])
+
   return null
 }
