@@ -1,3 +1,10 @@
+## [1.11.1](https://github.com/Nosto/search-templates-starter/compare/v1.11.0...v1.11.1) (2026-01-09)
+
+
+### Bug Fixes
+
+* improve history entries ([8d525f4](https://github.com/Nosto/search-templates-starter/commit/8d525f482b9470be4673f695af163d97370338b0))
+
 # [1.11.0](https://github.com/Nosto/search-templates-starter/compare/v1.10.0...v1.11.0) (2026-01-08)
 
 
