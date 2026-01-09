@@ -1,5 +1,6 @@
 import Results from "@/components/Autocomplete/Results/Results"
 import { useDomEvents } from "@/hooks/useDomEvents"
+import { usePopState } from "@/hooks/usePopState"
 import { selectors } from "@/config"
 import { useAutocomplete } from "./useAutocomplete"
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
@@ -32,21 +33,13 @@ export default function AutocompleteInjected({ onSubmit }: Props) {
     isInjected: true
   })
 
-  useEffect(() => {
-    function handlePopState() {
-      const searchParams = new URLSearchParams(window.location.search)
-      const query = searchParams.get(QUERY_PARAM) || ""
-      if (searchInputRef.current && query) {
-        searchInputRef.current.value = query
-      }
+  usePopState(() => {
+    const searchParams = new URLSearchParams(window.location.search)
+    const query = searchParams.get(QUERY_PARAM) || ""
+    if (searchInputRef.current && query) {
+      searchInputRef.current.value = query
     }
-
-    window.addEventListener("popstate", handlePopState)
-
-    return () => {
-      window.removeEventListener("popstate", handlePopState)
-    }
-  }, [])
+  })
 
   useDomEvents(searchInputRef, {
     onInput: () => setInput(searchInputRef.current?.value || ""),

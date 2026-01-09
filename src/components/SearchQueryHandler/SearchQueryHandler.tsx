@@ -5,6 +5,7 @@ import { getQueryFromUrlState } from "@/mapping/url/getCurrentUrlState"
 import { updateUrlFromQuery } from "@/mapping/url/updateUrl"
 import { StoreContext, useConfig } from "@nosto/search-js/preact/common"
 import { createSkeletonContent } from "./skeletonContent"
+import { usePopState } from "@/hooks/usePopState"
 
 export default function SearchQueryHandler() {
   const store = useContext(StoreContext)
@@ -44,19 +45,11 @@ export default function SearchQueryHandler() {
   }, [initialized, query, from, size, filter, sort])
 
   // Handle browser back/forward navigation
-  useEffect(() => {
-    function handlePopState() {
-      const query = getQueryFromUrlState()
-      // execute search with new URL state
-      newSearch(query)
-    }
-
-    window.addEventListener("popstate", handlePopState)
-
-    return () => {
-      window.removeEventListener("popstate", handlePopState)
-    }
-  }, [newSearch])
+  usePopState(() => {
+    const query = getQueryFromUrlState()
+    // execute search with new URL state
+    newSearch(query)
+  })
 
   return null
 }
