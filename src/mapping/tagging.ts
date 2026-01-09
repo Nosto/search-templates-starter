@@ -1,15 +1,16 @@
 import { nostojs } from "@nosto/nosto-js"
+import { PageType } from "@nosto/nosto-js/client"
 
-function notImplemented(): string | undefined {
+function notImplemented<T>(): T | undefined {
   throw new Error("Nosto tagging API not yet initialized")
 }
 
 export const tagging = {
-  categoryId: notImplemented,
-  categoryPath: notImplemented,
-  pageType: notImplemented,
-  variation: notImplemented,
-  brand: notImplemented
+  categoryId: notImplemented<string>,
+  categoryPath: notImplemented<string>,
+  pageType: notImplemented<PageType>,
+  variation: notImplemented<string>,
+  brand: notImplemented<string>
 }
 
 nostojs(api => {
