@@ -5,7 +5,7 @@ import Serp from "@/components/Serp/Serp"
 import "@/variables.css"
 import SearchQueryHandler from "@/components/SearchQueryHandler/SearchQueryHandler"
 import { SidebarProvider } from "@/contexts/SidebarContext"
-import { autocompleteConfig, categoryConfig, redirectOnSearch, selectors, serpConfig } from "@/config"
+import { autocompleteConfig, categoryConfig, redirectOnSearch, searchPath, selectors, serpConfig } from "@/config"
 import { useActions } from "@nosto/search-js/preact/hooks"
 import Category from "@/components/Category/Category"
 import { CategoryPageProvider } from "@nosto/search-js/preact/category"
@@ -16,6 +16,7 @@ import Portal from "@/elements/Portal/Portal"
 import AutocompleteInjected from "@/components/Autocomplete/AutocompleteInjected"
 import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 import { searchNavigate } from "./searchNavigate"
+import { usePopState } from "@/hooks/usePopState"
 
 type AutocompleteProps = {
   onSubmit: (query: string, options?: SearchAnalyticsOptions) => void
@@ -96,6 +97,12 @@ function App() {
       setPageType("search")
     }
   }
+
+  usePopState(() => {
+    if (redirectOnSearch) return
+    const isSearchPage = location.pathname === searchPath
+    setPageType(isSearchPage ? "search" : tagging.pageType())
+  }, [setPageType])
 
   switch (pageType) {
     case "category":
