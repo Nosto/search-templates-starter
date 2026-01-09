@@ -1,35 +1,26 @@
 import { test, expect, Page } from "@playwright/test"
 import { resultsSelector, searchSelector, waitForApplicationReady } from "./helpers"
 
-// Helper function to navigate back until reaching a URL matching the pattern
 async function goBackUntil(page: Page, urlPattern: RegExp, maxAttempts = 5) {
   for (let i = 0; i < maxAttempts; i++) {
-    const currentUrl = page.url()
-    if (urlPattern.test(currentUrl)) {
-      return true
+    if (urlPattern.test(page.url())) {
+      return
     }
     await page.goBack()
-    await page.waitForTimeout(200) // Short wait for navigation
+    await page.waitForTimeout(200)
   }
-  return false
+  throw new Error(`Could not navigate back to URL matching ${urlPattern}`)
 }
 
-// Helper function to navigate forward until reaching a URL matching the pattern
 async function goForwardUntil(page: Page, urlPattern: RegExp, maxAttempts = 5) {
   for (let i = 0; i < maxAttempts; i++) {
-    try {
-      await page.goForward()
-      await page.waitForTimeout(300) // Short wait for navigation
-      const currentUrl = page.url()
-      if (urlPattern.test(currentUrl)) {
-        return true
-      }
-    } catch {
-      // Can't go forward anymore
-      break
+    if (urlPattern.test(page.url())) {
+      return
     }
+    await page.goForward()
+    await page.waitForTimeout(200)
   }
-  return false
+  throw new Error(`Could not navigate forward to URL matching ${urlPattern}`)
 }
 
 test.describe("Browser Navigation", () => {
@@ -87,21 +78,18 @@ test.describe("Browser Navigation", () => {
     await expect(searchInput).toHaveValue("shoes")
 
     // Click browser forward button until we reach test
-    const reachedTest = await goForwardUntil(page, /[?&]q=test/)
+    await goForwardUntil(page, /[?&]q=test/)
 
-    if (reachedTest) {
-      // Verify URL changed forward
-      await expect(page).toHaveURL(/[?&]q=test/)
+    await expect(page).toHaveURL(/[?&]q=test/)
 
-      // Wait briefly for popstate handler to trigger
-      await page.waitForTimeout(500)
+    // Wait briefly for popstate handler to trigger
+    await page.waitForTimeout(500)
 
-      // Verify search input is updated
-      await expect(searchInput).toHaveValue("test")
+    // Verify search input is updated
+    await expect(searchInput).toHaveValue("test")
 
-      // Verify results are visible
-      await expect(page.locator(resultsSelector)).toBeVisible()
-    }
+    // Verify results are visible
+    await expect(page.locator(resultsSelector)).toBeVisible()
   })
 
   test("pagination navigation creates history entries", async ({ page }) => {
@@ -115,17 +103,15 @@ test.describe("Browser Navigation", () => {
 
     // Click to next page if available
     const nextPageLink = page.locator('a[aria-label*="Next page"], a[aria-label="2 page"]').first()
-    const hasNextPage = await nextPageLink.isVisible()
+    await expect(nextPageLink).toBeVisible()
 
-    if (hasNextPage) {
-      await nextPageLink.click()
+    await nextPageLink.click()
 
-      // Wait for URL to include page parameter and results to update
-      await expect(page).toHaveURL(/[?&]p=\d+/)
-      await expect(page.locator(resultsSelector)).toBeVisible()
+    // Wait for URL to include page parameter and results to update
+    await expect(page).toHaveURL(/[?&]p=\d+/)
+    await expect(page.locator(resultsSelector)).toBeVisible()
 
-      // Verify URL changed (demonstrating that navigation works)
-      expect(page.url()).not.toBe(initialUrl)
-    }
+    // Verify URL changed (demonstrating that navigation works)
+    expect(page.url()).not.toBe(initialUrl)
   })
 })
