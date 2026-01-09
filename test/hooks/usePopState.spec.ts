@@ -18,7 +18,7 @@ describe("usePopState", () => {
 
     renderHook(() => usePopState(handler))
 
-    expect(addEventListenerSpy).toHaveBeenCalledWith("popstate", handler)
+    expect(addEventListenerSpy).toHaveBeenCalledWith("popstate", expect.any(Function))
   })
 
   it("should remove popstate event listener on unmount", () => {
@@ -28,7 +28,7 @@ describe("usePopState", () => {
 
     unmount()
 
-    expect(removeEventListenerSpy).toHaveBeenCalledWith("popstate", handler)
+    expect(removeEventListenerSpy).toHaveBeenCalledWith("popstate", expect.any(Function))
   })
 
   it("should call handler when popstate event is triggered", () => {

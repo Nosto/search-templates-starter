@@ -1,11 +1,21 @@
-import { useEffect } from "preact/hooks"
+import { useEffect, useRef } from "preact/hooks"
 
 export function usePopState(handler: () => void) {
+  const handlerRef = useRef(handler)
+
   useEffect(() => {
-    window.addEventListener("popstate", handler)
+    handlerRef.current = handler
+  })
+
+  useEffect(() => {
+    function handlePopState() {
+      handlerRef.current()
+    }
+
+    window.addEventListener("popstate", handlePopState)
 
     return () => {
-      window.removeEventListener("popstate", handler)
+      window.removeEventListener("popstate", handlePopState)
     }
-  }, [handler])
+  }, [])
 }
