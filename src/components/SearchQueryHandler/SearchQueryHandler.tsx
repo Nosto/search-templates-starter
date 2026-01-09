@@ -11,7 +11,8 @@ export default function SearchQueryHandler() {
   const { newSearch } = useActions()
 
   // Get current query, pagination, filter, and sort state from app
-  const { query, from, filter, size, sort } = useNostoAppState(state => ({
+  const { initialized, query, from, filter, size, sort } = useNostoAppState(state => ({
+    initialized: state.initialized,
     query: state.query?.query,
     from: state.query?.products?.from,
     filter: state.query?.products?.filter,
@@ -37,8 +38,10 @@ export default function SearchQueryHandler() {
 
   // Update URL when app state changes
   useEffect(() => {
-    updateUrlFromQuery({ from, size, query, filter, sort })
-  }, [query, from, size, filter, sort])
+    if (initialized) {
+      updateUrlFromQuery({ from, size, query, filter, sort })
+    }
+  }, [initialized, query, from, size, filter, sort])
 
   // Handle browser back/forward navigation
   useEffect(() => {
