@@ -100,8 +100,8 @@ function App() {
 
   usePopState(() => {
     if (redirectOnSearch) return
-    const onSearch = location.pathname === searchPath
-    setPageType(onSearch ? "search" : tagging.pageType())
+    const isSearchPage = location.pathname === searchPath
+    setPageType(isSearchPage ? "search" : tagging.pageType())
   }, [setPageType])
 
   switch (pageType) {
