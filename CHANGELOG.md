@@ -1,3 +1,10 @@
+## [1.12.1](https://github.com/Nosto/search-templates-starter/compare/v1.12.0...v1.12.1) (2026-01-09)
+
+
+### Bug Fixes
+
+* adjust page type on navigation ([a88f608](https://github.com/Nosto/search-templates-starter/commit/a88f608167c5fb279120e526e2ead9ad9c83c34f))
+
 # [1.12.0](https://github.com/Nosto/search-templates-starter/compare/v1.11.1...v1.12.0) (2026-01-09)
 
 
