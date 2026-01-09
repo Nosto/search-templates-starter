@@ -103,7 +103,7 @@ test.describe("Browser Navigation", () => {
 
     // Click to next page if available
     const nextPageLink = page.locator('a[aria-label*="Next page"], a[aria-label="2 page"]').first()
-    await nextPageLink.isVisible()
+    await expect(nextPageLink).toBeVisible()
 
     await nextPageLink.click()
 
