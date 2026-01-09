@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/Nosto/search-templates-starter/compare/v1.11.1...v1.12.0) (2026-01-09)
+
+
+### Features
+
+* extract popstate listeners into usePopState custom hook ([99c8d85](https://github.com/Nosto/search-templates-starter/commit/99c8d856100d6603df48db25f2841765a9f04a08))
+
 ## [1.11.1](https://github.com/Nosto/search-templates-starter/compare/v1.11.0...v1.11.1) (2026-01-09)
 
 
