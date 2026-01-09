@@ -49,7 +49,7 @@ export default function SearchQueryHandler() {
     const query = getQueryFromUrlState()
     // execute search with new URL state
     newSearch(query)
-  })
+  }, [newSearch])
 
   return null
 }

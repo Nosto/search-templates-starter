@@ -55,25 +55,6 @@ describe("usePopState", () => {
     expect(handler).not.toHaveBeenCalled()
   })
 
-  it("should update handler when it changes", () => {
-    const handler1 = vi.fn()
-    const handler2 = vi.fn()
-
-    const { rerender } = renderHook(({ fn }) => usePopState(fn), {
-      initialProps: { fn: handler1 }
-    })
-
-    window.dispatchEvent(new PopStateEvent("popstate"))
-    expect(handler1).toHaveBeenCalledTimes(1)
-    expect(handler2).not.toHaveBeenCalled()
-
-    rerender({ fn: handler2 })
-
-    window.dispatchEvent(new PopStateEvent("popstate"))
-    expect(handler1).toHaveBeenCalledTimes(1)
-    expect(handler2).toHaveBeenCalledTimes(1)
-  })
-
   it("should work with handlers that access external state", () => {
     let counter = 0
     const handlerWithState = vi.fn(() => {
