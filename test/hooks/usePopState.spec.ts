@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest"
+import { describe, it, expect, vi, beforeEach } from "vitest"
 import { renderHook } from "@testing-library/preact"
 import { usePopState } from "@/hooks/usePopState"
 
@@ -7,10 +7,6 @@ describe("usePopState", () => {
 
   beforeEach(() => {
     handler = vi.fn()
-  })
-
-  afterEach(() => {
-    vi.restoreAllMocks()
   })
 
   it("should add popstate event listener on mount", () => {
