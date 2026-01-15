@@ -100,6 +100,7 @@ function App() {
     } else {
       searchNavigate(query, "history")
       setPageType("search")
+      setTaggingPageType("search")
     }
   }
 
