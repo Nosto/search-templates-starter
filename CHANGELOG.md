@@ -1,3 +1,10 @@
+## [1.12.2](https://github.com/Nosto/search-templates-starter/compare/v1.12.1...v1.12.2) (2026-01-15)
+
+
+### Bug Fixes
+
+* add tagging providers ([83a7d9a](https://github.com/Nosto/search-templates-starter/commit/83a7d9a4cfa252ee077de1292cfa4514c086950b))
+
 ## [1.12.1](https://github.com/Nosto/search-templates-starter/compare/v1.12.0...v1.12.1) (2026-01-09)
 
 
