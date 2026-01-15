@@ -14,9 +14,10 @@ import { nostojs } from "@nosto/nosto-js"
 import { ErrorBoundary } from "@nosto/search-js/preact/common"
 import Portal from "@/elements/Portal/Portal"
 import AutocompleteInjected from "@/components/Autocomplete/AutocompleteInjected"
-import { SearchAnalyticsOptions } from "@nosto/nosto-js/client"
+import { PageType, SearchAnalyticsOptions } from "@nosto/nosto-js/client"
 import { searchNavigate } from "./searchNavigate"
 import { usePopState } from "@/hooks/usePopState"
+import { QUERY_PARAM } from "@/mapping/url/constants"
 
 type AutocompleteProps = {
   onSubmit: (query: string, options?: SearchAnalyticsOptions) => void
@@ -86,6 +87,10 @@ function DefaultApp({ onSearch }: AppProps) {
   )
 }
 
+function setTaggingPageType(pageType: PageType | undefined) {
+  nostojs(api => api.setTaggingProvider("pageType", pageType))
+}
+
 function App() {
   const [pageType, setPageType] = useState(() => tagging.pageType())
 
@@ -101,7 +106,9 @@ function App() {
   usePopState(() => {
     if (redirectOnSearch) return
     const isSearchPage = location.pathname === searchPath
-    setPageType(isSearchPage ? "search" : tagging.pageType())
+    const pageType = isSearchPage ? "search" : tagging.pageType()
+    setPageType(pageType)
+    setTaggingPageType(pageType)
   }, [setPageType])
 
   switch (pageType) {
@@ -122,11 +129,18 @@ function App() {
   }
 }
 
+function searchTermsProvider() {
+  const params = new URLSearchParams(window.location.search)
+  const searchParams = params.get(QUERY_PARAM)
+  return searchParams ? [searchParams] : []
+}
+
 async function init() {
   const api = await new Promise(nostojs)
   // wait for tagging to be available
   await api.pageTaggingAsync()
   const dummy = document.createElement("div")
+  nostojs(api => api.setTaggingProvider("searchTerms", searchTermsProvider))
   render(<App />, dummy)
 }
 init()
