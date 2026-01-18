@@ -83,7 +83,7 @@
     "msw": "^2.12.7"
   },
   "overrides": {
-    "undici": "^6.23.0"
+    "undici": "6.23.0"
   },
   "repository": {
     "type": "git",
