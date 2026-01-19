@@ -39,7 +39,7 @@
     "@commitlint/config-conventional": "^20.3.1",
     "@nosto/nosto-cli": "^1.2.4",
     "@nosto/nosto-js": "^2.10.1",
-    "@nosto/search-js": "^3.24.6",
+    "@nosto/search-js": "^3.25.1",
     "@nosto/web-components": "^10.18.8",
     "@playwright/test": "^1.57.0",
     "@preact/preset-vite": "^2.10.2",
