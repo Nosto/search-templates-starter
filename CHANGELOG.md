@@ -1,3 +1,10 @@
+## [1.12.3](https://github.com/Nosto/search-templates-starter/compare/v1.12.2...v1.12.3) (2026-01-19)
+
+
+### Bug Fixes
+
+* remove semantic-release dependencies causing npm audit failures ([7a8d413](https://github.com/Nosto/search-templates-starter/commit/7a8d413d26f492fc6457aec40c89eb6a9522c80f))
+
 ## [1.12.2](https://github.com/Nosto/search-templates-starter/compare/v1.12.1...v1.12.2) (2026-01-15)
 
 
