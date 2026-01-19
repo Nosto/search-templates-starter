@@ -8,6 +8,11 @@ updates:
       prefix: "deps"
     open-pull-requests-limit: 10
     groups:
+      patch-updates:
+        patterns:
+          - "*"
+        update-types:
+          - "patch"
       storybook:
         patterns:
           - "@storybook/*"
