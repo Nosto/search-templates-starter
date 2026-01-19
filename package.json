@@ -82,6 +82,9 @@
   "dependencies": {
     "msw": "^2.12.7"
   },
+  "overrides": {
+    "semver": "^7.5.3"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Nosto/search-templates-starter.git"
