@@ -1,28 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/preact-vite"
 import Content from "./Content"
 import { withAutocompleteContext } from ".storybook/decorators"
-import type { Product } from "@/types"
-
-const mockContentProducts: Product[] = [
-  {
-    productId: "content-1",
-    name: "Blog Post: Summer Fashion Trends",
-    url: "https://example.com/blog/summer-fashion-trends",
-    customFields: [{ key: "type", value: "content" }]
-  } as Product,
-  {
-    productId: "content-2",
-    name: "Guide: How to Choose Running Shoes",
-    url: "https://example.com/guides/running-shoes",
-    customFields: [{ key: "type", value: "content" }]
-  } as Product,
-  {
-    productId: "content-3",
-    name: "Article: Top 10 Tech Gadgets",
-    url: "https://example.com/articles/tech-gadgets",
-    customFields: [{ key: "type", value: "content" }]
-  } as Product
-]
+import { mockContentProducts } from "@mocks/products"
 
 export default {
   title: "Autocomplete/Content",

@@ -1,10 +1,10 @@
 import type { Product } from "@/types"
 
 /**
- * Checks if a product is a content product by looking for custom field type === 'content'
+ * Checks if a product is a content product by looking for custom field contentType === 'article'
  */
 export function isContentProduct(product: Product) {
-  return product.customFields?.some(field => field.key === "type" && field.value === "content") ?? false
+  return product.customFields?.some(field => field.key === "contentType" && field.value === "article") ?? false
 }
 
 /**

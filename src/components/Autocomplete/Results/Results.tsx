@@ -41,7 +41,7 @@ export default function Results({ onKeyDown }: ResultsProps) {
             {hasHistory && <History />}
             {hasResults && <Keywords keywords={keywords} />}
             {hasResults && <Categories categories={categories} />}
-            {hasResults && <Content content={contentProducts} />}
+            {hasResults && contentProducts.length > 0 && <Content content={contentProducts} />}
             {hasResults && <PopularSearches searches={popularSearches} />}
           </div>
           {hasResults && normalProducts.length > 0 && (

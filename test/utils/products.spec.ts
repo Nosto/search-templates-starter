@@ -4,19 +4,19 @@ import type { Product } from "@/types"
 
 describe("products utils", () => {
   describe("isContentProduct", () => {
-    it("should return true for products with type=content custom field", () => {
+    it("should return true for products with contentType=article custom field", () => {
       const product = {
         productId: "1",
-        customFields: [{ key: "type", value: "content" }]
+        customFields: [{ key: "contentType", value: "article" }]
       } as Product
 
       expect(isContentProduct(product)).toBe(true)
     })
 
-    it("should return false for products without type=content custom field", () => {
+    it("should return false for products without contentType=article custom field", () => {
       const product = {
         productId: "2",
-        customFields: [{ key: "type", value: "normal" }]
+        customFields: [{ key: "contentType", value: "product" }]
       } as Product
 
       expect(isContentProduct(product)).toBe(false)
@@ -45,18 +45,18 @@ describe("products utils", () => {
       const products = [
         {
           productId: "1",
-          customFields: [{ key: "type", value: "content" }]
+          customFields: [{ key: "contentType", value: "article" }]
         },
         {
           productId: "2",
-          customFields: [{ key: "type", value: "normal" }]
+          customFields: [{ key: "contentType", value: "product" }]
         },
         {
           productId: "3"
         },
         {
           productId: "4",
-          customFields: [{ key: "type", value: "content" }]
+          customFields: [{ key: "contentType", value: "article" }]
         }
       ] as Product[]
 
@@ -83,11 +83,11 @@ describe("products utils", () => {
       const products = [
         {
           productId: "1",
-          customFields: [{ key: "type", value: "content" }]
+          customFields: [{ key: "contentType", value: "article" }]
         },
         {
           productId: "2",
-          customFields: [{ key: "type", value: "content" }]
+          customFields: [{ key: "contentType", value: "article" }]
         }
       ] as Product[]
 
