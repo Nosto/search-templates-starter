@@ -16,8 +16,8 @@ export default function Content({ content }: ContentProps) {
     <div className={style.suggestionsColumn}>
       <Heading>Content</Heading>
       <div className={style.keywords}>
-        {content.map((item, index) => (
-          <ContentItem content={item} key={index} />
+        {content.map(item => (
+          <ContentItem content={item} key={item.productId} />
         ))}
       </div>
     </div>

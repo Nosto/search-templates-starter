@@ -7,11 +7,15 @@ type ContentProps = {
 }
 
 export default function Content({ content }: ContentProps) {
+  if (!content.productId) {
+    return null
+  }
+
   return (
     <AutocompleteElement
       key={content.productId}
       hit={{
-        productId: content.productId!,
+        productId: content.productId,
         url: content.url
       }}
       as="a"
