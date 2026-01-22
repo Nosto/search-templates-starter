@@ -13,7 +13,6 @@ export default function Content({ content }: ContentProps) {
 
   return (
     <AutocompleteElement
-      key={content.productId}
       hit={{
         productId: content.productId,
         url: content.url
