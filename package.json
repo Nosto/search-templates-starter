@@ -41,7 +41,7 @@
     "@nosto/nosto-js": "^2.10.1",
     "@nosto/search-js": "^3.25.1",
     "@nosto/web-components": "^10.18.8",
-    "@playwright/test": "^1.57.0",
+    "@playwright/test": "^1.58.0",
     "@preact/preset-vite": "^2.10.2",
     "@storybook/addon-docs": "^10.1.11",
     "@storybook/preact-vite": "^10.1.11",
