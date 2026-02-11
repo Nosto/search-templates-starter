@@ -6,6 +6,8 @@ import History from "./History"
 import PopularSearches from "./PopularSearches"
 import { useRovingFocus } from "@/hooks/useRovingFocus"
 import Categories from "./Categories"
+import Content from "./Content"
+import { splitProductsByType } from "@/utils/products"
 
 type ResultsProps = {
   onKeyDown: (e: KeyboardEvent) => void
@@ -15,10 +17,13 @@ export default function Results({ onKeyDown }: ResultsProps) {
   const { categories, keywords, products, popularSearches } = useResponse()
   const containerRef = useRovingFocus<HTMLDivElement>(".ns-autocomplete-element")
 
+  const { normalProducts, contentProducts } = splitProductsByType(products?.hits ?? [])
+
   const hasResults = !!(
     categories?.hits?.length ||
     keywords?.hits?.length ||
-    products?.hits?.length ||
+    normalProducts.length ||
+    contentProducts.length ||
     popularSearches?.hits?.length
   )
   const hasHistory = !!useNostoAppState(state => state.historyItems?.length)
@@ -36,9 +41,12 @@ export default function Results({ onKeyDown }: ResultsProps) {
             {hasHistory && <History />}
             {hasResults && <Keywords keywords={keywords} />}
             {hasResults && <Categories categories={categories} />}
+            {hasResults && contentProducts.length > 0 && <Content content={contentProducts} />}
             {hasResults && <PopularSearches searches={popularSearches} />}
           </div>
-          {hasResults && <Products products={products} />}
+          {hasResults && normalProducts.length > 0 && (
+            <Products products={{ hits: normalProducts, total: normalProducts.length }} />
+          )}
         </div>
       </div>
     </div>
