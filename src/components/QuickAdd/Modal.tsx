@@ -8,8 +8,6 @@ import Icon from "@/elements/Icon/Icon"
 import Heading from "@/elements/Heading/Heading"
 import ProductImage from "../Product/ProductImage"
 import SimpleSelector from "./SimpleSelector"
-import VariantSelector from "@/elements/VariantSelector/VariantSelector"
-import { shopifyMode } from "@/config"
 
 type Props = {
   product: Product
@@ -29,10 +27,6 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
   const [selectedSkuId, setSelectedSkuId] = useState(defaultSkuId(product))
   const dialogRef = useRef<HTMLDialogElement>(null)
   const hasMultipleSkus = !!product.skus?.length
-  // shopify variant selector based on Product API option data
-  const renderShopifySelector = shopifyMode && hasMultipleSkus
-  // simple generic variant selector for non-shopify mode
-  const renderSimpleSelector = !shopifyMode && hasMultipleSkus
 
   const data = useMemo(() => {
     if (selectedSkuId) {
@@ -55,10 +49,6 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
       dialogRef.current?.showModal()
     }
   }, [show])
-
-  const handleVariantChange = useCallback((variant: { id: number }) => {
-    setSelectedSkuId(String(variant.id))
-  }, [])
 
   const handleAddToCart = useCallback(
     (e: Event) => {
@@ -108,15 +98,7 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
                 <span className={styles.listPrice}>{data.listPriceText}</span>
               )}
             </div>
-            {renderShopifySelector ? (
-              <VariantSelector
-                handle={product.handle!}
-                onVariantChange={handleVariantChange}
-                className={styles.swatches}
-                preselect
-              />
-            ) : null}
-            {renderSimpleSelector ? (
+            {hasMultipleSkus ? (
               <SimpleSelector product={product} skuId={selectedSkuId} onChange={skuId => setSelectedSkuId(skuId)} />
             ) : null}
             <div className={styles.description}>{product.description}</div>
