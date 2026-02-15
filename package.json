@@ -38,7 +38,7 @@
     "@commitlint/cli": "^20.4.1",
     "@commitlint/config-conventional": "^20.4.1",
     "@nosto/nosto-cli": "^1.2.4",
-    "@nosto/nosto-js": "^2.10.1",
+    "@nosto/nosto-js": "^2.11.0",
     "@nosto/search-js": "^3.25.1",
     "@nosto/web-components": "^10.18.9",
     "@playwright/test": "^1.58.2",
