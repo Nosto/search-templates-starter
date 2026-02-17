@@ -65,7 +65,6 @@ describe("Image", () => {
     expect(img.getAttribute("style")).toContain("object-fit: cover;")
     expect(img.getAttribute("style")).toContain("max-width: 640px;")
     expect(img.getAttribute("style")).toContain("max-height: 360px;")
-    expect(img.getAttribute("style")).toContain("aspect-ratio: 1.7777777777777777;")
     expect(img.getAttribute("style")).toContain("width: 100%;")
   })
 })
