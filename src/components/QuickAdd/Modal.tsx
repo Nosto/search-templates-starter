@@ -50,6 +50,10 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
     }
   }, [show])
 
+  const handleSkuChange = useCallback((skuId: string) => {
+    setSelectedSkuId(skuId)
+  }, [])
+
   const handleAddToCart = useCallback(
     (e: Event) => {
       e.preventDefault()
@@ -99,7 +103,7 @@ export default function Modal({ product, show, onClose, onAddToCart }: Props) {
               )}
             </div>
             {hasMultipleSkus ? (
-              <SimpleSelector product={product} skuId={selectedSkuId} onChange={skuId => setSelectedSkuId(skuId)} />
+              <SimpleSelector product={product} skuId={selectedSkuId} onChange={handleSkuChange} />
             ) : null}
             <div className={styles.description}>{product.description}</div>
             <button className={styles.addToCartButton} onClick={handleAddToCart} disabled={!selectedSkuId}>
