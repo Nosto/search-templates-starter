@@ -106,9 +106,3 @@
   text-decoration: line-through;
   margin-left: var(--ns-space-2);
 }
-
-.swatches {
-  --value-active-bg: var(--ns-color-black);
-  --value-active-border: var(--ns-color-black);
-  --value-padding: var(--ns-space-2);
-}
