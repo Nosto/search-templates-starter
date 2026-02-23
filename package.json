@@ -38,7 +38,7 @@
     "@commitlint/cli": "^20.4.1",
     "@commitlint/config-conventional": "^20.4.1",
     "@nosto/nosto-cli": "^1.2.4",
-    "@nosto/nosto-js": "^2.11.0",
+    "@nosto/nosto-js": "^2.11.1",
     "@nosto/search-js": "^3.25.1",
     "@nosto/web-components": "^10.18.9",
     "@playwright/test": "^1.58.2",
@@ -59,7 +59,7 @@
     "eslint-plugin-storybook": "10.2.3",
     "husky": "^9.1.7",
     "jsdom": "^28.1.0",
-    "preact": "^10.28.3",
+    "preact": "^10.28.4",
     "prettier": "^3.8.1",
     "rollup-plugin-visualizer": "^6.0.5",
     "storybook": "^10.0.3",
@@ -75,6 +75,9 @@
   },
   "dependencies": {
     "msw": "^2.12.10"
+  },
+  "overrides": {
+    "minimatch": "^10.2.1"
   },
   "repository": {
     "type": "git",
