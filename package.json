@@ -40,7 +40,7 @@
     "@nosto/nosto-cli": "^1.2.4",
     "@nosto/nosto-js": "^2.11.1",
     "@nosto/search-js": "^3.25.1",
-    "@nosto/web-components": "^10.18.9",
+    "@nosto/web-components": "^11.2.0",
     "@playwright/test": "^1.58.2",
     "@preact/preset-vite": "^2.10.3",
     "@storybook/addon-docs": "^10.2.8",
