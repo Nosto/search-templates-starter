@@ -61,7 +61,7 @@
     "jsdom": "^28.1.0",
     "preact": "^10.28.4",
     "prettier": "^3.8.1",
-    "rollup-plugin-visualizer": "^6.0.5",
+    "rollup-plugin-visualizer": "^7.0.0",
     "storybook": "^10.0.3",
     "stylelint": "^17.3.0",
     "stylelint-config-css-modules": "^4.6.0",
