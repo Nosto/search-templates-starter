@@ -1,3 +1,10 @@
+## [1.12.4](https://github.com/Nosto/search-templates-starter/compare/v1.12.3...v1.12.4) (2026-02-23)
+
+
+### Bug Fixes
+
+* resolve npm audit vulnerabilities by overriding minimatch ([2d5130a](https://github.com/Nosto/search-templates-starter/commit/2d5130a44fd87bdd0a0afc176ed93232def82aca))
+
 ## [1.12.3](https://github.com/Nosto/search-templates-starter/compare/v1.12.2...v1.12.3) (2026-01-19)
 
 
