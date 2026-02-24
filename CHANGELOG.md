@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/Nosto/search-templates-starter/compare/v1.12.4...v1.13.0) (2026-02-24)
+
+
+### Features
+
+* remove variant-selector and use platform-agnostic SimpleSelector ([e2c9180](https://github.com/Nosto/search-templates-starter/commit/e2c9180baf7eb6efd2f279a99b9f22c6f055935a))
+
 ## [1.12.4](https://github.com/Nosto/search-templates-starter/compare/v1.12.3...v1.12.4) (2026-02-23)
 
 
