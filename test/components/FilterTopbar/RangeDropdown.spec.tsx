@@ -18,7 +18,7 @@ describe("RangeDropdown", () => {
     max: 500
   }
 
-  let mockUpdateRange: ReturnType<typeof vi.fn>
+  let mockUpdateRange: ([from, to]: [number | undefined, number | undefined]) => void
 
   beforeEach(() => {
     mockUpdateRange = vi.fn()
