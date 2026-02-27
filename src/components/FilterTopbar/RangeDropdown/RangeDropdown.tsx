@@ -56,10 +56,10 @@ export default function RangeDropdown({ facet }: Props) {
   const applyFilter = () => {
     const clampedMin = Math.max(min, Math.min(localMin, max))
     const clampedMax = Math.max(min, Math.min(localMax, max))
-    const constrainedMin = Math.min(clampedMin, clampedMax)
-    const constrainedMax = Math.max(clampedMin, clampedMax)
+    const newMin = Math.min(clampedMin, clampedMax)
+    const newMax = Math.max(clampedMin, clampedMax)
 
-    updateRange([constrainedMin, constrainedMax])
+    updateRange([newMin, newMax])
     setIsOpen(false)
   }
 
