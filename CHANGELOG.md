@@ -1,3 +1,12 @@
+## [1.13.1](https://github.com/Nosto/search-templates-starter/compare/v1.13.0...v1.13.1) (2026-02-27)
+
+
+### Bug Fixes
+
+* constrain range to min-max ([6f2c04d](https://github.com/Nosto/search-templates-starter/commit/6f2c04d1301f596ef2becc9da9a1ac381cc7d344))
+* correct mockUpdateRange type to match RangeProps ([655cc6c](https://github.com/Nosto/search-templates-starter/commit/655cc6c1a04abf8725f131b1802def620a67c5ef))
+* **deps:** resolve npm audit vulnerabilities by updating minimatch and rollup ([40b986d](https://github.com/Nosto/search-templates-starter/commit/40b986dc063a971fadc8ee93d352e07d7cbd96f1))
+
 # [1.13.0](https://github.com/Nosto/search-templates-starter/compare/v1.12.4...v1.13.0) (2026-02-24)
 
 
