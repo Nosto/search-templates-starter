@@ -11,13 +11,9 @@ updates:
       patch-updates:
         update-types:
           - "patch"
-        patterns:
-          - "*"
       minor-updates:
         update-types:
           - "minor"
-        patterns:
-          - "*"
       storybook:
         patterns:
           - "@storybook/*"
