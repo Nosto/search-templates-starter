@@ -1,3 +1,10 @@
+## [1.13.2](https://github.com/Nosto/search-templates-starter/compare/v1.13.1...v1.13.2) (2026-03-02)
+
+
+### Bug Fixes
+
+* **deps:** remove patterns from minor/patch groups to enable grouping ([926b015](https://github.com/Nosto/search-templates-starter/commit/926b015aeb61624e22eaf0dfca6242e807711ba6))
+
 ## [1.13.1](https://github.com/Nosto/search-templates-starter/compare/v1.13.0...v1.13.1) (2026-02-27)
 
 
