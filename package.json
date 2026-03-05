@@ -78,7 +78,8 @@
     "msw": "^2.12.10"
   },
   "overrides": {
-    "minimatch": "^10.2.1"
+    "minimatch": "^10.2.1",
+    "immutable": "^5.1.5"
   },
   "repository": {
     "type": "git",
