@@ -1,3 +1,10 @@
+## [1.13.3](https://github.com/Nosto/search-templates-starter/compare/v1.13.2...v1.13.3) (2026-03-09)
+
+
+### Bug Fixes
+
+* **deps:** add immutable override >=5.1.5 to fix prototype pollution vulnerability ([38aad94](https://github.com/Nosto/search-templates-starter/commit/38aad942aa51e7d9611e3f336be2c614c656007d))
+
 ## [1.13.2](https://github.com/Nosto/search-templates-starter/compare/v1.13.1...v1.13.2) (2026-03-02)
 
 
