@@ -1,3 +1,10 @@
+## [1.13.4](https://github.com/Nosto/search-templates-starter/compare/v1.13.3...v1.13.4) (2026-03-16)
+
+
+### Bug Fixes
+
+* add flatted override to resolve high severity npm audit vulnerability ([0240ebb](https://github.com/Nosto/search-templates-starter/commit/0240ebb8e18eeb72508b32423174079840f26776))
+
 ## [1.13.3](https://github.com/Nosto/search-templates-starter/compare/v1.13.2...v1.13.3) (2026-03-09)
 
 
