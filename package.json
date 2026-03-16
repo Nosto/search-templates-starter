@@ -38,13 +38,13 @@
     "@commitlint/cli": "^20.4.3",
     "@commitlint/config-conventional": "^20.4.3",
     "@nosto/nosto-cli": "^1.2.8",
-    "@nosto/nosto-js": "^2.11.1",
-    "@nosto/search-js": "^3.25.3",
-    "@nosto/web-components": "^11.3.0",
+    "@nosto/nosto-js": "^2.11.2",
+    "@nosto/search-js": "^3.25.4",
+    "@nosto/web-components": "^11.3.1",
     "@playwright/test": "^1.58.2",
-    "@preact/preset-vite": "^2.10.3",
-    "@storybook/addon-docs": "^10.2.16",
-    "@storybook/preact-vite": "^10.2.16",
+    "@preact/preset-vite": "^2.10.4",
+    "@storybook/addon-docs": "^10.2.19",
+    "@storybook/preact-vite": "^10.2.19",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/preact": "^3.2.3",
     "@types/eslint-config-prettier": "^6.11.3",
@@ -56,7 +56,7 @@
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-storybook": "10.2.16",
+    "eslint-plugin-storybook": "10.2.19",
     "husky": "^9.1.7",
     "jsdom": "^29.0.0",
     "preact": "^10.28.4",
@@ -74,7 +74,7 @@
     "vitest": "^4.0.18"
   },
   "dependencies": {
-    "msw": "^2.12.10"
+    "msw": "^2.12.11"
   },
   "overrides": {
     "minimatch": "^10.2.1",
