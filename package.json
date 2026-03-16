@@ -78,7 +78,8 @@
   },
   "overrides": {
     "minimatch": "^10.2.1",
-    "immutable": ">=5.1.5"
+    "immutable": ">=5.1.5",
+    "flatted": ">=3.4.0"
   },
   "repository": {
     "type": "git",
