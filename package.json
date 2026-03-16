@@ -58,7 +58,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-storybook": "10.2.16",
     "husky": "^9.1.7",
-    "jsdom": "^28.1.0",
+    "jsdom": "^29.0.0",
     "preact": "^10.28.4",
     "prettier": "^3.8.1",
     "rollup-plugin-visualizer": "^7.0.1",
@@ -78,7 +78,8 @@
   },
   "overrides": {
     "minimatch": "^10.2.1",
-    "immutable": ">=5.1.5"
+    "immutable": ">=5.1.5",
+    "flatted": ">=3.4.0"
   },
   "repository": {
     "type": "git",
