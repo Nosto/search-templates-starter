@@ -1,3 +1,11 @@
+## [1.13.5](https://github.com/Nosto/search-templates-starter/compare/v1.13.4...v1.13.5) (2026-03-23)
+
+
+### Bug Fixes
+
+* resolve npm audit vulnerability in flatted package ([7eb10dc](https://github.com/Nosto/search-templates-starter/commit/7eb10dc4bba1fcd3da1b6b97e039360ea986b277))
+* resolve TypeScript build errors in QuickAdd.stories.tsx and sync storybook version ([02e2969](https://github.com/Nosto/search-templates-starter/commit/02e296978a2bc1dd5f2fb7caacdcb9b83391d990))
+
 ## [1.13.4](https://github.com/Nosto/search-templates-starter/compare/v1.13.3...v1.13.4) (2026-03-16)
 
 
