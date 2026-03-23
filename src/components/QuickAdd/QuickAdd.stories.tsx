@@ -16,13 +16,7 @@ const meta: Meta<typeof QuickAdd> = {
       }
     }
   },
-  decorators: [withSearchContext],
-  argTypes: {
-    type: {
-      control: { type: "select" },
-      options: ["serp", "autocomplete", "category"]
-    }
-  }
+  decorators: [withSearchContext]
 }
 
 export default meta
@@ -89,7 +83,6 @@ const multipleSkuProduct: Product = createMockProduct({
 export const SingleSKU: Story = {
   args: {
     product: singleSkuProduct,
-    type: "serp",
     children: "Add to Cart"
   }
 }
@@ -97,7 +90,6 @@ export const SingleSKU: Story = {
 export const NoSKU: Story = {
   args: {
     product: noSkuProduct,
-    type: "serp",
     children: "Add to Cart"
   }
 }
@@ -105,7 +97,6 @@ export const NoSKU: Story = {
 export const MultipleSKUs: Story = {
   args: {
     product: multipleSkuProduct,
-    type: "serp",
     children: "Choose Variants & Add to Cart"
   },
   parameters: {
@@ -121,7 +112,6 @@ export const MultipleSKUs: Story = {
 export const FromAutocomplete: Story = {
   args: {
     product: singleSkuProduct,
-    type: "autocomplete",
     children: "Quick Add"
   }
 }
@@ -129,7 +119,6 @@ export const FromAutocomplete: Story = {
 export const FromCategory: Story = {
   args: {
     product: multipleSkuProduct,
-    type: "category",
     children: "Add to Bag"
   }
 }
