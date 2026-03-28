@@ -145,3 +145,24 @@ export const mockNewProductOnSale = createMockProduct({
 export const mockProducts = createProductsResponse(generateMockProducts(5))
 
 export const mockEmptyProducts = createEmptyResponse()
+
+export const mockContentProducts: Product[] = [
+  createMockProduct({
+    productId: "content-1",
+    name: "Blog Post: Summer Fashion Trends",
+    url: "https://example.com/blog/summer-fashion-trends",
+    customFields: [{ key: "contentType", value: "article" }]
+  }),
+  createMockProduct({
+    productId: "content-2",
+    name: "Guide: How to Choose Running Shoes",
+    url: "https://example.com/guides/running-shoes",
+    customFields: [{ key: "contentType", value: "article" }]
+  }),
+  createMockProduct({
+    productId: "content-3",
+    name: "Article: Top 10 Tech Gadgets",
+    url: "https://example.com/articles/tech-gadgets",
+    customFields: [{ key: "contentType", value: "article" }]
+  })
+]
