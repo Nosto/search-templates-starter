@@ -1,3 +1,10 @@
+## [1.13.6](https://github.com/Nosto/search-templates-starter/compare/v1.13.5...v1.13.6) (2026-03-30)
+
+
+### Bug Fixes
+
+* resolve npm audit vulnerabilities (brace-expansion, picomatch, yaml) ([3e81770](https://github.com/Nosto/search-templates-starter/commit/3e81770910435c167688e671e082421389e6eb5f))
+
 ## [1.13.5](https://github.com/Nosto/search-templates-starter/compare/v1.13.4...v1.13.5) (2026-03-23)
 
 
