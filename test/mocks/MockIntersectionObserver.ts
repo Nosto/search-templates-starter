@@ -3,6 +3,7 @@ import { vi } from "vitest"
 export class MockIntersectionObserver implements IntersectionObserver {
   readonly root: Element | Document | null
   readonly rootMargin: string
+  readonly scrollMargin: string = ""
   readonly thresholds: ReadonlyArray<number>
   private readonly callback: IntersectionObserverCallback
 

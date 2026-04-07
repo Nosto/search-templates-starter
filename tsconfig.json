@@ -25,11 +25,10 @@
     "jsxImportSource": "preact",
 
     /* Paths */
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@mocks/*": ["mocks/*"],
-      ".storybook/*": [".storybook/*"]
+      "@/*": ["./src/*"],
+      "@mocks/*": ["./mocks/*"],
+      ".storybook/*": ["./.storybook/*"]
     },
 
     /* Plugins */
