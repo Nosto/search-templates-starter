@@ -1,3 +1,10 @@
+## [1.13.7](https://github.com/Nosto/search-templates-starter/compare/v1.13.6...v1.13.7) (2026-04-07)
+
+
+### Bug Fixes
+
+* resolve TypeScript 6.0 build errors (TS5101, TS2882, TS2420) ([08cfe56](https://github.com/Nosto/search-templates-starter/commit/08cfe5626bc81842878c96abfe30559e0d72b7a4))
+
 ## [1.13.6](https://github.com/Nosto/search-templates-starter/compare/v1.13.5...v1.13.6) (2026-03-30)
 
 
