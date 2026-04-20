@@ -1,3 +1,11 @@
+## [1.13.8](https://github.com/Nosto/search-templates-starter/compare/v1.13.7...v1.13.8) (2026-04-20)
+
+
+### Bug Fixes
+
+* disable react-hooks/immutability rule and revert code changes ([6ce4d1b](https://github.com/Nosto/search-templates-starter/commit/6ce4d1ba3e1429ce93dbb7b2f022cbd9923300ba))
+* resolve lint errors from eslint-plugin-react-hooks 7.1.0 upgrade ([82e0a1e](https://github.com/Nosto/search-templates-starter/commit/82e0a1eb934535e465554b873eba268a2aed8498))
+
 ## [1.13.7](https://github.com/Nosto/search-templates-starter/compare/v1.13.6...v1.13.7) (2026-04-07)
 
 
