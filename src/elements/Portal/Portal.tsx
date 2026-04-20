@@ -19,11 +19,11 @@ export default function Portal({ target, clear, children }: Props) {
     }
   }, [target, element])
 
+  // eslint-disable-next-line react-hooks/immutability -- Intentional DOM manipulation to clear portal target
   useEffect(() => {
     if (element && clear && !isClearedRef.current) {
-      const targetElement = element
       // eslint-disable-next-line react-hooks/immutability -- Intentional DOM manipulation to clear portal target
-      targetElement.innerHTML = ""
+      element.innerHTML = ""
       isClearedRef.current = true
     }
   }, [element, clear])
