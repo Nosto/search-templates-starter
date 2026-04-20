@@ -33,7 +33,6 @@ export function useAutocomplete({
     if (element) {
       if (isInjected) {
         const initialQuery = getInitialQuery()
-        // eslint-disable-next-line react-hooks/immutability -- Intentional DOM manipulation for injected mode
         element.value = initialQuery
       }
       disableNativeAutocomplete(element)
@@ -65,7 +64,6 @@ export function useAutocomplete({
       if (trimmedQuery) {
         addQuery(query)
         if (isInjected && element) {
-          // eslint-disable-next-line react-hooks/immutability -- Intentional DOM manipulation for injected mode
           element.value = trimmedQuery
         } else {
           setInput(trimmedQuery)
