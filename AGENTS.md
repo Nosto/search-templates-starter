@@ -14,6 +14,10 @@ Search Templates Starter is a Preact-based search interface starter template for
 - **Playwright**: End-to-end testing
 - **Storybook**: Component development and documentation
 
+## Working Guidance
+
+Reference this file first for project-wide instructions. Use search or shell commands when local files contradict these notes or when you need implementation details from the codebase.
+
 ## Validation Commands
 
 Before committing code, ensure all validation checks pass:
@@ -53,21 +57,18 @@ npm run storybook
 This starts Storybook at http://localhost:6060.
 
 **Taking Screenshots:**
-1. Navigate to the component story
-2. **Close the controls section first** using the "Hide addons [alt A]" button for cleaner screenshots
-3. **Wait for `#storybook-root .storybook-wrapper` to be available** before capturing
-4. Take the screenshot
+1. Navigate to the component story.
+2. Close the controls section first using the "Hide addons [alt A]" button for cleaner screenshots.
+3. Wait for `#storybook-root .storybook-wrapper` to be available before capturing.
+4. Take the screenshot.
 
-## Instruction Files
+## Codex Skills
 
-File-specific coding conventions are documented in `.github/instructions/`:
+File-pattern-specific coding conventions are now documented as project-local Codex skills in `.codex/skills/`:
 
-- **TypeScript/JavaScript** (`**/*.ts`, `**/*.tsx`): `.github/instructions/typescript.instructions.md`
-- **Testing** (`test/**/*`): `.github/instructions/testing.instructions.md`
-- **Storybook Stories** (`**/*.stories.tsx`): `.github/instructions/storybook.instructions.md`
-- **Preact Components** (`**/*.tsx`): `.github/instructions/preact.instructions.md`
+- **TypeScript/JavaScript** (`**/*.ts`, `**/*.tsx`): `$search-templates-typescript`
+- **Testing** (`test/**/*`): `$search-templates-testing`
+- **Storybook Stories** (`**/*.stories.tsx`): `$search-templates-storybook`
+- **Preact Components** (`**/*.tsx`): `$search-templates-preact`
 
-Additional conventions:
-- Copilot-specific instructions: `.github/copilot-instructions.md`
-
-Always reference these instruction files when modifying or creating files that match their patterns.
+Use the relevant skill when modifying or creating files that match its pattern.
