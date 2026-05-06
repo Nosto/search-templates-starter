@@ -71,4 +71,4 @@ File-pattern-specific coding conventions are now documented as project-local Cod
 - **Storybook Stories** (`**/*.stories.tsx`): `$search-templates-storybook`
 - **Preact Components** (`**/*.tsx`): `$search-templates-preact`
 
-Use the relevant skill when modifying or creating files that match its pattern.
+Use the most specific matching skill first when modifying or creating files. For `*.stories.tsx`, use `$search-templates-storybook` as the primary skill; use `$search-templates-preact` for non-story TSX components. Apply `$search-templates-typescript` alongside the more specific skill when general TypeScript guidance is relevant.
