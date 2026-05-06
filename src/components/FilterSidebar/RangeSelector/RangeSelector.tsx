@@ -2,7 +2,7 @@ import { useState } from "preact/hooks"
 import Icon from "@/elements/Icon/Icon"
 import RadioButton from "@/elements/RadioButton/RadioButton"
 import { SearchStatsFacet } from "@nosto/nosto-js/client"
-import { useRangeSelector } from "@nosto/search-js/preact/hooks"
+import { useActions, useRangeSelector } from "@nosto/search-js/preact/hooks"
 import styles from "./RangeSelector.module.css"
 import { cl } from "@nosto/search-js/utils"
 
@@ -17,6 +17,7 @@ type Props = {
 
 export default function RangeSelector({ facet, rangeSize = 100, defaultActive = false }: Props) {
   const { ranges, updateRange } = useRangeSelector(facet.id, rangeSize)
+  const { replaceFilter } = useActions()
   const [active, setActive] = useState(defaultActive)
 
   const toggleActive = () => {
@@ -24,6 +25,15 @@ export default function RangeSelector({ facet, rangeSize = 100, defaultActive = 
   }
 
   const selectedCount = ranges.filter(r => r.selected).length
+
+  const handleRangeChange = (rangeItem: (typeof ranges)[number]) => {
+    if (rangeItem.selected) {
+      replaceFilter(facet.field!, undefined)
+      return
+    }
+
+    updateRange([rangeItem.min, rangeItem.max])
+  }
 
   // TODO currency formatting for price ranges
 
@@ -57,9 +67,12 @@ export default function RangeSelector({ facet, rangeSize = 100, defaultActive = 
               name={`${facet.id}-range`}
               value={`${rangeItem.min} - ${rangeItem.max}`}
               selected={rangeItem.selected ?? false}
-              onChange={() =>
-                rangeItem.selected ? updateRange([undefined, undefined]) : updateRange([rangeItem.min, rangeItem.max])
-              }
+              onChange={() => handleRangeChange(rangeItem)}
+              onClick={() => {
+                if (rangeItem.selected) {
+                  handleRangeChange(rangeItem)
+                }
+              }}
               className={styles.rangeItem}
             />
           ))}
