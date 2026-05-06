@@ -15,7 +15,7 @@ Apply these conventions when editing TypeScript or TSX files in this project.
 - Use `const` and `let`; do not use `var`.
 - Prefer `async`/`await` over Promise chaining.
 - Use individual named exports over bulk exports.
-- Favor named exports over default exports.
+- Prefer named exports for utilities and shared helpers, and allow default exports for components and Storybook files where that matches existing patterns.
 - Avoid `any`; prefer specific types or `unknown`.
 - Use ES2020 language features and syntax conventions.
 - Favor functional array methods such as `map`, `filter`, and `reduce` when they keep the code readable.
