@@ -1,4 +1,4 @@
-import style from "./RadioButton.module.css"
+import styles from "./RadioButton.module.css"
 import { cl } from "@nosto/search-js/utils"
 
 type Props = {
@@ -11,10 +11,10 @@ type Props = {
 
 export default function RadioButton({ value, selected, onChange, className, name }: Props) {
   return (
-    <label className={cl(style.radioButton, className)}>
+    <label className={cl(styles.radioButton, className)}>
       {value}
       <input type="radio" name={name} checked={selected} onChange={onChange} />
-      <span className={style.checkmark} />
+      <span className={styles.checkmark} />
     </label>
   )
 }
