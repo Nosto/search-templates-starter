@@ -57,7 +57,7 @@ export default function RangeSelector({ facet, rangeSize = 100, defaultActive = 
               name={`${facet.id}-range`}
               value={`${rangeItem.min} - ${rangeItem.max}`}
               selected={rangeItem.selected ?? false}
-              onChange={() =>
+              onClick={() =>
                 rangeItem.selected ? updateRange([undefined, undefined]) : updateRange([rangeItem.min, rangeItem.max])
               }
               className={styles.rangeItem}

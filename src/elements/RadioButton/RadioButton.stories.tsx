@@ -17,7 +17,7 @@ export const Default: Story = {
     name: "example",
     value: "Radio Button Label",
     selected: false,
-    onChange: () => {}
+    onClick: () => {}
   }
 }
 
@@ -26,7 +26,7 @@ export const Selected: Story = {
     name: "example",
     value: "Selected Radio Button",
     selected: true,
-    onChange: () => {}
+    onClick: () => {}
   }
 }
 
@@ -35,7 +35,7 @@ export const LongLabel: Story = {
     name: "example",
     value: "This is a radio button with a very long label that might wrap to multiple lines",
     selected: false,
-    onChange: () => {}
+    onClick: () => {}
   }
 }
 
@@ -44,7 +44,7 @@ export const PriceRange: Story = {
     name: "price",
     value: "£0 - £250",
     selected: false,
-    onChange: () => {}
+    onClick: () => {}
   },
   parameters: {
     docs: {
