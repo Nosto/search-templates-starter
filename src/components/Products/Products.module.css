@@ -1,5 +1,6 @@
 .container {
   display: grid;
+  grid-auto-flow: dense;
   grid-template-columns: 1fr;
   transition: opacity 0.3s ease;
 }
