@@ -1,3 +1,10 @@
+## [1.13.10](https://github.com/Nosto/search-templates-starter/compare/v1.13.9...v1.13.10) (2026-05-06)
+
+
+### Bug Fixes
+
+* **toolbar:** remove loading state flicker ([03fecc1](https://github.com/Nosto/search-templates-starter/commit/03fecc1d6a4f2fad908caf471005d887056ffc02))
+
 ## [1.13.9](https://github.com/Nosto/search-templates-starter/compare/v1.13.8...v1.13.9) (2026-05-06)
 
 
