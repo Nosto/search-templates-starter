@@ -1,5 +1,5 @@
 import { useNostoAppState, useResponse } from "@nosto/search-js/preact/hooks"
-import style from "./Results.module.css"
+import styles from "./Results.module.css"
 import Keywords from "./Keywords"
 import Products from "./Products"
 import History from "./History"
@@ -29,10 +29,10 @@ export default function Results({ onKeyDown }: ResultsProps) {
 
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div className={style.autocomplete} data-nosto-element="autocomplete" onKeyDown={onKeyDown}>
-      <div className={`${style.container} ${style.paddingContainer}`} ref={containerRef}>
-        <div className={style.items}>
-          <div className={style.section}>
+    <div className={styles.autocomplete} data-nosto-element="autocomplete" onKeyDown={onKeyDown}>
+      <div className={`${styles.container} ${styles.paddingContainer}`} ref={containerRef}>
+        <div className={styles.items}>
+          <div className={styles.section}>
             {hasHistory && <History />}
             {hasResults && <Keywords keywords={keywords} />}
             {hasResults && <Categories categories={categories} />}

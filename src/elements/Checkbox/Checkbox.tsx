@@ -1,4 +1,4 @@
-import style from "./Checkbox.module.css"
+import styles from "./Checkbox.module.css"
 import { cl } from "@nosto/search-js/utils"
 
 type Props = {
@@ -10,10 +10,10 @@ type Props = {
 
 export default function Checkbox({ value, selected, onChange, className }: Props) {
   return (
-    <label className={cl(style.checkbox, className)}>
+    <label className={cl(styles.checkbox, className)}>
       {value}
       <input type="checkbox" checked={selected} onChange={onChange} />
-      <span className={style.checkmark} />
+      <span className={styles.checkmark} />
     </label>
   )
 }

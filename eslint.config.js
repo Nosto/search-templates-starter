@@ -46,6 +46,7 @@ export default tseslint.config(
   {
     files: ["**/*.{js,ts,tsx}"],
     rules: {
+      "react-hooks/immutability": "off",
       "func-style": ["error", "declaration", { allowArrowFunctions: true }],
       "prefer-arrow-callback": ["error", { allowNamedFunctions: true }],
       "function-paren-newline": ["error", "multiline-arguments"],
