@@ -1,3 +1,10 @@
+## [1.13.9](https://github.com/Nosto/search-templates-starter/compare/v1.13.8...v1.13.9) (2026-05-06)
+
+
+### Bug Fixes
+
+* **ui:** default button type ([06b6847](https://github.com/Nosto/search-templates-starter/commit/06b68471e69b08ad64f8309b228951e363da3636))
+
 ## [1.13.8](https://github.com/Nosto/search-templates-starter/compare/v1.13.7...v1.13.8) (2026-04-20)
 
 
