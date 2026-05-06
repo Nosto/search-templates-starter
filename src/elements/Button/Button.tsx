@@ -8,9 +8,9 @@ type Props = {
   light?: boolean
 } & JSX.IntrinsicElements["button"]
 
-export default function Button({ className, icon, children, light, ...props }: Props) {
+export default function Button({ className, icon, children, light, type = "button", ...props }: Props) {
   return (
-    <button className={cl(styles.button, light && styles.light, className)} {...props}>
+    <button className={cl(styles.button, light && styles.light, className)} type={type} {...props}>
       {icon && <Icon name={icon} />}
       {children}
     </button>
