@@ -5,6 +5,9 @@ import skeleton from "./skeleton.module.css"
 import DynamicCard from "@/elements/DynamicCard/DynamicCard"
 import { cl } from "@nosto/search-js/utils"
 
+/**
+ * Renders a Shopify dynamic-card product search result. Keep the SerpElement wrapper in place so Nosto search analytics can track product clicks.
+ */
 export default function DynamicCardProduct({ product }: { product: Product }) {
   const isSkeleton = product.tags1?.includes("skeleton")
 

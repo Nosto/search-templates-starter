@@ -7,6 +7,9 @@ type PopularSearchProps = {
   search: SearchPopularSearch
 }
 
+/**
+ * Renders an autocomplete popular-search result. Keep the AutocompleteElement wrapper in place so Nosto search analytics can track popular-search clicks.
+ */
 export default function PopularSearch({ search }: PopularSearchProps) {
   const onSubmit = useOnSubmit()
   return (
