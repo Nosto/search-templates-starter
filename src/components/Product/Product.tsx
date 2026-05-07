@@ -14,6 +14,9 @@ type Props = {
   showAltOnHover?: boolean
 }
 
+/**
+ * Renders a product search result. Keep the SerpElement wrapper in place so Nosto search analytics can track product clicks.
+ */
 export default function Product({ product, children, showAltOnHover = true }: Props) {
   const hasAlternateImage = showAltOnHover && product.alternateImageUrls && product.alternateImageUrls.length > 0
   const isNew = useMemo(
