@@ -1,3 +1,10 @@
+## [1.13.11](https://github.com/Nosto/search-templates-starter/compare/v1.13.10...v1.13.11) (2026-05-07)
+
+
+### Bug Fixes
+
+* **deps:** move msw to dev dependencies ([8713aca](https://github.com/Nosto/search-templates-starter/commit/8713aca8220927155e0bb3789a90cd3d73557db6))
+
 ## [1.13.10](https://github.com/Nosto/search-templates-starter/compare/v1.13.9...v1.13.10) (2026-05-06)
 
 
