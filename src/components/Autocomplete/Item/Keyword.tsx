@@ -7,6 +7,9 @@ type KeywordProps = {
   keyword: SearchKeyword
 }
 
+/**
+ * Renders an autocomplete keyword result. Keep the AutocompleteElement wrapper in place so Nosto search analytics can track keyword clicks.
+ */
 export default function Keyword({ keyword }: KeywordProps) {
   const onSubmit = useOnSubmit()
   return (

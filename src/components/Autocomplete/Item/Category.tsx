@@ -6,6 +6,9 @@ type CategoryProps = {
   category: SearchCategory
 }
 
+/**
+ * Renders an autocomplete category result. Keep the AutocompleteElement wrapper in place so Nosto search analytics can track category clicks.
+ */
 export default function Category({ category }: CategoryProps) {
   return (
     <AutocompleteElement

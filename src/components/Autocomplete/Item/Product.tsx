@@ -6,6 +6,9 @@ type Props = {
   hit: Product
 }
 
+/**
+ * Renders an autocomplete product result. Keep the AutocompleteElement wrapper in place so Nosto search analytics can track product clicks.
+ */
 export default function Product({ hit }: Props) {
   return (
     <AutocompleteElement

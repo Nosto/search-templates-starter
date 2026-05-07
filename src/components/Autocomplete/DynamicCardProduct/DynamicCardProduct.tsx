@@ -6,6 +6,9 @@ type Props = {
   hit: Product
 }
 
+/**
+ * Renders a Shopify dynamic-card autocomplete product result. Keep the AutocompleteElement wrapper in place so Nosto search analytics can track product clicks.
+ */
 export default function DynamicCardProduct({ hit }: Props) {
   return (
     <AutocompleteElement
