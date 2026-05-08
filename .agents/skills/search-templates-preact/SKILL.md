@@ -1,5 +1,5 @@
 ---
-name: search-templates-preact
+name: preact
 description: Project Preact component conventions for Search Templates Starter. Use when editing or creating TSX Preact components matching **/*.tsx, including components that read Nosto app state.
 ---
 

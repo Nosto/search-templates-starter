@@ -129,6 +129,17 @@ npm run storybook
 
 No merchant ID is required as the components in Storybook are sandboxed.
 
+### Codex skills
+
+This repository includes project-local Codex skills in `.agents/skills/` for common development tasks:
+
+- `typescript` for TypeScript and JavaScript conventions.
+- `preact` for TSX Preact component conventions.
+- `storybook` for Storybook story conventions.
+- `testing` for Vitest test conventions.
+
+Use the most specific skill for the files you are editing. For example, use `storybook` for `*.stories.tsx` files and `preact` for non-story TSX components. Apply `typescript` alongside the more specific skill when general TypeScript guidance is relevant.
+
 ## Developing live
 
 Using the Nosto CLI, you may also deploy the template straight to your store in preview mode. Note that any changes you do through Nosto CLI will only be visible with the Debug Toolbar and preview mode enabled. Production deployments are done through the Nosto Admin system.

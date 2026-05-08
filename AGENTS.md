@@ -64,11 +64,11 @@ This starts Storybook at http://localhost:6060.
 
 ## Codex Skills
 
-File-pattern-specific coding conventions are now documented as project-local Codex skills in `.codex/skills/`:
+File-pattern-specific coding conventions are now documented as project-local Codex skills in `.agents/skills/`:
 
-- **TypeScript/JavaScript** (`**/*.ts`, `**/*.tsx`): `$search-templates-typescript`
-- **Testing** (`test/**/*`): `$search-templates-testing`
-- **Storybook Stories** (`**/*.stories.tsx`): `$search-templates-storybook`
-- **Preact Components** (`**/*.tsx`): `$search-templates-preact`
+- **TypeScript/JavaScript** (`**/*.ts`, `**/*.tsx`): `$typescript`
+- **Testing** (`test/**/*`): `$testing`
+- **Storybook Stories** (`**/*.stories.tsx`): `$storybook`
+- **Preact Components** (`**/*.tsx`): `$preact`
 
-Use the most specific matching skill first when modifying or creating files. For `*.stories.tsx`, use `$search-templates-storybook` as the primary skill; use `$search-templates-preact` for non-story TSX components. Apply `$search-templates-typescript` alongside the more specific skill when general TypeScript guidance is relevant.
+Use the most specific matching skill first when modifying or creating files. For `*.stories.tsx`, use `$storybook` as the primary skill; use `$preact` for non-story TSX components. Apply `$typescript` alongside the more specific skill when general TypeScript guidance is relevant.

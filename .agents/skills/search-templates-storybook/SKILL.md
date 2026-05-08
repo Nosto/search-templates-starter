@@ -1,5 +1,5 @@
 ---
-name: search-templates-storybook
+name: storybook
 description: Project Storybook story conventions for Search Templates Starter. Use when editing or creating Storybook files matching **/*.stories.tsx, especially stories for real Preact components.
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: search-templates-typescript
+name: typescript
 description: Project TypeScript and JavaScript conventions for Search Templates Starter. Use when editing or creating TypeScript or TSX files matching **/*.ts or **/*.tsx in this Preact, Vite, and @nosto/search-js codebase.
 ---
 

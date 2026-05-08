@@ -1,5 +1,5 @@
 ---
-name: search-templates-testing
+name: testing
 description: Project Vitest conventions for Search Templates Starter. Use when editing or creating test files under test/**/*, including jsdom and @testing-library/preact based tests.
 ---
 
