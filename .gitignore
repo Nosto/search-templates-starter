@@ -1,6 +1,7 @@
 # Dynamically loaded Nosto client script type definitions
 src/nosto/nosto.d.ts
 .env
+.nostocache
 
 # Logs
 logs

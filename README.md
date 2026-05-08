@@ -26,7 +26,7 @@ To use the Starter, you must have a Nosto account with access to Search Template
 
 Ensure you have the following installed:
 
-- Node.js (v22 or higher)
+- Node.js (v24 or higher)
 - npm
 
 ## Installation
