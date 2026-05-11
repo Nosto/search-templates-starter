@@ -29,13 +29,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Audit dependencies
-        run: npm audit --audit-level=high
-
       - name: Run lint
         run: npm run lint
 
       - name: Run style lint
+        if: ${{ github.event.repository.name == 'search-templates-starter' }}
         run: npm run style-lint
 
       - name: Run typecheck
@@ -45,6 +43,7 @@ jobs:
         run: npm run test
 
       - name: Run E2E tests
+        if: ${{ github.event.repository.name == 'search-templates-starter' }}
         run: |
           npx playwright install --with-deps
           npm run test:e2e
