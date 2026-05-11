@@ -1,3 +1,10 @@
+## [1.13.12](https://github.com/Nosto/search-templates-starter/compare/v1.13.11...v1.13.12) (2026-05-11)
+
+
+### Bug Fixes
+
+* exclude stylelint and e2e in clone repositories ([d8d94ce](https://github.com/Nosto/search-templates-starter/commit/d8d94ce010622c70a7b9f72e590dac2cd0d5321c))
+
 ## [1.13.11](https://github.com/Nosto/search-templates-starter/compare/v1.13.10...v1.13.11) (2026-05-07)
 
 
