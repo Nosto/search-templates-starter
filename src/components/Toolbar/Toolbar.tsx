@@ -1,7 +1,7 @@
 import { useSelectedFiltersCount, useSort, useSizeOptions } from "@nosto/search-js/preact/hooks"
 import { sortOptions, defaultSize, sizes } from "@/config"
 import Select from "@/elements/Select/Select"
-import { toolbarStyles as styles } from "@/styles/classNames"
+import { styles } from "./styles"
 import Button from "@/elements/Button/Button"
 import { cl } from "@nosto/search-js/utils"
 import { useFilterSidebar } from "@/contexts/SidebarContext"

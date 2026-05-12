@@ -3,7 +3,7 @@ import { useRange } from "@nosto/search-js/preact/hooks"
 import DualRange from "@/elements/DualRange/DualRange"
 import Icon from "@/elements/Icon/Icon"
 import { SearchStatsFacet } from "@nosto/nosto-js/client"
-import { rangeFacetStyles as styles } from "@/styles/classNames"
+import { styles } from "./styles"
 import { cl } from "@nosto/search-js/utils"
 
 type Props = {

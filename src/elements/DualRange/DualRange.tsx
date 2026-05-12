@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState, useEffect } from "preact/hooks"
-import { dualRangeStyles as styles } from "@/styles/classNames"
+import { styles } from "./styles"
 import { cl } from "@nosto/search-js/utils"
 
 type Range = [number | undefined, number | undefined]

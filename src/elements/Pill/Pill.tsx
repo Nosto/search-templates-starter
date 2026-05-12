@@ -1,4 +1,4 @@
-import { pillStyles as styles } from "@/styles/classNames"
+import { styles } from "./styles"
 import { cl } from "@nosto/search-js/utils"
 import { ComponentChildren } from "preact"
 

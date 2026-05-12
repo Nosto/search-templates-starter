@@ -1,7 +1,7 @@
 import { pick } from "@nosto/search-js/utils"
 import Product from "@/components/Product/Product"
 import { useDecoratedSearchResults, useNostoAppState } from "@nosto/search-js/preact/hooks"
-import { productGridStyles as styles } from "@/styles/classNames"
+import { styles } from "./styles"
 import { cl } from "@nosto/search-js/utils"
 import { hitDecorators } from "@/config"
 

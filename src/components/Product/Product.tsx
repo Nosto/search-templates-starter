@@ -1,6 +1,6 @@
 import { SerpElement } from "@nosto/search-js/preact/serp"
 import { cl } from "@nosto/search-js/utils"
-import { productStyles as styles, skeletonStyles as skeleton } from "@/styles/classNames"
+import { skeleton, styles } from "./styles"
 import type { Product } from "@/types"
 import { renderRatingStars } from "./renderRatingStars"
 import ProductImage from "./ProductImage"

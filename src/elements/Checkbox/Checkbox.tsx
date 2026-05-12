@@ -1,4 +1,4 @@
-import { checkboxStyles as styles } from "@/styles/classNames"
+import { styles } from "./styles"
 import { cl } from "@nosto/search-js/utils"
 
 type Props = {

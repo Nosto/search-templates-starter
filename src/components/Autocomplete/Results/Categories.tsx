@@ -1,7 +1,7 @@
 import { SearchCategories } from "@nosto/nosto-js/client"
 import Heading from "@/elements/Heading/Heading"
 import Category from "../Item/Category"
-import { autocompleteResultsStyles as styles } from "@/styles/classNames"
+import { styles } from "./styles"
 
 export type CategoriesProps = {
   categories: SearchCategories

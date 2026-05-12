@@ -3,7 +3,7 @@ import { SearchStatsFacet, SearchTermsFacet } from "@nosto/nosto-js/client"
 import TermsDropdown from "./TermsDropdown/TermsDropdown"
 import RangeDropdown from "./RangeDropdown/RangeDropdown"
 import ClearFiltersButton from "./ClearFiltersButton/ClearFiltersButton"
-import { filterTopbarStyles as styles } from "@/styles/classNames"
+import { styles } from "./styles"
 
 export default function FilterTopbar() {
   const { facets } = useFacets()

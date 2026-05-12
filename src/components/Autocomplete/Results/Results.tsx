@@ -1,5 +1,5 @@
 import { useNostoAppState, useResponse } from "@nosto/search-js/preact/hooks"
-import { autocompleteResultsStyles as styles } from "@/styles/classNames"
+import { styles } from "./styles"
 import Keywords from "./Keywords"
 import Products from "./Products"
 import History from "./History"

@@ -1,5 +1,5 @@
 import { useNostoAppState } from "@nosto/search-js/preact/hooks"
-import { noResultsStyles as styles } from "@/styles/classNames"
+import { styles } from "./styles"
 
 export default function NoResults() {
   const query = useNostoAppState(state => state.response.query)

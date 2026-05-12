@@ -1,6 +1,6 @@
 import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
 import { SearchKeyword } from "@nosto/nosto-js/client"
-import { autocompleteItemStyles as styles } from "@/styles/classNames"
+import { styles } from "./styles"
 import { useOnSubmit } from "../OnSubmitContext"
 
 type KeywordProps = {

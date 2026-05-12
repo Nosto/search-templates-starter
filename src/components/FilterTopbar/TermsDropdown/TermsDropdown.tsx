@@ -3,7 +3,7 @@ import { SearchTermsFacet } from "@nosto/nosto-js/client"
 import FilterTrigger from "../FilterTrigger/FilterTrigger"
 import Checkbox from "@/elements/Checkbox/Checkbox"
 import { useOptimisticFacet } from "@/hooks/useOptimisticFacet"
-import { termsDropdownStyles as styles } from "@/styles/classNames"
+import { styles } from "./styles"
 
 type Props = {
   facet: SearchTermsFacet

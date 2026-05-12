@@ -1,7 +1,7 @@
 import { SearchKeywords } from "@nosto/nosto-js/client"
 import Heading from "@/elements/Heading/Heading"
 import Keyword from "@/components/Autocomplete/Item/Keyword"
-import { autocompleteResultsStyles as styles } from "@/styles/classNames"
+import { styles } from "./styles"
 
 export type KeywordsProps = {
   keywords: SearchKeywords

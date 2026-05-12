@@ -1,7 +1,7 @@
 import { useNostoAppState } from "@nosto/search-js/preact/hooks"
 import HistoryItem from "../Item/HistoryItem"
 import Heading from "@/elements/Heading/Heading"
-import { autocompleteHistoryStyles as styles } from "@/styles/classNames"
+import { styles } from "./History.styles"
 
 export default function History() {
   const historyItems = useNostoAppState(state => state.historyItems)

@@ -1,5 +1,5 @@
 import { SearchCategory } from "@nosto/nosto-js/client"
-import { autocompleteItemStyles as styles } from "@/styles/classNames"
+import { styles } from "./styles"
 import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
 
 type CategoryProps = {

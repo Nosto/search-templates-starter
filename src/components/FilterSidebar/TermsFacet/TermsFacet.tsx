@@ -2,7 +2,7 @@ import Icon from "@/elements/Icon/Icon"
 import { SearchTermsFacet } from "@nosto/nosto-js/client"
 import Pill from "@/elements/Pill/Pill"
 import { useOptimisticFacet } from "@/hooks/useOptimisticFacet"
-import { termsFacetStyles as styles } from "@/styles/classNames"
+import { styles } from "./styles"
 
 type Props = {
   facet: SearchTermsFacet
