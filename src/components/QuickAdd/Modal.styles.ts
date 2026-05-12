@@ -1,4 +1,4 @@
-export const styles = {
+const styles = {
   modal:
     "fixed left-1/2 top-1/2 m-0 hidden max-h-[90vh] w-[90%] max-w-[800px] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-none border-0 bg-white p-0 transition-opacity duration-[5s] ease-[ease] open:flex open:animate-fade-in backdrop:open:animate-fade-in backdrop:open:bg-black/50",
   content: "flex-1 overflow-y-auto p-4",
@@ -12,3 +12,5 @@ export const styles = {
   listPrice: "ml-[var(--ns-space-2)] line-through",
   description: "max-[800px]:hidden"
 }
+
+export default styles

@@ -1,4 +1,4 @@
-export const styles = {
+const styles = {
   container:
     "flex cursor-pointer flex-col p-[var(--ns-space-2)] text-inherit no-underline focus:bg-[var(--ns-color-focus)]",
   image: "h-auto w-full object-contain aspect-[var(--ns-aspect-ratio)]",
@@ -7,3 +7,5 @@ export const styles = {
   price: "font-bold",
   strikedPrice: "ml-[var(--ns-space-2)] line-through"
 }
+
+export default styles

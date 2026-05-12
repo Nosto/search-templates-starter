@@ -1,7 +1,7 @@
 import { render } from "@testing-library/preact"
 import { describe, it, expect, vi } from "vitest"
 import Pill from "@/elements/Pill/Pill"
-import { styles as pillStyles } from "@/elements/Pill/styles"
+import pillStyles from "@/elements/Pill/styles"
 
 describe("Pill", () => {
   it("should render children content", () => {

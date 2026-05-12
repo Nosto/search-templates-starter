@@ -1,4 +1,4 @@
-export const styles = {
+const styles = {
   autocomplete:
     "absolute left-0 right-0 z-[var(--ns-z-index-autocomplete)] mx-auto box-border flex w-[calc(100%_-_var(--ns-width-autocomplete-offset))] max-w-[var(--ns-max-width-autocomplete)] flex-col items-start rounded-[var(--ns-border-radius-3)] border border-[var(--ns-color-grey-light)] bg-[var(--ns-color-white)] font-[var(--ns-font-family)] text-[length:var(--ns-font-size-4)] shadow-[var(--ns-box-shadow-autocomplete)] md:w-auto",
   container: "mt-auto w-full",
@@ -14,3 +14,5 @@ export const styles = {
   button: "flex justify-center rounded-none border-t border-[var(--ns-color-grey-light)]",
   submit: "w-full rounded-none text-center"
 }
+
+export default styles

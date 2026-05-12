@@ -1,4 +1,4 @@
-import { styles } from "./styles"
+import styles from "./styles"
 import { cl } from "@nosto/search-js/utils"
 import { ComponentChildren } from "preact"
 

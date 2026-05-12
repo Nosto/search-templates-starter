@@ -1,4 +1,4 @@
-export const styles = {
+const styles = {
   container: "w-full py-[var(--ns-space-2)]",
   track:
     "relative my-[var(--ns-space-4)] h-[6px] cursor-pointer rounded-[var(--ns-border-radius-3)] bg-[var(--ns-color-grey-light)]",
@@ -10,3 +10,5 @@ export const styles = {
     "mt-[var(--ns-space-2)] flex justify-between text-[length:var(--ns-font-size-3)] text-[var(--ns-color-grey-dark)]",
   label: "font-[var(--ns-weight-medium)]"
 }
+
+export default styles

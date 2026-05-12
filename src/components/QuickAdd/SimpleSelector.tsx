@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Product } from "@/types"
-import { styles } from "./SimpleSelector.styles"
+import styles from "./SimpleSelector.styles"
 import { cl } from "@nosto/search-js/utils"
 
 type Props = {

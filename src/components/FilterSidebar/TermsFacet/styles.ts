@@ -1,4 +1,4 @@
-export const styles = {
+const styles = {
   dropdown: "border-b border-[var(--ns-color-grey-light)] md:last:border-b-0",
   active: "[&>.ns-facet-menu]:max-h-[var(--ns-facet-max-height)] [&>.ns-facet-menu]:opacity-100",
   menu: "ns-facet-menu max-h-0 overflow-hidden opacity-0 transition-[max-height,opacity] duration-[var(--ns-transition-duration)] ease-[var(--ns-transition-easing)]",
@@ -14,3 +14,5 @@ export const styles = {
   icon: "absolute right-[var(--ns-space-16)] top-1/2 block -translate-y-1/2",
   pillContainer: "p-[var(--ns-space-2)]"
 }
+
+export default styles

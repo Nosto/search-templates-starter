@@ -1,4 +1,4 @@
-export const styles = {
+const styles = {
   dropdown: "border-b border-[var(--ns-color-grey-light)] md:last:border-b-0",
   active:
     "[&>.ns-facet-menu]:max-h-[var(--ns-facet-max-height)] [&>.ns-facet-menu]:p-[var(--ns-space-4)] [&>.ns-facet-menu]:opacity-100",
@@ -12,3 +12,5 @@ export const styles = {
   rangeContainer: "flex flex-col gap-[var(--ns-space-2)] pr-[var(--ns-space-2)]",
   rangeItem: "py-[var(--ns-space-2)]"
 }
+
+export default styles

@@ -1,5 +1,5 @@
 import { useProductFilters } from "@nosto/search-js/preact/hooks"
-import { styles } from "./styles"
+import styles from "./styles"
 import Pill from "@/elements/Pill/Pill"
 
 export default function SelectedFilters() {

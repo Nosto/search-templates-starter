@@ -1,5 +1,5 @@
 import Icon from "@/elements/Icon/Icon"
-import { styles } from "./styles"
+import styles from "./styles"
 
 interface FilterTriggerProps {
   value?: string

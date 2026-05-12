@@ -1,5 +1,5 @@
 import { JSX } from "preact/jsx-runtime"
-import { styles } from "./styles"
+import styles from "./styles"
 import Icon, { IconName } from "@/elements/Icon/Icon"
 import { cl } from "@nosto/search-js/utils"
 

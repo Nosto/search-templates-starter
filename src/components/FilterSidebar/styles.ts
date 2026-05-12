@@ -1,4 +1,4 @@
-export const styles = {
+const styles = {
   close:
     "absolute right-[var(--ns-space-4)] top-[var(--ns-space-4)] block max-w-[var(--ns-width-mobile-close-sidebar)] cursor-pointer items-center border-0 text-right text-[length:var(--ns-font-size-3)]",
   dialog:
@@ -9,3 +9,5 @@ export const styles = {
   facets: "m-0 list-none p-0",
   clearFilters: "mt-auto border-t border-[var(--ns-color-grey-light)] p-[var(--ns-space-4)] text-center"
 }
+
+export default styles

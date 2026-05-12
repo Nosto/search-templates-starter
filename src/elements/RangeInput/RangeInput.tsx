@@ -1,5 +1,5 @@
 import { JSX } from "preact"
-import { styles } from "./styles"
+import styles from "./styles"
 import { cl } from "@nosto/search-js/utils"
 
 type Props = JSX.IntrinsicElements["input"]

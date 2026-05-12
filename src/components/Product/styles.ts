@@ -1,4 +1,4 @@
-export const styles = {
+const styles = {
   container: "relative box-border w-full max-w-full flex-[0_0_100%] p-[var(--ns-space-2)] text-inherit no-underline",
   altContainer: "group",
   image: "relative",
@@ -16,7 +16,4 @@ export const styles = {
     "absolute bottom-2 left-2 z-[1] block cursor-pointer border-0 bg-[var(--ns-color-white)] p-2 text-center text-[length:var(--ns-font-size-4)] text-[var(--ns-color-black)] [@media(hover:hover)_and_(pointer:fine)]:hidden [@media(hover:hover)_and_(pointer:fine)]:group-hover:block"
 }
 
-export const skeleton = {
-  skeleton: "pointer-events-none",
-  text: "animate-shimmer rounded-[var(--ns-border-radius-3)] bg-[linear-gradient(90deg,#f0f0f0_25%,#e0e0e0_50%,#f0f0f0_75%)] bg-[length:200%_100%] text-transparent"
-}
+export default styles

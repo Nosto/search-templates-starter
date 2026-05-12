@@ -1,6 +1,6 @@
 import { SearchPopularSearches } from "@nosto/nosto-js/client"
 import Heading from "@/elements/Heading/Heading"
-import { styles } from "./styles"
+import styles from "./styles"
 import PopularSearch from "../Item/PopularSearch"
 
 export type SearchesProps = {
