@@ -1,7 +1,12 @@
 import { render } from "@testing-library/preact"
 import { describe, it, expect, vi } from "vitest"
 import Pill from "@/elements/Pill/Pill"
-import pillStyles from "@/elements/Pill/styles"
+
+const selectedClass = "bg-[var(--ns-color-black)]"
+
+function classNames(element: HTMLElement) {
+  return element.className.split(/\s+/)
+}
 
 describe("Pill", () => {
   it("should render children content", () => {
@@ -23,7 +28,7 @@ describe("Pill", () => {
     )
 
     const button = getByRole("button")
-    expect(button.className).toContain(pillStyles.selected)
+    expect(classNames(button)).toContain(selectedClass)
   })
 
   it("should not apply selected Tailwind classes when selected is false", () => {
@@ -34,7 +39,7 @@ describe("Pill", () => {
     )
 
     const button = getByRole("button")
-    expect(button.className).not.toContain(pillStyles.selected)
+    expect(classNames(button)).not.toContain(selectedClass)
   })
 
   it("should call onClick when clicked", () => {
@@ -66,7 +71,7 @@ describe("Pill", () => {
     const { getByRole } = render(<Pill onClick={() => {}}>Default Pill</Pill>)
 
     const button = getByRole("button")
-    expect(button.className).not.toContain(pillStyles.selected)
+    expect(classNames(button)).not.toContain(selectedClass)
   })
 
   it("should work without onClick prop", () => {

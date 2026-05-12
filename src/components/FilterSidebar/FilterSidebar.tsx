@@ -3,7 +3,6 @@ import TermsFacet from "./TermsFacet/TermsFacet"
 import RangeFacet from "./RangeFacet/RangeFacet"
 import Icon from "@/elements/Icon/Icon"
 import { SearchStatsFacet, SearchTermsFacet } from "@nosto/nosto-js/client"
-import styles from "./styles"
 import Button from "@/elements/Button/Button"
 import { cl } from "@nosto/search-js/utils"
 import { useFilterSidebar } from "@/contexts/SidebarContext"
@@ -19,7 +18,13 @@ type ToggleProps = {
 
 function ToggleSidebarButton({ className, onClick }: ToggleProps = {}) {
   return (
-    <Button className={cl(styles.close, className)} onClick={onClick}>
+    <Button
+      className={cl(
+        "absolute right-[var(--ns-space-4)] top-[var(--ns-space-4)] block max-w-[var(--ns-width-mobile-close-sidebar)] cursor-pointer items-center border-0 text-right text-[length:var(--ns-font-size-3)]",
+        className
+      )}
+      onClick={onClick}
+    >
       <Icon name="close" circle={true} />
     </Button>
   )
@@ -61,15 +66,26 @@ export default function FilterSidebar() {
 
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
-    <dialog ref={dialogRef} className={styles.dialog} onClose={handleClose} onClick={handleBackdropClick}>
-      <div className={styles.content}>
-        <div className={styles.header}>
+    <dialog
+      ref={dialogRef}
+      className={
+        "fixed left-0 top-0 m-0 h-full max-h-full max-w-[var(--ns-width-mobile-sidebar)] animate-dialog-slide-in border-0 p-0 backdrop:animate-fade-in backdrop:bg-black/50"
+      }
+      onClose={handleClose}
+      onClick={handleBackdropClick}
+    >
+      <div
+        className={
+          "relative flex h-full w-full min-w-[var(--ns-width-mobile-sidebar)] flex-col overflow-y-auto bg-[var(--ns-color-white)] p-[var(--ns-space-1)]"
+        }
+      >
+        <div className={"flex items-baseline border-b border-[var(--ns-color-grey-light)] p-[var(--ns-space-4)]"}>
           <Heading>Filters</Heading>
           <ToggleSidebarButton onClick={() => setOpen(false)} />
         </div>
         <SelectedFilters />
         <div>
-          <ul className={styles.facets}>
+          <ul className={"m-0 list-none p-0"}>
             {facets?.map(facet => {
               switch (facet.type) {
                 case "terms":
@@ -83,7 +99,7 @@ export default function FilterSidebar() {
           </ul>
         </div>
         {filters.length ? (
-          <div className={styles.clearFilters}>
+          <div className={"mt-auto border-t border-[var(--ns-color-grey-light)] p-[var(--ns-space-4)] text-center"}>
             <ClearFiltersButton />
           </div>
         ) : null}

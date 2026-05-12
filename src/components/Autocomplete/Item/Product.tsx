@@ -1,5 +1,4 @@
 import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
-import styles from "./Product.styles"
 import type { Product } from "@/types"
 
 type Props = {
@@ -20,18 +19,32 @@ export default function Product({ hit }: Props) {
       as="a"
       componentProps={{
         "aria-label": `Product ${hit.name}`,
-        className: styles.container,
+        className:
+          "flex cursor-pointer flex-col p-[var(--ns-space-2)] text-inherit no-underline focus:bg-[var(--ns-color-focus)]",
         href: hit.url
       }}
     >
-      <img className={styles.image} src={hit.imageUrl} alt={hit.name} />
-      <div className={styles.details} data-nosto-element="product">
+      <img
+        className={"h-auto w-full object-contain aspect-[var(--ns-aspect-ratio)]"}
+        src={hit.imageUrl}
+        alt={hit.name}
+      />
+      <div
+        className={"pt-[var(--ns-space-2)] text-[length:var(--ns-font-size-4)] text-[var(--ns-color-black)]"}
+        data-nosto-element="product"
+      >
         {hit.brand && <div>{hit.brand}</div>}
-        <div className={styles.name}>{hit.name}</div>
-        <div className={styles.price}>
+        <div
+          className={
+            "mb-[var(--ns-space-1)] overflow-hidden text-ellipsis [-webkit-box-orient:vertical] [-webkit-line-clamp:1] [display:-webkit-box] [line-clamp:1]"
+          }
+        >
+          {hit.name}
+        </div>
+        <div className={"font-bold"}>
           <span>{hit.priceText}</span>
           {hit.listPrice && hit.price && hit.listPrice > hit.price && (
-            <span className={styles.strikedPrice}>{hit.listPriceText}</span>
+            <span className={"ml-[var(--ns-space-2)] line-through"}>{hit.listPriceText}</span>
           )}
         </div>
       </div>

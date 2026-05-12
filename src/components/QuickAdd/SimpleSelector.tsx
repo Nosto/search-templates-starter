@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Product } from "@/types"
-import styles from "./SimpleSelector.styles"
 import { cl } from "@nosto/search-js/utils"
 
 type Props = {
@@ -12,11 +11,14 @@ type Props = {
 
 export default function SimpleSelector({ product, skuId, onChange }: Props) {
   return (
-    <div className={styles.simpleSelector}>
+    <div className={"mt-[var(--ns-space-4)] flex flex-wrap gap-[var(--ns-space-2)]"}>
       {product.skus?.map(sku => (
         <label
           key={sku.id}
-          className={cl(styles.simpleOption, skuId === sku.id && styles.active)}
+          className={cl(
+            "mb-[var(--ns-space-4)] inline-block cursor-pointer border-[var(--ns-color-grey)] bg-[var(--ns-color-grey-light)] p-[var(--ns-space-2)] [&_input]:hidden",
+            skuId === sku.id && "border-[var(--ns-color-black)] bg-[var(--ns-color-black)] text-[var(--ns-color-white)]"
+          )}
           onClick={() => onChange(sku.id!)}
         >
           {sku.name}

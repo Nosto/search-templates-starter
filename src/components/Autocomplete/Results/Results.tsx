@@ -1,5 +1,4 @@
 import { useNostoAppState, useResponse } from "@nosto/search-js/preact/hooks"
-import styles from "./styles"
 import Keywords from "./Keywords"
 import Products from "./Products"
 import History from "./History"
@@ -29,10 +28,16 @@ export default function Results({ onKeyDown }: ResultsProps) {
 
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div className={styles.autocomplete} data-nosto-element="autocomplete" onKeyDown={onKeyDown}>
-      <div className={`${styles.container} ${styles.paddingContainer}`} ref={containerRef}>
-        <div className={styles.items}>
-          <div className={styles.section}>
+    <div
+      className={
+        "absolute left-0 right-0 z-[var(--ns-z-index-autocomplete)] mx-auto box-border flex w-[calc(100%_-_var(--ns-width-autocomplete-offset))] max-w-[var(--ns-max-width-autocomplete)] flex-col items-start rounded-[var(--ns-border-radius-3)] border border-[var(--ns-color-grey-light)] bg-[var(--ns-color-white)] font-[var(--ns-font-family)] text-[length:var(--ns-font-size-4)] shadow-[var(--ns-box-shadow-autocomplete)] md:w-auto"
+      }
+      data-nosto-element="autocomplete"
+      onKeyDown={onKeyDown}
+    >
+      <div className={`${"mt-auto w-full"} ${"p-[var(--ns-space-1)]"}`} ref={containerRef}>
+        <div className={"flex flex-row max-md:flex-col"}>
+          <div className={"flex flex-row max-md:grid max-md:grid-cols-2"}>
             {hasHistory && <History />}
             {hasResults && <Keywords keywords={keywords} />}
             {hasResults && <Categories categories={categories} />}

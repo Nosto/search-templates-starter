@@ -1,5 +1,4 @@
 import { useCallback, useRef, useState, useEffect } from "preact/hooks"
-import styles from "./styles"
 import { cl } from "@nosto/search-js/utils"
 
 type Range = [number | undefined, number | undefined]
@@ -153,17 +152,28 @@ export default function DualRange({ min, max, value, onChange, className, id }: 
   const maxPercentage = getPercentage(maxValue)
 
   return (
-    <div className={cl(styles.container, className)} id={id}>
-      <div className={styles.track} ref={trackRef} data-testid="dual-range-track">
+    <div className={cl("w-full py-[var(--ns-space-2)]", className)} id={id}>
+      <div
+        className={
+          "relative my-[var(--ns-space-4)] h-[6px] cursor-pointer rounded-[var(--ns-border-radius-3)] bg-[var(--ns-color-grey-light)]"
+        }
+        ref={trackRef}
+        data-testid="dual-range-track"
+      >
         <div
-          className={styles.range}
+          className={
+            "pointer-events-none absolute h-full rounded-[var(--ns-border-radius-3)] bg-[var(--ns-color-primary)]"
+          }
           style={{
             left: `${minPercentage}%`,
             width: `${maxPercentage - minPercentage}%`
           }}
         />
         <div
-          className={cl(styles.handle, isDragging === "min" && styles.dragging)}
+          className={cl(
+            "absolute top-1/2 h-5 w-5 -translate-x-1/2 -translate-y-1/2 cursor-grab rounded-full border-[var(--ns-border-width-medium)] border-solid border-[var(--ns-color-primary)] bg-[var(--ns-color-white)] outline-none transition-shadow duration-150 ease-in-out hover:shadow-[var(--ns-box-shadow-slider-handle)] focus:shadow-[var(--ns-box-shadow-slider-handle)]",
+            isDragging === "min" && "cursor-grabbing shadow-[var(--ns-box-shadow-slider-handle)]"
+          )}
           style={{ left: `${minPercentage}%` }}
           onMouseDown={() => handleMouseDown("min")}
           onKeyDown={e => handleKeyDown(e, "min")}
@@ -175,7 +185,10 @@ export default function DualRange({ min, max, value, onChange, className, id }: 
           aria-label="Minimum value"
         />
         <div
-          className={cl(styles.handle, isDragging === "max" && styles.dragging)}
+          className={cl(
+            "absolute top-1/2 h-5 w-5 -translate-x-1/2 -translate-y-1/2 cursor-grab rounded-full border-[var(--ns-border-width-medium)] border-solid border-[var(--ns-color-primary)] bg-[var(--ns-color-white)] outline-none transition-shadow duration-150 ease-in-out hover:shadow-[var(--ns-box-shadow-slider-handle)] focus:shadow-[var(--ns-box-shadow-slider-handle)]",
+            isDragging === "max" && "cursor-grabbing shadow-[var(--ns-box-shadow-slider-handle)]"
+          )}
           style={{ left: `${maxPercentage}%` }}
           onMouseDown={() => handleMouseDown("max")}
           onKeyDown={e => handleKeyDown(e, "max")}
@@ -187,9 +200,13 @@ export default function DualRange({ min, max, value, onChange, className, id }: 
           aria-label="Maximum value"
         />
       </div>
-      <div className={styles.labels}>
-        <span className={styles.label}>{Math.round(minValue * 100) / 100}</span>
-        <span className={styles.label}>{Math.round(maxValue * 100) / 100}</span>
+      <div
+        className={
+          "mt-[var(--ns-space-2)] flex justify-between text-[length:var(--ns-font-size-3)] text-[var(--ns-color-grey-dark)]"
+        }
+      >
+        <span className={"font-[var(--ns-weight-medium)]"}>{Math.round(minValue * 100) / 100}</span>
+        <span className={"font-[var(--ns-weight-medium)]"}>{Math.round(maxValue * 100) / 100}</span>
       </div>
     </div>
   )

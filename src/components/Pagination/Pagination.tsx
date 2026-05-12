@@ -1,7 +1,6 @@
 import { usePagination, useActions, Page } from "@nosto/search-js/preact/hooks"
 import Icon from "@/elements/Icon/Icon"
 import { JSX } from "preact/jsx-runtime"
-import styles from "./styles"
 import { getPageUrl } from "@/mapping/url/getPageUrl"
 import { cl } from "@nosto/search-js/utils"
 
@@ -11,7 +10,15 @@ type Props = {
 
 function PageLink({ onClick, href, className, ariaLabel, children }: Props) {
   return (
-    <a className={cl(styles.link, className)} href={href} aria-label={ariaLabel} onClick={onClick}>
+    <a
+      className={cl(
+        "relative block cursor-pointer rounded-[var(--ns-border-radius-3)] px-[var(--ns-space-4)] py-[var(--ns-space-2)] text-[var(--ns-color-black)] no-underline",
+        className
+      )}
+      href={href}
+      aria-label={ariaLabel}
+      onClick={onClick}
+    >
       {children}
     </a>
   )
@@ -36,7 +43,7 @@ export default function Pagination() {
   }
 
   return (
-    <ul className={styles.container}>
+    <ul className={"my-[var(--ns-space-2)] flex list-none flex-wrap justify-center p-0"}>
       {prev && (
         <li>
           <PageLink {...pageLinkProps(prev)} ariaLabel="Previous page">
@@ -53,13 +60,13 @@ export default function Pagination() {
             </PageLink>
           </li>
           <li>
-            <span className={styles.filler}>...</span>
+            <span className={"block px-[var(--ns-space-4)] py-[var(--ns-space-2)]"}>...</span>
           </li>
         </>
       )}
 
       {pages.map(page => (
-        <li key={page.page} className={cl(page.current && styles.active)}>
+        <li key={page.page} className={cl(page.current && "bg-[var(--ns-color-primary-light)]")}>
           <PageLink ariaLabel={`${page.page} page`} {...pageLinkProps(page)}>
             {page.page}
           </PageLink>
@@ -69,7 +76,7 @@ export default function Pagination() {
       {last && (
         <>
           <li>
-            <span className={styles.filler}>...</span>
+            <span className={"block px-[var(--ns-space-4)] py-[var(--ns-space-2)]"}>...</span>
           </li>
           <li>
             <PageLink {...pageLinkProps(last)} ariaLabel="Last page">
