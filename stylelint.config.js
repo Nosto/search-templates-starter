@@ -1,8 +1,15 @@
 export default {
-  extends: ["stylelint-config-standard", "stylelint-config-css-modules"],
+  extends: ["stylelint-config-standard"],
   plugins: ["stylelint-value-no-unknown-custom-properties"],
   rules: {
-    "custom-property-pattern": "^(value|ns)-[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+    "custom-property-pattern": "^(value|ns|animate)-[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+    "at-rule-no-unknown": [
+      true,
+      {
+        ignoreAtRules: ["theme"]
+      }
+    ],
+    "import-notation": null,
     "selector-class-pattern": null,
     "property-no-vendor-prefix": null,
     "value-no-vendor-prefix": null,

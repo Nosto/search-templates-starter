@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useCallback, useEffect, useMemo, useRef, useState } from "preact/hooks"
 import type { Product } from "@/types"
-import styles from "./Modal.module.css"
+import { quickAddModalStyles as styles } from "@/styles/classNames"
 import Button from "@/elements/Button/Button"
 import Icon from "@/elements/Icon/Icon"
 import Heading from "@/elements/Heading/Heading"

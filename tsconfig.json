@@ -29,10 +29,7 @@
       "@/*": ["./src/*"],
       "@mocks/*": ["./mocks/*"],
       ".storybook/*": ["./.storybook/*"]
-    },
-
-    /* Plugins */
-    "plugins": [{ "name": "typescript-plugin-css-modules" }]
+    }
   },
   "include": ["src", ".storybook/**/*", "test"]
 }

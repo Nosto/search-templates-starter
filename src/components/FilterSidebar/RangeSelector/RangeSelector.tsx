@@ -3,7 +3,7 @@ import Icon from "@/elements/Icon/Icon"
 import RadioButton from "@/elements/RadioButton/RadioButton"
 import { SearchStatsFacet } from "@nosto/nosto-js/client"
 import { useRangeSelector } from "@nosto/search-js/preact/hooks"
-import styles from "./RangeSelector.module.css"
+import { rangeSelectorStyles as styles } from "@/styles/classNames"
 import { cl } from "@nosto/search-js/utils"
 
 type Props = {

@@ -2,7 +2,7 @@ import Icon from "@/elements/Icon/Icon"
 import { SearchTermsFacet } from "@nosto/nosto-js/client"
 import Pill from "@/elements/Pill/Pill"
 import { useOptimisticFacet } from "@/hooks/useOptimisticFacet"
-import styles from "./TermsFacet.module.css"
+import { termsFacetStyles as styles } from "@/styles/classNames"
 
 type Props = {
   facet: SearchTermsFacet
@@ -29,7 +29,9 @@ export default function TermsFacet({ facet }: Props) {
         type="button"
       >
         <span className={styles.title}>{facet.name}</span>
-        {selectedFiltersCount > 0 && <span className={styles.count}>{selectedFiltersCount}</span>}
+        {selectedFiltersCount > 0 && (
+          <span className={`${styles.count} ${styles.anchorCount}`}>{selectedFiltersCount}</span>
+        )}
         <span className={styles.icon}>
           <Icon name={active ? "arrow-up" : "arrow-down"} circle={true} />
         </span>

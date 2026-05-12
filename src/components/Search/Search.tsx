@@ -1,7 +1,7 @@
 import { AutocompletePageProvider } from "@nosto/search-js/preact/autocomplete"
 import AutocompleteNative from "@/components/Autocomplete/AutocompleteNative"
 import { autocompleteConfig } from "@/config"
-import styles from "./Search.module.css"
+import { searchStyles as styles } from "@/styles/classNames"
 import { useActions } from "@nosto/search-js/preact/hooks"
 import { useCallback } from "preact/hooks"
 import { nostojs } from "@nosto/nosto-js"

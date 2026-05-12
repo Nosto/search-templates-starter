@@ -1,5 +1,5 @@
 import { HistoryElement } from "@nosto/search-js/preact/autocomplete"
-import styles from "./HistoryItem.module.css"
+import { autocompleteHistoryItemStyles as styles } from "@/styles/classNames"
 import { useOnSubmit } from "../OnSubmitContext"
 
 type HistoryItemProps = {

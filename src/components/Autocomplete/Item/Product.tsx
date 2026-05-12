@@ -1,5 +1,5 @@
 import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
-import styles from "./Product.module.css"
+import { autocompleteProductStyles as styles } from "@/styles/classNames"
 import type { Product } from "@/types"
 
 type Props = {

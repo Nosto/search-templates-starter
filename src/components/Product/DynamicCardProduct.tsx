@@ -1,7 +1,6 @@
 import { Product } from "@/types"
 import { SerpElement } from "@nosto/search-js/preact/serp"
-import styles from "./Product.module.css"
-import skeleton from "./skeleton.module.css"
+import { productStyles as styles, skeletonStyles as skeleton } from "@/styles/classNames"
 import DynamicCard from "@/elements/DynamicCard/DynamicCard"
 import { cl } from "@nosto/search-js/utils"
 

@@ -1,7 +1,7 @@
 import { JSX } from "preact"
 import FilterSidebar from "@/components/FilterSidebar/FilterSidebar"
 import { useNostoAppState } from "@nosto/search-js/preact/hooks"
-import styles from "./ContentWrapper.module.css"
+import { contentWrapperStyles as styles } from "@/styles/classNames"
 import { cl } from "@nosto/search-js/utils"
 
 export type ContentChildrenProps = { loading: boolean; foundProducts: boolean }

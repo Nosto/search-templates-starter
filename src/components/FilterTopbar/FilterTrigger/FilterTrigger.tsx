@@ -1,5 +1,5 @@
 import Icon from "@/elements/Icon/Icon"
-import styles from "./FilterTrigger.module.css"
+import { filterTriggerStyles as styles } from "@/styles/classNames"
 
 interface FilterTriggerProps {
   value?: string

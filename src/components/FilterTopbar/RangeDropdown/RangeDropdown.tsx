@@ -4,7 +4,7 @@ import { SearchStatsFacet } from "@nosto/nosto-js/client"
 import FilterTrigger from "../FilterTrigger/FilterTrigger"
 import RangeInput from "@/elements/RangeInput/RangeInput"
 import Button from "@/elements/Button/Button"
-import styles from "./RangeDropdown.module.css"
+import { rangeDropdownStyles as styles } from "@/styles/classNames"
 
 type Props = {
   facet: SearchStatsFacet

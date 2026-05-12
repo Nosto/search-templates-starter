@@ -1,5 +1,5 @@
 import { JSX } from "preact"
-import styles from "./Select.module.css"
+import { selectStyles as styles } from "@/styles/classNames"
 import { cl } from "@nosto/search-js/utils"
 
 type Props = {

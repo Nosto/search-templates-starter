@@ -1,6 +1,7 @@
 import { render } from "@testing-library/preact"
 import { describe, it, expect, vi } from "vitest"
 import Pill from "@/elements/Pill/Pill"
+import { pillStyles } from "@/styles/classNames"
 
 describe("Pill", () => {
   it("should render children content", () => {
@@ -14,7 +15,7 @@ describe("Pill", () => {
     expect(button.textContent).toBe("Nike (42)")
   })
 
-  it("should apply selected class when selected is true", () => {
+  it("should apply selected Tailwind classes when selected is true", () => {
     const { getByRole } = render(
       <Pill selected={true} onClick={() => {}}>
         Adidas (28)
@@ -22,10 +23,10 @@ describe("Pill", () => {
     )
 
     const button = getByRole("button")
-    expect(button.className).toMatch(/selected/)
+    expect(button.className).toContain(pillStyles.selected)
   })
 
-  it("should not apply selected class when selected is false", () => {
+  it("should not apply selected Tailwind classes when selected is false", () => {
     const { getByRole } = render(
       <Pill selected={false} onClick={() => {}}>
         Reebok (3)
@@ -33,7 +34,7 @@ describe("Pill", () => {
     )
 
     const button = getByRole("button")
-    expect(button.className).not.toMatch(/selected/)
+    expect(button.className).not.toContain(pillStyles.selected)
   })
 
   it("should call onClick when clicked", () => {
@@ -65,7 +66,7 @@ describe("Pill", () => {
     const { getByRole } = render(<Pill onClick={() => {}}>Default Pill</Pill>)
 
     const button = getByRole("button")
-    expect(button.className).not.toMatch(/selected/)
+    expect(button.className).not.toContain(pillStyles.selected)
   })
 
   it("should work without onClick prop", () => {

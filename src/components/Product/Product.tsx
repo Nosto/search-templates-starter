@@ -1,7 +1,6 @@
 import { SerpElement } from "@nosto/search-js/preact/serp"
 import { cl } from "@nosto/search-js/utils"
-import styles from "./Product.module.css"
-import skeleton from "./skeleton.module.css"
+import { productStyles as styles, skeletonStyles as skeleton } from "@/styles/classNames"
 import type { Product } from "@/types"
 import { renderRatingStars } from "./renderRatingStars"
 import ProductImage from "./ProductImage"
@@ -42,7 +41,11 @@ export default function Product({ product, children, showAltOnHover = true }: Pr
       <div className={styles.image}>
         <ProductImage src={product.imageUrl!} alt={product.name} className={styles.img} />
         {hasAlternateImage && (
-          <ProductImage src={product.alternateImageUrls![0]} alt={product.name} className={styles.img} />
+          <ProductImage
+            src={product.alternateImageUrls![0]}
+            alt={product.name}
+            className={cl(styles.img, styles.altImg)}
+          />
         )}
         {isNew && !isOnSale && <div className={styles.newRibbon}>New</div>}
         {isOnSale && <div className={styles.saleRibbon}>Sale</div>}

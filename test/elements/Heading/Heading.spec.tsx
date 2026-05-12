@@ -17,11 +17,11 @@ describe("Heading", () => {
     expect(headingEl?.textContent).toBe("Test H1")
   })
 
-  it("applies correct CSS class", () => {
+  it("applies Tailwind classes", () => {
     const { container } = render(<Heading>Test</Heading>)
     const headingEl = container.querySelector("h3")
     expect(headingEl?.className).toBeDefined()
-    expect(headingEl?.className).toMatch(/heading/)
+    expect(headingEl?.className).toContain("font-bold")
   })
 
   it("works with all heading levels", () => {

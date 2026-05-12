@@ -2,12 +2,13 @@ import { resolve } from "path"
 import { defineConfig } from "vitest/config"
 import { devEnvironmentPlugin } from "./src/plugins/devEnvironmentPlugin"
 import preact from "@preact/preset-vite"
+import tailwindcss from "@tailwindcss/vite"
 import { visualizer } from "rollup-plugin-visualizer"
 
 const dirname = import.meta.dirname
 
 export default defineConfig(({ mode = "injected" }) => {
-  const plugins = [preact(), devEnvironmentPlugin()]
+  const plugins = [preact(), tailwindcss(), devEnvironmentPlugin()]
 
   // Add bundle visualizer when ANALYZE environment variable is set
   if (process.env.ANALYZE) {

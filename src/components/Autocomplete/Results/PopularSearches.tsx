@@ -1,6 +1,6 @@
 import { SearchPopularSearches } from "@nosto/nosto-js/client"
 import Heading from "@/elements/Heading/Heading"
-import styles from "./Results.module.css"
+import { autocompleteResultsStyles as styles } from "@/styles/classNames"
 import PopularSearch from "../Item/PopularSearch"
 
 export type SearchesProps = {

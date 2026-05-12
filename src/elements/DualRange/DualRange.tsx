@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState, useEffect } from "preact/hooks"
-import styles from "./DualRange.module.css"
+import { dualRangeStyles as styles } from "@/styles/classNames"
 import { cl } from "@nosto/search-js/utils"
 
 type Range = [number | undefined, number | undefined]
@@ -154,7 +154,7 @@ export default function DualRange({ min, max, value, onChange, className, id }: 
 
   return (
     <div className={cl(styles.container, className)} id={id}>
-      <div className={styles.track} ref={trackRef}>
+      <div className={styles.track} ref={trackRef} data-testid="dual-range-track">
         <div
           className={styles.range}
           style={{

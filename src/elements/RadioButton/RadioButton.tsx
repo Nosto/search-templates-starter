@@ -1,4 +1,4 @@
-import styles from "./RadioButton.module.css"
+import { radioButtonStyles as styles } from "@/styles/classNames"
 import { cl } from "@nosto/search-js/utils"
 
 type Props = {

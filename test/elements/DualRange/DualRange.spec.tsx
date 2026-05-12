@@ -34,7 +34,7 @@ describe("DualRange", () => {
 
       const minHandle = container.querySelector('[aria-label="Minimum value"]')
       const maxHandle = container.querySelector('[aria-label="Maximum value"]')
-      const track = container.querySelector('[class*="track"]')
+      const track = container.querySelector('[data-testid="dual-range-track"]')
 
       expect(minHandle).toBeTruthy()
       expect(maxHandle).toBeTruthy()

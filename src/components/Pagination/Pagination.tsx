@@ -1,7 +1,7 @@
 import { usePagination, useActions, Page } from "@nosto/search-js/preact/hooks"
 import Icon from "@/elements/Icon/Icon"
 import { JSX } from "preact/jsx-runtime"
-import styles from "./Pagination.module.css"
+import { paginationStyles as styles } from "@/styles/classNames"
 import { getPageUrl } from "@/mapping/url/getPageUrl"
 import { cl } from "@nosto/search-js/utils"
 

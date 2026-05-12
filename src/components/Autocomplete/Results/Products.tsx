@@ -2,7 +2,7 @@ import { SearchProducts } from "@nosto/nosto-js/client"
 import Button from "@/elements/Button/Button"
 import Heading from "@/elements/Heading/Heading"
 import Product from "@/components/Autocomplete/Item/Product"
-import styles from "./Results.module.css"
+import { autocompleteResultsStyles as styles } from "@/styles/classNames"
 
 export type ProductsProps = {
   products: SearchProducts
