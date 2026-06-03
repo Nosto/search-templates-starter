@@ -13,7 +13,6 @@ type Context = {
 }
 
 function getContext(): Context {
-  // @ts-expect-error -- ENV VARIABLES --
   const { MODE, VITE_MERCHANT_ID, VITE_MERCHANT_DOMAIN } = import.meta.env
   const url = new URL(window.location.href)
   return {

@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+
 /**
  * If you are redirected here when you try to import a CSS module with VSCode,
  * you may want to do this to enable proper CSS type resolution in the IDE:
