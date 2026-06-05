@@ -1,3 +1,10 @@
+## [1.13.13](https://github.com/Nosto/search-templates-starter/compare/v1.13.12...v1.13.13) (2026-06-05)
+
+
+### Bug Fixes
+
+* bump search-js ([ebe690c](https://github.com/Nosto/search-templates-starter/commit/ebe690cf0166a1b6a2e3bbf2e0aa0f9ac8aafc27))
+
 ## [1.13.12](https://github.com/Nosto/search-templates-starter/compare/v1.13.11...v1.13.12) (2026-05-11)
 
 
