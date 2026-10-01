@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/Nosto/search-templates-starter/compare/v1.13.13...v1.14.0) (2026-10-01)
+
+
+### Features
+
+* add support for nosto env in query ([3d60c36](https://github.com/Nosto/search-templates-starter/commit/3d60c36a5c298c07a407196f277beac9b3bd3f4d))
+
 ## [1.13.13](https://github.com/Nosto/search-templates-starter/compare/v1.13.12...v1.13.13) (2026-06-05)
 
 
