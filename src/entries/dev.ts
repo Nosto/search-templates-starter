@@ -2,25 +2,43 @@ import "@nosto/web-components"
 import { mockNostojs } from "@nosto/nosto-js/testing"
 import { mockSearch } from "@mocks/search"
 import { init, nostojs } from "@nosto/nosto-js"
+import type { BackendEnvironment } from "@nosto/nosto-js"
 
-const { merchantId, domain, category, mode } = getContext()
+const environments = ["production", "staging", "local"] as const satisfies readonly BackendEnvironment[]
+
+const { merchantId, domain, category, environment, mode } = getContext()
 
 type Context = {
   mode: string
   merchantId: string
   domain?: string
   category?: string
+  environment?: BackendEnvironment
 }
 
 function getContext(): Context {
-  const { MODE, VITE_MERCHANT_ID, VITE_MERCHANT_DOMAIN } = import.meta.env
+  const { MODE, VITE_MERCHANT_ID, VITE_MERCHANT_DOMAIN, VITE_NOSTO_ENV } = import.meta.env
   const url = new URL(window.location.href)
   return {
     mode: MODE,
     merchantId: url.searchParams.get("merchant") ?? VITE_MERCHANT_ID,
     domain: url.searchParams.get("domain") ?? VITE_MERCHANT_DOMAIN,
-    category: url.searchParams.get("category") ?? undefined
+    category: url.searchParams.get("category") ?? undefined,
+    environment: parseEnvironment(url.searchParams.get("env") ?? VITE_NOSTO_ENV)
   }
+}
+
+function parseEnvironment(value: string | undefined): BackendEnvironment | undefined {
+  if (!value) {
+    return undefined
+  }
+  const environment = environments.find(candidate => candidate === value)
+  if (!environment) {
+    console.warn(
+      `Unknown Nosto environment "${value}", falling back to production. Expected one of: ${environments.join(", ")}.`
+    )
+  }
+  return environment
 }
 
 if (domain) {
@@ -87,7 +105,8 @@ function setupNosto() {
     }
   })
   init({
-    merchantId
+    merchantId,
+    env: environment
   })
   renderApp()
   logAnalyticsEvents()
