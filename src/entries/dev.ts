@@ -3,10 +3,14 @@ import { mockNostojs } from "@nosto/nosto-js/testing"
 import { mockSearch } from "@mocks/search"
 import { init, nostojs } from "@nosto/nosto-js"
 import type { BackendEnvironment } from "@nosto/nosto-js"
+import { createFailureControl, getFailureMode, withSimulatedFailure } from "@/dev/failureSimulation"
+import { mountDevPanel } from "@/dev/devPanel"
 
 const environments = ["production", "staging", "local"] as const satisfies readonly BackendEnvironment[]
 
 const { merchantId, domain, category, environment, mode } = getContext()
+
+const failureMode = getFailureMode()
 
 type Context = {
   mode: string
@@ -80,7 +84,7 @@ function setupNosto() {
       pageTagging: () => ({ pageType: "search" }),
       // @ts-expect-error partial mock
       pageTaggingAsync: async () => ({ pageType: "search" }),
-      search: mockSearch,
+      search: withSimulatedFailure(mockSearch, failureMode),
       recordSearchSubmit: () => Promise.resolve()
     })
     renderApp()
@@ -104,6 +108,9 @@ function setupNosto() {
       }
     }
   })
+  nostojs(api => {
+    api.search = withSimulatedFailure(api.search, failureMode)
+  })
   init({
     merchantId,
     env: environment
@@ -111,4 +118,5 @@ function setupNosto() {
   renderApp()
   logAnalyticsEvents()
 }
+mountDevPanel(createFailureControl(failureMode))
 setupNosto()
