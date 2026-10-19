@@ -165,6 +165,7 @@ export const autocompleteConfig = {
   historyEnabled: true,
   historySize: 10,
   search: {
+    ...baseConfig.search,
     hitDecorators: [
       ...hitDecorators,
       thumbnailDecorator({ size: "8" }) // 400x400
