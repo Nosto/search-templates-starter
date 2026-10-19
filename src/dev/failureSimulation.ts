@@ -31,7 +31,6 @@ function delay(ms: number) {
 
 /**
  * Wraps the search function so that it behaves as if the Nosto search service failed.
- * The mode is read on every call, so a failure can start while the page is open.
  */
 export function withSimulatedFailure(search: SearchFn): SearchFn {
   return async (query, options) => {

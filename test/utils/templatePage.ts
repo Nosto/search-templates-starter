@@ -24,8 +24,7 @@ type PageOptions = {
 }
 
 /**
- * Simulates a page load: renders the platform's native page and runs the real injected entry,
- * with only the Nosto API mocked. Session storage is kept, like across real page loads.
+ * Simulates a page load: renders the platform's native page and runs the real injected entry.
  */
 export async function loadTemplatePage({
   url = "/?q=shoes",
@@ -38,7 +37,6 @@ export async function loadTemplatePage({
   history.replaceState(null, "", url)
   document.body.innerHTML = nativePage
   mockNostojs({
-    // search-js and the fallback log through the Nosto logger, which would otherwise print to the console
     internal: { logger: silentLogger },
     pageTagging: () => ({ pageType }),
     // @ts-expect-error partial mock
@@ -67,31 +65,18 @@ export async function loadTemplatePage({
   return page
 }
 
-/**
- * Product links rendered by the template. Mock product names are random, their URLs are not.
- */
 export function findProductLinks(results: HTMLElement) {
   return results.querySelectorAll('a[href^="https://example.com/product-"]')
 }
 
-/**
- * Dispatches a form submit the way the browser does, returning whether the browser would proceed with it
- */
 export function submitNatively(form: HTMLFormElement) {
   return form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }))
 }
 
-/**
- * Advances the fake clock until the page has rendered and the first search has completed,
- * staying below the search-js retry interval
- */
 export async function waitForPageToRender() {
   await vi.advanceTimersByTimeAsync(100)
 }
 
-/**
- * Advances the fake clock until search-js has used up its retries, so a fallback would have happened by now
- */
 export async function waitForSearchRetries() {
   const { maxRetries, retryInterval } = baseConfig.search
   await vi.advanceTimersByTimeAsync((maxRetries + 1) * retryInterval)

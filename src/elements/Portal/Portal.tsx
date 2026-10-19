@@ -31,6 +31,9 @@ export default function Portal({ target, clear, children }: Props) {
     }
   }, [target, element, clear])
 
-  // a portal renders as a separate root, so render errors inside it never reach boundaries outside it
-  return element ? createPortal(<FallbackBoundary>{children}</FallbackBoundary>, element) : null
+  if (!element) {
+    return null
+  }
+
+  return createPortal(<FallbackBoundary>{children}</FallbackBoundary>, element)
 }

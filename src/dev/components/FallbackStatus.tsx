@@ -27,7 +27,6 @@ export default function FallbackStatus() {
   )
 }
 
-// the fallback can start at any time while the page is open, so the status is polled
 function useFallbackExpiry() {
   const [expiry, setExpiry] = useState(readActiveExpiry)
 

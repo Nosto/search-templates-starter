@@ -12,7 +12,6 @@ type Props = {
 export default function FallbackBoundary({ children }: Props) {
   const [error] = useErrorBoundary()
 
-  // the fallback unmounts the whole template, which must wait until Preact has finished the failed render
   useEffect(() => {
     if (error) {
       onFallback({ reason: error })
