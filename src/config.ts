@@ -8,6 +8,10 @@ import { CategoryConfig } from "@nosto/search-js/preact/category"
 import { SearchQuery } from "@nosto/nosto-js/client"
 import { tagging } from "./mapping/tagging"
 import { pipe } from "./utils/pipe"
+import { logger } from "@nosto/search-js/utils"
+import { restoreNativeContent } from "./fallback/fallback"
+import { setFallbackSession } from "./fallback/fallbackSession"
+import { shouldFallback } from "./fallback/shouldFallback"
 
 export const sizes = [24, 48, 72]
 
@@ -32,7 +36,44 @@ export const skeletonLoading = true
  */
 export const redirectOnSearch = true
 
-export const shopifyMode = !!window.Shopify
+/**
+ * How long (ms) the default fallback keeps the template disabled, letting the platform's native search take over
+ */
+export const fallbackDuration = 10 * 60 * 1000
+
+type FallbackDetails = {
+  /** The error that triggered the fallback */
+  reason: unknown
+  /** The failed search query, undefined when the template failed to render */
+  query?: SearchQuery
+}
+
+/**
+ * Called when Nosto search is unavailable on a search or category page, or the template fails to render.
+ *
+ * The default keeps the template disabled for `fallbackDuration` and restores the native content.
+ * To opt out of the fallback, leave the function empty.
+ *
+ * @example Redirect to the platform's own search instead.
+ * Without `setFallbackSession`, the template would mount on the search page and fall back again in a loop.
+ * ```
+ * export function onFallback({ query }: FallbackDetails) {
+ *   setFallbackSession(fallbackDuration)
+ *   window.location.href = `/search?q=${encodeURIComponent(query?.query ?? "")}`
+ * }
+ * ```
+ */
+export function onFallback({ reason }: FallbackDetails) {
+  logger.warn("Nosto search is unavailable, falling back to native content", reason)
+  setFallbackSession(fallbackDuration)
+  restoreNativeContent()
+}
+
+function onSearchError(error: unknown, query: SearchQuery) {
+  if (shouldFallback(error)) {
+    onFallback({ reason: error, query })
+  }
+}
 
 /**
  * Default sort option for search results and categories
@@ -78,7 +119,9 @@ export const hitDecorators = [handleDecorator, priceDecorator()] as const
  */
 export const baseConfig = {
   search: {
-    hitDecorators
+    hitDecorators,
+    maxRetries: 1,
+    retryInterval: 500
   },
   queryModifications: withBaseConfig
 }
@@ -145,6 +188,7 @@ function withAutocompleteDefaults(query: SearchQuery) {
 
 export const categoryConfig = {
   ...baseConfig,
+  onSearchError,
   persistentSearchCache: false,
   preservePageScroll: false,
   queryModifications: pipe(withBaseConfig, withCategoryMetadata)
@@ -166,6 +210,7 @@ function withCategoryMetadata(query: SearchQuery) {
  */
 export const serpConfig = {
   ...baseConfig,
+  onSearchError,
   persistentSearchCache: false,
   preservePageScroll: false
 } satisfies SerpConfig

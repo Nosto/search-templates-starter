@@ -1,9 +1,10 @@
 import type { API } from "@nosto/nosto-js/client"
 import { readSession, writeSession } from "./storage"
+import { clearFallbackSession } from "@/fallback/fallbackSession"
 
 const failureModes = ["off", "error", "timeout"] as const
 
-export type FailureMode = (typeof failureModes)[number]
+type FailureMode = (typeof failureModes)[number]
 
 type SearchFn = API["search"]
 
@@ -17,7 +18,7 @@ function parseFailureMode(value: string | null | undefined) {
 /**
  * Resolves the simulated failure mode from sessionStorage, so the mode survives template navigation and reloads.
  */
-export function getFailureMode(): FailureMode {
+function getFailureMode(): FailureMode {
   return parseFailureMode(readSession(storageKey)) ?? "off"
 }
 
@@ -26,28 +27,28 @@ function delay(ms: number) {
 }
 
 /**
- * Wraps the search function so that it behaves as if the Nosto search service failed
+ * Wraps the search function so that it behaves as if the Nosto search service failed.
+ * The mode is read on every call, so a failure can start while the page is open.
  */
-export function withSimulatedFailure(search: SearchFn, mode: FailureMode): SearchFn {
-  switch (mode) {
-    case "error":
-      return async () => {
+export function withSimulatedFailure(search: SearchFn): SearchFn {
+  return async (query, options) => {
+    switch (getFailureMode()) {
+      case "error":
         throw Object.assign(new Error("[Dev] Simulated Nosto search failure"), { status: 503 })
-      }
-    case "timeout":
-      return async () => {
+      case "timeout":
         await delay(timeoutMs)
         throw new Error("[Dev] Simulated Nosto search timeout exceeded")
-      }
-    default:
-      return search
+      default:
+        return search(query, options)
+    }
   }
 }
 
 /**
- * Dev panel tool for switching the simulated failure mode. Changing the mode reloads the page.
+ * Dev panel tool for switching the simulated failure mode. Changing the mode resets the fallback and reloads the page.
  */
-export function createFailureControl(current: FailureMode) {
+export function createFailureControl() {
+  const current = getFailureMode()
   const label = document.createElement("label")
   label.textContent = "Simulate Nosto error:"
 
@@ -58,6 +59,7 @@ export function createFailureControl(current: FailureMode) {
     const mode = parseFailureMode(select.value)
     if (mode) {
       writeSession(storageKey, mode)
+      clearFallbackSession()
       location.reload()
     }
   })

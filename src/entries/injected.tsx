@@ -11,7 +11,9 @@ import Category from "@/components/Category/Category"
 import { CategoryPageProvider } from "@nosto/search-js/preact/category"
 import { tagging } from "@/mapping/tagging"
 import { nostojs } from "@nosto/nosto-js"
-import { ErrorBoundary } from "@nosto/search-js/preact/common"
+import FallbackBoundary from "@/fallback/components/FallbackBoundary"
+import { registerUnmount } from "@/fallback/fallback"
+import { isFallbackActive } from "@/fallback/fallbackSession"
 import Portal from "@/elements/Portal/Portal"
 import AutocompleteInjected from "@/components/Autocomplete/AutocompleteInjected"
 import { PageType, SearchAnalyticsOptions } from "@nosto/nosto-js/client"
@@ -53,7 +55,7 @@ function SerpApp() {
   const { newSearch } = useActions()
 
   return (
-    <ErrorBoundary>
+    <FallbackBoundary>
       <SearchQueryHandler />
       <SidebarProvider>
         <Autocomplete onSubmit={(query, options) => newSearch({ query }, options)} />
@@ -61,13 +63,13 @@ function SerpApp() {
           <Serp />
         </Portal>
       </SidebarProvider>
-    </ErrorBoundary>
+    </FallbackBoundary>
   )
 }
 
 function CategoryApp({ onSearch }: AppProps) {
   return (
-    <ErrorBoundary>
+    <FallbackBoundary>
       <SearchQueryHandler />
       <SidebarProvider>
         <Autocomplete onSubmit={onSearch} />
@@ -75,15 +77,15 @@ function CategoryApp({ onSearch }: AppProps) {
           <Category />
         </Portal>
       </SidebarProvider>
-    </ErrorBoundary>
+    </FallbackBoundary>
   )
 }
 
 function DefaultApp({ onSearch }: AppProps) {
   return (
-    <ErrorBoundary>
+    <FallbackBoundary>
       <Autocomplete onSubmit={onSearch} />
-    </ErrorBoundary>
+    </FallbackBoundary>
   )
 }
 
@@ -137,11 +139,16 @@ function searchTermsProvider() {
 }
 
 async function init() {
+  if (isFallbackActive()) {
+    // Nosto search failed recently, leave the page to the native platform
+    return
+  }
   const api = await new Promise(nostojs)
   // wait for tagging to be available
   await api.pageTaggingAsync()
   const dummy = document.createElement("div")
   nostojs(api => api.setTaggingProvider("searchTerms", searchTermsProvider))
+  registerUnmount(() => render(null, dummy))
   render(<App />, dummy)
 }
 init()

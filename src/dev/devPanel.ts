@@ -1,12 +1,17 @@
 import { readSession, writeSession } from "./storage"
+import { createFailureControl } from "./failureSimulation"
+import { createFallbackStatus } from "./fallbackStatus"
 
 const collapsedKey = "nosto:dev:panel-collapsed"
 
 /**
- * Mounts a collapsible dev tools panel in the bottom right corner of the page.
- * Each tool is a self-contained element, rendered side by side inside the panel.
+ * Mounts a collapsible dev tools panel in the bottom right corner of the page
  */
-export function mountDevPanel(...tools: HTMLElement[]) {
+export function mountDevPanel() {
+  renderPanel(createFailureControl(), createFallbackStatus())
+}
+
+function renderPanel(...tools: HTMLElement[]) {
   const panel = document.createElement("div")
   panel.style.cssText =
     "position:fixed;bottom:8px;right:8px;z-index:2147483647;display:flex;align-items:center;height:32px;border-radius:4px;overflow:hidden;background:#222;color:#fff;font:12px sans-serif"
