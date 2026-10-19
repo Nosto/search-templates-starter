@@ -1,6 +1,5 @@
 import { waitForElement } from "@/utils/waitForElement"
 import { stashNativeContent } from "@/fallback/nativeContent"
-import FallbackBoundary from "@/fallback/components/FallbackBoundary"
 import { ComponentChildren } from "preact"
 import { createPortal } from "preact/compat"
 import { useEffect, useState } from "preact/hooks"
@@ -35,5 +34,5 @@ export default function Portal({ target, clear, children }: Props) {
     return null
   }
 
-  return createPortal(<FallbackBoundary>{children}</FallbackBoundary>, element)
+  return createPortal(children, element)
 }

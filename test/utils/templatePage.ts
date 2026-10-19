@@ -57,6 +57,7 @@ export async function loadTemplatePage({
     nativeResultsHtml: document.querySelector<HTMLElement>("#serp")!.innerHTML,
     form: document.querySelector<HTMLFormElement>("#search-form")!,
     input: document.querySelector<HTMLInputElement>("#search")!,
+    dropdown: document.querySelector<HTMLElement>("#dropdown")!,
     nativeButton: document.querySelector<HTMLButtonElement>("#native-button")!
   }
 
@@ -67,6 +68,12 @@ export async function loadTemplatePage({
 
 export function findProductLinks(results: HTMLElement) {
   return results.querySelectorAll('a[href^="https://example.com/product-"]')
+}
+
+export function typeIntoSearch(input: HTMLInputElement, text: string) {
+  input.dispatchEvent(new FocusEvent("focus"))
+  input.value = text
+  input.dispatchEvent(new Event("input", { bubbles: true }))
 }
 
 export function submitNatively(form: HTMLFormElement) {

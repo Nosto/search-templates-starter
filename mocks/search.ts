@@ -1,4 +1,4 @@
-import { SearchFacet, SearchQuery, SearchResult } from "@nosto/nosto-js/client"
+import { SearchFacet, SearchKeyword, SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 import { mockKeywords } from "./keywords"
 import { generateMockProducts } from "./products"
 
@@ -81,3 +81,18 @@ export function mockFailingAutocomplete(): MockSearch {
     return mockSearch(query)
   }
 }
+
+/**
+ * Mock search where result searches work but the autocomplete response has a keyword the dropdown can't render
+ */
+export function mockMalformedAutocomplete(): MockSearch {
+  return async query => {
+    const result = await mockSearch(query)
+    if (isAutocompleteQuery(query) && result.keywords) {
+      result.keywords.hits = [unrenderableKeyword]
+    }
+    return result
+  }
+}
+
+const unrenderableKeyword = null as unknown as SearchKeyword

@@ -41,7 +41,9 @@ function Autocomplete({ onSubmit }: AutocompleteProps) {
   return (
     <AutocompletePageProvider config={autocompleteConfig}>
       <Portal target={selectors.dropdown}>
-        <AutocompleteInjected onSubmit={handleSubmit} />
+        <FallbackBoundary pageType="autocomplete">
+          <AutocompleteInjected onSubmit={handleSubmit} />
+        </FallbackBoundary>
       </Portal>
     </AutocompletePageProvider>
   )
@@ -55,12 +57,14 @@ function SerpApp() {
   const { newSearch } = useActions()
 
   return (
-    <FallbackBoundary>
+    <FallbackBoundary pageType="search">
       <SearchQueryHandler />
       <SidebarProvider>
         <Autocomplete onSubmit={(query, options) => newSearch({ query }, options)} />
         <Portal target={selectors.results} clear>
-          <Serp />
+          <FallbackBoundary pageType="search">
+            <Serp />
+          </FallbackBoundary>
         </Portal>
       </SidebarProvider>
     </FallbackBoundary>
@@ -69,12 +73,14 @@ function SerpApp() {
 
 function CategoryApp({ onSearch }: AppProps) {
   return (
-    <FallbackBoundary>
+    <FallbackBoundary pageType="category">
       <SearchQueryHandler />
       <SidebarProvider>
         <Autocomplete onSubmit={onSearch} />
         <Portal target={selectors.results} clear>
-          <Category />
+          <FallbackBoundary pageType="category">
+            <Category />
+          </FallbackBoundary>
         </Portal>
       </SidebarProvider>
     </FallbackBoundary>
@@ -83,7 +89,7 @@ function CategoryApp({ onSearch }: AppProps) {
 
 function DefaultApp({ onSearch }: AppProps) {
   return (
-    <FallbackBoundary>
+    <FallbackBoundary pageType="autocomplete">
       <Autocomplete onSubmit={onSearch} />
     </FallbackBoundary>
   )

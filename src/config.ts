@@ -41,9 +41,10 @@ export const redirectOnSearch = true
  */
 export const fallbackDuration = 10 * 60 * 1000
 
-type FallbackDetails = {
+export type FallbackDetails = {
   /** The error that triggered the fallback */
   reason: unknown
+  pageType: "autocomplete" | "search" | "category"
   /** The failed search query, undefined when the template failed to render */
   query?: SearchQuery
 }
@@ -52,26 +53,38 @@ type FallbackDetails = {
  * Called when Nosto search is unavailable on a search or category page, or the template fails to render.
  *
  * The default keeps the template disabled for `fallbackDuration` and restores the native content.
+ * Autocomplete failures are only logged.
  * To opt out of the fallback, leave the function empty.
  *
- * @example Redirect to the platform's own search instead.
+ * @example Redirect search pages to the platform's own search instead.
  * Without `setFallbackSession`, the template would mount on the search page and fall back again in a loop.
  * ```
- * export function onFallback({ query }: FallbackDetails) {
+ * export function onFallback({ pageType, query }: FallbackDetails) {
+ *   if (pageType === "autocomplete") {
+ *     return
+ *   }
  *   setFallbackSession(fallbackDuration)
- *   window.location.href = `/search?q=${encodeURIComponent(query?.query ?? "")}`
+ *   if (pageType === "search") {
+ *     window.location.href = `/search?q=${encodeURIComponent(query?.query ?? "")}`
+ *   } else {
+ *     restoreNativeContent()
+ *   }
  * }
  * ```
  */
-export function onFallback({ reason }: FallbackDetails) {
-  logger.warn("Nosto search is unavailable, falling back to native content", reason)
+export function onFallback({ reason, pageType }: FallbackDetails) {
+  if (pageType === "autocomplete") {
+    logger.error("Nosto autocomplete is unavailable", reason)
+    return
+  }
+  logger.warn(`Nosto ${pageType} is unavailable, falling back to native content`, reason)
   setFallbackSession(fallbackDuration)
   restoreNativeContent()
 }
 
-function onSearchError(error: unknown, query: SearchQuery) {
+function fallbackOnSearchError(error: unknown, query: SearchQuery, pageType: FallbackDetails["pageType"]) {
   if (shouldFallback(error)) {
-    onFallback({ reason: error, query })
+    onFallback({ reason: error, pageType, query })
   }
 }
 
@@ -147,6 +160,7 @@ function withBaseConfig(query: SearchQuery) {
 
 export const autocompleteConfig = {
   ...baseConfig,
+  onSearchError: (error, query) => fallbackOnSearchError(error, query, "autocomplete"),
   memoryCache: true,
   historyEnabled: true,
   historySize: 10,
@@ -188,7 +202,7 @@ function withAutocompleteDefaults(query: SearchQuery) {
 
 export const categoryConfig = {
   ...baseConfig,
-  onSearchError,
+  onSearchError: (error, query) => fallbackOnSearchError(error, query, "category"),
   persistentSearchCache: false,
   preservePageScroll: false,
   queryModifications: pipe(withBaseConfig, withCategoryMetadata)
@@ -210,7 +224,7 @@ function withCategoryMetadata(query: SearchQuery) {
  */
 export const serpConfig = {
   ...baseConfig,
-  onSearchError,
+  onSearchError: (error, query) => fallbackOnSearchError(error, query, "search"),
   persistentSearchCache: false,
   preservePageScroll: false
 } satisfies SerpConfig

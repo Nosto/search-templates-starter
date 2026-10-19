@@ -1,10 +1,17 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest"
-import { mockFailingAutocomplete, mockMalformedSearch, mockSearch, mockUnavailableSearch } from "@mocks/search"
+import {
+  mockFailingAutocomplete,
+  mockMalformedAutocomplete,
+  mockMalformedSearch,
+  mockSearch,
+  mockUnavailableSearch
+} from "@mocks/search"
 import {
   findProductLinks,
   loadTemplatePage,
   nativeContent,
   submitNatively,
+  typeIntoSearch,
   waitForPageToRender,
   waitForSearchRetries
 } from "../utils/templatePage"
@@ -101,11 +108,21 @@ describe("fallback", () => {
     await waitForPageToRender()
     expect(findProductLinks(results)).not.toHaveLength(0)
 
-    input.value = "runn"
-    input.dispatchEvent(new Event("input", { bubbles: true }))
+    typeIntoSearch(input, "runn")
     await waitForSearchRetries()
 
     expect(autocompleteSearches).not.toHaveLength(0)
+    expect(findProductLinks(results)).not.toHaveLength(0)
+  })
+
+  it("keeps the template when the autocomplete dropdown fails to render", async () => {
+    const { results, input, dropdown } = await loadTemplatePage({ search: mockMalformedAutocomplete() })
+    await waitForPageToRender()
+
+    typeIntoSearch(input, "runn")
+    await waitForSearchRetries()
+
+    expect(dropdown.textContent).toBe("")
     expect(findProductLinks(results)).not.toHaveLength(0)
   })
 
