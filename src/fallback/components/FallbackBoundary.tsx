@@ -14,7 +14,7 @@ export default function FallbackBoundary({ pageType, children }: Props) {
   const [error] = useErrorBoundary()
 
   useEffect(() => {
-    if (error && pageType) {
+    if (error) {
       onFallback({ reason: error, pageType })
     }
   }, [error, pageType])
