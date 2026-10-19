@@ -112,7 +112,7 @@ function App() {
     const pageType = isSearchPage ? "search" : tagging.pageType()
     setPageType(pageType)
     setTaggingPageType(pageType)
-  }, [setPageType])
+  })
 
   switch (pageType) {
     case "category":

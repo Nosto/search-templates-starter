@@ -16,15 +16,15 @@ export default function FailureControl() {
   }
 
   return (
-    <label>
-      Simulate Nosto error:
-      <select className={styles.control} value={getFailureMode()} onChange={onModeChange}>
+    <span>
+      <label htmlFor="nosto-dev-failure-mode">Simulate Nosto error:</label>
+      <select id="nosto-dev-failure-mode" className={styles.control} value={getFailureMode()} onChange={onModeChange}>
         {failureModes.map(mode => (
           <option key={mode} value={mode}>
             {mode}
           </option>
         ))}
       </select>
-    </label>
+    </span>
   )
 }

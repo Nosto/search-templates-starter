@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from "vitest"
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest"
 import { renderHook } from "@testing-library/preact"
 import { usePopState } from "@/hooks/usePopState"
 
@@ -7,6 +7,10 @@ describe("usePopState", () => {
 
   beforeEach(() => {
     handler = vi.fn()
+  })
+
+  afterEach(() => {
+    vi.restoreAllMocks()
   })
 
   it("should add popstate event listener on mount", () => {
@@ -53,6 +57,31 @@ describe("usePopState", () => {
     window.dispatchEvent(new PopStateEvent("popstate"))
 
     expect(handler).not.toHaveBeenCalled()
+  })
+
+  it("should call the latest handler after a re-render", () => {
+    const firstHandler = vi.fn()
+    const latestHandler = vi.fn()
+    const { rerender } = renderHook(({ onPopState }) => usePopState(onPopState), {
+      initialProps: { onPopState: firstHandler }
+    })
+
+    rerender({ onPopState: latestHandler })
+    window.dispatchEvent(new PopStateEvent("popstate"))
+
+    expect(firstHandler).not.toHaveBeenCalled()
+    expect(latestHandler).toHaveBeenCalledTimes(1)
+  })
+
+  it("should register the listener only once across re-renders", () => {
+    const addEventListenerSpy = vi.spyOn(window, "addEventListener")
+    const { rerender } = renderHook(({ onPopState }) => usePopState(onPopState), {
+      initialProps: { onPopState: vi.fn() }
+    })
+
+    rerender({ onPopState: vi.fn() })
+
+    expect(addEventListenerSpy.mock.calls.filter(([type]) => type === "popstate")).toHaveLength(1)
   })
 
   it("should work with handlers that access external state", () => {

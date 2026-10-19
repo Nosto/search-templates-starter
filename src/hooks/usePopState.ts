@@ -1,4 +1,4 @@
-import { useEffect } from "preact/hooks"
+import { useEffect, useRef } from "preact/hooks"
 
 /**
  * Subscribes to the browser `popstate` event and invokes the provided handler
@@ -7,12 +7,19 @@ import { useEffect } from "preact/hooks"
  *
  * @param handler - Function to execute when a `popstate` event is fired.
  */
-export function usePopState(handler: () => void, deps: unknown[] = []) {
+export function usePopState(handler: () => void) {
+  const handlerRef = useRef(handler)
+
   useEffect(() => {
-    window.addEventListener("popstate", handler)
+    handlerRef.current = handler
+  })
+
+  useEffect(() => {
+    const onPopState = () => handlerRef.current()
+    window.addEventListener("popstate", onPopState)
 
     return () => {
-      window.removeEventListener("popstate", handler)
+      window.removeEventListener("popstate", onPopState)
     }
-  }, deps)
+  }, [])
 }
