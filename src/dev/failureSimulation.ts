@@ -1,25 +1,28 @@
 import type { API } from "@nosto/nosto-js/client"
-import { readSession, writeSession } from "./storage"
-import { clearFallbackSession } from "@/fallback/fallbackSession"
+import { getSessionStorageItem, setSessionStorageItem } from "@nosto/search-js/utils"
 
-const failureModes = ["off", "error", "timeout"] as const
+export const failureModes = ["off", "error", "timeout"] as const
 
 type FailureMode = (typeof failureModes)[number]
 
 type SearchFn = API["search"]
 
-const storageKey = "nosto:dev:simulate-failure"
+const storageKey = "nosto:search-js:dev:simulate-failure"
 const timeoutMs = 5000
 
-function parseFailureMode(value: string | null | undefined) {
+export function parseFailureMode(value: unknown) {
   return failureModes.find(mode => mode === value)
 }
 
 /**
  * Resolves the simulated failure mode from sessionStorage, so the mode survives template navigation and reloads.
  */
-function getFailureMode(): FailureMode {
-  return parseFailureMode(readSession(storageKey)) ?? "off"
+export function getFailureMode(): FailureMode {
+  return parseFailureMode(getSessionStorageItem(storageKey)) ?? "off"
+}
+
+export function setFailureMode(mode: FailureMode) {
+  setSessionStorageItem(storageKey, mode)
 }
 
 function delay(ms: number) {
@@ -42,28 +45,4 @@ export function withSimulatedFailure(search: SearchFn): SearchFn {
         return search(query, options)
     }
   }
-}
-
-/**
- * Dev panel tool for switching the simulated failure mode. Changing the mode resets the fallback and reloads the page.
- */
-export function createFailureControl() {
-  const current = getFailureMode()
-  const label = document.createElement("label")
-  label.textContent = "Simulate Nosto error:"
-
-  const select = document.createElement("select")
-  select.style.marginLeft = "6px"
-  select.append(...failureModes.map(mode => new Option(mode, mode, false, mode === current)))
-  select.addEventListener("change", () => {
-    const mode = parseFailureMode(select.value)
-    if (mode) {
-      writeSession(storageKey, mode)
-      clearFallbackSession()
-      location.reload()
-    }
-  })
-
-  label.append(select)
-  return label
 }

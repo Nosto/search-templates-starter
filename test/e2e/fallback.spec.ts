@@ -45,7 +45,7 @@ async function expectProductResults(page: Page) {
 }
 
 async function breakNostoSearch(page: Page) {
-  await page.evaluate(() => sessionStorage.setItem("nosto:dev:simulate-failure", "error"))
+  await page.evaluate(() => sessionStorage.setItem("nosto:search-js:dev:simulate-failure", JSON.stringify("error")))
 }
 
 async function expectPageLoad(page: Page, action: () => Promise<void>) {

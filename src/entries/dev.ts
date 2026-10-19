@@ -4,7 +4,7 @@ import { mockSearch } from "@mocks/search"
 import { init, nostojs } from "@nosto/nosto-js"
 import type { BackendEnvironment } from "@nosto/nosto-js"
 import { withSimulatedFailure } from "@/dev/failureSimulation"
-import { mountDevPanel } from "@/dev/devPanel"
+import { mountDevPanel } from "@/dev/components/DevPanel"
 
 const environments = ["production", "staging", "local"] as const satisfies readonly BackendEnvironment[]
 
