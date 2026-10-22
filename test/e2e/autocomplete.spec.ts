@@ -119,7 +119,7 @@ test.describe("Autocomplete", () => {
     expect(page.url()).toBe("https://example.com/redirected-page")
   })
 
-  test("form submission navigates normally when response has no redirect", async ({ page }) => {
+  test("form submission navigates normally when response has no redirect", async ({ page, baseURL }) => {
     const searchInput = page.locator(searchSelector)
     const dropdown = page.locator(dropdownSelector)
     const dropdownContent = page.locator(`${dropdownSelector} > div`)
@@ -136,7 +136,7 @@ test.describe("Autocomplete", () => {
     await expect(page).toHaveURL(/\?q=running/, { timeout: 2000 })
 
     // Verify we're still on the same domain
-    expect(page.url()).toContain("localhost:8000")
+    expect(new URL(page.url()).origin).toBe(baseURL)
 
     // Dropdown should be empty after navigation
     await expect(dropdown).toBeEmpty()

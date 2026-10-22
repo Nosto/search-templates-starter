@@ -42,7 +42,7 @@ test.describe("Keyword Redirect", () => {
     expect(page.url()).toBe("https://example.com/sale-items")
   })
 
-  test("keyword without _redirect property submits search when clicked", async ({ page }) => {
+  test("keyword without _redirect property submits search when clicked", async ({ page, baseURL }) => {
     const searchInput = page.locator(searchSelector)
     const dropdown = page.locator(dropdownSelector)
 
@@ -65,6 +65,6 @@ test.describe("Keyword Redirect", () => {
     await expect(page).toHaveURL(/\?q=running\+shoes/, { timeout: 2000 })
 
     // Verify we're still on the same domain (not redirected externally)
-    expect(page.url()).toContain("localhost:8000")
+    expect(new URL(page.url()).origin).toBe(baseURL)
   })
 })

@@ -1,4 +1,4 @@
-import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
+import { SearchFacet, SearchKeyword, SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 import { mockKeywords } from "./keywords"
 import { generateMockProducts } from "./products"
 
@@ -39,3 +39,60 @@ export async function mockSearch(query: SearchQuery) {
 
   return createSearchResult(searchQuery, from, size)
 }
+
+export type MockSearch = (query: SearchQuery) => Promise<SearchResult>
+
+export function isAutocompleteQuery(query: SearchQuery) {
+  return !!query.keywords
+}
+
+/**
+ * Mock search that fails as if the Nosto search service were unavailable
+ */
+export function mockUnavailableSearch(status = 503): MockSearch {
+  return async () => {
+    throw Object.assign(new Error(`Status ${status}`), { status })
+  }
+}
+
+/**
+ * Mock search whose response passes the search action but has a facet the template can't render
+ */
+export function mockMalformedSearch(): MockSearch {
+  return async query => {
+    const result = await mockSearch(query)
+    if (result.products) {
+      result.products.facets = [unrenderableFacet]
+    }
+    return result
+  }
+}
+
+const unrenderableFacet = null as unknown as SearchFacet
+
+/**
+ * Mock search where autocomplete is unavailable but result searches work
+ */
+export function mockFailingAutocomplete(): MockSearch {
+  return async query => {
+    if (isAutocompleteQuery(query)) {
+      throw Object.assign(new Error("Status 503"), { status: 503 })
+    }
+    return mockSearch(query)
+  }
+}
+
+/**
+ * Mock search where result searches work but the autocomplete response has a keyword the dropdown can't render
+ */
+export function mockMalformedAutocomplete(): MockSearch {
+  return async query => {
+    const result = await mockSearch(query)
+    if (isAutocompleteQuery(query) && result.keywords) {
+      result.keywords.hits = [unrenderableKeyword]
+    }
+    return result
+  }
+}
+
+const unrenderableKeyword = null as unknown as SearchKeyword

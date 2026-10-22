@@ -8,6 +8,10 @@ import { CategoryConfig } from "@nosto/search-js/preact/category"
 import { SearchQuery } from "@nosto/nosto-js/client"
 import { tagging } from "./mapping/tagging"
 import { pipe } from "./utils/pipe"
+import { logger } from "@nosto/search-js/utils"
+import { restoreNativeContent } from "./fallback/fallback"
+import { setFallbackSession } from "./fallback/fallbackSession"
+import { shouldFallback } from "./fallback/shouldFallback"
 
 export const sizes = [24, 48, 72]
 
@@ -32,7 +36,57 @@ export const skeletonLoading = true
  */
 export const redirectOnSearch = true
 
-export const shopifyMode = !!window.Shopify
+/**
+ * How long (ms) the default fallback keeps the template disabled, letting the platform's native search take over
+ */
+export const fallbackDuration = 10 * 60 * 1000
+
+export type FallbackDetails = {
+  /** The error that triggered the fallback */
+  reason: unknown
+  pageType: "autocomplete" | "search" | "category"
+  /** The failed search query, undefined when the template failed to render */
+  query?: SearchQuery
+}
+
+/**
+ * Called when Nosto search is unavailable on a search or category page, or the template fails to render.
+ *
+ * The default keeps the template disabled for `fallbackDuration` and restores the native content.
+ * Autocomplete failures are only logged.
+ * To opt out of the fallback, leave the function empty.
+ *
+ * @example Redirect search pages to the platform's own search instead.
+ * Without `setFallbackSession`, the template would mount on the search page and fall back again in a loop.
+ * ```
+ * export function onFallback({ pageType, query }: FallbackDetails) {
+ *   if (pageType === "autocomplete") {
+ *     return
+ *   }
+ *   setFallbackSession(fallbackDuration)
+ *   if (pageType === "search") {
+ *     window.location.href = `/search?q=${encodeURIComponent(query?.query ?? "")}`
+ *   } else {
+ *     restoreNativeContent()
+ *   }
+ * }
+ * ```
+ */
+export function onFallback({ reason, pageType }: FallbackDetails) {
+  if (pageType === "autocomplete") {
+    logger.error("Nosto autocomplete is unavailable", reason)
+    return
+  }
+  logger.warn(`Nosto ${pageType} is unavailable, falling back to native content`, reason)
+  setFallbackSession(fallbackDuration)
+  restoreNativeContent()
+}
+
+function fallbackOnSearchError(error: unknown, query: SearchQuery, pageType: FallbackDetails["pageType"]) {
+  if (shouldFallback(error)) {
+    onFallback({ reason: error, pageType, query })
+  }
+}
 
 /**
  * Default sort option for search results and categories
@@ -78,7 +132,9 @@ export const hitDecorators = [handleDecorator, priceDecorator()] as const
  */
 export const baseConfig = {
   search: {
-    hitDecorators
+    hitDecorators,
+    maxRetries: 1,
+    retryInterval: 500
   },
   queryModifications: withBaseConfig
 }
@@ -104,10 +160,12 @@ function withBaseConfig(query: SearchQuery) {
 
 export const autocompleteConfig = {
   ...baseConfig,
+  onSearchError: (error, query) => fallbackOnSearchError(error, query, "autocomplete"),
   memoryCache: true,
   historyEnabled: true,
   historySize: 10,
   search: {
+    ...baseConfig.search,
     hitDecorators: [
       ...hitDecorators,
       thumbnailDecorator({ size: "8" }) // 400x400
@@ -145,6 +203,7 @@ function withAutocompleteDefaults(query: SearchQuery) {
 
 export const categoryConfig = {
   ...baseConfig,
+  onSearchError: (error, query) => fallbackOnSearchError(error, query, "category"),
   persistentSearchCache: false,
   preservePageScroll: false,
   queryModifications: pipe(withBaseConfig, withCategoryMetadata)
@@ -166,6 +225,7 @@ function withCategoryMetadata(query: SearchQuery) {
  */
 export const serpConfig = {
   ...baseConfig,
+  onSearchError: (error, query) => fallbackOnSearchError(error, query, "search"),
   persistentSearchCache: false,
   preservePageScroll: false
 } satisfies SerpConfig

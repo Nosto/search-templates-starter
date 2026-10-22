@@ -1,0 +1,36 @@
+.panel {
+  position: fixed;
+  bottom: 8px;
+  right: 8px;
+  z-index: 2147483647;
+  display: flex;
+  align-items: center;
+  height: 32px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #222;
+  color: #fff;
+  font: 12px sans-serif;
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-left: 8px;
+}
+
+.control {
+  margin-left: 6px;
+}
+
+.toggle {
+  align-self: stretch;
+  min-width: 28px;
+  padding: 0 8px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: 16px sans-serif;
+  cursor: pointer;
+}
