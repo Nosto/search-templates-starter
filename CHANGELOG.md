@@ -1,3 +1,20 @@
+# [1.15.0](https://github.com/Nosto/search-templates-starter/compare/v1.14.1...v1.15.0) (2026-10-22)
+
+
+### Bug Fixes
+
+* e2e tests conflicting with running dev server ([bbdeefc](https://github.com/Nosto/search-templates-starter/commit/bbdeefc8f0096bcb4cf4bb7d1234f67932ce49b3))
+* lint crash ([ca0b474](https://github.com/Nosto/search-templates-starter/commit/ca0b474ac078f6ad01607fd8230e4f28bd39523c))
+* preserve base config in autocomplete config ([f1080bc](https://github.com/Nosto/search-templates-starter/commit/f1080bcadc10c174e54ff37359d3e24d45b6a74a))
+* refactor dev panel into a Preact component ([31e38a6](https://github.com/Nosto/search-templates-starter/commit/31e38a64571384917d14064f6e9a754ec21c6c73))
+* wire up the autocomplete fallback if merchants want it ([3329ec8](https://github.com/Nosto/search-templates-starter/commit/3329ec8e77a6ff2fa624e108c821234d0f658961))
+
+
+### Features
+
+* add failure simulation panel ([8387934](https://github.com/Nosto/search-templates-starter/commit/83879341762939925b9fc12944abd7143f5f77c8))
+* add fallback mechanism ([0b00499](https://github.com/Nosto/search-templates-starter/commit/0b0049900788cdeefa2e7a58b9baeae05ba64053))
+
 ## [1.14.1](https://github.com/Nosto/search-templates-starter/compare/v1.14.0...v1.14.1) (2026-10-09)
 
 
